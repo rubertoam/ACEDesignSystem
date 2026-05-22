@@ -1,0 +1,84 @@
+/**
+ * ACE design system — pointer cursor on interactive controls (click affordance).
+ * Text fields keep the text (I-beam) cursor; disabled controls use not-allowed.
+ */
+@layer base {
+  :where(
+    a[href],
+    area[href],
+    summary,
+    label[for],
+    button:not(:disabled):not([aria-disabled='true']),
+    select:not(:disabled),
+    input[type='button']:not(:disabled),
+    input[type='submit']:not(:disabled),
+    input[type='reset']:not(:disabled),
+    input[type='checkbox']:not(:disabled),
+    input[type='radio']:not(:disabled),
+    input[type='file']:not(:disabled),
+    [role='button']:not([aria-disabled='true']),
+    [role='link']:not([aria-disabled='true']),
+    [role='menuitem']:not([aria-disabled='true']),
+    [role='menuitemcheckbox']:not([aria-disabled='true']),
+    [role='menuitemradio']:not([aria-disabled='true']),
+    [role='tab']:not(:disabled):not([aria-disabled='true']),
+    [role='option']:not([aria-disabled='true']),
+    [role='radio']:not([data-disabled]):not([aria-disabled='true']),
+    [role='checkbox']:not([data-disabled]):not([aria-disabled='true']),
+    [role='switch']:not(:disabled):not([data-disabled]):not([aria-disabled='true']),
+    [role='slider']:not([data-disabled]):not([aria-disabled='true'])
+  ) {
+    cursor: pointer;
+  }
+
+  :where(
+    label:has(button:not(:disabled):not([aria-disabled='true'])),
+    label:has([role='checkbox']:not([data-disabled]):not([aria-disabled='true'])),
+    label:has([role='radio']:not([data-disabled]):not([aria-disabled='true'])),
+    label:has([role='switch']:not(:disabled):not([data-disabled])),
+    label:has(input[type='checkbox']:not(:disabled)),
+    label:has(input[type='radio']:not(:disabled))
+  ) {
+    cursor: pointer;
+  }
+
+  :where(
+    button:disabled,
+    button[aria-disabled='true'],
+    select:disabled,
+    [role='button'][aria-disabled='true'],
+    [role='tab']:disabled,
+    [role='tab'][aria-disabled='true'],
+    [role='menuitem'][aria-disabled='true'],
+    [role='menuitemcheckbox'][aria-disabled='true'],
+    [role='menuitemradio'][aria-disabled='true'],
+    [role='option'][aria-disabled='true'],
+    [role='checkbox'][data-disabled],
+    [role='checkbox'][aria-disabled='true'],
+    [role='radio'][data-disabled],
+    [role='radio'][aria-disabled='true'],
+    [role='switch']:disabled,
+    [role='switch'][data-disabled],
+    [role='switch'][aria-disabled='true']
+  ) {
+    cursor: not-allowed;
+  }
+
+  :where(
+    input[type='text'],
+    input[type='search'],
+    input[type='email'],
+    input[type='password'],
+    input[type='url'],
+    input[type='tel'],
+    input[type='number'],
+    input[type='date'],
+    input[type='datetime-local'],
+    input[type='time'],
+    input[type='month'],
+    input[type='week'],
+    textarea
+  ):not(:disabled) {
+    cursor: text;
+  }
+}

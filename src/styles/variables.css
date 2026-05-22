@@ -1,0 +1,636 @@
+/**
+ * Design tokens — map Figma variables and code primitives here.
+ * Import this file from your global stylesheet (see `src/style.css`).
+ *
+ * Literal colors/sizes are allowed only inside this file as token definitions.
+ * Components and lab pages must consume tokens via var(--token-name), not raw hex/px.
+ *
+ * Typography: see `typography-tokens.css` and `ace-typography-from-figma.json` (ACE / Figma node 2651:5).
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-screening: 'Noto Sans', var(--font-sans);
+  --text-2xs: 0.625rem;
+  --text-xs: 0.75rem;
+  --text-13: 0.8125rem;
+  --text-14: 0.875rem;
+  --text-15: 0.9375rem;
+  --text-base: 1rem;
+
+  /* Spacing scale (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* Radius & elevation */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-checkbox: 0.1875rem;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+
+  /* ACE drop shadows — Figma Drop Shadows (71:71); single-layer elevation, 10% alpha */
+  /** Space between a subsection label and its content (labs, documentation). */
+  --ace-section-label-gap: 1.25rem;
+
+  --ace-drop-shadow-none: none;
+  --ace-drop-shadow-xs: 0 4px 8px rgb(0 0 0 / 0.1);
+  --ace-drop-shadow-sm: 0 6px 12px rgb(0 0 0 / 0.1);
+  --ace-drop-shadow-md: 0 8px 16px rgb(0 0 0 / 0.1);
+  --ace-drop-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.1);
+  --ace-drop-shadow-xl: 0 12px 24px rgb(0 0 0 / 0.1);
+
+  /* Dialog modal — ACE Dialog Modals (Figma node 3047:2036) */
+  --dialog-modal-surface: #ffffff;
+  --dialog-modal-border: #eff0f2;
+  --dialog-modal-radius: 0.5rem;
+  --dialog-modal-padding: 1.5rem;
+  --dialog-modal-body-focus-gutter: 0.25rem; /* room for input focus ring inside scroll body */
+  --dialog-modal-section-gap: 1.5rem;
+  --dialog-modal-shadow: var(--ace-drop-shadow-xl);
+  --dialog-modal-overlay: rgb(0 0 0 / 0.45);
+  --dialog-modal-title: #23262c;
+  --dialog-modal-body: #23262c;
+  --dialog-modal-muted: #464c59;
+  /* FinScan Primary/500, Error tokens from ACE */
+  --dialog-modal-primary: #3d2e8a;
+  --dialog-modal-primary-hover: #322475;
+  --dialog-modal-on-primary: #ffffff;
+  --dialog-modal-outline-border: #3d2e8a;
+  --dialog-modal-outline-text: #3d2e8a;
+  --dialog-modal-outline-hover-bg: #f8f7fc;
+  --dialog-modal-danger: #dc264b;
+  --dialog-modal-danger-hover: #c41e42;
+  --dialog-modal-close-hover: var(--ace-neutral-100);
+  --dialog-modal-btn-radius: 0.25rem;
+  --dialog-modal-footer-btn-gap: 0.75rem;
+  --dialog-modal-content-max-h: min(85vh, 32rem);
+  --dialog-modal-max-width-md: 28rem;
+  --dialog-modal-max-width-lg: 38.5rem;
+  --dialog-modal-inline-error-bg: var(--ace-error-50);
+  --dialog-modal-inline-error-border: #dc264b;
+
+  /* ACE neutrals (Figma) — define before screening aliases */
+  --ace-neutral-100: #f5f6f8;
+
+  /* ——— Data table (screening) organism ——— */
+  --screening-surface: #ffffff;
+  --screening-surface-muted: #fafafb;
+  --screening-surface-hover: var(--ace-neutral-100);
+  --screening-surface-row-muted: #f3f4f6;
+  --screening-surface-expanded: #ffffff;
+  --screening-surface-selected: rgb(244 241 252 / 0.6);
+  --screening-border: var(--screening-border-strong);
+  --screening-border-strong: #cfd2d9;
+  --screening-border-row: #eff0f2;
+  --screening-border-soft: #e4e6ea;
+  --screening-text-primary: #23262c;
+  --screening-text-secondary: #464c59;
+  --screening-text-muted: #6a7285;
+  --screening-text-on-primary: #ffffff;
+  --screening-primary: #523eb9;
+  --screening-primary-hover-border: #4334a3;
+  --screening-primary-soft-bg: #efeef9;
+  --screening-primary-soft-bg-hover: #e4dff3;
+  --screening-primary-ring: rgb(82 62 185 / 0.35);
+  --screening-primary-ring-offset: #ffffff;
+  /* Lab / docs chrome — aliases screening tokens */
+  --color-background: var(--screening-surface-muted);
+  --color-surface: var(--screening-surface);
+  --color-text-primary: var(--screening-text-primary);
+  --color-text-muted: var(--screening-text-muted);
+  --color-border: var(--screening-border-strong);
+  --color-accent: var(--screening-primary);
+  --screening-icon-muted: #949baa;
+  --screening-progress-track: #eff0f2;
+  --screening-progress-fill: #523eb9;
+  --screening-chip-inactive-bg: #ffffff;
+  --screening-chip-inactive-border: #cfd2d9;
+  --screening-chip-inactive-hover-bg: var(--ace-neutral-100);
+  --screening-chip-inactive-hover-border: #949baa;
+  --screening-pill-new-border: #d6cef5;
+  --screening-pill-new-surface: #f4f1fc;
+  --screening-pill-new-dot: #523eb9;
+  --screening-pill-new-label: #523eb9;
+  --screening-chip-active-text: #523eb9;
+  --screening-chip-active-border: #523eb9;
+  --screening-checkbox-inner-bg: #ffffff;
+  --screening-pill-escalated-border: #ffcc80;
+  --screening-pill-escalated-surface: #fff4e8;
+  --screening-pill-escalated-dot: #ef6c00;
+  --screening-pill-escalated-label: #e65100;
+  --screening-score-high: #c62828;
+  --screening-age-fresh: #2e7d32;
+  --screening-age-warn: #ef6c00;
+  --screening-age-stale: #c62828;
+  --screening-tile-e-bg: #fdeaea;
+  --screening-tile-e-fg: #9e2a2a;
+  --screening-tile-e-border: rgb(194 40 40 / 0.12);
+  --screening-tile-n-bg: #e8f4ea;
+  --screening-tile-n-fg: #2d6a3e;
+  --screening-tile-n-border: rgb(46 125 50 / 0.12);
+  --screening-tile-c1-bg: #fff4e8;
+  --screening-tile-c1-fg: #b35c00;
+  --screening-tile-c1-border: rgb(230 126 0 / 0.12);
+  --screening-tile-c2-bg: #fff9e6;
+  --screening-tile-c2-fg: #9a6b00;
+  --screening-tile-c2-border: rgb(249 168 37 / 0.15);
+  --screening-tile-b-bg: #f0f1f3;
+  --screening-tile-b-fg: #5c6370;
+  --screening-tile-b-border: rgb(106 114 130 / 0.15);
+  /* Dropdown menu panel (Figma Menu Lists 1541:5729) */
+  --ace-dropdown-trigger-width: 12.5rem; /* 200px — field / button triggers */
+  --ace-dropdown-menu-shadow: var(--ace-drop-shadow-xs);
+  --ace-dropdown-menu-surface: var(--screening-surface);
+  --ace-dropdown-menu-border: var(--screening-border-strong);
+  --ace-dropdown-menu-text: var(--screening-text-primary);
+  --ace-dropdown-menu-text-muted: var(--screening-text-muted);
+  --ace-dropdown-menu-primary: var(--screening-primary);
+  --ace-dropdown-menu-row-hover: var(--screening-surface-hover);
+  --ace-dropdown-menu-row-emphasis: var(--screening-surface-muted);
+  --ace-dropdown-menu-danger: var(--dialog-modal-danger);
+
+  /* Time picker (Figma 419:3011) */
+  --ace-time-picker-trigger-width: 15rem; /* 240px */
+  --ace-time-picker-panel-width: 15rem;
+
+  /* Date picker (Figma 419:3010) */
+  --ace-date-picker-trigger-width: 15rem; /* 240px */
+  --ace-date-picker-panel-width: 29.25rem; /* 468px — range (dual month) */
+  --ace-date-picker-panel-width-single: 15.5rem; /* single month */
+  --ace-date-picker-month-title: var(--ace-neutral-800);
+  --ace-date-picker-weekday: var(--screening-text-secondary);
+  --ace-date-picker-day: var(--screening-text-secondary);
+  --ace-date-picker-day-muted: var(--screening-text-muted);
+  --ace-date-picker-day-on-primary: #ffffff;
+  --ace-date-picker-range-fill: var(--screening-primary-soft-bg); /* Primary/50 #EFEEF9 */
+  --ace-date-picker-day-size: 1.75rem; /* 28px — circle fits inside cell gap */
+  --ace-date-picker-day-gap: 0.125rem; /* 2px between day cells */
+
+  --ace-neutral-800: #23262c;
+
+  /* Site header / top navigation (Figma 225:1406) */
+  --ace-site-header-height: 4rem;
+  --ace-site-header-px: 2rem;
+  --ace-site-header-py: 0.75rem;
+  --ace-site-header-surface: var(--screening-surface);
+  --ace-site-header-border: var(--screening-border-strong);
+  --ace-site-header-logo-gap: var(--ace-finscan-icon-gap);
+  --ace-site-header-nav-gap: 2rem;
+  --ace-site-header-actions-gap: 1.5rem;
+  --ace-site-header-toolbar-gap: 1rem;
+  --ace-site-header-toolbar-icon-color: var(--ace-neutral-800);
+  --ace-site-header-icon-notifications-width: 2rem;
+  --ace-site-header-icon-notifications-height: 1.96875rem;
+  --ace-site-header-icon-help-size: 2.125rem;
+  --ace-site-header-nav-hover: var(--screening-surface-hover);
+  --ace-site-header-greeting-color: var(--screening-primary);
+
+  /* FinScan icon / brand (Figma Icon / FinScan 2782:29) */
+  --ace-finscan-icon-gap: 0.75rem;
+  --ace-finscan-mark-green: #99ca3c;
+  --ace-finscan-mark-blue: #0672a3;
+  --ace-finscan-mark-magenta: #92278f;
+  --ace-finscan-mark-primary: #3d2e8a;
+  --ace-finscan-wordmark-fill: #3d2e8a;
+  --ace-guidelines-principle-title: #454cbc;
+
+  /* Sidebar (Figma 4491:2509) */
+  --ace-sidebar-width: 18.125rem; /* 290px */
+  --ace-sidebar-menu-icon: var(--ace-neutral-800);
+  /* Success / Error (Figma) */
+  --ace-success-50: #f8fbf1;
+  --ace-success-500: #87b531;
+  --ace-error-50: #fdf4f6;
+  --ace-header-status-success: var(--ace-success-500);
+  --ace-sidebar-shadow: 6px 0 5px rgb(0 0 0 / 0.03);
+  --ace-sidebar-border: var(--screening-border-strong);
+  --ace-sidebar-border-accent: #7868cd;
+  --ace-sidebar-heading-bg: var(--screening-surface-muted);
+  --ace-sidebar-heading-border: var(--screening-border-strong);
+  --ace-sidebar-item-radius: var(--radius-md);
+  --ace-sidebar-item-selected-bg: var(--screening-primary-soft-bg);
+  --ace-sidebar-item-selected-text: var(--dialog-modal-primary);
+  --ace-sidebar-item-hover-bg: var(--ace-neutral-100);
+  /** Neutral 400 — expanded group container stroke (Figma). */
+  --ace-sidebar-group-expanded-border: var(--ace-button-neutral-400);
+  --ace-sidebar-group-hover-bg: var(--ace-neutral-100);
+  /** White wash on + / ⋯ over Neutral 100 group header hover */
+  --ace-sidebar-row-action-hover-bg: var(--screening-surface);
+  --ace-sidebar-group-gap: var(--space-3);
+  --ace-sidebar-nav-px: var(--space-3);
+  --ace-sidebar-nav-py: 0.375rem;
+  /* Full-width controls in header align with group row hover area (nav column) */
+  --ace-sidebar-control-width: calc(var(--ace-sidebar-width) - 2 * var(--ace-sidebar-nav-px));
+  /* Edit group dialog — items list scrolls after 5 rows */
+  --ace-edit-group-restore-bg: var(--ace-success-500);
+  --ace-edit-group-restore-hover-bg: var(--ace-success-50);
+  --ace-edit-group-trash-hover-bg: var(--ace-error-50);
+  --ace-edit-group-item-row-height: 2.5rem;
+  --ace-edit-group-items-list-max-height: calc(
+    5 * var(--ace-edit-group-item-row-height) + 4 * var(--space-1) + 2 * var(--space-2)
+  );
+
+  /* Motion — shared easing/duration tokens (see Animations lab + aceAnimations.ts) */
+  --ace-motion-ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
+  --ace-motion-duration-fast: 150ms;
+  --ace-motion-duration-medium: 300ms;
+  --ace-motion-duration-slow: 420ms;
+  --ace-sidebar-duration-panel: var(--ace-motion-duration-medium);
+  --ace-sidebar-duration-expand: var(--ace-motion-duration-medium);
+
+  /* Tabs (Figma 2045:4334) */
+  --ace-tabs-gap: var(--space-3);
+  --ace-tabs-text-active: var(--screening-primary);
+  --ace-tabs-text-inactive: var(--screening-icon-muted);
+  --ace-tabs-indicator-bg: var(--screening-primary);
+  --ace-tabs-indicator-height: 0.09375rem;
+  --ace-tabs-indicator-radius: var(--radius-sm);
+
+  /* Data table outer card — ACE Drop Shadows XS at rest (Figma 71:71); hover uses SM */
+  --screening-shadow-card: var(--ace-drop-shadow-xs);
+  --screening-shadow-card-hover: var(--ace-drop-shadow-sm);
+
+  /* Landing page card — Figma Cards organism (4130:1977) */
+  --ace-landing-page-card-width: 25rem;
+  --ace-landing-page-card-min-height: 12.5rem;
+  --ace-landing-page-card-radius: 4px;
+  --ace-landing-page-card-border: var(--screening-border-row);
+  --ace-landing-page-card-surface: var(--screening-surface);
+  --ace-landing-page-card-footer-bg: var(--screening-primary-soft-bg);
+  --ace-landing-page-card-shadow: var(--screening-shadow-card);
+  --ace-landing-page-card-shadow-hover: 0 12px 12px rgb(0 0 0 / 0.1);
+  --ace-landing-page-card-title-color: var(--ace-neutral-800);
+  --ace-landing-page-card-body-color: var(--ace-neutral-800);
+  --ace-landing-page-card-footer-stat-color: var(--screening-text-secondary);
+  --ace-landing-page-card-link-color: var(--screening-primary);
+  --ace-landing-page-card-tag-bg: var(--ace-button-purple-500);
+  --ace-landing-page-card-tag-text: #ffffff;
+  --ace-landing-page-card-header-px: 1.5rem;
+  --ace-landing-page-card-header-py: 0.75rem;
+  --ace-landing-page-card-body-px: 1.5rem;
+  --ace-landing-page-card-body-py-stats: 0.75rem;
+  --ace-landing-page-card-body-py-desc: 1.5rem;
+  --ace-landing-page-card-footer-px: 1.5rem;
+  --ace-landing-page-card-footer-py: 0.75rem;
+
+  /* Data card (medium) — Figma Cards / Data (2046:5157) */
+  --ace-data-card-width: 43.25rem;
+  --ace-data-card-radius: 4px;
+  --ace-data-card-border: var(--screening-border-row);
+  --ace-data-card-surface: var(--screening-surface);
+  --ace-data-card-header-bg: var(--screening-surface-muted);
+  --ace-data-card-header-height: 2.625rem;
+  --ace-data-card-shadow: var(--ace-drop-shadow-sm);
+  --ace-data-card-shadow-hover: var(--ace-drop-shadow-xl);
+  --ace-data-card-row-muted: var(--screening-text-muted);
+  --ace-data-card-insight-bg: var(--screening-primary-soft-bg);
+  --ace-data-card-insight-border: var(--screening-primary);
+  --screening-shadow-row-accent: inset 2px 0 0 0 rgb(82 62 185 / 0.2);
+  --screening-shadow-thead: 0 1px 0 rgb(207 210 217 / 0.6);
+  --screening-header-min-height: 3.5rem;
+  --screening-progress-width: 7.5rem;
+  --screening-progress-height: var(--space-2);
+  --screening-table-min-width: 45rem;
+  --screening-body-max-height: calc(100dvh - 14rem);
+  --screening-checkbox-border: #523eb9;
+  --screening-checkbox-disabled-border: #cfd2d9;
+  --screening-checkbox-disabled-checked-bg: #d4d6db;
+
+  /* ACE Toggle — Figma Toggles (117:1265) */
+  --ace-toggle-thumb: #ffffff;
+  --ace-toggle-track-off: #949baa;
+  --ace-toggle-track-on: #523eb9;
+  --ace-toggle-track-off-hover: #7e8694;
+  --ace-toggle-track-on-hover: #4334a3;
+  --ace-toggle-track-disabled-off: #cfd2d9;
+  --ace-toggle-track-disabled-on: #cbc5ec;
+  --ace-toggle-focus-ring: var(--screening-primary-ring);
+  --ace-toggle-ring-offset: var(--screening-primary-ring-offset);
+
+  /* ACE Slider — Figma Sliders (2505:47) */
+  --ace-slider-track-height: 0.625rem;
+  --ace-slider-radius: 4px;
+  --ace-slider-handle-height: 2.25rem;
+  --ace-slider-handle-width: 4px;
+  --ace-slider-handle-width-hover: 8px;
+  --ace-slider-tick-inset: 4px;
+  --ace-slider-tooltip-size: 1.75rem;
+  --ace-slider-track-inactive: #efeef9;
+  --ace-slider-track-border: #523eb9;
+  --ace-slider-range: #523eb9;
+  --ace-slider-handle: #523eb9;
+  --ace-slider-tick-on-range: #efeef9;
+  --ace-slider-tick-on-track: #523eb9;
+  --ace-slider-tooltip-bg: #23262c;
+  --ace-slider-tooltip-text: #fafafb;
+  --ace-slider-track-inactive-disabled: #eff0f2;
+  --ace-slider-track-border-disabled: #cfd2d9;
+  --ace-slider-range-disabled: #cbc5ec;
+  --ace-slider-handle-disabled: #949baa;
+  --ace-slider-focus-ring: var(--screening-primary-ring);
+  --ace-slider-ring-offset: var(--screening-primary-ring-offset);
+
+  /* ACE Radio — Figma Radio Buttons (331:1755) */
+  --ace-radio-bg-inner: #ffffff;
+  --ace-radio-border-default: #23262c;
+  --ace-radio-border-hover: #23262c;
+  --ace-radio-surface-hover: var(--ace-neutral-100);
+  --ace-radio-border-selected: #523eb9;
+  --ace-radio-indicator-selected: #523eb9;
+  --ace-radio-border-disabled: #949baa;
+  --ace-radio-indicator-disabled: #d4d6db;
+  --ace-radio-label-disabled: #949baa;
+  --ace-radio-focus-ring: var(--screening-primary-ring);
+  --ace-radio-focus-offset: var(--screening-primary-ring-offset);
+  --ace-radio-field-border: #cfd2d9;
+  --ace-radio-field-bg: #ffffff;
+  --ace-radio-field-bg-hover: #efeef9;
+  --ace-radio-field-bg-active: #efeef9;
+  --ace-radio-field-border-active: #523eb9;
+  --ace-radio-field-bg-disabled: #eff0f2;
+
+  --screening-icon-chevron: 1rem; /* 16px */
+  --screening-duration-accordion: 420ms;
+  --screening-ease-accordion: cubic-bezier(0.33, 1, 0.68, 1);
+
+  /* ACE Accordion — Figma Accordions (332:1500) */
+  --ace-accordion-surface: #ffffff;
+  --ace-accordion-surface-muted: #fafafb;
+  --ace-accordion-border: #cfd2d9;
+  --ace-accordion-radius: 0.25rem;
+  --ace-accordion-px: 1rem;
+  --ace-accordion-py: 0.75rem;
+  --ace-accordion-gap: 1rem;
+  --ace-accordion-title: #23262c;
+  --ace-accordion-tag-bg: #e4e6ea;
+  --ace-accordion-tag-text: #23262c;
+  --ace-accordion-icon: #23262c;
+  --ace-accordion-content-bg: #ffffff;
+  --ace-accordion-duration: 420ms;
+  --ace-accordion-ease: cubic-bezier(0.33, 1, 0.68, 1);
+  /* Table pagination — Review Assigned (Figma 102:5124) */
+  --screening-pagination-btn-size: 2rem;
+  --screening-pagination-btn-radius: 0.1875rem;
+  --screening-pagination-gap: 0.25rem;
+  --screening-pagination-page-size-border: #949baa;
+  /* Input / Small — ACE Design System v.3 (Figma Input frame, e.g. 408:2084 default, 408:2090 focus) */
+  --screening-input-height-sm: 2.25rem;
+  --screening-input-radius: 0.25rem;
+  --screening-input-px: 0.75rem;
+  --screening-input-gap: 0.75rem;
+  --screening-input-border: #bcbcca;
+  --screening-input-border-focus: #9090a7;
+  --screening-input-bg-focus: #efeef9;
+  --screening-input-focus-ring: #7868cd;
+  --screening-input-placeholder: #bcbcca;
+
+  /* ACE Input atom — Figma Input (408:1976); borders/focus align with data table search field */
+  --ace-input-height-sm: var(--screening-input-height-sm);
+  --ace-input-height-md: 2.75rem;
+  --ace-input-height-lg: 3.25rem;
+  --ace-input-font-sm: 0.875rem;
+  --ace-input-font-md: 1rem;
+  --ace-input-font-lg: 1.125rem;
+  --ace-input-leading-sm: 1.0625rem;
+  --ace-input-leading-md: 1.1875rem;
+  --ace-input-leading-lg: 1.35rem;
+  --ace-input-error-bg: var(--ace-error-50);
+  --ace-input-error-border: #dc264b;
+  --ace-input-error-message: #ef4444;
+  --ace-input-disabled-bg: #eff0f2;
+  --ace-input-disabled-border: #dedee5;
+  --ace-input-disabled-text: #464c59;
+
+  /* ACE Buttons — FinScan Primary + Innovative Blue (Figma Buttons, node 2067:191) */
+  --ace-button-radius: var(--dialog-modal-btn-radius);
+  --ace-button-on-solid: #ffffff;
+  --ace-button-purple-500: #3d2e8a;
+  --ace-button-purple-700: #261c55;
+  --ace-button-purple-400: #523eb9;
+  --ace-button-blue-500: #0672a3;
+  --ace-button-blue-700: #033952;
+  --ace-button-blue-400: #089de1;
+  --ace-button-neutral-400: #cfd2d9;
+  --ace-button-neutral-500: #949baa;
+  --ace-button-neutral-600: #6a7285;
+  --ace-button-disabled-primary-bg: var(--ace-button-neutral-400);
+  --ace-button-disabled-primary-text: var(--ace-button-neutral-600);
+  --ace-button-focus-ring: rgb(120 104 205 / 0.45);
+  --ace-button-px-sm: 0.75rem;
+  --ace-button-py-sm: 0.25rem;
+  --ace-button-gap-sm: 0.5rem;
+  --ace-button-px-md: 1rem;
+  --ace-button-py-md: 0.5rem;
+  --ace-button-gap-md: 0.5rem;
+  --ace-button-px-lg: 1.125rem;
+  --ace-button-py-lg: 0.75rem;
+  --ace-button-gap-lg: 0.75rem;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --color-background: var(--screening-surface-muted);
+  --color-surface: var(--screening-surface);
+  --color-text-primary: var(--screening-text-primary);
+  --color-text-muted: var(--screening-text-muted);
+  --color-border: var(--screening-border-strong);
+  --color-accent: var(--screening-primary);
+  --ace-sidebar-item-selected-text: var(--screening-chip-active-text);
+  --ace-sidebar-border-accent: var(--screening-primary-hover-border);
+    --screening-surface: #22272b;
+    --screening-surface-muted: #1d2125;
+    --screening-surface-hover: var(--ace-neutral-100);
+    --screening-surface-row-muted: #2c333a;
+    --screening-surface-expanded: #1d2125;
+    --screening-surface-selected: rgb(56 65 74 / 0.45);
+    --screening-border: var(--screening-border-strong);
+    --screening-border-strong: #38414a;
+    --screening-border-row: #333a42;
+    --screening-border-soft: #38414a;
+    --screening-text-primary: #b6c2cf;
+    --screening-text-secondary: #9fadbc;
+    --screening-text-muted: #8696a7;
+    --screening-primary-ring-offset: #22272b;
+    --screening-icon-muted: #8696a7;
+    --screening-progress-track: #2c333a;
+    --screening-chip-inactive-bg: #22272b;
+    --screening-chip-inactive-border: #38414a;
+    --screening-chip-inactive-hover-bg: var(--ace-neutral-100);
+    --screening-chip-inactive-hover-border: #5c6773;
+    --screening-primary-soft-bg: #2a2540;
+    --screening-primary-soft-bg-hover: #352f4d;
+    --screening-primary-hover-border: #9b8ed4;
+    --screening-pill-new-border: #d6cef5;
+    --screening-pill-new-surface: #f4f1fc;
+    --screening-pill-new-dot: #523eb9;
+    --screening-chip-active-text: #dcd7e8;
+    --screening-chip-active-border: #7c6bc4;
+    --screening-checkbox-inner-bg: #22272b;
+    --screening-score-high: #f48a8a;
+    --screening-shadow-thead: 0 1px 0 rgb(0 0 0 / 0.45);
+    --screening-checkbox-disabled-border: #454c59;
+    --ace-toggle-track-off: #5c6773;
+    --ace-toggle-track-on: #7c6bc4;
+    --ace-toggle-track-off-hover: #6f7b8a;
+    --ace-toggle-track-on-hover: #9b8ed4;
+    --ace-toggle-track-disabled-off: #454c59;
+    --ace-toggle-track-disabled-on: #3d3658;
+    --ace-toggle-thumb: #ffffff;
+    --ace-slider-track-inactive: #2a2540;
+    --ace-slider-track-border: #7c6bc4;
+    --ace-slider-range: #7c6bc4;
+    --ace-slider-handle: #7c6bc4;
+    --ace-slider-tick-on-range: #efeef9;
+    --ace-slider-tick-on-track: #9b8ed4;
+    --ace-slider-tooltip-bg: #22272b;
+    --ace-slider-tooltip-text: #fafafb;
+    --ace-slider-track-inactive-disabled: #2c333a;
+    --ace-slider-track-border-disabled: #454c59;
+    --ace-slider-range-disabled: #3d3658;
+    --ace-slider-handle-disabled: #5c6773;
+    --ace-radio-bg-inner: #22272b;
+    --ace-radio-border-default: #b6c2cf;
+    --ace-radio-border-hover: #b6c2cf;
+    --ace-radio-surface-hover: var(--ace-neutral-100);
+    --ace-radio-border-selected: #7c6bc4;
+    --ace-radio-indicator-selected: #9b8ed4;
+    --ace-radio-border-disabled: #5c6773;
+    --ace-radio-indicator-disabled: #454c59;
+    --ace-radio-label-disabled: #8696a7;
+    --ace-radio-field-border: #38414a;
+    --ace-radio-field-bg: #22272b;
+    --ace-radio-field-bg-hover: #2a2540;
+    --ace-radio-field-bg-active: #2a2540;
+    --ace-radio-field-border-active: #7c6bc4;
+    --ace-radio-field-bg-disabled: #1d2125;
+    --screening-primary: #9b8ed4;
+    --screening-primary-hover-border: #b5aae0;
+    --screening-primary-ring: rgb(155 142 212 / 0.45);
+    --screening-text-on-primary: #ffffff;
+    --screening-checkbox-border: #7c6bc4;
+    --screening-checkbox-disabled-checked-bg: #454c59;
+    --screening-input-border: #5c6773;
+    --screening-input-border-focus: #8696a7;
+    --screening-input-bg-focus: var(--screening-primary-soft-bg);
+    --screening-input-focus-ring: #9b8ed4;
+    --screening-input-placeholder: #8696a7;
+    --ace-success-50: #1a2210;
+    --ace-error-50: #3d2529;
+    --ace-input-error-bg: var(--ace-error-50);
+    --ace-input-error-border: #f48a8a;
+    --ace-input-error-message: #f48a8a;
+    --ace-input-disabled-bg: #1d2125;
+    --ace-input-disabled-border: #454c59;
+    --ace-input-disabled-text: #6f7b8a;
+    --ace-button-purple-500: #7c6bc4;
+    --ace-button-purple-700: #9b8ed4;
+    --ace-button-purple-400: #b5aae0;
+    --ace-button-blue-500: #089de1;
+    --ace-button-blue-700: #3db8f0;
+    --ace-button-blue-400: #5cc9f5;
+    --ace-button-neutral-400: #5c6773;
+    --ace-button-neutral-500: #8696a7;
+    --ace-button-neutral-600: #8696a7;
+    --ace-button-disabled-primary-bg: #454c59;
+    --ace-button-disabled-primary-text: #6f7b8a;
+    --ace-button-focus-ring: rgb(155 142 212 / 0.5);
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.35);
+    --ace-accordion-surface: #22272b;
+    --ace-accordion-surface-muted: #1d2125;
+    --ace-accordion-border: #38414a;
+    --ace-accordion-title: #b6c2cf;
+    --ace-accordion-tag-bg: #38414a;
+    --ace-accordion-tag-text: #b6c2cf;
+    --ace-accordion-icon: #b6c2cf;
+    --ace-accordion-content-bg: #22272b;
+    --ace-drop-shadow-xs: 0 4px 8px rgb(0 0 0 / 0.4);
+    --ace-drop-shadow-sm: 0 6px 12px rgb(0 0 0 / 0.4);
+    --ace-drop-shadow-md: 0 8px 16px rgb(0 0 0 / 0.45);
+    --ace-drop-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.45);
+    --ace-drop-shadow-xl: 0 12px 24px rgb(0 0 0 / 0.5);
+    --dialog-modal-surface: #1d2125;
+    --dialog-modal-border: #38414a;
+    --dialog-modal-title: #b6c2cf;
+    --dialog-modal-body: #b6c2cf;
+    --dialog-modal-muted: #9fadbc;
+    --dialog-modal-close-hover: var(--ace-neutral-100);
+    --dialog-modal-outline-hover-bg: #2a2540;
+    --ace-neutral-100: #2c333a;
+    --ace-neutral-800: #b6c2cf;
+    --ace-site-header-toolbar-icon-color: var(--screening-text-primary);
+    --ace-sidebar-menu-icon: var(--screening-icon-muted);
+    --ace-sidebar-item-hover-bg: var(--ace-neutral-100);
+    --ace-sidebar-group-hover-bg: var(--ace-neutral-100);
+    --ace-sidebar-row-action-hover-bg: var(--screening-surface);
+    --ace-guidelines-principle-title: #9b8ed4;
+
+    /* Dialog actions */
+    --dialog-modal-primary: var(--ace-button-purple-500);
+    --dialog-modal-primary-hover: var(--ace-button-purple-700);
+    --dialog-modal-outline-border: var(--screening-primary);
+    --dialog-modal-outline-text: var(--screening-primary);
+    --dialog-modal-danger: #f07178;
+    --dialog-modal-danger-hover: #f48a8a;
+    --dialog-modal-overlay: rgb(0 0 0 / 0.65);
+    --dialog-modal-inline-error-border: #f48a8a;
+
+    /* Progress, pills, age, tiles */
+    --screening-progress-fill: var(--screening-primary);
+    --screening-pill-new-border: #4a4068;
+    --screening-pill-new-surface: #2a2540;
+    --screening-pill-new-dot: var(--screening-primary);
+    --screening-pill-new-label: var(--screening-chip-active-text);
+    --screening-pill-escalated-border: #7a5020;
+    --screening-pill-escalated-surface: #3d2a14;
+    --screening-pill-escalated-dot: #ffb74d;
+    --screening-pill-escalated-label: #ffcc80;
+    --screening-age-fresh: #81c784;
+    --screening-age-warn: #ffb74d;
+    --screening-age-stale: #f48a8a;
+    --screening-tile-e-bg: #3d2529;
+    --screening-tile-e-fg: #f48a8a;
+    --screening-tile-e-border: rgb(244 138 138 / 0.3);
+    --screening-tile-n-bg: #1e3324;
+    --screening-tile-n-fg: #81c784;
+    --screening-tile-n-border: rgb(129 199 132 / 0.25);
+    --screening-tile-c1-bg: #3d2a14;
+    --screening-tile-c1-fg: #ffb74d;
+    --screening-tile-c1-border: rgb(255 183 77 / 0.25);
+    --screening-tile-c2-bg: #3d3510;
+    --screening-tile-c2-fg: #ffd54f;
+    --screening-tile-c2-border: rgb(255 213 79 / 0.25);
+    --screening-tile-b-bg: #2c333a;
+    --screening-tile-b-fg: #9fadbc;
+    --screening-tile-b-border: rgb(159 173 188 / 0.2);
+
+    /* Cards */
+    --ace-landing-page-card-surface: var(--screening-surface);
+    --ace-landing-page-card-title-color: var(--screening-text-primary);
+    --ace-landing-page-card-body-color: var(--screening-text-primary);
+    --ace-landing-page-card-footer-stat-color: var(--screening-text-secondary);
+    --ace-landing-page-card-shadow-hover: 0 12px 16px rgb(0 0 0 / 0.4);
+    --ace-data-card-surface: var(--screening-surface);
+    --ace-data-card-header-bg: var(--screening-surface-muted);
+
+    /* Date picker */
+    --ace-date-picker-month-title: var(--screening-text-primary);
+    --ace-date-picker-weekday: var(--screening-text-secondary);
+    --ace-date-picker-day: var(--screening-text-secondary);
+
+    /* Sidebar, brand, pagination */
+    --ace-sidebar-shadow: 6px 0 12px rgb(0 0 0 / 0.35);
+    --ace-sidebar-border-accent: var(--screening-primary-hover-border);
+    --ace-finscan-wordmark-fill: #b5aae0;
+    --ace-finscan-mark-primary: #b5aae0;
+    --ace-success-500: #9bc94e;
+    --screening-shadow-row-accent: inset 2px 0 0 0 rgb(155 142 212 / 0.35);
+    --screening-pagination-page-size-border: #5c6773;
+}
