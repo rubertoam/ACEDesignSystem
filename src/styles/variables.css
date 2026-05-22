@@ -377,6 +377,7 @@
 
   /* ACE Toggle — Figma Toggles (117:1265) */
   --ace-toggle-thumb: #ffffff;
+  --ace-toggle-thumb-disabled: #eff0f2; /* Neutral 100 */
   --ace-toggle-track-off: var(--ace-neutral-200);
   --ace-toggle-track-on: #523eb9;
   --ace-toggle-track-off-hover: #dfe2e8;
@@ -569,6 +570,7 @@
     --ace-toggle-track-disabled-off: #454c59;
     --ace-toggle-track-disabled-on: #3d3658;
     --ace-toggle-thumb: #ffffff;
+    --ace-toggle-thumb-disabled: #6a7285; /* Neutral 600 — muted thumb on disabled tracks */
     --ace-toggle-icon-glyph-off: var(--ace-neutral-800);
     --ace-toggle-icon-glyph-on: var(--ace-toggle-thumb);
     --ace-slider-track-inactive: #2a2540;

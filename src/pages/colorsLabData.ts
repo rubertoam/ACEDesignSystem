@@ -386,6 +386,7 @@ export const COLOR_COMPONENT_GROUPS: ColorComponentGroup[] = [
     description: 'Switch track and thumb (Figma Toggles 117:1265; see Toggles lab).',
     tokens: solidTokens([
       { name: 'Toggle thumb', cssVar: '--ace-toggle-thumb' },
+      { name: 'Toggle thumb disabled', cssVar: '--ace-toggle-thumb-disabled' },
       { name: 'Toggle track off', cssVar: '--ace-toggle-track-off' },
       { name: 'Toggle track on', cssVar: '--ace-toggle-track-on' },
       { name: 'Toggle track off hover', cssVar: '--ace-toggle-track-off-hover' },

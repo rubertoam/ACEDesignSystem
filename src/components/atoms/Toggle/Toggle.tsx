@@ -23,7 +23,7 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
     return (
       <SwitchPrimitive.Root
         ref={ref}
-        className={cn(aceToggleClass(size, variant), variant === 'icon' && 'group', className)}
+        className={cn(aceToggleClass(size, variant), className)}
         {...props}
       >
         {variant === 'icon' ? (

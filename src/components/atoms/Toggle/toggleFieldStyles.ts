@@ -11,7 +11,7 @@ export const ACE_TOGGLE_SIZE_LABELS: Record<AceToggleSize, string> = {
 
 /** Track + interaction (Figma Toggles 117:1265; --ace-toggle-* tokens). */
 export const aceToggleTrackClass =
-  'relative inline-flex shrink-0 cursor-pointer items-center rounded-full border-0 p-[var(--ace-toggle-track-padding)] outline-none transition-colors duration-200 ease-out disabled:cursor-not-allowed ' +
+  'group relative inline-flex shrink-0 cursor-pointer items-center rounded-full border-0 p-[var(--ace-toggle-track-padding)] outline-none transition-colors duration-200 ease-out disabled:cursor-not-allowed ' +
   'data-[state=unchecked]:bg-[var(--ace-toggle-track-off)] data-[state=checked]:bg-[var(--ace-toggle-track-on)] ' +
   'disabled:data-[state=unchecked]:bg-[var(--ace-toggle-track-disabled-off)] disabled:data-[state=checked]:bg-[var(--ace-toggle-track-disabled-on)] ' +
   'enabled:data-[state=unchecked]:hover:bg-[var(--ace-toggle-track-off-hover)] enabled:data-[state=checked]:hover:bg-[var(--ace-toggle-track-on-hover)] ' +
@@ -28,9 +28,9 @@ const thumbShadow = 'shadow-[0_1px_2px_rgb(35_38_44_/0.12)]'
 /** Shared thumb pill — identical for standard and icon variants. */
 const aceToggleThumbClassBase: Record<AceToggleSize, string> = {
   sm:
-    `pointer-events-none z-[1] h-3 w-3 shrink-0 rounded-full bg-[var(--ace-toggle-thumb)] ${thumbShadow} transition-transform duration-200 ease-out will-change-transform `,
+    `pointer-events-none z-[1] h-3 w-3 shrink-0 rounded-full bg-[var(--ace-toggle-thumb)] group-disabled:bg-[var(--ace-toggle-thumb-disabled)] ${thumbShadow} transition-[transform,background-color] duration-200 ease-out will-change-transform `,
   md:
-    `pointer-events-none z-[1] h-4 w-4 shrink-0 rounded-full bg-[var(--ace-toggle-thumb)] ${thumbShadow} transition-transform duration-200 ease-out will-change-transform `,
+    `pointer-events-none z-[1] h-4 w-4 shrink-0 rounded-full bg-[var(--ace-toggle-thumb)] group-disabled:bg-[var(--ace-toggle-thumb-disabled)] ${thumbShadow} transition-[transform,background-color] duration-200 ease-out will-change-transform `,
 }
 
 /** Thumb travel = track inner width − thumb (--ace-toggle-track-padding). */
