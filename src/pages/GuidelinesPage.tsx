@@ -1,4 +1,5 @@
 import { cn } from '../lib/cn'
+import { publicAsset } from '../lib/publicAsset'
 
 const FIGMA_GUIDELINES_URL =
   'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=2-19&m=dev'
@@ -17,7 +18,7 @@ const PRINCIPLES = [
     title: 'Adaptive',
     description:
       'Remain adaptive to the technological improvements, evolving market trends, and growing needs and requirements of our users.',
-    iconSrc: '/brand/guidelines/adaptive.png',
+    iconSrc: publicAsset('/brand/guidelines/adaptive.png'),
     iconClass: 'size-[6.25rem] object-contain',
   },
   {
@@ -25,7 +26,7 @@ const PRINCIPLES = [
     title: 'Clarity',
     description:
       'Ensure clarity by creating a simple, unambiguous and easy-to-use product user experience.',
-    iconSrc: '/brand/guidelines/clarity.png',
+    iconSrc: publicAsset('/brand/guidelines/clarity.png'),
     iconClass: 'h-[6.625rem] w-[8.4375rem] object-contain',
   },
   {
@@ -33,7 +34,7 @@ const PRINCIPLES = [
     title: 'Empowerment',
     description:
       'Empower the user by building an experience that encourages them to explore with confidence.',
-    iconSrc: '/brand/guidelines/empowerment.png',
+    iconSrc: publicAsset('/brand/guidelines/empowerment.png'),
     iconClass: 'h-[4.9375rem] w-[6.25rem] object-contain',
   },
 ] as const

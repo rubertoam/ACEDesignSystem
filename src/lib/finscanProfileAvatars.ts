@@ -1,3 +1,5 @@
+import { publicAsset } from './publicAsset'
+
 /** Profile photos from Figma Site Header Actions (3127:35) */
 export type FinScanProfileId = 'none' | 'janet' | 'laura' | 'carol' | 'lee' | 'sam' | 'no-image'
 
@@ -15,17 +17,17 @@ export type FinScanProfileAvatar = {
 
 export const FINSCAN_PROFILE_AVATARS: FinScanProfileAvatar[] = [
   { id: 'none', label: 'Hidden (initials)', greetingName: 'User Name', initials: 'UN' },
-  { id: 'janet', label: 'Janet', greetingName: 'Janet', initials: 'JA', imageUrl: '/brand/profiles/janet.png' },
-  { id: 'laura', label: 'Laura', greetingName: 'Laura', initials: 'LA', imageUrl: '/brand/profiles/laura.png' },
-  { id: 'carol', label: 'Carol', greetingName: 'Carol', initials: 'CA', imageUrl: '/brand/profiles/carol.png' },
-  { id: 'lee', label: 'Lee', greetingName: 'Lee', initials: 'LE', imageUrl: '/brand/profiles/lee.png' },
-  { id: 'sam', label: 'Sam', greetingName: 'Sam', initials: 'SA', imageUrl: '/brand/profiles/sam.png' },
+  { id: 'janet', label: 'Janet', greetingName: 'Janet', initials: 'JA', imageUrl: publicAsset('/brand/profiles/janet.png') },
+  { id: 'laura', label: 'Laura', greetingName: 'Laura', initials: 'LA', imageUrl: publicAsset('/brand/profiles/laura.png') },
+  { id: 'carol', label: 'Carol', greetingName: 'Carol', initials: 'CA', imageUrl: publicAsset('/brand/profiles/carol.png') },
+  { id: 'lee', label: 'Lee', greetingName: 'Lee', initials: 'LE', imageUrl: publicAsset('/brand/profiles/lee.png') },
+  { id: 'sam', label: 'Sam', greetingName: 'Sam', initials: 'SA', imageUrl: publicAsset('/brand/profiles/sam.png') },
   {
     id: 'no-image',
     label: 'User Name',
     greetingName: 'User Name',
     initials: 'UN',
-    imageUrl: '/brand/profiles/no-image.png',
+    imageUrl: publicAsset('/brand/profiles/no-image.png'),
   },
 ]
 
