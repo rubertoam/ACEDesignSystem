@@ -376,6 +376,8 @@
   --screening-checkbox-disabled-checked-bg: #d4d6db;
 
   /* ACE Toggle — Figma Toggles (117:1265) */
+  --ace-toggle-duration: var(--ace-motion-duration-medium);
+  --ace-toggle-ease: var(--ace-motion-ease-standard);
   --ace-toggle-thumb: #ffffff;
   --ace-toggle-thumb-disabled: #eff0f2; /* Neutral 100 */
   --ace-toggle-track-off: var(--ace-neutral-200);

@@ -95,6 +95,16 @@ export const ACE_ANIMATIONS: AceAnimationEntry[] = [
     notes: 'PanelLeftClose rotates 180° when sidebar is open vs closed.',
   },
   {
+    id: 'toggle-thumb-slide',
+    name: 'Toggle thumb slide',
+    component: 'Toggle',
+    properties: 'transform, background-color',
+    duration: 'var(--ace-toggle-duration)',
+    easing: 'var(--ace-toggle-ease)',
+    tokens: ['--ace-toggle-duration', '--ace-toggle-ease'],
+    notes: 'Thumb translate-x on data-state; track fill uses the same duration and easing.',
+  },
+  {
     id: 'lab-nav-section-expand',
     name: 'Lab nav section expand',
     component: 'LabLayout',

@@ -6,6 +6,7 @@ import { cn } from '../../../lib/cn'
 import {
   aceToggleClass,
   aceToggleIconCheckClass,
+  aceToggleIconGlyphMotion,
   aceToggleIconXClass,
   aceToggleThumbClass,
   type AceToggleSize,
@@ -35,7 +36,7 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
               <Check
                 className={cn(
                   aceToggleIconCheckClass[size],
-                  'opacity-0 transition-opacity group-data-[state=checked]:opacity-100',
+                  cn(aceToggleIconGlyphMotion, 'opacity-0 group-data-[state=checked]:opacity-100'),
                 )}
                 strokeWidth={2}
               />
@@ -47,7 +48,7 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
               <X
                 className={cn(
                   aceToggleIconXClass[size],
-                  'opacity-100 transition-opacity group-data-[state=checked]:opacity-0',
+                  cn(aceToggleIconGlyphMotion, 'opacity-100 group-data-[state=checked]:opacity-0'),
                 )}
                 strokeWidth={2}
               />
