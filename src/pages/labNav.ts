@@ -40,6 +40,8 @@ export const labNavSections: LabNavSection[] = [
 
       { label: 'Overview', to: '/lab/atoms' },
 
+      { label: 'FinScan Logo', to: '/lab/atoms/finscan-logo' },
+
       { label: 'Colors', to: '/lab/atoms/colors' },
 
       { label: 'Typography', to: '/lab/atoms/typography' },
@@ -59,8 +61,6 @@ export const labNavSections: LabNavSection[] = [
       { label: 'Radio buttons', to: '/lab/atoms/radios' },
 
       { label: 'Tabs', to: '/lab/atoms/tabs' },
-
-      { label: 'FinScan icon', to: '/lab/atoms/finscan-icon' },
 
     ],
 

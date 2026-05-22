@@ -20,10 +20,10 @@ export function FinScanIconLab() {
 
   return (
     <ComponentLabPage
-      title="FinScan icon"
+      title="FinScan Logo"
       description="Official FinScan brand lockup from ACE Design System — hash mark dot grid and wordmark with registered trademark."
       figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Icon / FinScan in Figma"
+      figmaLinkLabel="FinScan Logo in Figma"
       examplesToolbar={
         <div className="flex flex-wrap items-end gap-6">
           <LabSelect

@@ -24,6 +24,18 @@ export function AtomsLab() {
 
             <li>
 
+              <Link className="text-[var(--color-accent)] underline underline-offset-2" to="/lab/atoms/finscan-logo">
+
+                FinScan Logo
+
+              </Link>{' '}
+
+              — hash mark + wordmark lockup (Figma Icon / FinScan 2782:29).
+
+            </li>
+
+            <li>
+
               <Link className="text-[var(--color-accent)] underline underline-offset-2" to="/lab/atoms/colors">
 
                 Colors
@@ -139,18 +151,6 @@ export function AtomsLab() {
               </Link>{' '}
 
               — horizontal tab list for related views (Figma Tabs).
-
-            </li>
-
-            <li>
-
-              <Link className="text-[var(--color-accent)] underline underline-offset-2" to="/lab/atoms/finscan-icon">
-
-                FinScan icon
-
-              </Link>{' '}
-
-              — hash mark + wordmark lockup (Figma Icon / FinScan 2782:29).
 
             </li>
 

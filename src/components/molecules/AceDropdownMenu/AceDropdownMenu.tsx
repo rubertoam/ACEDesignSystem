@@ -475,9 +475,9 @@ function MenuEntries({
                 opt.imageUrl && 'gap-[var(--space-2)] pl-9',
               )}
             >
-              <span className="absolute left-2 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center">
-                <DropdownMenu.ItemIndicator>
-                  <span className="size-2 rounded-full bg-[var(--screening-primary)]" />
+              <span className="absolute left-2 top-1/2 size-4 -translate-y-1/2">
+                <DropdownMenu.ItemIndicator className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <span className="block size-2 rounded-full bg-[var(--screening-primary)]" />
                 </DropdownMenu.ItemIndicator>
               </span>
               {opt.imageUrl ? (

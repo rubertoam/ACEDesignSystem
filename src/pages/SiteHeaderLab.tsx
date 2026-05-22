@@ -233,8 +233,8 @@ const navItems = [
               <li>Greeting uses caption bold + primary color</li>
               <li>
                 Brand lockup: <code className="text-[var(--screening-text-primary)]">FinScanIcon</code> (
-                <Link className="text-[var(--color-accent)] underline underline-offset-2" to="/lab/atoms/finscan-icon">
-                  FinScan icon lab
+                <Link className="text-[var(--color-accent)] underline underline-offset-2" to="/lab/atoms/finscan-logo">
+                  FinScan Logo lab
                 </Link>
                 )
               </li>

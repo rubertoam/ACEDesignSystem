@@ -43,7 +43,8 @@ export default function App() {
         <Route path="atoms/radios" element={<RadioPlaygroundLab />} />
         <Route path="atoms/tabs" element={<TabsLab />} />
         <Route path="atoms/animations" element={<AnimationsLab />} />
-        <Route path="atoms/finscan-icon" element={<FinScanIconLab />} />
+        <Route path="atoms/finscan-logo" element={<FinScanIconLab />} />
+        <Route path="atoms/finscan-icon" element={<Navigate to="/lab/atoms/finscan-logo" replace />} />
         <Route path="molecules" element={<MoleculesLab />} />
         <Route path="molecules/dropdowns" element={<DropdownsLab />} />
         <Route path="molecules/accordions" element={<AccordionLab />} />

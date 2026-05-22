@@ -23,7 +23,7 @@ const aceRadioIndicatorSize: Record<AceRadioSize, string> = {
 /** Circular control (inner span inside the item button). */
 export function aceRadioControlClass(size: AceRadioSize = 'md'): string {
   return cn(
-    'flex shrink-0 items-center justify-center rounded-full border bg-[var(--ace-radio-bg-inner)] transition-colors duration-200 ease-out',
+    'relative box-border shrink-0 rounded-full border border-solid bg-[var(--ace-radio-bg-inner)] p-0 leading-[0] transition-colors duration-200 ease-out',
     aceRadioControlSize[size],
     'border-[var(--ace-radio-border-default)]',
     'group-data-[state=unchecked]:group-hover:border-[var(--ace-radio-border-hover)] group-data-[state=unchecked]:group-hover:bg-[var(--ace-radio-surface-hover)]',
@@ -35,7 +35,7 @@ export function aceRadioControlClass(size: AceRadioSize = 'md'): string {
 
 export function aceRadioIndicatorClass(size: AceRadioSize = 'md'): string {
   return cn(
-    'block rounded-full bg-[var(--ace-radio-indicator-selected)]',
+    'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--ace-radio-indicator-selected)]',
     aceRadioIndicatorSize[size],
     'data-[disabled]:bg-[var(--ace-radio-indicator-disabled)]',
   )
