@@ -30,7 +30,11 @@ export function LabControlField({
   )
 }
 
-/** Segmented control matching the lab light/dark theme toggle (LabLayout). */
+const labSegmentedEase =
+  'ease-[var(--ace-motion-ease-standard)] motion-reduce:transition-none motion-reduce:duration-0'
+const labSegmentedDuration = 'duration-[var(--ace-motion-duration-medium)]'
+
+/** Segmented control with sliding selection pill (lab theme toggle and similar). */
 export function LabSegmentedToggle<T extends string>({
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
@@ -46,32 +50,57 @@ export function LabSegmentedToggle<T extends string>({
   options: readonly { value: T; label: string }[]
   className?: string
 }) {
+  const selectedIndex = Math.max(
+    0,
+    options.findIndex((opt) => opt.value === value),
+  )
+  const segmentCount = options.length
+
   return (
     <div
       role="group"
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledBy}
       className={cn(
-        'inline-flex w-fit max-w-full self-start rounded-[var(--radius-md)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] p-0.5',
+        'relative inline-grid w-fit max-w-full self-start rounded-[var(--radius-md)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] p-0.5',
         className,
       )}
+      style={{ gridTemplateColumns: `repeat(${segmentCount}, minmax(0, 1fr))` }}
     >
-      {options.map((opt) => (
-        <button
-          key={opt.value}
-          type="button"
-          aria-pressed={value === opt.value}
-          onClick={() => onChange(opt.value)}
-          className={cn(
-            'rounded-[var(--radius-sm)] px-3 py-1.5 text-xs font-semibold transition-colors',
-            value === opt.value
-              ? 'bg-[var(--screening-surface)] text-[var(--screening-text-primary)] shadow-[var(--ace-drop-shadow-xs)] ring-1 ring-[var(--screening-border-strong)]'
-              : 'text-[var(--screening-text-muted)] hover:text-[var(--screening-text-primary)]',
-          )}
-        >
-          {opt.label}
-        </button>
-      ))}
+      <div
+        aria-hidden
+        className={cn(
+          'pointer-events-none absolute top-0.5 bottom-0.5 left-0.5 rounded-[var(--radius-sm)] bg-[var(--screening-surface)] shadow-[var(--ace-drop-shadow-xs)] ring-1 ring-[var(--screening-border-strong)]',
+          'transition-transform will-change-transform',
+          labSegmentedDuration,
+          labSegmentedEase,
+        )}
+        style={{
+          width: `calc((100% - 0.25rem) / ${segmentCount})`,
+          transform: `translateX(${selectedIndex * 100}%)`,
+        }}
+      />
+      {options.map((opt) => {
+        const selected = value === opt.value
+        return (
+          <button
+            key={opt.value}
+            type="button"
+            aria-pressed={selected}
+            onClick={() => onChange(opt.value)}
+            className={cn(
+              'relative z-[1] rounded-[var(--radius-sm)] px-3 py-1.5 text-xs font-semibold transition-colors',
+              labSegmentedDuration,
+              labSegmentedEase,
+              selected
+                ? 'text-[var(--screening-text-primary)]'
+                : 'text-[var(--screening-text-muted)] hover:text-[var(--screening-text-primary)]',
+            )}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
     </div>
   )
 }
