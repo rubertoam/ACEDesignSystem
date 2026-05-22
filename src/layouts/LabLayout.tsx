@@ -1,5 +1,5 @@
 import { ChevronRight } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { AceSiteHeader } from '../components/organisms/AceSiteHeader/AceSiteHeader'
 import { LabThemeProvider, type LabTheme } from '../contexts/LabThemeContext'
@@ -47,16 +47,25 @@ function LabThemeToggle({
   theme: LabTheme
   onThemeChange: (theme: LabTheme) => void
 }) {
+  const labelId = useId()
   return (
-    <LabSegmentedToggle
-      aria-label="Site theme"
-      value={theme}
-      onChange={onThemeChange}
-      options={[
-        { value: 'light', label: 'Light' },
-        { value: 'dark', label: 'Dark' },
-      ]}
-    />
+    <div className="flex items-center gap-2">
+      <span
+        id={labelId}
+        className={cn(p1, 'text-sm font-semibold text-[var(--screening-text-primary)]')}
+      >
+        Theme
+      </span>
+      <LabSegmentedToggle
+        aria-labelledby={labelId}
+        value={theme}
+        onChange={onThemeChange}
+        options={[
+          { value: 'light', label: 'Light' },
+          { value: 'dark', label: 'Dark' },
+        ]}
+      />
+    </div>
   )
 }
 

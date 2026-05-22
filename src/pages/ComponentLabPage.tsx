@@ -1,6 +1,8 @@
-import { ExternalLink } from 'lucide-react'
 import { useEffect, useId, useMemo, useState, type ReactNode } from 'react'
+import { useLocation } from 'react-router-dom'
+import { AceAvailabilityTag } from '../components/atoms/AceAvailabilityTag/AceAvailabilityTag'
 import { AceTabs, aceTabButtonId } from '../components/atoms/AceTabs/AceTabs'
+import { getLabAvailability } from '../lib/labAvailability'
 import { cn } from '../lib/cn'
 import { labUsageSections } from './labContent'
 
@@ -32,8 +34,6 @@ const codeBlockClass = cn(
 export type ComponentLabPageProps = {
   title: string
   description?: string
-  figmaUrl?: string
-  figmaLinkLabel?: string
   examples?: ReactNode
   /** When false, examples render without the outer canvas panel (e.g. nested section containers). Default true. */
   examplesCanvas?: boolean
@@ -55,8 +55,6 @@ export function ComponentLabCode({ children }: { children: string }) {
 export function ComponentLabPage({
   title,
   description,
-  figmaUrl,
-  figmaLinkLabel = 'Open in Figma',
   examples,
   examplesCanvas = true,
   examplesToolbar,
@@ -66,6 +64,8 @@ export function ComponentLabPage({
   previewToolbar,
   variables,
 }: ComponentLabPageProps) {
+  const { pathname } = useLocation()
+  const availability = getLabAvailability(pathname)
   const tabListId = useId()
   const examplesPanelId = `${tabListId}-examples-panel`
   const codePanelId = `${tabListId}-code-panel`
@@ -103,10 +103,11 @@ export function ComponentLabPage({
   return (
     <div className="w-full max-w-none space-y-6">
       <div className={panel}>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+        <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
             <h2
               className={cn(
+                'm-0',
                 '[font:var(--ace-type-heading-h5-bold)] [letter-spacing:var(--ace-type-heading-h5-bold-tracking)]',
                 'text-[var(--screening-text-primary)]',
               )}
@@ -117,23 +118,8 @@ export function ComponentLabPage({
               <p className={cn('mt-2', p1, 'text-[var(--screening-text-muted)]')}>{description}</p>
             ) : null}
           </div>
-          {figmaUrl ? (
-            <a
-              href={figmaUrl}
-              target="_blank"
-              rel="noreferrer noopener"
-              className={cn(
-                'inline-flex shrink-0 items-center gap-1.5 rounded-[var(--radius-md)] border border-solid',
-                'border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] px-3 py-2',
-                'text-xs font-semibold text-[var(--screening-text-primary)] shadow-[var(--ace-drop-shadow-xs)]',
-                'transition-colors hover:border-[var(--screening-primary)] hover:bg-[var(--screening-primary-soft-bg)]',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
-                'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
-              )}
-            >
-              {figmaLinkLabel}
-              <ExternalLink className="size-3.5 opacity-70" aria-hidden />
-            </a>
+          {availability ? (
+            <AceAvailabilityTag status={availability} className="mt-0.5 shrink-0" />
           ) : null}
         </div>
       </div>

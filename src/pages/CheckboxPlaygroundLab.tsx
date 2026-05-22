@@ -7,9 +7,6 @@ import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleS
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { cn } from '../lib/cn'
 
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=317-1492&m=dev'
-
 type PreviewCol = 'regular' | 'hover' | 'active' | 'disabled' | 'disabled_selected'
 
 const COLUMNS: { key: PreviewCol; label: string }[] = [
@@ -93,8 +90,6 @@ export function CheckboxPlaygroundLab() {
     <ComponentLabPage
       title="Checkboxes"
       description="ACE Design System v.3 checkboxes: with or without label, small / medium / large hit targets, and states (regular, hover, active/checked, disabled, disabled selected). Built on Radix Checkbox with screening color tokens."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Checkboxes in Figma"
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">

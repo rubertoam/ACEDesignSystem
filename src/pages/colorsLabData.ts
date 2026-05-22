@@ -1,0 +1,312 @@
+/** Figma FinScan Colors (2794:5) — palette scales and per-component token groups. */
+
+export type ColorToken = {
+  name: string
+  cssVar: string
+  kind?: 'solid' | 'shadow'
+}
+
+export type ColorComponentGroup = {
+  id: string
+  title: string
+  description?: string
+  tokens: ColorToken[]
+}
+
+export type PaletteSwatch = {
+  shade: string
+  hex: string
+  hsl: string
+  cssVar?: string
+  /** White / near-white swatches need a visible edge (Figma Shades / 0). */
+  bordered?: boolean
+}
+
+export type ColorPaletteFamily = {
+  id: string
+  title: string
+  subtitle?: string
+  description: string
+  swatches: PaletteSwatch[]
+}
+
+function solidTokens(tokens: ColorToken[]): ColorToken[] {
+  return tokens.filter((t) => t.kind !== 'shadow')
+}
+
+export const COLOR_PALETTE_FAMILIES: ColorPaletteFamily[] = [
+  {
+    id: 'neutral',
+    title: 'Neutral',
+    description:
+      'These colors are used as supporting secondary colors in backgrounds, text colors, separators, modals, etc.',
+    swatches: [
+      { shade: '50', hex: '#FAFAFB', hsl: 'HSL 240 11 98 100', cssVar: '--screening-surface-muted' },
+      { shade: '100', hex: '#EFF0F2', hsl: 'HSL 220 10 94 100' },
+      { shade: '200', hex: '#E4E6EA', hsl: 'HSL 220 13 91 100', cssVar: '--ace-neutral-200' },
+      { shade: '300', hex: '#DADCE1', hsl: 'HSL 223 10 87 100' },
+      { shade: '400', hex: '#CFD2D9', hsl: 'HSL 222 12 83 100', cssVar: '--ace-button-neutral-400' },
+      { shade: '500', hex: '#949BAA', hsl: 'HSL 222 11 62 100', cssVar: '--ace-button-neutral-500' },
+      { shade: '600', hex: '#6A7285', hsl: 'HSL 222 11 47 100', cssVar: '--ace-button-neutral-600' },
+      { shade: '700', hex: '#464C59', hsl: 'HSL 221 12 31 100', cssVar: '--screening-text-secondary' },
+      { shade: '800', hex: '#23262C', hsl: 'HSL 220 11 15 100', cssVar: '--ace-neutral-800' },
+      { shade: '900', hex: '#121316', hsl: 'HSL 225 10 8 100' },
+    ],
+  },
+  {
+    id: 'finscan-purple',
+    title: 'Primary',
+    subtitle: 'FinScan Purple',
+    description:
+      'The primary color palette is used across interactive elements such as CTAs, links, inputs, and active states.',
+    swatches: [
+      { shade: '50', hex: '#EFEEF9', hsl: 'HSL 246 38 95 100', cssVar: '--screening-primary-soft-bg' },
+      { shade: '100', hex: '#CBC5EC', hsl: 'HSL 249 51 85 100' },
+      { shade: '200', hex: '#A296DC', hsl: 'HSL 250 50 73 100' },
+      { shade: '300', hex: '#7868CD', hsl: 'HSL 250 50 61 100' },
+      { shade: '400', hex: '#523EB9', hsl: 'HSL 250 50 58 100', cssVar: '--screening-primary' },
+      { shade: '500', hex: '#3D2E8A', hsl: 'HSL 250 50 36 100', cssVar: '--ace-button-purple-500' },
+      { shade: '600', hex: '#312570', hsl: 'HSL 250 50 29 100' },
+      { shade: '700', hex: '#261C55', hsl: 'HSL 251 50 22 100', cssVar: '--ace-button-purple-700' },
+      { shade: '800', hex: '#1A143B', hsl: 'HSL 249 49 15 100' },
+      { shade: '900', hex: '#0F0B21', hsl: 'HSL 251 50 9 100' },
+    ],
+  },
+  {
+    id: 'innovative-blue',
+    title: 'Primary',
+    subtitle: 'Innovative Blue',
+    description:
+      'The primary color palette is used across interactive elements such as CTAs, links, inputs, and active states.',
+    swatches: [
+      { shade: '50', hex: '#EAF8FE', hsl: 'HSL 198 91 96 100' },
+      { shade: '100', hex: '#ADE3FC', hsl: 'HSL 199 93 83 100' },
+      { shade: '200', hex: '#6FCEFA', hsl: 'HSL 199 93 71 100' },
+      { shade: '300', hex: '#31BAF7', hsl: 'HSL 198 93 58 100' },
+      { shade: '400', hex: '#089DE1', hsl: 'HSL 199 93 46 100', cssVar: '--ace-button-blue-400' },
+      { shade: '500', hex: '#0672A3', hsl: 'HSL 199 93 33 100', cssVar: '--ace-button-blue-500' },
+      { shade: '600', hex: '#05557A', hsl: 'HSL 199 92 25 100' },
+      { shade: '700', hex: '#033952', hsl: 'HSL 199 93 17 100', cssVar: '--ace-button-blue-700' },
+      { shade: '800', hex: '#021C29', hsl: 'HSL 200 91 8 100' },
+      { shade: '900', hex: '#010E14', hsl: 'HSL 199 90 4 100' },
+    ],
+  },
+  {
+    id: 'success',
+    title: 'Success',
+    description: 'These colors depict positivity — generally used across success and complete states.',
+    swatches: [
+      { shade: '50', hex: '#F8FBF1', hsl: 'HSL 78 56 96 100', cssVar: '--ace-success-50' },
+      { shade: '100', hex: '#E2F0C8', hsl: 'HSL 81 57 86 100' },
+      { shade: '200', hex: '#CCE59F', hsl: 'HSL 81 57 76 100' },
+      { shade: '300', hex: '#B7DA75', hsl: 'HSL 81 58 66 100' },
+      { shade: '400', hex: '#A1CF4C', hsl: 'HSL 81 58 55 100' },
+      { shade: '500', hex: '#87B531', hsl: 'HSL 81 57 45 100', cssVar: '--ace-success-500' },
+      { shade: '600', hex: '#658825', hsl: 'HSL 81 57 34 100' },
+      { shade: '700', hex: '#435B18', hsl: 'HSL 81 58 23 100' },
+      { shade: '800', hex: '#222D0C', hsl: 'HSL 80 58 11 100' },
+      { shade: '900', hex: '#111706', hsl: 'HSL 81 59 6 100' },
+    ],
+  },
+  {
+    id: 'error',
+    title: 'Error',
+    description: 'These colors depict negativity — generally used across error states.',
+    swatches: [
+      { shade: '50', hex: '#FDF4F6', hsl: 'HSL 347 69 97 100', cssVar: '--ace-error-50' },
+      { shade: '100', hex: '#FADEE4', hsl: 'HSL 347 74 93 100' },
+      { shade: '200', hex: '#F5BEC9', hsl: 'HSL 348 73 85 100' },
+      { shade: '300', hex: '#EF9DAE', hsl: 'HSL 348 72 78 100' },
+      { shade: '400', hex: '#EA7D93', hsl: 'HSL 348 72 70 100' },
+      { shade: '500', hex: '#DC264B', hsl: 'HSL 348 72 51 100', cssVar: '--dialog-modal-danger' },
+      { shade: '600', hex: '#C21F40', hsl: 'HSL 348 72 44 100' },
+      { shade: '700', hex: '#8B162E', hsl: 'HSL 348 73 32 100' },
+      { shade: '800', hex: '#530D1C', hsl: 'HSL 347 73 19 100' },
+      { shade: '900', hex: '#380912', hsl: 'HSL 349 72 13 100' },
+    ],
+  },
+  {
+    id: 'shades',
+    title: 'Shades',
+    description: 'Absolute white and black used for high-contrast surfaces and typography.',
+    swatches: [
+      { shade: '0', hex: '#FFFFFF', hsl: 'HSL 0 0 100 100', cssVar: '--screening-surface', bordered: true },
+      { shade: '100', hex: '#000000', hsl: 'HSL 0 0 0 100' },
+    ],
+  },
+]
+
+export const COLOR_COMPONENT_GROUPS: ColorComponentGroup[] = [
+  {
+    id: 'lab-shell',
+    title: 'Lab shell',
+    description: 'Default page chrome in the component lab (not ACE product tokens).',
+    tokens: solidTokens([
+      { name: 'Background', cssVar: '--color-background' },
+      { name: 'Surface', cssVar: '--color-surface' },
+      { name: 'Text primary', cssVar: '--color-text-primary' },
+      { name: 'Text muted', cssVar: '--color-text-muted' },
+      { name: 'Border', cssVar: '--color-border' },
+      { name: 'Accent', cssVar: '--color-accent' },
+    ]),
+  },
+  {
+    id: 'semantic-status',
+    title: 'Semantic status',
+    description: 'Success and error washes used in forms, sidebars, and inline validation.',
+    tokens: solidTokens([
+      { name: 'Success 50', cssVar: '--ace-success-50' },
+      { name: 'Success 500', cssVar: '--ace-success-500' },
+      { name: 'Error 50', cssVar: '--ace-error-50' },
+    ]),
+  },
+  {
+    id: 'dialog-modal',
+    title: 'Dialog modal',
+    description: 'ACE dialog / modal molecule (see Dialog modal lab).',
+    tokens: solidTokens([
+      { name: 'Surface', cssVar: '--dialog-modal-surface' },
+      { name: 'Border', cssVar: '--dialog-modal-border' },
+      { name: 'Title & body', cssVar: '--dialog-modal-title' },
+      { name: 'Body (same as title in light)', cssVar: '--dialog-modal-body' },
+      { name: 'Muted', cssVar: '--dialog-modal-muted' },
+      { name: 'Overlay', cssVar: '--dialog-modal-overlay' },
+      { name: 'Primary', cssVar: '--dialog-modal-primary' },
+      { name: 'Primary hover', cssVar: '--dialog-modal-primary-hover' },
+      { name: 'On primary', cssVar: '--dialog-modal-on-primary' },
+      { name: 'Outline border', cssVar: '--dialog-modal-outline-border' },
+      { name: 'Outline text', cssVar: '--dialog-modal-outline-text' },
+      { name: 'Outline hover bg', cssVar: '--dialog-modal-outline-hover-bg' },
+      { name: 'Danger', cssVar: '--dialog-modal-danger' },
+      { name: 'Danger hover', cssVar: '--dialog-modal-danger-hover' },
+      { name: 'Close hover', cssVar: '--dialog-modal-close-hover' },
+      { name: 'Inline error background', cssVar: '--dialog-modal-inline-error-bg' },
+      { name: 'Inline error border', cssVar: '--dialog-modal-inline-error-border' },
+    ]),
+  },
+  {
+    id: 'data-table',
+    title: 'Data Table',
+    description: 'Tokens for the data table organism (--screening-* in variables.css).',
+    tokens: solidTokens([
+      { name: 'Surface', cssVar: '--screening-surface' },
+      { name: 'Surface muted', cssVar: '--screening-surface-muted' },
+      { name: 'Surface hover', cssVar: '--screening-surface-hover' },
+      { name: 'Surface row muted', cssVar: '--screening-surface-row-muted' },
+      { name: 'Surface expanded', cssVar: '--screening-surface-expanded' },
+      { name: 'Surface selected', cssVar: '--screening-surface-selected' },
+      { name: 'Border strong', cssVar: '--screening-border-strong' },
+      { name: 'Border row', cssVar: '--screening-border-row' },
+      { name: 'Border soft', cssVar: '--screening-border-soft' },
+      { name: 'Text primary', cssVar: '--screening-text-primary' },
+      { name: 'Text secondary', cssVar: '--screening-text-secondary' },
+      { name: 'Text muted', cssVar: '--screening-text-muted' },
+      { name: 'Text on primary', cssVar: '--screening-text-on-primary' },
+      { name: 'Primary', cssVar: '--screening-primary' },
+      { name: 'Primary hover border', cssVar: '--screening-primary-hover-border' },
+      { name: 'Primary soft bg', cssVar: '--screening-primary-soft-bg' },
+      { name: 'Primary soft bg hover', cssVar: '--screening-primary-soft-bg-hover' },
+      { name: 'Primary ring', cssVar: '--screening-primary-ring' },
+      { name: 'Primary ring offset', cssVar: '--screening-primary-ring-offset' },
+      { name: 'Icon muted', cssVar: '--screening-icon-muted' },
+      { name: 'Progress track', cssVar: '--screening-progress-track' },
+      { name: 'Progress fill', cssVar: '--screening-progress-fill' },
+      { name: 'Chip inactive bg', cssVar: '--screening-chip-inactive-bg' },
+      { name: 'Chip inactive border', cssVar: '--screening-chip-inactive-border' },
+      { name: 'Chip inactive hover bg', cssVar: '--screening-chip-inactive-hover-bg' },
+      { name: 'Chip inactive hover border', cssVar: '--screening-chip-inactive-hover-border' },
+      { name: 'Chip active text', cssVar: '--screening-chip-active-text' },
+      { name: 'Chip active border', cssVar: '--screening-chip-active-border' },
+      { name: 'Pill new border', cssVar: '--screening-pill-new-border' },
+      { name: 'Pill new surface', cssVar: '--screening-pill-new-surface' },
+      { name: 'Pill new dot', cssVar: '--screening-pill-new-dot' },
+      { name: 'Pill new label', cssVar: '--screening-pill-new-label' },
+      { name: 'Checkbox inner bg', cssVar: '--screening-checkbox-inner-bg' },
+      { name: 'Checkbox border', cssVar: '--screening-checkbox-border' },
+      { name: 'Checkbox disabled border', cssVar: '--screening-checkbox-disabled-border' },
+      { name: 'Checkbox disabled checked bg', cssVar: '--screening-checkbox-disabled-checked-bg' },
+      { name: 'Pill escalated border', cssVar: '--screening-pill-escalated-border' },
+      { name: 'Pill escalated surface', cssVar: '--screening-pill-escalated-surface' },
+      { name: 'Pill escalated dot', cssVar: '--screening-pill-escalated-dot' },
+      { name: 'Pill escalated label', cssVar: '--screening-pill-escalated-label' },
+      { name: 'Score high', cssVar: '--screening-score-high' },
+      { name: 'Age fresh', cssVar: '--screening-age-fresh' },
+      { name: 'Age warn', cssVar: '--screening-age-warn' },
+      { name: 'Age stale', cssVar: '--screening-age-stale' },
+      { name: 'Tile E bg', cssVar: '--screening-tile-e-bg' },
+      { name: 'Tile E fg', cssVar: '--screening-tile-e-fg' },
+      { name: 'Tile E border', cssVar: '--screening-tile-e-border' },
+      { name: 'Tile N bg', cssVar: '--screening-tile-n-bg' },
+      { name: 'Tile N fg', cssVar: '--screening-tile-n-fg' },
+      { name: 'Tile N border', cssVar: '--screening-tile-n-border' },
+      { name: 'Tile C1 bg', cssVar: '--screening-tile-c1-bg' },
+      { name: 'Tile C1 fg', cssVar: '--screening-tile-c1-fg' },
+      { name: 'Tile C1 border', cssVar: '--screening-tile-c1-border' },
+      { name: 'Tile C2 bg', cssVar: '--screening-tile-c2-bg' },
+      { name: 'Tile C2 fg', cssVar: '--screening-tile-c2-fg' },
+      { name: 'Tile C2 border', cssVar: '--screening-tile-c2-border' },
+      { name: 'Tile B bg', cssVar: '--screening-tile-b-bg' },
+      { name: 'Tile B fg', cssVar: '--screening-tile-b-fg' },
+      { name: 'Tile B border', cssVar: '--screening-tile-b-border' },
+      { name: 'Input border', cssVar: '--screening-input-border' },
+      { name: 'Input border focus', cssVar: '--screening-input-border-focus' },
+      { name: 'Input bg focus', cssVar: '--screening-input-bg-focus' },
+      { name: 'Input focus ring', cssVar: '--screening-input-focus-ring' },
+      { name: 'Input placeholder', cssVar: '--screening-input-placeholder' },
+    ]),
+  },
+  {
+    id: 'tab-cards',
+    title: 'ACE Tab cards',
+    description: 'Card-style tabs for inner-feature navigation (Figma Tab Cards 4130:4356; see Molecules → Tabs lab).',
+    tokens: solidTokens([
+      { name: 'Tab card surface default', cssVar: '--ace-tab-card-surface-default' },
+      { name: 'Tab card border default', cssVar: '--ace-tab-card-border-default' },
+      { name: 'Tab card surface emphasis (Primary 50)', cssVar: '--ace-tab-card-surface-emphasis' },
+      { name: 'Tab card border active', cssVar: '--ace-tab-card-border-active' },
+      { name: 'Tab card title', cssVar: '--ace-tab-card-title-color' },
+      { name: 'Tab card subtitle', cssVar: '--ace-tab-card-subtitle-color' },
+      { name: 'Tab card description', cssVar: '--ace-tab-card-description-color' },
+      { name: 'Tab card icon primary', cssVar: '--ace-tab-card-icon-primary' },
+    ]),
+  },
+  {
+    id: 'toggle',
+    title: 'ACE Toggle',
+    description: 'Switch track and thumb (Figma Toggles 117:1265; see Toggles lab).',
+    tokens: solidTokens([
+      { name: 'Toggle thumb', cssVar: '--ace-toggle-thumb' },
+      { name: 'Toggle track off', cssVar: '--ace-toggle-track-off' },
+      { name: 'Toggle track on', cssVar: '--ace-toggle-track-on' },
+      { name: 'Toggle track off hover', cssVar: '--ace-toggle-track-off-hover' },
+      { name: 'Toggle track on hover', cssVar: '--ace-toggle-track-on-hover' },
+      { name: 'Toggle track disabled off', cssVar: '--ace-toggle-track-disabled-off' },
+      { name: 'Toggle track disabled on', cssVar: '--ace-toggle-track-disabled-on' },
+      { name: 'Toggle focus ring', cssVar: '--ace-toggle-focus-ring' },
+      { name: 'Toggle track padding', cssVar: '--ace-toggle-track-padding' },
+      { name: 'Toggle icon glyph off', cssVar: '--ace-toggle-icon-glyph-off' },
+      { name: 'Toggle icon glyph on', cssVar: '--ace-toggle-icon-glyph-on' },
+    ]),
+  },
+  {
+    id: 'radio',
+    title: 'ACE Radio',
+    description: 'Radio control, indicator, and field chrome (Figma Radio Buttons 331:1755; see Radio buttons lab).',
+    tokens: solidTokens([
+      { name: 'Radio inner bg', cssVar: '--ace-radio-bg-inner' },
+      { name: 'Radio border default', cssVar: '--ace-radio-border-default' },
+      { name: 'Radio border hover', cssVar: '--ace-radio-border-hover' },
+      { name: 'Radio surface hover', cssVar: '--ace-radio-surface-hover' },
+      { name: 'Radio border selected', cssVar: '--ace-radio-border-selected' },
+      { name: 'Radio indicator selected', cssVar: '--ace-radio-indicator-selected' },
+      { name: 'Radio border disabled', cssVar: '--ace-radio-border-disabled' },
+      { name: 'Radio indicator disabled', cssVar: '--ace-radio-indicator-disabled' },
+      { name: 'Radio label disabled', cssVar: '--ace-radio-label-disabled' },
+      { name: 'Radio field border', cssVar: '--ace-radio-field-border' },
+      { name: 'Radio field bg', cssVar: '--ace-radio-field-bg' },
+      { name: 'Radio field bg hover', cssVar: '--ace-radio-field-bg-hover' },
+      { name: 'Radio field border active', cssVar: '--ace-radio-field-border-active' },
+      { name: 'Radio field bg disabled', cssVar: '--ace-radio-field-bg-disabled' },
+    ]),
+  },
+]

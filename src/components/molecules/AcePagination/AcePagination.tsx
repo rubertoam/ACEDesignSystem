@@ -1,5 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react'
-import { ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { AceDropdownMenu, type AceDropdownMenuEntry } from '../AceDropdownMenu/AceDropdownMenu'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
@@ -132,9 +132,6 @@ export function AcePagination({
       </div>
 
       <div className="flex shrink-0 flex-wrap items-center gap-[var(--screening-pagination-gap)]">
-        <IconNavButton label="First page" disabled={!canPrev} onClick={() => onPageChange(1)}>
-          <ChevronsLeft className={aceChevronIconClass} strokeWidth={2} />
-        </IconNavButton>
         <IconNavButton label="Previous page" disabled={!canPrev} onClick={() => onPageChange(pageSafe - 1)}>
           <ChevronLeft className={aceChevronIconClass} strokeWidth={2} />
         </IconNavButton>
@@ -153,9 +150,6 @@ export function AcePagination({
         )}
         <IconNavButton label="Next page" disabled={!canNext} onClick={() => onPageChange(pageSafe + 1)}>
           <ChevronRight className={aceChevronIconClass} strokeWidth={2} />
-        </IconNavButton>
-        <IconNavButton label="Last page" disabled={!canNext} onClick={() => onPageChange(totalPages)}>
-          <ChevronsRight className={aceChevronIconClass} strokeWidth={2} />
         </IconNavButton>
       </div>
     </div>

@@ -12,12 +12,6 @@ import { LabCheckbox, LabSegmentedToggle } from '../lib/labControls'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const FIGMA_TIME_PICKER_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=419-3011&m=dev'
-
-const FIGMA_DATE_PICKER_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=419-3010&m=dev'
-
 const DATE_MODE_OPTIONS = [
   { value: 'single' as const, label: 'Single date' },
   { value: 'range' as const, label: 'Date range' },
@@ -61,16 +55,7 @@ export function DateAndTimePickersLab() {
   const timePickerControls = (
     <LabControlsPanel title="Time picker">
       <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Scheduling time control from{' '}
-        <a
-          href={FIGMA_TIME_PICKER_URL}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="text-[var(--screening-primary)] underline underline-offset-2"
-        >
-          Figma (419:3011)
-        </a>
-        .
+        Scheduling time control from node 419:3011.
       </p>
       <label className="flex w-fit cursor-pointer items-center gap-2.5">
         <Toggle
@@ -93,16 +78,7 @@ export function DateAndTimePickersLab() {
   const datePickerControls = (
     <LabControlsPanel title="Date picker">
       <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Range and single-date modes from{' '}
-        <a
-          href={FIGMA_DATE_PICKER_URL}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="text-[var(--screening-primary)] underline underline-offset-2"
-        >
-          Figma (419:3010)
-        </a>
-        . Toggle the mode below to switch the preview.
+        Range and single-date modes from node 419:3010. Toggle the mode below to switch the preview.
       </p>
       <div className="flex flex-wrap items-center gap-4">
         <LabSegmentedToggle
@@ -132,8 +108,6 @@ export function DateAndTimePickersLab() {
     <ComponentLabPage
       title="Date and time pickers"
       description="Organism-level scheduling controls. Time and date pickers use ACE field triggers and dropdown panels with Reset, Cancel, and Set footers."
-      figmaUrl={FIGMA_DATE_PICKER_URL}
-      figmaLinkLabel="Date picker in Figma"
       examplesCanvas={false}
       examples={
         <div className="flex flex-col gap-10">

@@ -19,7 +19,6 @@ type AceTypographyRow = {
 type AceDoc = {
   meta: {
     source: string
-    figmaUrl?: string
     nodeId?: string
   }
   typography: AceTypographyRow[]
@@ -145,16 +144,7 @@ export function TypographyLab() {
             CSS definitions: <code className="text-[var(--color-text-primary)]">src/styles/typography-tokens.css</code>.
           </li>
           <li>
-            Figma alignment: <code className="text-[var(--color-text-primary)]">src/styles/ace-typography-from-figma.json</code> ({doc.meta.source}
-            {doc.meta.figmaUrl ? (
-              <>
-                ,{' '}
-                <a className="text-[var(--color-accent)]" href={doc.meta.figmaUrl} target="_blank" rel="noreferrer">
-                  ACE type variables in Figma
-                </a>
-              </>
-            ) : null}
-            ).
+            Figma alignment: <code className="text-[var(--color-text-primary)]">src/styles/ace-typography-from-figma.json</code> ({doc.meta.source}).
           </li>
           <li>
             Regenerate the JSON when Figma font variables change; add any app-only tokens (like Label Bold) to{' '}

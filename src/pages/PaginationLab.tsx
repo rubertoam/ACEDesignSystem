@@ -1,11 +1,8 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { AceInputField } from '../components/atoms/AceInputField'
-import { LabSelect } from '../lib/labControls'
+import { LabControlField, LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { AcePagination } from '../components/molecules/AcePagination/AcePagination'
-
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=102-5124&m=dev'
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50, 100, 250]
 
@@ -26,15 +23,6 @@ const SCALE_PRESETS: ScalePreset[] = [
   { id: 'stress', label: 'Stress', hint: '2,000 pages · mid-range', totalItems: 49987, pageSize: 25, startPage: 1000 },
   { id: 'end', label: 'Near end', hint: '100 pages · last page', totalItems: 2487, pageSize: 25, startPage: 100 },
 ]
-
-function LabField({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <label className="flex flex-col gap-1 text-xs">
-      <span className="font-medium text-[var(--color-text-muted)]">{label}</span>
-      {children}
-    </label>
-  )
-}
 
 export function PaginationLab() {
   const [totalItems, setTotalItems] = useState(487)
@@ -63,9 +51,7 @@ export function PaginationLab() {
   return (
     <ComponentLabPage
       title="Pagination"
-      description="Table footer pagination from Review Assigned (Figma). Range label, page-size select, first/prev/numbered/next/last controls, and ellipses for long page counts."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Pagination in Figma"
+      description="Table footer pagination from Review Assigned (Figma). Range label, page-size select, prev/numbered/next controls, and ellipses for long page counts."
       examplesToolbar={
         <div className="flex flex-col gap-4">
           <div>
@@ -90,8 +76,8 @@ export function PaginationLab() {
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <LabField label="Total items">
+          <div className="grid items-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <LabControlField label="Total items">
               <AceInputField
                 fieldSize="sm"
                 type="number"
@@ -105,7 +91,7 @@ export function PaginationLab() {
                 }}
                 aria-label="Total items"
               />
-            </LabField>
+            </LabControlField>
             <LabSelect
               label="Page size"
               value={String(pageSize)}
@@ -116,7 +102,7 @@ export function PaginationLab() {
               }}
               options={PAGE_SIZE_OPTIONS.map((n) => ({ value: String(n), label: String(n) }))}
             />
-            <LabField label="Current page">
+            <LabControlField label="Current page">
               <AceInputField
                 fieldSize="sm"
                 type="number"
@@ -129,12 +115,12 @@ export function PaginationLab() {
                 }}
                 aria-label="Current page"
               />
-            </LabField>
-            <LabField label="Summary">
-              <p className="m-0 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm text-[var(--color-text-primary)]">
+            </LabControlField>
+            <LabControlField label="Summary">
+              <p className="m-0 flex min-h-[var(--screening-input-height-sm)] items-center rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-background)] px-2 text-sm text-[var(--color-text-primary)]">
                 {pageSummary.totalPages.toLocaleString()} pages · {pageSummary.range}
               </p>
-            </LabField>
+            </LabControlField>
           </div>
         </div>
       }

@@ -1,9 +1,6 @@
 import { cn } from '../lib/cn'
 import { publicAsset } from '../lib/publicAsset'
 
-const FIGMA_GUIDELINES_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=2-19&m=dev'
-
 const guidelinesText = 'text-[var(--screening-text-primary)]'
 const guidelinesBody =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-sm leading-[1.65]'
@@ -116,24 +113,6 @@ export function GuidelinesPage() {
             ))}
           </ul>
         </section>
-
-        <p
-          className={cn(
-            'm-0 mt-10 border-t border-solid border-[var(--screening-border-strong)] pt-6',
-            guidelinesText,
-            guidelinesBody,
-          )}
-        >
-          Source:{' '}
-          <a
-            href={FIGMA_GUIDELINES_URL}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="text-[var(--screening-primary)] underline underline-offset-2"
-          >
-            Design Principles in Figma
-          </a>
-        </p>
       </article>
     </div>
   )

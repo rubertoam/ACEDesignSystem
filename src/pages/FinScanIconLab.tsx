@@ -3,9 +3,6 @@ import { FinScanIcon, type FinScanIconVariant } from '../components/atoms/FinSca
 import { LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=2782-29&m=dev'
-
 const VARIANTS: { id: FinScanIconVariant; label: string; description: string }[] = [
   { id: 'lockup', label: 'Lockup', description: 'Hash mark + wordmark (site header)' },
   { id: 'mark', label: 'Hash mark', description: 'Icon only, 24×24' },
@@ -22,8 +19,6 @@ export function FinScanIconLab() {
     <ComponentLabPage
       title="FinScan Logo"
       description="Official FinScan brand lockup from ACE Design System — hash mark dot grid and wordmark with registered trademark."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="FinScan Logo in Figma"
       examplesToolbar={
         <div className="flex flex-wrap items-end gap-6">
           <LabSelect

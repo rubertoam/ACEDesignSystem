@@ -3,9 +3,6 @@ import { AceInputField } from '../components/atoms/AceInputField'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { DialogModal, DialogModalInlineError } from '../components/molecules/DialogModal/DialogModal'
 
-const FIGMA_DIALOG_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=3047-2036&m=dev'
-
 export function DialogModalLab() {
   const [basicOpen, setBasicOpen] = useState(false)
   const [deleteOpen, setDeleteOpen] = useState(false)
@@ -22,8 +19,6 @@ export function DialogModalLab() {
       <ComponentLabPage
         title="Dialog modal"
         description="ACE dialog modal — headline, close control, supporting copy, optional inline error, and right-aligned Cancel + primary actions (default or danger)."
-        figmaUrl={FIGMA_DIALOG_URL}
-        figmaLinkLabel="Dialog modals in Figma"
         examplesToolbar={previewToolbar}
         examples={
           <div className="flex flex-wrap gap-3">

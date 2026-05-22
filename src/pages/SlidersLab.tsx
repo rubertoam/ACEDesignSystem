@@ -4,9 +4,6 @@ import { LabCheckbox, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=2505-47&m=dev'
-
 const VARIANTS: { key: AceSliderVariant; label: string; defaultValue: number | [number, number] }[] = [
   { key: 'continuous', label: 'Continuous', defaultValue: 50 },
   { key: 'discrete', label: 'Discrete', defaultValue: 50 },
@@ -122,8 +119,6 @@ export function SlidersLab() {
     <ComponentLabPage
       title="Sliders"
       description="ACE Design System v.3 sliders: Continuous, Discrete, Ranged, and Centered variants with Default and Hover handle states (Figma 2505:47). Built on Radix Slider."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Sliders in Figma"
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">
@@ -181,11 +176,7 @@ export function SlidersLab() {
       usage={
         <p className="m-0 text-[var(--screening-text-muted)]">
           Static reference rows match Figma Default and Hover columns and are not interactive (no value counter).
-          Use Interactive with Show counter to preview the hover value bubble per variant. See{' '}
-          <a href={FIGMA_URL} className="text-[var(--screening-primary)] underline underline-offset-2">
-            Figma (2505:47)
-          </a>
-          .
+          Use Interactive with Show counter to preview the hover value bubble per variant. See node 2505:47.
         </p>
       }
       variables={

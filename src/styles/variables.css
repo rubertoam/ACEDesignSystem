@@ -79,6 +79,7 @@
 
   /* ACE neutrals (Figma) — define before screening aliases */
   --ace-neutral-100: #f5f6f8;
+  --ace-neutral-200: #e8eaed;
 
   /* ——— Data table (screening) organism ——— */
   --screening-surface: #ffffff;
@@ -254,6 +255,20 @@
   --ace-tabs-indicator-height: 0.09375rem;
   --ace-tabs-indicator-radius: var(--radius-sm);
 
+  /* Tab cards — Figma Cards / Tab (4130:4356) */
+  --ace-tab-card-gap: var(--space-4);
+  --ace-tab-card-radius: 6px;
+  --ace-tab-card-padding: 0.875rem;
+  --ace-tab-card-max-width: 23.3125rem;
+  --ace-tab-card-surface-default: var(--screening-surface);
+  --ace-tab-card-border-default: var(--ace-button-neutral-400);
+  --ace-tab-card-surface-emphasis: var(--screening-primary-soft-bg);
+  --ace-tab-card-border-active: var(--screening-primary);
+  --ace-tab-card-title-color: var(--ace-neutral-800);
+  --ace-tab-card-subtitle-color: var(--screening-text-secondary);
+  --ace-tab-card-description-color: var(--ace-neutral-800);
+  --ace-tab-card-icon-primary: var(--screening-primary);
+
   /* Data table outer card — ACE Drop Shadows XS at rest (Figma 71:71); hover uses SM */
   --screening-shadow-card: var(--ace-drop-shadow-xs);
   --screening-shadow-card-hover: var(--ace-drop-shadow-sm);
@@ -306,14 +321,17 @@
 
   /* ACE Toggle — Figma Toggles (117:1265) */
   --ace-toggle-thumb: #ffffff;
-  --ace-toggle-track-off: #949baa;
+  --ace-toggle-track-off: var(--ace-neutral-200);
   --ace-toggle-track-on: #523eb9;
-  --ace-toggle-track-off-hover: #7e8694;
+  --ace-toggle-track-off-hover: #dfe2e8;
   --ace-toggle-track-on-hover: #4334a3;
   --ace-toggle-track-disabled-off: #cfd2d9;
   --ace-toggle-track-disabled-on: #cbc5ec;
   --ace-toggle-focus-ring: var(--screening-primary-ring);
   --ace-toggle-ring-offset: var(--screening-primary-ring-offset);
+  --ace-toggle-track-padding: 0.25rem;
+  --ace-toggle-icon-glyph-off: var(--ace-neutral-800);
+  --ace-toggle-icon-glyph-on: var(--ace-toggle-thumb);
 
   /* ACE Slider — Figma Sliders (2505:47) */
   --ace-slider-track-height: 0.625rem;
@@ -376,6 +394,17 @@
   --ace-accordion-content-bg: #ffffff;
   --ace-accordion-duration: 420ms;
   --ace-accordion-ease: cubic-bezier(0.33, 1, 0.68, 1);
+  /* Lab availability tags — product usage status on component pages */
+  --ace-availability-available-bg: #e8f4ea;
+  --ace-availability-available-border: rgb(46 125 50 / 0.2);
+  --ace-availability-available-text: #2e7d32;
+  --ace-availability-in-progress-bg: #fff4e8;
+  --ace-availability-in-progress-border: #ffcc80;
+  --ace-availability-in-progress-text: #e65100;
+  --ace-availability-planned-bg: #f4f1fc;
+  --ace-availability-planned-border: #d6cef5;
+  --ace-availability-planned-text: #523eb9;
+
   /* Table pagination — Review Assigned (Figma 102:5124) */
   --screening-pagination-btn-size: 2rem;
   --screening-pagination-btn-radius: 0.1875rem;
@@ -484,6 +513,8 @@
     --ace-toggle-track-disabled-off: #454c59;
     --ace-toggle-track-disabled-on: #3d3658;
     --ace-toggle-thumb: #ffffff;
+    --ace-toggle-icon-glyph-off: var(--ace-neutral-800);
+    --ace-toggle-icon-glyph-on: var(--ace-toggle-thumb);
     --ace-slider-track-inactive: #2a2540;
     --ace-slider-track-border: #7c6bc4;
     --ace-slider-range: #7c6bc4;
@@ -564,6 +595,7 @@
     --dialog-modal-close-hover: var(--ace-neutral-100);
     --dialog-modal-outline-hover-bg: #2a2540;
     --ace-neutral-100: #2c333a;
+    --ace-neutral-200: #38414a;
     --ace-neutral-800: #b6c2cf;
     --ace-site-header-toolbar-icon-color: var(--screening-text-primary);
     --ace-sidebar-menu-icon: var(--screening-icon-muted);
@@ -633,4 +665,13 @@
     --ace-success-500: #9bc94e;
     --screening-shadow-row-accent: inset 2px 0 0 0 rgb(155 142 212 / 0.35);
     --screening-pagination-page-size-border: #5c6773;
+    --ace-availability-available-bg: #1e3324;
+    --ace-availability-available-border: rgb(129 199 132 / 0.3);
+    --ace-availability-available-text: #81c784;
+    --ace-availability-in-progress-bg: #3d2a14;
+    --ace-availability-in-progress-border: #7a5020;
+    --ace-availability-in-progress-text: #ffb74d;
+    --ace-availability-planned-bg: #2a2540;
+    --ace-availability-planned-border: #4a4068;
+    --ace-availability-planned-text: #dcd7e8;
 }

@@ -20,12 +20,6 @@ import { cn } from '../lib/cn'
 import { LabCheckbox } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const FIGMA_SIDEBAR_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=4491-2509&m=dev'
-
-const FIGMA_HEADER_URL =
-  'https://www.figma.com/design/4vUzx3bkw7zQifD0Gy7rX1/Review-Assigned?node-id=99-5092&m=dev'
-
 const ORGANIZATIONS = [
   { id: 'org-1', label: 'Organization 1' },
   { id: 'org-2', label: 'Organization 2' },
@@ -385,8 +379,6 @@ export function SidebarLab() {
       <ComponentLabPage
         title="Sidebar"
         description="Application sidebar for flat navigation or grouped query lists. Uses ACE screening tokens, collapsible width, group-header overflow menus (Edit, Copy, Delete), and organization switching in the navigation variant."
-        figmaUrl={FIGMA_SIDEBAR_URL}
-        figmaLinkLabel="Sidebar in Figma"
         examplesToolbar={examplesToolbar}
         examples={
           <div
@@ -414,16 +406,7 @@ export function SidebarLab() {
               <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-[var(--screening-surface-muted)] p-6">
                 <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Main content</p>
                 <p className="mt-2 text-sm text-[var(--screening-text-muted)]">
-                  App shell preview based on{' '}
-                  <a
-                    href={FIGMA_HEADER_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[var(--screening-primary)] underline underline-offset-2"
-                  >
-                    Review Assigned header
-                  </a>
-                  . Sidebar motion is documented on the{' '}
+                  App shell preview based on Review Assigned header. Sidebar motion is documented on the{' '}
                   <Link
                     to="/lab/atoms/animations"
                     className="text-[var(--screening-primary)] underline underline-offset-2"

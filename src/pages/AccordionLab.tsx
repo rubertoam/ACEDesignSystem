@@ -3,9 +3,6 @@ import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { AceAccordion, type AceAccordionSurface } from '../components/molecules/AceAccordion/AceAccordion'
 import { LabCheckbox, LabRadioGroup } from '../lib/labControls'
 
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=332-1500&m=dev'
-
 const sampleBody = (
   <p className="m-0 min-h-[18rem] [font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--screening-text-secondary)]">
     Accordion body content goes here. Expand and collapse uses a 420ms ease-out curve (
@@ -14,7 +11,7 @@ const sampleBody = (
 )
 
 export function AccordionLab() {
-  const [surface, setSurface] = useState<AceAccordionSurface>('gray')
+  const [surface, setSurface] = useState<AceAccordionSurface>('white')
   const [dropShadow, setDropShadow] = useState(false)
   const [showTag, setShowTag] = useState(true)
   const [showAddIcon, setShowAddIcon] = useState(true)
@@ -38,8 +35,6 @@ export function AccordionLab() {
     <ComponentLabPage
       title="Accordions"
       description="Standard collapsed / expanded accordion from ACE (Figma Accordions). Toggle gray or white background, drop shadow (XS) independently, and show or hide the tag and each Material icon on the right."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Accordions in Figma"
       examplesToolbar={
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
@@ -48,8 +43,8 @@ export function AccordionLab() {
               value={surface}
               onChange={setSurface}
               options={[
-                { value: 'gray', label: 'Gray' },
                 { value: 'white', label: 'White' },
+                { value: 'gray', label: 'Gray' },
               ]}
             />
             <LabCheckbox label="Drop shadow (XS)" checked={dropShadow} onCheckedChange={setDropShadow} />
@@ -88,7 +83,7 @@ export function AccordionLab() {
       code={
         <ComponentLabCode>{`<AceAccordion
   title="[Enter Title]"
-  surface="gray"
+  surface="white"
   dropShadow
   showTag
   showAddIcon

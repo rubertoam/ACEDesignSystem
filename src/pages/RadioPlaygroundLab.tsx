@@ -11,9 +11,6 @@ import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleS
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { cn } from '../lib/cn'
 
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=331-1755&m=dev'
-
 type PreviewCol = 'regular' | 'hover' | 'active' | 'disabled' | 'disabled_selected'
 
 const COLUMNS: { key: PreviewCol; label: string }[] = [
@@ -125,8 +122,6 @@ export function RadioPlaygroundLab() {
     <ComponentLabPage
       title="Radio buttons"
       description="ACE Design System v.3 radio controls: small / medium / large circles, states (regular, hover, active, disabled, disabled selected), and optional field wrapper. Built on Radix Radio Group with --ace-radio-* tokens."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Radio Buttons in Figma"
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">

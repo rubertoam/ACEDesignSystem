@@ -41,7 +41,7 @@ export default function App() {
         <Route path="atoms/checkboxes" element={<CheckboxPlaygroundLab />} />
         <Route path="atoms/toggles" element={<TogglePlaygroundLab />} />
         <Route path="atoms/radios" element={<RadioPlaygroundLab />} />
-        <Route path="atoms/tabs" element={<TabsLab />} />
+        <Route path="atoms/tabs" element={<Navigate to="/lab/molecules/tabs" replace />} />
         <Route path="atoms/animations" element={<AnimationsLab />} />
         <Route path="atoms/finscan-logo" element={<FinScanIconLab />} />
         <Route path="atoms/finscan-icon" element={<Navigate to="/lab/atoms/finscan-logo" replace />} />
@@ -50,6 +50,7 @@ export default function App() {
         <Route path="molecules/accordions" element={<AccordionLab />} />
         <Route path="molecules/pagination" element={<PaginationLab />} />
         <Route path="molecules/sliders" element={<SlidersLab />} />
+        <Route path="molecules/tabs" element={<TabsLab />} />
         <Route path="organisms" element={<OrganismsLab />} />
         <Route path="organisms/data-table" element={<DataTableLab />} />
         <Route path="organisms/screening-results-table" element={<Navigate to="/lab/organisms/data-table" replace />} />

@@ -114,7 +114,7 @@ export function AceAccordion({
   children,
   tagLabel = '[Label]',
   showTag = true,
-  surface = 'gray',
+  surface = 'white',
   dropShadow = false,
   showAddIcon = true,
   showDeleteIcon = true,

@@ -4,15 +4,6 @@ import { LabCheckbox, LabControlField, LabTextInput } from '../lib/labControls'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const FIGMA_LANDING_CARDS_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=4130-1977&m=dev'
-
-const FIGMA_DATA_CARDS_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=2046-5157&m=dev'
-
-const FIGMA_STAT_ICONS_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=4212-1138&m=dev'
-
 const DEFAULT_DESCRIPTION =
   '[Description option for this card which can provide some contextual information to users about what this is.]'
 
@@ -103,16 +94,7 @@ export function CardsLab() {
   const landingControls = (
     <LabControlsPanel title="Landing Page Card">
       <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Configure both Landing Page card variants. Stat body icons from{' '}
-        <a
-          href={FIGMA_STAT_ICONS_URL}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="text-[var(--screening-primary)] underline underline-offset-2"
-        >
-          Figma (4212:1138)
-        </a>
-        .
+        Configure both Landing Page card variants. Stat body icons from node 4212:1138.
       </p>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <LabTextInput label="Card title" value={title} onChange={setTitle} className="max-w-md" />
@@ -142,16 +124,7 @@ export function CardsLab() {
   const dataCardControls = (
     <LabControlsPanel title="Data Card">
       <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Medium expandable data card from{' '}
-        <a
-          href={FIGMA_DATA_CARDS_URL}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="text-[var(--screening-primary)] underline underline-offset-2"
-        >
-          Figma (2046:5157)
-        </a>
-        . Expand/collapse uses the same easing as the accordion.
+        Medium expandable data card from node 2046:5157. Expand/collapse uses the same easing as the accordion.
       </p>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <LabTextInput label="Heading" value={dataHeading} onChange={setDataHeading} className="max-w-md" />
@@ -195,8 +168,6 @@ export function CardsLab() {
     <ComponentLabPage
       title="Cards"
       description="Landing page and medium data cards — expandable sections, header actions, and design-token shadows."
-      figmaUrl={FIGMA_LANDING_CARDS_URL}
-      figmaLinkLabel="Cards in Figma"
       examplesCanvas={false}
       examples={
         <div className="flex flex-col gap-10">

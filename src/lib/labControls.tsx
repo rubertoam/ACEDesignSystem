@@ -33,12 +33,14 @@ export function LabControlField({
 /** Segmented control matching the lab light/dark theme toggle (LabLayout). */
 export function LabSegmentedToggle<T extends string>({
   'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
   value,
   onChange,
   options,
   className,
 }: {
   'aria-label'?: string
+  'aria-labelledby'?: string
   value: T
   onChange: (value: T) => void
   options: readonly { value: T; label: string }[]
@@ -48,6 +50,7 @@ export function LabSegmentedToggle<T extends string>({
     <div
       role="group"
       aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
       className={cn(
         'inline-flex w-fit max-w-full self-start rounded-[var(--radius-md)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] p-0.5',
         className,
@@ -167,7 +170,6 @@ export function LabSelect<T extends string>({
 
   const items: AceDropdownMenuEntry[] = useMemo(
     () => [
-      { type: 'menuHeader', label },
       {
         type: 'radioGroup',
         value,
@@ -175,19 +177,19 @@ export function LabSelect<T extends string>({
         options: options.map((o) => ({ value: o.value, label: o.label })),
       },
     ],
-    [label, value, onChange, options],
+    [value, onChange, options],
   )
 
   return (
-    <div className={cn('flex min-w-0 flex-col gap-1.5', className)}>
-      <span className={labControlLegendClass}>{label}</span>
+    <fieldset className={cn('min-w-0 border-0 p-0', className)}>
+      <legend className={labControlLegendClass}>{label}</legend>
       <AceDropdownMenu
         triggerLabel={selectedLabel}
         items={items}
         align="start"
         panelWidth={panelWidth}
       />
-    </div>
+    </fieldset>
   )
 }
 

@@ -2,9 +2,6 @@ import { cn } from '../lib/cn'
 import { labExampleSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=71-71&m=dev'
-
 type ShadowRow = {
   title: string
   spec: string
@@ -35,8 +32,6 @@ export function DropShadowsLab() {
     <ComponentLabPage
       title="Drop shadows"
       description="ACE elevation tokens for single-layer drop shadows (Figma Drop Shadows). Add via box-shadow using the --ace-drop-shadow-* variables in variables.css. Use the lab Theme control (top bar) for light vs dark surfaces."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Drop Shadows in Figma"
       examples={
         <div className="space-y-8">
           {SHADOW_ROWS.map((row) => (

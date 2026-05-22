@@ -5,9 +5,6 @@ import { LabCheckbox, LabControlField, LabRadioGroup } from '../lib/labControls'
 import { labExampleSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=408-1976&m=dev'
-
 const SIZES: AceInputFieldSize[] = ['sm', 'md', 'lg']
 const VISUAL_STATES: AceInputVisualState[] = ['default', 'active', 'focus', 'error', 'disabled']
 
@@ -97,8 +94,6 @@ export function InputPlaygroundLab() {
     <ComponentLabPage
       title="Input fields"
       description="ACE Design System v.3 text inputs: small, medium, and large heights; default, active (filled border), focus (lavender fill + ring), error (pink surface + message), and disabled. Icons optional (search). Tokens reuse screening input variables plus --ace-input-* in variables.css."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Input in Figma"
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">

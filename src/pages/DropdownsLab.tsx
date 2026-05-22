@@ -2,12 +2,6 @@ import { useMemo, useState, type ReactNode } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { AceDropdownMenu, type AceDropdownMenuEntry } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
 
-const FIGMA_TRIGGERS_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=1307-3725&m=dev'
-
-const FIGMA_MENU_LISTS_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=1541-5729&m=dev'
-
 const rowClass =
   'flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 border-b border-[var(--screening-border-row)] pb-4 last:border-0 last:pb-0'
 
@@ -333,8 +327,6 @@ export function DropdownsLab() {
     <ComponentLabPage
       title="Dropdowns"
       description="Interactive menu lists opened from field triggers. Hover, selection, checkboxes, toggles, search filtering, Select All, and Reset All behave while the menu is open. Static specs live in Figma Menu Lists."
-      figmaUrl={FIGMA_MENU_LISTS_URL}
-      figmaLinkLabel="Menu lists in Figma"
       examples={
         <div ref={setMenuHost} className="relative flex flex-col gap-6">
           <p className="m-0 text-sm text-[var(--screening-text-secondary)]">
@@ -438,11 +430,7 @@ export function DropdownsLab() {
           <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code>, design-system{' '}
           <code className="text-[var(--color-text-primary)]">Checkbox</code> and <code className="text-[var(--color-text-primary)]">Toggle</code> at{' '}
           <code className="text-[var(--color-text-primary)]">size=&quot;sm&quot;</code>, and no leading icons in list rows. Pass{' '}
-          <code className="text-[var(--color-text-primary)]">portalContainer</code> when the menu must mount inside a scroll container; theme follows the lab Theme control on <code className="text-[var(--color-text-primary)]">&lt;html&gt;</code>. Triggers:{' '}
-          <a className="text-[var(--color-accent)] underline underline-offset-2" href={FIGMA_TRIGGERS_URL} target="_blank" rel="noreferrer noopener">
-            Figma · Dropdowns
-          </a>
-          .
+          <code className="text-[var(--color-text-primary)]">portalContainer</code> when the menu must mount inside a scroll container; theme follows the lab Theme control on <code className="text-[var(--color-text-primary)]">&lt;html&gt;</code>. Triggers: Figma · Dropdowns.
         </p>
       }
       variables={

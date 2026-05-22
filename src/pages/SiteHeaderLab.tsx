@@ -16,12 +16,6 @@ import {
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const FIGMA_SITE_HEADER_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=225-1406&m=dev'
-
-const FIGMA_ACTIONS_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=3127-35&m=dev'
-
 const ALL_NAV_ITEMS: { id: string; label: string }[] = [
   { id: 'home', label: 'Home' },
   { id: 'reporting', label: 'Reporting' },
@@ -126,16 +120,7 @@ export function SiteHeaderLab() {
     <div className="flex flex-col gap-4">
       <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
         Use the dropdowns to configure the header. Menu and toolbar items support multiple checkboxes; profile
-        images are mutually exclusive (one at a time).{' '}
-        <a
-          href={FIGMA_ACTIONS_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="text-[var(--color-accent)] underline underline-offset-2"
-        >
-          Figma Actions layer
-        </a>
-        .
+        images are mutually exclusive (one at a time). Figma Actions layer.
       </p>
       <div className="flex flex-wrap items-end gap-3">
         <AceDropdownMenu
@@ -169,8 +154,6 @@ export function SiteHeaderLab() {
     <ComponentLabPage
       title="Site header"
       description="Top navigation for FinScan — brand, primary menu items with dropdown chevrons, and user toolbar actions."
-      figmaUrl={FIGMA_SITE_HEADER_URL}
-      figmaLinkLabel="Site navigation in Figma"
       examplesToolbar={examplesToolbar}
       examples={
         <div className="overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]">
@@ -238,17 +221,7 @@ const navItems = [
                 </Link>
                 )
               </li>
-              <li>
-                Profile avatars from{' '}
-                <a
-                  href={FIGMA_ACTIONS_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[var(--color-accent)] underline underline-offset-2"
-                >
-                  Figma Actions (3127:35)
-                </a>
-              </li>
+              <li>Profile avatars from Figma Actions (node 3127:35)</li>
             </ul>
           </section>
         </>

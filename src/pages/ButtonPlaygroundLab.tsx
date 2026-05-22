@@ -13,9 +13,6 @@ import { labExampleSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { cn } from '../lib/cn'
 
-const FIGMA_URL =
-  'https://www.figma.com/design/nIr5xquI2bOX7A9JRpamOg/ACE-Design-System-v.3?node-id=2067-191&m=dev'
-
 const VARIANTS: AceButtonVariant[] = ['primary', 'secondary', 'tertiary']
 const PALETTES: AceButtonPalette[] = ['purple', 'blue']
 const SIZES: AceButtonSize[] = ['sm', 'md', 'lg']
@@ -126,8 +123,6 @@ export function ButtonPlaygroundLab() {
     <ComponentLabPage
       title="Button playground"
       description="ACE Design System v.3 buttons: FinScan Primary (purple) and Innovative Blue, with primary, secondary, and tertiary styles, three sizes, and default / hover / active / disabled states. Tokens are --ace-button-* in variables.css."
-      figmaUrl={FIGMA_URL}
-      figmaLinkLabel="Buttons in Figma"
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">
