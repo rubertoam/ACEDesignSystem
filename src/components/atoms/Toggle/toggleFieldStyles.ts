@@ -9,16 +9,9 @@ export const ACE_TOGGLE_SIZE_LABELS: Record<AceToggleSize, string> = {
   md: 'Large',
 }
 
-const toggleDuration = 'duration-[var(--ace-toggle-duration)]'
-const toggleEase =
-  'ease-[var(--ace-toggle-ease)] motion-reduce:transition-none motion-reduce:duration-0'
-
-/** Track + interaction (Figma Toggles 117:1265; --ace-toggle-* tokens). */
+/** Track + interaction (Figma Toggles 117:1265; --ace-toggle-* tokens). Motion in toggle.css. */
 export const aceToggleTrackClass = cn(
-  'group relative inline-flex shrink-0 cursor-pointer items-center rounded-full border-0 p-[var(--ace-toggle-track-padding)] outline-none',
-  'transition-colors',
-  toggleDuration,
-  toggleEase,
+  'ace-toggle-track group relative inline-flex shrink-0 cursor-pointer items-center rounded-full border-0 p-[var(--ace-toggle-track-padding)] outline-none',
   'disabled:cursor-not-allowed',
   'data-[state=unchecked]:bg-[var(--ace-toggle-track-off)] data-[state=checked]:bg-[var(--ace-toggle-track-on)]',
   'disabled:data-[state=unchecked]:bg-[var(--ace-toggle-track-disabled-off)] disabled:data-[state=checked]:bg-[var(--ace-toggle-track-disabled-on)]',
@@ -34,24 +27,15 @@ const aceToggleRootSize: Record<AceToggleSize, string> = {
 
 const thumbShadow = 'shadow-[0_1px_2px_rgb(35_38_44_/0.12)]'
 
-const aceToggleThumbMotion = cn(
-  '[transition-property:transform,background-color]',
-  toggleDuration,
-  toggleEase,
-  'will-change-transform',
-)
-
 /** Shared thumb pill — identical for standard and icon variants. */
 const aceToggleThumbClassBase: Record<AceToggleSize, string> = {
   sm: cn(
-    'pointer-events-none z-[1] h-3 w-3 shrink-0 rounded-full bg-[var(--ace-toggle-thumb)] group-disabled:bg-[var(--ace-toggle-thumb-disabled)]',
+    'ace-toggle-thumb pointer-events-none z-[1] block h-3 w-3 shrink-0 rounded-full bg-[var(--ace-toggle-thumb)] group-disabled:bg-[var(--ace-toggle-thumb-disabled)]',
     thumbShadow,
-    aceToggleThumbMotion,
   ),
   md: cn(
-    'pointer-events-none z-[1] h-4 w-4 shrink-0 rounded-full bg-[var(--ace-toggle-thumb)] group-disabled:bg-[var(--ace-toggle-thumb-disabled)]',
+    'ace-toggle-thumb pointer-events-none z-[1] block h-4 w-4 shrink-0 rounded-full bg-[var(--ace-toggle-thumb)] group-disabled:bg-[var(--ace-toggle-thumb-disabled)]',
     thumbShadow,
-    aceToggleThumbMotion,
   ),
 }
 
@@ -61,7 +45,7 @@ const aceToggleThumbTranslate: Record<AceToggleSize, string> = {
   md: 'translate-x-0 data-[state=checked]:translate-x-5',
 }
 
-export const aceToggleIconGlyphMotion = cn('transition-opacity', toggleDuration, toggleEase)
+export const aceToggleIconGlyphMotion = 'ace-toggle-icon-glyph'
 
 export const aceToggleIconCheckClass: Record<AceToggleSize, string> = {
   sm: 'size-2 shrink-0 text-[var(--ace-toggle-icon-glyph-on)]',

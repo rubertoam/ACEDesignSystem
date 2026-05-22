@@ -98,7 +98,7 @@ export const ACE_ANIMATIONS: AceAnimationEntry[] = [
     id: 'toggle-thumb-slide',
     name: 'Toggle thumb slide',
     component: 'Toggle',
-    properties: 'transform, background-color',
+    properties: 'translate, background-color',
     duration: 'var(--ace-toggle-duration)',
     easing: 'var(--ace-toggle-ease)',
     tokens: ['--ace-toggle-duration', '--ace-toggle-ease'],

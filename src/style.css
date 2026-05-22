@@ -2,6 +2,7 @@
 @import './styles/variables.css';
 @import './styles/typography-tokens.css';
 @import './styles/interactive-cursor.css';
+@import './styles/toggle.css';
 
 html {
   font-family: var(--font-screening);

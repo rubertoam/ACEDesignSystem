@@ -1,0 +1,31 @@
+/**
+ * ACE Toggle motion — thumb uses Tailwind v4 `translate` utilities (not transform).
+ * transition-property must include `translate` or the slide appears instant.
+ */
+@layer components {
+  .ace-toggle-track {
+    transition-property: background-color;
+    transition-duration: var(--ace-toggle-duration);
+    transition-timing-function: var(--ace-toggle-ease);
+  }
+
+  .ace-toggle-thumb {
+    transition-property: translate, background-color;
+    transition-duration: var(--ace-toggle-duration);
+    transition-timing-function: var(--ace-toggle-ease);
+  }
+
+  .ace-toggle-icon-glyph {
+    transition-property: opacity;
+    transition-duration: var(--ace-toggle-duration);
+    transition-timing-function: var(--ace-toggle-ease);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ace-toggle-track,
+    .ace-toggle-thumb,
+    .ace-toggle-icon-glyph {
+      transition-duration: 0ms;
+    }
+  }
+}
