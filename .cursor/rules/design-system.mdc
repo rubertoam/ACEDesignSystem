@@ -1,0 +1,26 @@
+---
+description: Design system standards — Atomic Design, tokens, Figma MCP, lab docs
+globs: src/**/*.{tsx,ts,css}
+alwaysApply: false
+---
+
+# Design System Rules
+
+## Core principles
+
+- **Atomic Design**: Place UI in `src/components/atoms`, `molecules`, or `organisms` only. Pick the smallest accurate tier.
+- **No hardcoding**: Do not use raw hex colors or pixel literals in TSX/CSS for design intent. Express spacing, color, radius, shadow, and type through **CSS variables** in `src/styles/variables.css` (e.g. `var(--color-accent)`, `var(--space-4)`). In Tailwind, bind utilities to tokens with arbitrary values like `bg-[var(--color-surface)]` unless a token-mapped shortcut exists.
+- **Figma alignment**: Before **implementing or updating** a component that maps to Figma, call the Figma MCP **`get_design_context`** for that node (after reading its tool schema). Use **`get_screenshot`** for visual parity checks. Map Figma variables/styles into `variables.css`; keep names and usage consistent.
+
+## Component standards
+
+- **Framework**: React function components + TypeScript.
+- **Styling**: Tailwind CSS, with utilities tied to **design tokens** (CSS variables), not one-off literals.
+- **Lab documentation**: Every component lab page must render **Usage** and **Variables** sections (use `ComponentLabPage` in `src/pages/`).
+- **Animations**: When adding motion to a component, register it in `src/lib/aceAnimations.ts` and document it on `/lab/atoms/animations` (see `.cursor/rules/ace-animations.mdc`).
+
+## Figma MCP workflow (UI work)
+
+1. `get_design_context` for the specific node.
+2. `get_screenshot` for visual parity.
+3. Map Figma variables/styles to local `variables.css`, then implement.

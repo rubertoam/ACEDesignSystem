@@ -1,0 +1,21 @@
+---
+description: Register component animations in the ACE motion catalog and Animations lab
+globs: src/**/*.{tsx,ts,css}
+alwaysApply: false
+---
+
+# ACE animations registry
+
+Whenever you **add or change** animation on a component (transitions, transforms, grid expand/collapse, opacity fades, etc.):
+
+1. **Tokens** — Prefer existing motion tokens in `src/styles/variables.css` (`--ace-motion-ease-standard`, `--ace-motion-duration-*`, component-specific aliases). Add new tokens only when the motion spec requires a distinct duration or curve.
+
+2. **Catalog** — Append or update an entry in `src/lib/aceAnimations.ts` (`ACE_ANIMATIONS` array). Each entry needs: stable `id`, `name`, `component`, `properties`, `duration`, `easing`, `tokens[]`, and optional `notes`.
+
+3. **Lab page** — Update `src/pages/AnimationsLab.tsx` so the catalog table and/or live demo reflects the new animation. Link from the component’s Usage section when motion is user-visible.
+
+4. **Reduced motion** — Use `motion-reduce:transition-none` (and related utilities) on animated elements.
+
+5. **Expand/collapse** — Reuse the grid `0fr` / `1fr` pattern with `min-h-0 overflow-hidden` inner wrapper (see AceAccordion, AceSidebar groups, LabLayout nav).
+
+Do not ship component animation without a corresponding `ACE_ANIMATIONS` entry and Animations lab documentation.
