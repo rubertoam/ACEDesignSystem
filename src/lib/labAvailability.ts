@@ -19,6 +19,7 @@ export const LAB_AVAILABILITY_BY_PATH: Record<string, LabAvailabilityStatus> = {
   '/lab/atoms/checkboxes': 'available',
   '/lab/atoms/toggles': 'available',
   '/lab/atoms/radios': 'available',
+  '/lab/atoms/badges': 'available',
   '/lab/molecules/tabs': 'available',
   '/lab/molecules/dropdowns': 'in-progress',
   '/lab/molecules/accordions': 'in-progress',

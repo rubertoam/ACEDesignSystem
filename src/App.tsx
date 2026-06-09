@@ -25,6 +25,7 @@ import { DropShadowsLab } from './pages/DropShadowsLab'
 import { TabsLab } from './pages/TabsLab'
 import { AnimationsLab } from './pages/AnimationsLab'
 import { FinScanIconLab } from './pages/FinScanIconLab'
+import { BadgesLab } from './pages/BadgesLab'
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="atoms/checkboxes" element={<CheckboxPlaygroundLab />} />
         <Route path="atoms/toggles" element={<TogglePlaygroundLab />} />
         <Route path="atoms/radios" element={<RadioPlaygroundLab />} />
+        <Route path="atoms/badges" element={<BadgesLab />} />
         <Route path="atoms/tabs" element={<Navigate to="/lab/molecules/tabs" replace />} />
         <Route path="atoms/animations" element={<AnimationsLab />} />
         <Route path="atoms/finscan-logo" element={<FinScanIconLab />} />

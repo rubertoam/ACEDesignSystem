@@ -392,6 +392,17 @@
   --ace-toggle-icon-glyph-off: var(--ace-neutral-800);
   --ace-toggle-icon-glyph-on: var(--ace-toggle-thumb);
 
+  /* ACE Badge — Figma Tags (2347:669) */
+  --ace-badge-radius: 100px;
+  --ace-badge-px: 0.5rem;
+  --ace-badge-py: 0.25rem;
+  --ace-badge-gap: 0.5rem;
+  --ace-badge-text: #ffffff;
+  --ace-badge-active-bg: var(--screening-primary);
+  --ace-badge-inactive-bg: #a296dc;
+  --ace-badge-inactive-opacity: 0.6;
+  --ace-badge-dismiss-hover-bg: rgb(255 255 255 / 0.16);
+
   /* ACE Slider — Figma Sliders (2505:47) */
   --ace-slider-track-height: 0.625rem;
   --ace-slider-radius: 4px;
@@ -575,6 +586,9 @@
     --ace-toggle-thumb-disabled: #6a7285; /* Neutral 600 — muted thumb on disabled tracks */
     --ace-toggle-icon-glyph-off: var(--ace-neutral-800);
     --ace-toggle-icon-glyph-on: var(--ace-toggle-thumb);
+    --ace-badge-active-bg: var(--screening-primary);
+    --ace-badge-inactive-bg: #7868cd;
+    --ace-badge-dismiss-hover-bg: rgb(255 255 255 / 0.12);
     --ace-slider-track-inactive: #2a2540;
     --ace-slider-track-border: #7c6bc4;
     --ace-slider-range: #7c6bc4;

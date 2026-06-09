@@ -76,6 +76,7 @@ export const labNavSections: LabNavSection[] = [
         '/lab/atoms/radios',
         'sizes, states, field wrapper (Figma Radio Buttons 331-1755).',
       ),
+      component('Badges', '/lab/atoms/badges', 'pill tags — active, inactive, and dismissible (Figma Tags 2347-669).'),
     ],
   },
   {

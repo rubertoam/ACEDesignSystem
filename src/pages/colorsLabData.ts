@@ -381,6 +381,18 @@ export const COLOR_COMPONENT_GROUPS: ColorComponentGroup[] = [
     ]),
   },
   {
+    id: 'badge',
+    title: 'ACE Badge',
+    description: 'Pill tags for filters and metadata (Figma Tags 2347:669; see Badges lab).',
+    tokens: solidTokens([
+      { name: 'Badge active bg', cssVar: '--ace-badge-active-bg' },
+      { name: 'Badge inactive bg', cssVar: '--ace-badge-inactive-bg' },
+      { name: 'Badge text', cssVar: '--ace-badge-text' },
+      { name: 'Badge inactive opacity', cssVar: '--ace-badge-inactive-opacity' },
+      { name: 'Badge dismiss hover', cssVar: '--ace-badge-dismiss-hover-bg' },
+    ]),
+  },
+  {
     id: 'toggle',
     title: 'ACE Toggle',
     description: 'Switch track and thumb (Figma Toggles 117:1265; see Toggles lab).',
