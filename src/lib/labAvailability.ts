@@ -25,12 +25,14 @@ export const LAB_AVAILABILITY_BY_PATH: Record<string, LabAvailabilityStatus> = {
   '/lab/molecules/accordions': 'in-progress',
   '/lab/molecules/pagination': 'planned',
   '/lab/molecules/sliders': 'in-progress',
+  '/lab/molecules/toast-messages': 'available',
   '/lab/organisms/dialog-modal': 'available',
   '/lab/organisms/data-table': 'planned',
   '/lab/organisms/date-time-pickers': 'in-progress',
   '/lab/organisms/sidebar': 'planned',
   '/lab/organisms/site-header': 'available',
   '/lab/organisms/cards': 'available',
+  '/lab/organisms/timeline': 'available',
 }
 
 export function getLabAvailability(pathname: string): LabAvailabilityStatus | undefined {

@@ -26,6 +26,8 @@ import { TabsLab } from './pages/TabsLab'
 import { AnimationsLab } from './pages/AnimationsLab'
 import { FinScanIconLab } from './pages/FinScanIconLab'
 import { BadgesLab } from './pages/BadgesLab'
+import { ToastMessagesLab } from './pages/ToastMessagesLab'
+import { TimelineLab } from './pages/TimelineLab'
 
 export default function App() {
   return (
@@ -53,6 +55,7 @@ export default function App() {
         <Route path="molecules/pagination" element={<PaginationLab />} />
         <Route path="molecules/sliders" element={<SlidersLab />} />
         <Route path="molecules/tabs" element={<TabsLab />} />
+        <Route path="molecules/toast-messages" element={<ToastMessagesLab />} />
         <Route path="organisms" element={<OrganismsLab />} />
         <Route path="organisms/data-table" element={<DataTableLab />} />
         <Route path="organisms/screening-results-table" element={<Navigate to="/lab/organisms/data-table" replace />} />
@@ -61,6 +64,7 @@ export default function App() {
         <Route path="organisms/sidebar" element={<SidebarLab />} />
         <Route path="organisms/site-header" element={<SiteHeaderLab />} />
         <Route path="organisms/cards" element={<CardsLab />} />
+        <Route path="organisms/timeline" element={<TimelineLab />} />
       </Route>
       <Route path="*" element={<Navigate to="/lab" replace />} />
     </Routes>

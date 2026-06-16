@@ -108,6 +108,11 @@ export const labNavSections: LabNavSection[] = [
         '/lab/molecules/tabs',
         'standard underline tabs and Tab Cards for inner-feature navigation (Figma Tabs / Tab Cards).',
       ),
+      component(
+        'Toast messages',
+        '/lab/molecules/toast-messages',
+        'success, info, warning, and error notifications with action layouts (Figma 2783-5).',
+      ),
     ],
   },
   {
@@ -135,6 +140,11 @@ export const labNavSections: LabNavSection[] = [
         'Cards',
         '/lab/organisms/cards',
         'landing page navigation cards (stats and description variants).',
+      ),
+      component(
+        'Timeline',
+        '/lab/organisms/timeline',
+        'match and transaction history with expandable status rows (Figma 4622-1645).',
       ),
     ],
   },
