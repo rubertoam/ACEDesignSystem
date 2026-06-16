@@ -1,6 +1,7 @@
 import { AceTimeline, DEMO_TIMELINE_ITEMS } from '../components/organisms/AceTimeline/AceTimeline'
 import { AceTimelineItem } from '../components/organisms/AceTimeline/AceTimelineItem'
-import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
+import { labComponentContainerClass } from '../lib/labChrome'
+import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
@@ -14,62 +15,67 @@ export function TimelineLab() {
       examplesCanvas={false}
       examples={
         <div className="space-y-10">
-          <div className={cn('items-start', labExampleSectionClass)}>
+          <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Interactive</p>
-            <div className="w-full max-w-[52rem] min-w-0">
+            <div className={labComponentContainerClass}>
               <AceTimeline items={DEMO_TIMELINE_ITEMS} />
             </div>
           </div>
 
-          <div className={cn('items-start', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Component breakdown</p>
-            <div className="flex w-full max-w-[52rem] flex-col gap-8">
-              <div className="space-y-2">
-                <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Default</p>
-                <AceTimelineItem
-                  variant={BREAKDOWN_VARIANT.variant}
-                  label={BREAKDOWN_VARIANT.label}
-                  timestamp={BREAKDOWN_VARIANT.timestamp}
-                  surface="default"
-                  interactive={false}
-                />
+          <div className={cn('w-full', labExampleSectionClass)}>
+            <p className={labSectionLabelClass}>Static examples</p>
+            <div className={labComponentContainerClass}>
+              <div className={labStaticExampleGroupClass}>
+                <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Component breakdown</p>
+                <div className="flex flex-col gap-8">
+                  <div className={labStaticExampleGroupClass}>
+                    <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Default</p>
+                    <AceTimelineItem
+                      variant={BREAKDOWN_VARIANT.variant}
+                      label={BREAKDOWN_VARIANT.label}
+                      timestamp={BREAKDOWN_VARIANT.timestamp}
+                      surface="default"
+                      interactive={false}
+                    />
+                  </div>
+                  <div className={labStaticExampleGroupClass}>
+                    <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Highlight</p>
+                    <AceTimelineItem
+                      variant={BREAKDOWN_VARIANT.variant}
+                      label={BREAKDOWN_VARIANT.label}
+                      timestamp={BREAKDOWN_VARIANT.timestamp}
+                      surface="highlight"
+                      interactive={false}
+                    />
+                  </div>
+                  <div className={labStaticExampleGroupClass}>
+                    <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Expanded</p>
+                    <AceTimelineItem
+                      variant={BREAKDOWN_VARIANT.variant}
+                      label={BREAKDOWN_VARIANT.label}
+                      timestamp={BREAKDOWN_VARIANT.timestamp}
+                      surface="expanded"
+                      interactive={false}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="space-y-2">
-                <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Highlight</p>
-                <AceTimelineItem
-                  variant={BREAKDOWN_VARIANT.variant}
-                  label={BREAKDOWN_VARIANT.label}
-                  timestamp={BREAKDOWN_VARIANT.timestamp}
-                  surface="highlight"
-                  interactive={false}
-                />
-              </div>
-              <div className="space-y-2">
-                <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Expanded</p>
-                <AceTimelineItem
-                  variant={BREAKDOWN_VARIANT.variant}
-                  label={BREAKDOWN_VARIANT.label}
-                  timestamp={BREAKDOWN_VARIANT.timestamp}
-                  surface="expanded"
-                  interactive={false}
-                />
-              </div>
-            </div>
-          </div>
 
-          <div className={cn('items-start', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>All status variants</p>
-            <div className="flex w-full max-w-[52rem] flex-col gap-4">
-              {DEMO_TIMELINE_ITEMS.map((item) => (
-                <AceTimelineItem
-                  key={item.id}
-                  variant={item.variant}
-                  label={item.label}
-                  timestamp={item.timestamp}
-                  interactive={false}
-                  surface="highlight"
-                />
-              ))}
+              <div className={labStaticExampleGroupClass}>
+                <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">All status variants</p>
+                <div className="flex flex-col gap-4">
+                  {DEMO_TIMELINE_ITEMS.map((item) => (
+                    <AceTimelineItem
+                      key={item.id}
+                      variant={item.variant}
+                      label={item.label}
+                      timestamp={item.timestamp}
+                      interactive={false}
+                      surface="highlight"
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

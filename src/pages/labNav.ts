@@ -146,6 +146,11 @@ export const labNavSections: LabNavSection[] = [
         '/lab/organisms/timeline',
         'match and transaction history with expandable status rows (Figma 4622-1645).',
       ),
+      component(
+        'Attachments',
+        '/lab/organisms/attachments',
+        'file upload dropzone and URL linking for case evidence (Figma 3313-156).',
+      ),
     ],
   },
 ]

@@ -396,6 +396,19 @@ export const COLOR_COMPONENT_GROUPS: ColorComponentGroup[] = [
     ]),
   },
   {
+    id: 'attachments',
+    title: 'ACE Attachments',
+    description: 'File upload and URL linking (Figma Attachments 3313:156; see Attachments lab).',
+    tokens: solidTokens([
+      { name: 'Attachments border', cssVar: '--ace-attachments-border' },
+      { name: 'Attachments title', cssVar: '--ace-attachments-title' },
+      { name: 'Attachments dropzone bg', cssVar: '--ace-attachments-dropzone-bg' },
+      { name: 'Attachments link', cssVar: '--ace-attachments-link' },
+      { name: 'Attachments status', cssVar: '--ace-attachments-status' },
+      { name: 'Attachments error', cssVar: '--ace-attachments-error' },
+    ]),
+  },
+  {
     id: 'toast',
     title: 'ACE Toast',
     description: 'Transient notification cards (Figma Toast Messages 2783:5; see Toast messages lab).',

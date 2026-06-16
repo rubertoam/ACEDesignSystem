@@ -8,6 +8,9 @@ export const labSectionLabelClass =
 /** 20px between label and content — uses --ace-section-label-gap. */
 export const labExampleSectionClass = 'flex flex-col gap-[var(--ace-section-label-gap)]'
 
+/** 16px between static example labels and preview content. */
+export const labStaticExampleGroupClass = 'flex min-w-0 flex-col gap-4'
+
 export function LabExampleSection({
   title,
   children,

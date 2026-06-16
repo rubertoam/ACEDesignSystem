@@ -165,6 +165,14 @@ export {
   type AceTimelineItemProps,
 } from './components/organisms/AceTimeline/AceTimelineItem'
 export {
+  AceAttachments,
+  DEMO_ATTACHMENT_FILES,
+  DEMO_ATTACHMENT_LINKS,
+  type AceAttachmentFile,
+  type AceAttachmentLink,
+  type AceAttachmentsProps,
+} from './components/organisms/AceAttachments/AceAttachments'
+export {
   DEFAULT_SCREENING_TABLE_CHROME,
   ScreeningResultsTable,
   getScreeningRowsForCase,

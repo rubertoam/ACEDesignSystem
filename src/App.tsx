@@ -28,6 +28,7 @@ import { FinScanIconLab } from './pages/FinScanIconLab'
 import { BadgesLab } from './pages/BadgesLab'
 import { ToastMessagesLab } from './pages/ToastMessagesLab'
 import { TimelineLab } from './pages/TimelineLab'
+import { AttachmentsLab } from './pages/AttachmentsLab'
 
 export default function App() {
   return (
@@ -65,6 +66,7 @@ export default function App() {
         <Route path="organisms/site-header" element={<SiteHeaderLab />} />
         <Route path="organisms/cards" element={<CardsLab />} />
         <Route path="organisms/timeline" element={<TimelineLab />} />
+        <Route path="organisms/attachments" element={<AttachmentsLab />} />
       </Route>
       <Route path="*" element={<Navigate to="/lab" replace />} />
     </Routes>

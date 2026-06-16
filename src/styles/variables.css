@@ -464,6 +464,23 @@
   --ace-timeline-highlight-blocked: var(--ace-error-50);
   --ace-timeline-highlight-safe: var(--ace-success-50);
 
+  /* ACE Attachments — Figma Attachments (3313:156) */
+  --ace-attachments-radius: 4px;
+  --ace-attachments-padding: 0.75rem;
+  --ace-attachments-gap: 0.75rem;
+  --ace-attachments-border: #cfd2d9;
+  --ace-attachments-surface: var(--screening-surface);
+  --ace-attachments-dropzone-bg: #fafafb;
+  --ace-attachments-dropzone-border: var(--screening-primary);
+  --ace-attachments-panel-bg: #fafafb;
+  --ace-attachments-title: var(--screening-primary);
+  --ace-attachments-label: var(--ace-neutral-800);
+  --ace-attachments-link: var(--screening-primary);
+  --ace-attachments-muted: #6a7285;
+  --ace-attachments-status: var(--screening-primary);
+  --ace-attachments-error: var(--dialog-modal-danger);
+  --ace-attachments-divider: #cfd2d9;
+
   /* ACE Slider — Figma Sliders (2505:47) */
   --ace-slider-track-height: 0.625rem;
   --ace-slider-radius: 4px;
