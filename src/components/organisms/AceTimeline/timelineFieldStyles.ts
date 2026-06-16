@@ -25,13 +25,8 @@ export const aceTimelineShellClass = cn(
 
 export const aceTimelineHeaderClass = 'flex w-full items-center justify-between gap-4'
 
-export const aceTimelineSortTriggerClass = cn(
-  'flex w-[var(--ace-timeline-sort-width)] items-center justify-between gap-2',
-  'rounded-[var(--ace-timeline-radius)] border border-solid border-[var(--ace-timeline-border)]',
-  'bg-[var(--ace-timeline-sort-bg)] px-3 py-2',
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
-  'text-[var(--ace-timeline-title)]',
-)
+export const aceTimelineSortTriggerClass =
+  'w-[var(--ace-timeline-sort-width)] shrink-0 [font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]'
 
 export const aceTimelineExpandAllClass = cn(
   '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
@@ -44,6 +39,12 @@ export const aceTimelineListClass = 'flex w-full min-w-0 flex-col gap-[var(--ace
 
 export const aceTimelineItemRowClass = cn(
   'flex w-full min-w-0 items-start gap-[var(--ace-timeline-item-gap)]',
+)
+
+export const aceTimelineItemHeaderButtonClass = cn(
+  aceTimelineItemRowClass,
+  'cursor-pointer border-0 bg-transparent p-0 text-left outline-none',
+  'rounded-[var(--radius-sm)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 
 export const aceTimelineItemContentClass = 'min-w-0 flex-1'
@@ -67,8 +68,17 @@ export const aceTimelineToggleClass = cn(
 )
 
 export const aceTimelineToggleIconClass = cn(
-  'size-3 shrink-0 transition-transform duration-[var(--ace-accordion-duration)]',
-  '[transition-timing-function:var(--ace-accordion-ease)]',
+  'size-3 shrink-0 transition-transform',
+  'duration-[var(--ace-accordion-duration)] [transition-timing-function:var(--ace-accordion-ease)]',
+)
+
+export const aceTimelineMotionDuration = 'duration-[var(--ace-accordion-duration)]'
+export const aceTimelineMotionEase = '[transition-timing-function:var(--ace-accordion-ease)]'
+
+export const aceTimelineBodyPanelClass = cn(
+  'grid overflow-hidden transition-[grid-template-rows]',
+  aceTimelineMotionDuration,
+  aceTimelineMotionEase,
 )
 
 export const aceTimelineBodyClass = cn(
@@ -77,7 +87,17 @@ export const aceTimelineBodyClass = cn(
   'border border-solid border-[var(--ace-timeline-border)] bg-[var(--ace-timeline-body-bg)]',
 )
 
-export const aceTimelineIconClass = 'size-5 shrink-0 text-[var(--ace-timeline-icon-glyph)]'
+export const aceTimelineIconClass = cn(
+  'shrink-0 text-[var(--ace-timeline-icon-glyph)] transition-[width,height]',
+  aceTimelineMotionDuration,
+  aceTimelineMotionEase,
+)
+
+export const aceTimelineIconShellClassBase = cn(
+  'inline-flex shrink-0 items-center justify-center rounded-full transition-[width,height]',
+  aceTimelineMotionDuration,
+  aceTimelineMotionEase,
+)
 
 export const aceTimelineIconShellClass: Record<AceTimelineVariant, string> = {
   'system-action': 'bg-[var(--ace-timeline-icon-system)]',
@@ -105,23 +125,28 @@ export const aceTimelineHoverClass: Record<AceTimelineVariant, string> = {
 
 export function aceTimelineItemShellClass({
   variant,
-  surface,
+  surface = 'default',
   interactive,
+  open,
 }: {
   variant: AceTimelineVariant
-  surface: AceTimelineItemSurface
+  surface?: AceTimelineItemSurface
   interactive?: boolean
+  open: boolean
 }) {
+  const isHighlight = surface === 'highlight' && !open
+
   return cn(
-    'w-full min-w-0 rounded-[var(--ace-timeline-radius)]',
-    surface === 'expanded'
-      ? cn(
-          'flex flex-col gap-[var(--ace-timeline-item-gap)] border border-solid border-[var(--ace-timeline-border)]',
-          'bg-[var(--ace-timeline-expanded-bg)] p-[calc(var(--ace-timeline-item-padding)+1px)]',
-        )
+    'flex w-full min-w-0 flex-col gap-[var(--ace-timeline-item-gap)] overflow-hidden rounded-[var(--ace-timeline-radius)]',
+    'border border-solid p-[var(--ace-timeline-item-padding)] transition-[background-color,border-color]',
+    interactive && 'group/timeline-item',
+    aceTimelineMotionDuration,
+    aceTimelineMotionEase,
+    open
+      ? 'border-[var(--ace-timeline-border)] bg-[var(--ace-timeline-expanded-bg)]'
       : cn(
-          'p-[var(--ace-timeline-item-padding)]',
-          surface === 'highlight'
+          'border-transparent',
+          isHighlight
             ? aceTimelineHighlightClass[variant]
             : interactive
               ? aceTimelineHoverClass[variant]

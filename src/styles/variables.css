@@ -438,6 +438,10 @@
   --ace-timeline-item-gap: 1rem;
   --ace-timeline-item-padding: 0.75rem;
   --ace-timeline-sort-width: 12.5rem;
+  --ace-timeline-icon-size: 2rem;
+  --ace-timeline-icon-size-hover: 2.2rem;
+  --ace-timeline-icon-glyph-size: 1rem;
+  --ace-timeline-icon-glyph-size-hover: 1.1rem;
   --ace-timeline-surface: var(--screening-surface);
   --ace-timeline-border: #cfd2d9;
   --ace-timeline-sort-bg: #ffffff;

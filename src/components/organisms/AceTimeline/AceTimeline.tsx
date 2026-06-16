@@ -1,6 +1,8 @@
-import { ChevronDown } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { aceChevronIconClass } from '../../../lib/aceChevron'
+import {
+  AceDropdownMenu,
+  type AceDropdownMenuEntry,
+} from '../../molecules/AceDropdownMenu/AceDropdownMenu'
 import { cn } from '../../../lib/cn'
 import { AceTimelineItem, type AceTimelineItemData } from './AceTimelineItem'
 import {
@@ -26,6 +28,8 @@ const SORT_LABELS: Record<AceTimelineSort, string> = {
   'present-to-past': 'Sort by: Present to Past',
 }
 
+const SORT_OPTIONS: AceTimelineSort[] = ['past-to-present', 'present-to-past']
+
 function sortItems(items: AceTimelineItemData[], sort: AceTimelineSort) {
   if (sort === 'past-to-present') return items
   return [...items].reverse()
@@ -41,6 +45,7 @@ export function AceTimeline({
 }: AceTimelineProps) {
   const [sortInternal, setSortInternal] = useState<AceTimelineSort>('past-to-present')
   const [expandedInternal, setExpandedInternal] = useState<string[]>([])
+  const [portalHost, setPortalHost] = useState<HTMLElement | null>(null)
 
   const sort = sortProp ?? sortInternal
   const expandedIds = expandedIdsProp ?? expandedInternal
@@ -54,6 +59,17 @@ export function AceTimeline({
     if (sortProp == null) setSortInternal(next)
     onSortChange?.(next)
   }
+
+  const sortMenuItems = useMemo<AceDropdownMenuEntry[]>(
+    () =>
+      SORT_OPTIONS.map((value) => ({
+        type: 'item',
+        label: SORT_LABELS[value],
+        highlighted: sort === value,
+        onSelect: () => setSort(value),
+      })),
+    [sort],
+  )
 
   const sortedItems = useMemo(() => sortItems(items, sort), [items, sort])
   const allExpanded = sortedItems.length > 0 && sortedItems.every((item) => expandedIds.includes(item.id))
@@ -73,27 +89,22 @@ export function AceTimeline({
   }
 
   return (
-    <section className={cn(aceTimelineShellClass, className)} aria-label="Timeline">
+    <section
+      ref={setPortalHost}
+      className={cn(aceTimelineShellClass, className)}
+      aria-label="Timeline"
+    >
       <div className={aceTimelineHeaderClass}>
-        <label className="sr-only" htmlFor="ace-timeline-sort">
-          Sort timeline
-        </label>
-        <div className="relative">
-          <select
-            id="ace-timeline-sort"
-            className={cn(aceTimelineSortTriggerClass, 'appearance-none pr-8')}
-            value={sort}
-            onChange={(e) => setSort(e.target.value as AceTimelineSort)}
-          >
-            <option value="past-to-present">{SORT_LABELS['past-to-present']}</option>
-            <option value="present-to-past">{SORT_LABELS['present-to-past']}</option>
-          </select>
-          <ChevronDown
-            className={cn(aceChevronIconClass, 'pointer-events-none absolute top-1/2 right-3 -translate-y-1/2')}
-            strokeWidth={2}
-            aria-hidden
-          />
-        </div>
+        <AceDropdownMenu
+          triggerLabel={SORT_LABELS[sort]}
+          triggerMode="field"
+          size="sm"
+          panelWidth="wide"
+          align="start"
+          items={sortMenuItems}
+          portalContainer={portalHost}
+          className={aceTimelineSortTriggerClass}
+        />
         <button type="button" className={aceTimelineExpandAllClass} onClick={toggleExpandAll}>
           {allExpanded ? 'Collapse All' : 'Expand All'}
         </button>

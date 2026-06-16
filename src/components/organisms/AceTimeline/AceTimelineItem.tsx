@@ -7,15 +7,18 @@ import {
   TrendingUp,
   type LucideIcon,
 } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { useId, type ReactNode } from 'react'
 import { cn } from '../../../lib/cn'
 import {
   aceTimelineBodyClass,
+  aceTimelineBodyPanelClass,
   aceTimelineIconClass,
   aceTimelineIconShellClass,
+  aceTimelineIconShellClassBase,
   aceTimelineItemRowClass,
   aceTimelineItemContentClass,
   aceTimelineItemActionsClass,
+  aceTimelineItemHeaderButtonClass,
   aceTimelineItemSeparatorClass,
   aceTimelineItemSubtitleClass,
   aceTimelineItemTitleRowClass,
@@ -58,17 +61,39 @@ export type AceTimelineItemProps = {
   className?: string
 }
 
-function TimelineStatusIcon({ variant }: { variant: AceTimelineVariant }) {
+function TimelineStatusIcon({
+  variant,
+  interactive,
+}: {
+  variant: AceTimelineVariant
+  interactive: boolean
+}) {
   const Icon = VARIANT_ICONS[variant]
 
   return (
     <span
       className={cn(
-        'inline-flex size-10 shrink-0 items-center justify-center rounded-full',
+        aceTimelineIconShellClassBase,
         aceTimelineIconShellClass[variant],
+        interactive
+          ? cn(
+              'size-[var(--ace-timeline-icon-size)] group-hover/timeline-item:size-[var(--ace-timeline-icon-size-hover)]',
+            )
+          : 'size-[var(--ace-timeline-icon-size)]',
       )}
     >
-      <Icon className={aceTimelineIconClass} strokeWidth={2} aria-hidden />
+      <Icon
+        className={cn(
+          aceTimelineIconClass,
+          interactive
+            ? cn(
+                'size-[var(--ace-timeline-icon-glyph-size)] group-hover/timeline-item:size-[var(--ace-timeline-icon-glyph-size-hover)]',
+              )
+            : 'size-[var(--ace-timeline-icon-glyph-size)]',
+        )}
+        strokeWidth={2}
+        aria-hidden
+      />
     </span>
   )
 }
@@ -96,22 +121,74 @@ function TimelineHeading({
   )
 }
 
-function TimelineToggle({
-  expanded,
-  onClick,
-}: {
-  expanded: boolean
-  onClick?: () => void
-}) {
+function TimelineToggleHint({ expanded }: { expanded: boolean }) {
   return (
-    <button type="button" className={aceTimelineToggleClass} onClick={onClick}>
+    <span className={cn(aceTimelineToggleClass, 'pointer-events-none')}>
       {expanded ? 'Show less' : 'Show more'}
       <ChevronDown
-        className={cn(aceTimelineToggleIconClass, expanded && 'rotate-180')}
+        className={cn(aceTimelineToggleIconClass, expanded ? 'rotate-180' : 'rotate-0')}
         strokeWidth={2}
         aria-hidden
       />
-    </button>
+    </span>
+  )
+}
+
+function TimelineBodyPanel({
+  id,
+  open,
+  children,
+}: {
+  id: string
+  open: boolean
+  children: ReactNode
+}) {
+  return (
+    <div
+      id={id}
+      role="region"
+      aria-hidden={!open}
+      className={cn(
+        aceTimelineBodyPanelClass,
+        open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+      )}
+    >
+      <div className="min-h-0 overflow-hidden">
+        <div className={aceTimelineBodyClass}>{children}</div>
+      </div>
+    </div>
+  )
+}
+
+function TimelineItemRow({
+  variant,
+  label,
+  timestamp,
+  processName,
+  interactive,
+  showToggle,
+  isExpanded,
+}: {
+  variant: AceTimelineVariant
+  label: string
+  timestamp: string
+  processName?: string
+  interactive: boolean
+  showToggle: boolean
+  isExpanded: boolean
+}) {
+  return (
+    <>
+      <TimelineStatusIcon variant={variant} interactive={interactive} />
+      <div className={aceTimelineItemContentClass}>
+        <TimelineHeading label={label} timestamp={timestamp} processName={processName} />
+      </div>
+      {showToggle ? (
+        <div className={aceTimelineItemActionsClass}>
+          <TimelineToggleHint expanded={isExpanded} />
+        </div>
+      ) : null}
+    </>
   )
 }
 
@@ -127,52 +204,57 @@ export function AceTimelineItem({
   interactive = true,
   className,
 }: AceTimelineItemProps) {
+  const panelId = useId()
   const isExpanded = expanded || surface === 'expanded'
-  const showToggle = Boolean(onExpandedChange) || surface != null || body != null
+  const showBody = body != null
+  const showToggle = Boolean(onExpandedChange) || surface != null || showBody
+  const isExpandable = Boolean(onExpandedChange) && showBody
+  const previewSurface: AceTimelineItemSurface =
+    surface === 'highlight' ? 'highlight' : 'default'
 
   const row = (
-    <div className={aceTimelineItemRowClass}>
-      <TimelineStatusIcon variant={variant} />
-      <div className={aceTimelineItemContentClass}>
-        <TimelineHeading label={label} timestamp={timestamp} processName={processName} />
-      </div>
-      {showToggle ? (
-        <div className={aceTimelineItemActionsClass}>
-          <TimelineToggle
-            expanded={isExpanded}
-            onClick={onExpandedChange ? () => onExpandedChange(!isExpanded) : undefined}
-          />
-        </div>
-      ) : null}
-    </div>
+    <TimelineItemRow
+      variant={variant}
+      label={label}
+      timestamp={timestamp}
+      processName={processName}
+      interactive={interactive}
+      showToggle={showToggle}
+      isExpanded={isExpanded}
+    />
   )
-
-  if (isExpanded) {
-    return (
-      <article
-        className={cn(
-          aceTimelineItemShellClass({ variant, surface: 'expanded', interactive }),
-          className,
-        )}
-      >
-        {row}
-        <div className={aceTimelineBodyClass}>{body}</div>
-      </article>
-    )
-  }
 
   return (
     <article
       className={cn(
         aceTimelineItemShellClass({
           variant,
-          surface: surface === 'highlight' ? 'highlight' : 'default',
+          surface: previewSurface,
           interactive: interactive && surface !== 'highlight',
+          open: isExpanded,
         }),
         className,
       )}
     >
-      {row}
+      {isExpandable ? (
+        <button
+          type="button"
+          className={aceTimelineItemHeaderButtonClass}
+          aria-expanded={isExpanded}
+          aria-controls={panelId}
+          onClick={() => onExpandedChange?.(!isExpanded)}
+        >
+          {row}
+        </button>
+      ) : (
+        <div className={aceTimelineItemRowClass}>{row}</div>
+      )}
+
+      {showBody ? (
+        <TimelineBodyPanel id={panelId} open={isExpanded}>
+          {body}
+        </TimelineBodyPanel>
+      ) : null}
     </article>
   )
 }

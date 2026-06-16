@@ -105,7 +105,8 @@ export function TimelineLab() {
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
               Use the timeline for auditable histories where users scan status, timestamp, and process metadata, then
-              expand rows for supporting detail. Sort past-to-present for narratives; reverse for newest-first review.
+              expand rows for supporting detail. Each row expands when the full hoverable header is clicked; status
+              icons grow subtly (10%) on hover.
             </p>
           </section>
           <section className="space-y-2">
@@ -143,6 +144,11 @@ export function TimelineLab() {
             Variants — icon and highlight tokens per status (
             <code className="text-[var(--color-text-primary)]">--ace-timeline-icon-*</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-timeline-highlight-*</code>)
+          </li>
+          <li>
+            Motion — expand/collapse uses accordion tokens (
+            <code className="text-[var(--color-text-primary)]">--ace-accordion-duration</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-accordion-ease</code>)
           </li>
         </ul>
       }
