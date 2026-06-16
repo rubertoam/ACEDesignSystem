@@ -49,7 +49,7 @@ function LabThemeToggle({
 }) {
   const labelId = useId()
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 overflow-visible py-1">
       <span
         id={labelId}
         className={cn(p1, 'text-sm font-semibold text-[var(--screening-text-primary)]')}

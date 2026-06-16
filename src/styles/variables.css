@@ -194,6 +194,13 @@
   --ace-site-header-nav-hover: var(--screening-surface-hover);
   --ace-site-header-greeting-color: var(--screening-primary);
 
+  /* Lab segmented toggle — soft track, elevated indicator pill */
+  --ace-lab-segmented-track-bg: var(--screening-surface-muted);
+  --ace-lab-segmented-track-border: var(--screening-border-soft);
+  --ace-lab-segmented-indicator-bg: var(--screening-surface);
+  --ace-lab-segmented-indicator-shadow: 0 1px 2px rgb(35 38 44 / 0.06), 0 2px 6px rgb(35 38 44 / 0.08);
+  --ace-lab-segmented-padding: 0.25rem;
+
   /* FinScan icon / brand (Figma Icon / FinScan 2782:29) */
   --ace-finscan-icon-gap: 0.75rem;
   --ace-finscan-mark-green: #99ca3c;
@@ -759,6 +766,9 @@
     --ace-neutral-200: var(--ace-dark-mode-600);
     --ace-neutral-800: #b6c2cf;
     --ace-site-header-toolbar-icon-color: var(--screening-text-primary);
+    --ace-lab-segmented-track-border: var(--ace-dark-mode-600);
+    --ace-lab-segmented-indicator-bg: var(--ace-dark-mode-500);
+    --ace-lab-segmented-indicator-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 2px 8px rgb(0 0 0 / 0.22);
     --ace-sidebar-menu-icon: var(--screening-icon-muted);
     --ace-sidebar-item-hover-bg: var(--ace-neutral-100);
     --ace-sidebar-group-hover-bg: var(--ace-neutral-100);

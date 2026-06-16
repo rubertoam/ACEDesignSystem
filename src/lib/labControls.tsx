@@ -55,52 +55,59 @@ export function LabSegmentedToggle<T extends string>({
     options.findIndex((opt) => opt.value === value),
   )
   const segmentCount = options.length
+  const inset = 'var(--ace-lab-segmented-padding)'
+  const segmentWidth = `calc((100% - (${inset} * 2)) / ${segmentCount})`
 
   return (
-    <div
-      role="group"
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabelledBy}
-      className={cn(
-        'relative inline-grid w-fit max-w-full self-start rounded-[var(--radius-md)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] p-0.5',
-        className,
-      )}
-      style={{ gridTemplateColumns: `repeat(${segmentCount}, minmax(0, 1fr))` }}
-    >
+    <div className={cn('overflow-visible', className)}>
       <div
-        aria-hidden
+        role="group"
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
         className={cn(
-          'pointer-events-none absolute top-0.5 bottom-0.5 left-0.5 rounded-[var(--radius-sm)] bg-[var(--screening-surface)] shadow-[var(--ace-drop-shadow-xs)] ring-1 ring-[var(--screening-border-strong)]',
-          'transition-transform will-change-transform',
-          labSegmentedDuration,
-          labSegmentedEase,
+          'relative inline-grid w-fit max-w-full overflow-visible rounded-[var(--radius-md)] border border-solid border-[var(--ace-lab-segmented-track-border)] bg-[var(--ace-lab-segmented-track-bg)]',
+          'p-[var(--ace-lab-segmented-padding)]',
         )}
-        style={{
-          width: `calc((100% - 0.25rem) / ${segmentCount})`,
-          transform: `translateX(${selectedIndex * 100}%)`,
-        }}
-      />
-      {options.map((opt) => {
-        const selected = value === opt.value
-        return (
-          <button
-            key={opt.value}
-            type="button"
-            aria-pressed={selected}
-            onClick={() => onChange(opt.value)}
-            className={cn(
-              'relative z-[1] rounded-[var(--radius-sm)] px-3 py-1.5 text-xs font-semibold transition-colors',
-              labSegmentedDuration,
-              labSegmentedEase,
-              selected
-                ? 'text-[var(--screening-text-primary)]'
-                : 'text-[var(--screening-text-muted)] hover:text-[var(--screening-text-primary)]',
-            )}
-          >
-            {opt.label}
-          </button>
-        )
-      })}
+        style={{ gridTemplateColumns: `repeat(${segmentCount}, minmax(0, 1fr))` }}
+      >
+        <div
+          aria-hidden
+          className={cn(
+            'pointer-events-none absolute z-0 rounded-[var(--radius-sm)] bg-[var(--ace-lab-segmented-indicator-bg)] shadow-[var(--ace-lab-segmented-indicator-shadow)]',
+            'transition-transform will-change-transform',
+            labSegmentedDuration,
+            labSegmentedEase,
+          )}
+          style={{
+            top: inset,
+            bottom: inset,
+            left: inset,
+            width: segmentWidth,
+            transform: `translate3d(calc(${selectedIndex} * 100%), 0, 0)`,
+          }}
+        />
+        {options.map((opt) => {
+          const selected = value === opt.value
+          return (
+            <button
+              key={opt.value}
+              type="button"
+              aria-pressed={selected}
+              onClick={() => onChange(opt.value)}
+              className={cn(
+                'relative z-[1] rounded-[var(--radius-sm)] px-3 py-1.5 text-xs transition-colors',
+                labSegmentedDuration,
+                labSegmentedEase,
+                selected
+                  ? 'font-semibold text-[var(--screening-text-primary)]'
+                  : 'font-normal text-[var(--screening-text-muted)] hover:text-[var(--screening-text-primary)]',
+              )}
+            >
+              {opt.label}
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 }

@@ -161,7 +161,7 @@ export function AceSiteHeader({
             {greeting}
           </p>
         ) : null}
-        <div className="flex items-center gap-[var(--ace-site-header-toolbar-gap)]">
+        <div className="flex items-center gap-[var(--ace-site-header-toolbar-gap)] overflow-visible py-1">
           {showNotifications ? (
             <ToolbarIconButton label="Notifications" onClick={onNotificationsClick}>
               <SiteHeaderNotificationIcon />
