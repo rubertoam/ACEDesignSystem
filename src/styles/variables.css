@@ -79,6 +79,7 @@
 
   /* ACE neutrals (Figma) — define before screening aliases */
   --ace-neutral-100: #f5f6f8;
+  --ace-neutral-50: #fafafb;
   --ace-neutral-200: #e8eaed;
 
   /* ——— Data table (screening) organism ——— */
@@ -273,6 +274,7 @@
   --ace-notice-800: #856200;
   --ace-notice-900: #423100;
   --ace-error-50: #fdf4f6;
+  --ace-error-500: #dc264b;
   --ace-header-status-success: var(--ace-success-500);
   --ace-sidebar-shadow: 6px 0 5px rgb(0 0 0 / 0.03);
   --ace-sidebar-border: var(--screening-border-strong);
@@ -373,6 +375,7 @@
   --ace-data-card-insight-border: var(--screening-primary);
   --screening-shadow-row-accent: inset 2px 0 0 0 rgb(82 62 185 / 0.2);
   --screening-shadow-thead: 0 1px 0 rgb(207 210 217 / 0.6);
+  --screening-table-header-font-size: 0.75rem;
   --screening-header-min-height: 3.5rem;
   --screening-progress-width: 7.5rem;
   --screening-progress-height: var(--space-2);
@@ -399,16 +402,59 @@
   --ace-toggle-icon-glyph-off: var(--ace-neutral-800);
   --ace-toggle-icon-glyph-on: var(--ace-toggle-thumb);
 
-  /* ACE Badge — Figma Tags (2347:669) */
-  --ace-badge-radius: 100px;
-  --ace-badge-px: 0.5rem;
-  --ace-badge-py: 0.25rem;
-  --ace-badge-gap: 0.5rem;
-  --ace-badge-text: #ffffff;
-  --ace-badge-active-bg: var(--screening-primary);
-  --ace-badge-inactive-bg: #a296dc;
-  --ace-badge-inactive-opacity: 0.6;
-  --ace-badge-dismiss-hover-bg: rgb(255 255 255 / 0.16);
+  /* ACE Tooltip — Review Assigned screening toolbar pattern */
+  --ace-tooltip-radius: var(--radius-sm);
+  --ace-tooltip-px: var(--space-3);
+  --ace-tooltip-py: var(--space-2);
+  --ace-tooltip-surface: var(--screening-surface);
+  --ace-tooltip-border: var(--screening-border-strong);
+  --ace-tooltip-text: var(--screening-text-primary);
+  --ace-tooltip-shadow: var(--ace-drop-shadow-xs);
+  --ace-tooltip-duration: var(--ace-motion-duration-fast);
+  --ace-tooltip-ease: var(--ace-motion-ease-standard);
+
+  /* ACE Status pill — Review Assigned screening table pattern */
+  --ace-status-pill-gap: 0.375rem;
+  --ace-status-pill-py: 0.25rem;
+  --ace-status-pill-pl: 0.375rem;
+  --ace-status-pill-pr: 0.5rem;
+  --ace-status-pill-dot-size: 0.5rem;
+  --ace-status-pill-purple-border: var(--screening-pill-new-border);
+  --ace-status-pill-purple-surface: var(--screening-pill-new-surface);
+  --ace-status-pill-purple-dot: var(--screening-pill-new-dot);
+  --ace-status-pill-purple-label: var(--screening-pill-new-label);
+  --ace-status-pill-orange-border: var(--screening-pill-escalated-border);
+  --ace-status-pill-orange-surface: var(--screening-pill-escalated-surface);
+  --ace-status-pill-orange-dot: var(--screening-pill-escalated-dot);
+  --ace-status-pill-orange-label: var(--screening-pill-escalated-label);
+  --ace-status-pill-green-border: #a5d6a7;
+  --ace-status-pill-green-surface: var(--screening-tile-n-bg);
+  --ace-status-pill-green-dot: var(--screening-age-fresh);
+  --ace-status-pill-green-label: var(--screening-tile-n-fg);
+  --ace-status-pill-gray-border: var(--ace-button-neutral-400);
+  --ace-status-pill-gray-surface: var(--ace-neutral-100);
+  --ace-status-pill-gray-dot: var(--ace-button-neutral-600);
+  --ace-status-pill-gray-label: var(--screening-text-secondary);
+  --ace-status-pill-blue-border: var(--ace-button-blue-200);
+  --ace-status-pill-blue-surface: var(--ace-button-blue-50);
+  --ace-status-pill-blue-dot: var(--ace-button-blue-500);
+  --ace-status-pill-blue-label: var(--ace-button-blue-500);
+  --ace-status-pill-yellow-border: var(--ace-notice-200);
+  --ace-status-pill-yellow-surface: var(--ace-notice-50);
+  --ace-status-pill-yellow-dot: var(--ace-notice-500);
+  --ace-status-pill-yellow-label: var(--ace-notice-600);
+  --ace-status-pill-pink-border: var(--ace-secondary-enlighten-violet-200);
+  --ace-status-pill-pink-surface: var(--ace-secondary-enlighten-violet-50);
+  --ace-status-pill-pink-dot: var(--ace-secondary-enlighten-violet-400);
+  --ace-status-pill-pink-label: var(--ace-secondary-enlighten-violet-600);
+  --ace-status-pill-teal-border: var(--ace-secondary-teal-200);
+  --ace-status-pill-teal-surface: var(--ace-secondary-teal-50);
+  --ace-status-pill-teal-dot: var(--ace-secondary-teal-500);
+  --ace-status-pill-teal-label: var(--ace-secondary-teal-700);
+  --ace-status-pill-red-border: #ef9a9a;
+  --ace-status-pill-red-surface: var(--ace-error-50);
+  --ace-status-pill-red-dot: var(--ace-error-500);
+  --ace-status-pill-red-label: #b71c1c;
 
   /* ACE Toast — Figma Toast Messages (2783:5) */
   --ace-toast-width: 25rem;
@@ -602,6 +648,8 @@
   --ace-button-blue-500: #0672a3;
   --ace-button-blue-700: #033952;
   --ace-button-blue-400: #089de1;
+  --ace-button-blue-50: #eaf8fe;
+  --ace-button-blue-200: #6fcefa;
   --ace-button-neutral-400: #cfd2d9;
   --ace-button-neutral-500: #949baa;
   --ace-button-neutral-600: #6a7285;
@@ -647,7 +695,7 @@
     --screening-progress-track: var(--ace-dark-mode-700);
     --screening-chip-inactive-bg: var(--ace-dark-mode-800);
     --screening-chip-inactive-border: var(--ace-dark-mode-600);
-    --screening-chip-inactive-hover-bg: var(--ace-neutral-100);
+    --screening-chip-inactive-hover-bg: #2c333a;
     --screening-chip-inactive-hover-border: #5c6773;
     --screening-primary-soft-bg: #2a2540;
     --screening-primary-soft-bg-hover: #352f4d;
@@ -671,9 +719,6 @@
     --ace-toggle-thumb-disabled: #6a7285; /* Neutral 600 — muted thumb on disabled tracks */
     --ace-toggle-icon-glyph-off: var(--ace-neutral-800);
     --ace-toggle-icon-glyph-on: var(--ace-toggle-thumb);
-    --ace-badge-active-bg: var(--screening-primary);
-    --ace-badge-inactive-bg: #7868cd;
-    --ace-badge-dismiss-hover-bg: rgb(255 255 255 / 0.12);
     --ace-toast-bg: var(--ace-dark-mode-800);
     --ace-toast-border: var(--ace-dark-mode-600);
     --ace-toast-shadow: var(--ace-drop-shadow-md);

@@ -1,0 +1,49 @@
+@keyframes ace-tooltip-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translate3d(var(--ace-tooltip-enter-x, 0), var(--ace-tooltip-enter-y, 0), 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ace-tooltip-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.95) translate3d(var(--ace-tooltip-enter-x, 0), var(--ace-tooltip-enter-y, 0), 0);
+  }
+}
+
+[data-slot='ace-tooltip-content'][data-side='top'] {
+  --ace-tooltip-enter-y: 2px;
+}
+
+[data-slot='ace-tooltip-content'][data-side='bottom'] {
+  --ace-tooltip-enter-y: -2px;
+}
+
+[data-slot='ace-tooltip-content'][data-side='left'] {
+  --ace-tooltip-enter-x: 2px;
+}
+
+[data-slot='ace-tooltip-content'][data-side='right'] {
+  --ace-tooltip-enter-x: -2px;
+}
+
+[data-slot='ace-tooltip-content'][data-state='delayed-open'],
+[data-slot='ace-tooltip-content'][data-state='instant-open'],
+[data-slot='ace-tooltip-content'][data-state='open'] {
+  animation: ace-tooltip-enter var(--ace-tooltip-duration) var(--ace-tooltip-ease) forwards;
+}
+
+[data-slot='ace-tooltip-content'][data-state='closed'] {
+  animation: ace-tooltip-exit var(--ace-tooltip-duration) var(--ace-tooltip-ease) forwards;
+}

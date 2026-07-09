@@ -152,7 +152,7 @@ const fieldTriggerBase = cn(
 )
 
 export const aceDropdownMenuPanelClass = cn(
-  'overflow-hidden rounded-[var(--radius-md)] border border-solid border-[var(--ace-dropdown-menu-border)] bg-[var(--ace-dropdown-menu-surface)]',
+  'z-[250] overflow-hidden rounded-[var(--radius-md)] border border-solid border-[var(--ace-dropdown-menu-border)] bg-[var(--ace-dropdown-menu-surface)]',
   'shadow-[var(--ace-dropdown-menu-shadow)]',
 )
 
@@ -266,9 +266,10 @@ function PrimaryMenuItem({
   entry: Extract<AceDropdownMenuSubItem, { type: 'item' }>
   staticDisplay?: boolean
 }) {
+  const isSelected = entry.highlighted || entry.selected
   const rowClass = cn(
     primaryItemClass,
-    entry.highlighted && 'bg-[var(--screening-surface-hover)]',
+    isSelected && 'bg-[var(--screening-surface-hover)]',
     entry.destructive && 'text-[var(--dialog-modal-danger)]',
     entry.disabled && 'pointer-events-none opacity-50',
   )
@@ -277,7 +278,7 @@ function PrimaryMenuItem({
       <span
         className={cn(
           'w-[3px] shrink-0 self-stretch bg-transparent',
-          staticDisplay && entry.highlighted
+          isSelected
             ? 'bg-[var(--ace-dropdown-menu-primary)]'
             : 'group-data-[highlighted]:bg-[var(--ace-dropdown-menu-primary)]',
         )}
@@ -559,9 +560,10 @@ function MenuEntries({
     }
 
     const Icon = entry.icon
+    const isSelected = entry.highlighted || entry.selected
     const rowClass = cn(
       compact ? compactItemClass : cn(itemClass, 'px-[var(--space-3)] py-[var(--space-2)]'),
-      entry.highlighted && 'bg-[var(--screening-surface-hover)]',
+      isSelected && 'bg-[var(--screening-surface-hover)]',
       (entry.shortcut || Icon) && 'justify-between gap-[var(--space-3)]',
       entry.destructive &&
         'text-[var(--dialog-modal-danger)] data-[highlighted]:bg-[var(--screening-surface-hover)] data-[highlighted]:text-[var(--dialog-modal-danger)]',

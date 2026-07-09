@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react'
+import { AceButton } from '../components/atoms/AceButton'
+import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
 import {
   DEFAULT_SCREENING_TABLE_CHROME,
   ScreeningResultsTable,
@@ -21,7 +23,8 @@ const CHROME_OPTIONS: {
   { key: 'showCheckboxes', label: 'Checkboxes', hint: 'Row and header selection' },
   { key: 'showExpandChevrons', label: 'Expand chevrons', hint: 'Header expand-all and per-row expansion' },
   { key: 'showRowSearch', label: 'Search field', hint: 'Toolbar search input' },
-  { key: 'showMatchStringKey', label: 'Match string key', hint: 'Key toggle, label, and legend' },
+  { key: 'showColumnMenu', label: 'Columns menu', hint: 'Show or hide table columns' },
+  { key: 'showHistoryToggle', label: 'History toggle', hint: 'Show or hide reviewed (Escalated) rows' },
   {
     key: 'showQuickFilters',
     label: 'Quick filters',
@@ -39,9 +42,12 @@ const CHROME_OPTIONS: {
   },
 ]
 
+const TABLE_CONTEXT_OPTIONS = [{ value: 'Watchlist Screening', label: 'Watchlist Screening' }] as const
+
 export function DataTableLab() {
   const [chrome, setChrome] = useState<ScreeningResultsTableChrome>(() => ({ ...DEFAULT_SCREENING_TABLE_CHROME }))
   const [modalOpen, setModalOpen] = useState(false)
+  const [tableContext, setTableContext] = useState('Watchlist Screening')
 
   const toggleChrome = useCallback((key: keyof ScreeningResultsTableChrome) => {
     setChrome((c) => ({ ...c, [key]: !c[key] }))
@@ -49,17 +55,33 @@ export function DataTableLab() {
 
   const previewToolbar = (
     <>
-      <div className="flex w-full justify-start">
-        <button
-          type="button"
-          onClick={() => setModalOpen(true)}
-          className={cn(
-            'rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-xs font-medium text-[var(--color-text-primary)] shadow-[var(--shadow-sm)] transition-colors',
-            'hover:bg-[var(--color-background)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2',
-          )}
-        >
+      <div className="flex w-full flex-wrap items-end gap-3">
+        <AceButton type="button" variant="secondary" size="sm" onClick={() => setModalOpen(true)}>
           Table preview options
-        </button>
+        </AceButton>
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <span
+            className={cn(
+              aceTypography('--ace-type-paragraph-p1-regular'),
+              'text-[var(--screening-text-primary)]',
+            )}
+          >
+            Context
+          </span>
+          <AceDropdownMenu
+            triggerLabel={tableContext}
+            triggerMode="field"
+            size="sm"
+            panelWidth="wide"
+            align="start"
+            items={TABLE_CONTEXT_OPTIONS.map((option) => ({
+              type: 'item' as const,
+              label: option.label,
+              selected: option.value === tableContext,
+              onSelect: () => setTableContext(option.value),
+            }))}
+          />
+        </div>
       </div>
       <DialogModal
         open={modalOpen}
@@ -106,7 +128,7 @@ export function DataTableLab() {
       examplesToolbar={previewToolbar}
       examples={
         <div className="w-full min-w-0">
-          <ScreeningResultsTable className="max-w-full" chrome={chrome} />
+          <ScreeningResultsTable className="max-w-full" chrome={chrome} title={tableContext} />
         </div>
       }
       code={
@@ -118,7 +140,7 @@ export function DataTableLab() {
 
 <ScreeningResultsTable
   rows={MOCK_ROWS}
-  title="Data Table"
+  title="Watchlist Screening"
   chrome={{ showPagination: true }}
 />`}</ComponentLabCode>
       }
@@ -156,8 +178,8 @@ export function DataTableLab() {
           </li>
           <li>
             Layout toggles: pass a <code className="text-[var(--color-text-primary)]">chrome</code> object (see{' '}
-            <code className="text-[var(--color-text-primary)]">DEFAULT_SCREENING_TABLE_CHROME</code> in the organism) to hide accordion chrome, filters, search, match
-            key, chevrons, checkboxes, or enable the pagination footer (<code className="text-[var(--color-text-primary)]">AcePagination</code>). The preview-options UI uses the shared{' '}
+            <code className="text-[var(--color-text-primary)]">DEFAULT_SCREENING_TABLE_CHROME</code> in the organism) to hide accordion chrome, filters, search, column menu, history toggle,
+            chevrons, checkboxes, or enable the pagination footer (<code className="text-[var(--color-text-primary)]">AcePagination</code>). The preview-options UI uses the shared{' '}
             <code className="text-[var(--color-text-primary)]">DialogModal</code> molecule (<code className="text-[var(--color-text-primary)]">--dialog-modal-*</code>).
           </li>
         </ul>

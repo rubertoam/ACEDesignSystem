@@ -1,88 +1,55 @@
-import { useState } from 'react'
-import { AceBadge } from '../components/atoms/AceBadge/AceBadge'
-import type { AceBadgeVariant } from '../components/atoms/AceBadge/badgeFieldStyles'
-import { LabSelect } from '../lib/labControls'
+import { AceStatusPill } from '../components/atoms/AceStatusPill/AceStatusPill'
+import type { AceStatusPillVariant } from '../components/atoms/AceStatusPill/statusPillFieldStyles'
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const VARIANTS: { value: AceBadgeVariant; label: string }[] = [
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
-  { value: 'dismissible', label: 'Dismissible' },
+const VARIANTS: {
+  value: AceStatusPillVariant
+  label: string
+  accentToken: string
+  surfaceToken: string
+  borderToken: string
+}[] = [
+  { value: 'purple', label: 'Purple', accentToken: 'Primary 400', surfaceToken: 'Primary 50', borderToken: 'Primary tint' },
+  { value: 'orange', label: 'Orange', accentToken: 'Warning 500', surfaceToken: 'Warning 50', borderToken: 'Warning tint' },
+  { value: 'green', label: 'Green', accentToken: 'Success 500', surfaceToken: 'Success 50', borderToken: 'Success tint' },
+  { value: 'gray', label: 'Gray', accentToken: 'Neutral 700', surfaceToken: 'Neutral 50', borderToken: 'Neutral 400' },
+  { value: 'blue', label: 'Blue', accentToken: 'Primary 500', surfaceToken: 'Primary 50', borderToken: 'Primary 200' },
+  { value: 'yellow', label: 'Yellow', accentToken: 'Notice 500', surfaceToken: 'Notice 50', borderToken: 'Notice 200' },
+  { value: 'pink', label: 'Pink', accentToken: 'Secondary Violet 400', surfaceToken: 'Secondary Violet 50', borderToken: 'Secondary Violet 200' },
+  { value: 'teal', label: 'Teal', accentToken: 'Secondary FinScan Teal 500', surfaceToken: 'Secondary FinScan Teal 50', borderToken: 'Secondary FinScan Teal 200' },
+  { value: 'red', label: 'Red', accentToken: 'Error 500', surfaceToken: 'Error 50', borderToken: 'Error tint' },
 ]
 
-const DEMO_LABEL = '[Placeholder Text]'
-
 export function BadgesLab() {
-  const [variant, setVariant] = useState<AceBadgeVariant>('active')
-  const [visible, setVisible] = useState(true)
-
-  const toolbar = (
-    <LabSelect
-      label="Variant"
-      value={variant}
-      onChange={(v) => {
-        setVariant(v as AceBadgeVariant)
-        setVisible(true)
-      }}
-      options={VARIANTS.map(({ value, label }) => ({ value, label }))}
-    />
-  )
-
   return (
     <ComponentLabPage
-      title="Badges"
-      description="Compact pill labels for status, filters, and metadata (Figma Tags 2347:669). Active uses FinScan Primary 400; inactive uses Primary 200 at 60% opacity; dismissible adds a trailing close control."
-      examplesToolbar={toolbar}
+      title="Status pills"
+      description="Compact status labels with a leading dot, matching the Review Assigned screening results table. Each variant uses a tinted border, 50-shade fill, saturated dot, and caption label — same pattern as New and Escalate in the prototype."
       examples={
-        <div className="space-y-8">
-          <div className={cn('items-start', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Interactive</p>
-            {variant === 'dismissible' ? (
-              visible ? (
-                <AceBadge variant="dismissible" onDismiss={() => setVisible(false)}>
-                  {DEMO_LABEL}
-                </AceBadge>
-              ) : (
-                <button
-                  type="button"
-                  className="text-sm text-[var(--screening-primary)] underline-offset-2 hover:underline"
-                  onClick={() => setVisible(true)}
-                >
-                  Show badge again
-                </button>
-              )
-            ) : (
-              <AceBadge variant={variant}>{DEMO_LABEL}</AceBadge>
-            )}
-          </div>
-
-          <div className={cn('space-y-4', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>All variants</p>
-            <div className="flex flex-wrap items-center gap-4">
-              <AceBadge variant="active">{DEMO_LABEL}</AceBadge>
-              <AceBadge variant="inactive">{DEMO_LABEL}</AceBadge>
-              <AceBadge variant="dismissible" onDismiss={() => undefined}>
-                {DEMO_LABEL}
-              </AceBadge>
-            </div>
+        <div className={cn('space-y-4', labExampleSectionClass)}>
+          <p className={labSectionLabelClass}>All variants</p>
+          <div className="flex flex-wrap items-center gap-4">
+            {VARIANTS.map(({ value, label }) => (
+              <AceStatusPill key={value} variant={value}>
+                {label}
+              </AceStatusPill>
+            ))}
           </div>
         </div>
       }
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
-            Pass label text as <code className="text-[var(--screening-text-primary)]">children</code>. Use{' '}
-            <code className="text-[var(--screening-text-primary)]">onDismiss</code> with the dismissible variant.
+            Pass label text as <code className="text-[var(--screening-text-primary)]">children</code>. Choose a color
+            with <code className="text-[var(--screening-text-primary)]">variant</code>.
           </p>
-          <ComponentLabCode>{`import { AceBadge } from '../components/atoms/AceBadge/AceBadge'
+          <ComponentLabCode>{`import { AceStatusPill } from '../components/atoms/AceStatusPill/AceStatusPill'
 
-<AceBadge variant="active">Active Jobs</AceBadge>
-<AceBadge variant="inactive">Archived</AceBadge>
-<AceBadge variant="dismissible" onDismiss={() => remove(id)}>
-  Filter: Open
-</AceBadge>`}</ComponentLabCode>
+<AceStatusPill variant="purple">New</AceStatusPill>
+<AceStatusPill variant="orange">Escalated</AceStatusPill>
+<AceStatusPill variant="green">Complete</AceStatusPill>`}</ComponentLabCode>
         </>
       }
       usage={
@@ -90,32 +57,26 @@ export function BadgesLab() {
           <section className="space-y-2">
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
-              Use badges for short, non-interactive labels (active / inactive) or removable filters and chips
-              (dismissible). Keep copy concise — Footer Regular at 10px per the Figma spec.
+              Use status pills for short, non-interactive row or field status labels. Keep copy concise — Caption
+              Semi-Bold, matching the Review Assigned screening table.
             </p>
           </section>
           <section className="space-y-2">
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Variants</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Active</strong> — Primary 400 fill, white
-                label
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Inactive</strong> — Primary 200 fill at 60%
-                opacity
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Dismissible</strong> — active styling plus
-                close icon (8px gap)
-              </li>
+              {VARIANTS.map(({ label, accentToken, surfaceToken, borderToken }) => (
+                <li key={label}>
+                  <strong className="text-[var(--screening-text-primary)]">{label}</strong> — {borderToken} border,{' '}
+                  {surfaceToken} fill, {accentToken} dot and label
+                </li>
+              ))}
             </ul>
           </section>
           <section className="space-y-2">
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Accessibility</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
-              Dismissible badges expose an icon button with <code className="text-[var(--screening-text-primary)]">aria-label</code>{' '}
-              (default “Remove badge”). Customize via <code className="text-[var(--screening-text-primary)]">dismissLabel</code>.
+              The leading dot is decorative (<code className="text-[var(--screening-text-primary)]">aria-hidden</code>
+              ). Status meaning should be conveyed by the visible label text.
             </p>
           </section>
         </>
@@ -123,18 +84,19 @@ export function BadgesLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-badge-active-bg</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-badge-inactive-bg</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-badge-text</code>
+            Layout — <code className="text-[var(--color-text-primary)]">--ace-status-pill-gap</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-status-pill-py</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-status-pill-pl</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-status-pill-pr</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-status-pill-dot-size</code>
           </li>
           <li>
-            Layout — <code className="text-[var(--color-text-primary)]">--ace-badge-px</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-badge-py</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-badge-gap</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-badge-radius</code>
+            Type — Caption Semi-Bold (
+            <code className="text-[var(--color-text-primary)]">--ace-type-caption-semi-bold</code>)
           </li>
           <li>
-            Type — Footer Regular (<code className="text-[var(--color-text-primary)]">--ace-type-footer-regular</code>)
+            Accent and surface colors are mapped per variant in{' '}
+            <code className="text-[var(--color-text-primary)]">aceStatusPillVariantTokens</code>
           </li>
         </ul>
       }

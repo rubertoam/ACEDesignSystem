@@ -3,6 +3,7 @@ import {
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -17,19 +18,59 @@ import {
   ChevronRight,
   Eye,
   EyeOff,
+  List,
   Search,
 } from 'lucide-react'
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Checkbox } from '../../atoms/Checkbox/Checkbox'
+import { AceStatusPill } from '../../atoms/AceStatusPill/AceStatusPill'
+import {
+  AceTooltip,
+  AceTooltipContent,
+  AceTooltipIconWrap,
+  AceTooltipTrigger,
+} from '../../atoms/AceTooltip/AceTooltip'
 import { AceAccordion } from '../../molecules/AceAccordion/AceAccordion'
+import { AceAccordionReviewProgress } from '../../molecules/AceAccordion/AceAccordionReviewProgress'
+import { aceDropdownMenuPanelClass } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
 import { TablePagination } from '../../molecules/TablePagination'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
 import {
+  DEFAULT_SCREENING_COLUMN_ORDER,
+  DEFAULT_VISIBLE_SCREENING_COLUMNS,
+  SCREENING_COLUMN_DEFINITIONS,
+  type ScreeningColumnKey,
+} from './screeningTableColumns'
+import {
+  type ColumnDropIndicator,
+  ScreeningColumnReorderMenuItem,
+  reorderScreeningColumnKeys,
+  screeningColumnDropLineClass,
+  screeningColumnMenuLabelClass,
+} from './screeningTableColumnMenu'
+import {
+  screeningStatusFilterChipActiveClass,
+  screeningStatusFilterChipClass,
+  screeningStatusFilterChipInactiveClass,
+  screeningStatusFilterLabelClass,
+  screeningToolbarIconButtonClass,
+} from './screeningTableToolbar'
+import {
+  screeningTableHeaderCellClass,
+  screeningTableHeaderLabelClass,
+  screeningTableHeaderRowClass,
+  screeningTableHeaderSortButtonClass,
+  screeningTableHeaderSortIconActiveClass,
+  screeningTableHeaderSortIconIdleClass,
+} from './screeningTableHeader'
+import type { SortKey } from './screeningTableTypes'
+import {
   MOCK_ROWS,
-  MATCH_KEY_ITEMS,
-  ageDotClass,
   parseAgeForSort,
   scoreIsHighRisk,
+  screeningDisabledRowClass,
+  showMatchAgeStaleIndicator,
   tileSoftStyle,
   type ScreeningResultRow,
   type ScreeningRowStatus,
@@ -48,28 +89,15 @@ const ACE = {
   meta: '--ace-type-paragraph-p1-regular',
   filterLabel: '--ace-type-paragraph-p1-semi-bold',
   chip: '--ace-type-paragraph-p1-semi-bold',
-  matchKeyHeading: '--ace-type-paragraph-p1-semi-bold',
-  keyLegend: '--ace-type-caption-regular',
   keyCode: '--ace-type-footer-semi-bold',
-  columnHeader: '--ace-type-label-bold',
   cell: '--ace-type-paragraph-p1-regular',
   cellEmphasis: '--ace-type-paragraph-p1-semi-bold',
   emptyState: '--ace-type-paragraph-p1-regular',
   link: '--ace-type-paragraph-p1-semi-bold',
   detail: '--ace-type-paragraph-p1-regular',
-  pill: '--ace-type-caption-semi-bold',
   score: '--ace-type-paragraph-p1-semi-bold',
 } as const
 
-export const screeningNewPillSurfaceClass =
-  'border border-[var(--screening-pill-new-border)] bg-[var(--screening-pill-new-surface)] transition-colors duration-200 ease-out'
-
-export const screeningNewPillLabelClass = cn(
-  aceTypography(ACE.pill),
-  'text-[var(--screening-pill-new-label)]',
-)
-
-type SortKey = 'name' | 'dob' | 'matchAge' | 'matchScore' | 'matchString' | 'status'
 type SortDir = 'asc' | 'desc'
 
 const checkboxPadWrapClass =
@@ -83,8 +111,10 @@ export type ScreeningResultsTableChrome = {
   showAccordionHeader: boolean
   /** “Filter by” label and status chips */
   showQuickFilters: boolean
-  /** Match-string key toggle, label, and legend */
-  showMatchStringKey: boolean
+  /** Columns visibility menu (toolbar icon left of search) */
+  showColumnMenu: boolean
+  /** Show / hide review history toggle (toolbar icon left of search) */
+  showHistoryToggle: boolean
   /** Search field in the filter toolbar */
   showRowSearch: boolean
   /** Row and header selection checkboxes */
@@ -98,7 +128,8 @@ export type ScreeningResultsTableChrome = {
 export const DEFAULT_SCREENING_TABLE_CHROME: ScreeningResultsTableChrome = {
   showAccordionHeader: true,
   showQuickFilters: true,
-  showMatchStringKey: true,
+  showColumnMenu: true,
+  showHistoryToggle: true,
   showRowSearch: true,
   showCheckboxes: true,
   showExpandChevrons: true,
@@ -125,9 +156,21 @@ export function ScreeningResultsTable({
 }: ScreeningResultsTableProps) {
   const chrome = { ...DEFAULT_SCREENING_TABLE_CHROME, ...chromeProp }
   const hasControlColumn = chrome.showExpandChevrons || chrome.showCheckboxes
-  const fullColSpan = 6 + (hasControlColumn ? 1 : 0)
   const tableCaptionId = useId()
   const [statusFilters, setStatusFilters] = useState<Set<ScreeningRowStatus>>(() => new Set())
+  const [showReviewHistory, setShowReviewHistory] = useState(true)
+  const [visibleColumns, setVisibleColumns] = useState<Set<ScreeningColumnKey>>(
+    () => new Set(DEFAULT_VISIBLE_SCREENING_COLUMNS),
+  )
+  const [columnOrder, setColumnOrder] = useState<ScreeningColumnKey[]>(
+    () => [...DEFAULT_SCREENING_COLUMN_ORDER],
+  )
+  const [columnDropIndicator, setColumnDropIndicator] = useState<ColumnDropIndicator>(null)
+  const [draggedColumnKey, setDraggedColumnKey] = useState<ScreeningColumnKey | null>(null)
+  const [columnDropLineTop, setColumnDropLineTop] = useState<number | null>(null)
+  const columnListRef = useRef<HTMLDivElement>(null)
+  const columnItemRefs = useRef(new Map<ScreeningColumnKey, HTMLElement>())
+  const draggedColumnKeyRef = useRef<ScreeningColumnKey | null>(null)
   const [sortKey, setSortKey] = useState<SortKey | null>(null)
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
@@ -145,7 +188,6 @@ export function ScreeningResultsTable({
     [isSelectionControlled, onSelectedIdsChange],
   )
   const [sectionCollapsed, setSectionCollapsed] = useState(false)
-  const [matchKeyOpen, setMatchKeyOpen] = useState(false)
   const [rowSearchQuery, setRowSearchQuery] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -156,8 +198,63 @@ export function ScreeningResultsTable({
     return Array.from(set).sort((a, b) => a.localeCompare(b))
   }, [rows])
 
+  const columnMenuOptions = useMemo(
+    () =>
+      columnOrder.map((key) => {
+        const column = SCREENING_COLUMN_DEFINITIONS.find((definition) => definition.key === key)
+        return { key, label: column?.label ?? key }
+      }),
+    [columnOrder],
+  )
+
+  const visibleColumnsInOrder = useMemo(
+    () => columnMenuOptions.filter((column) => visibleColumns.has(column.key)),
+    [columnMenuOptions, visibleColumns],
+  )
+
+  const registerColumnMenuItemRef = useCallback((key: ScreeningColumnKey, node: HTMLElement | null) => {
+    if (node) columnItemRefs.current.set(key, node)
+    else columnItemRefs.current.delete(key)
+  }, [])
+
+  const handleDraggedColumnKeyChange = useCallback((key: ScreeningColumnKey | null) => {
+    draggedColumnKeyRef.current = key
+    setDraggedColumnKey(key)
+  }, [])
+
+  useLayoutEffect(() => {
+    if (!columnDropIndicator || !draggedColumnKey || !columnListRef.current) {
+      setColumnDropLineTop(null)
+      return
+    }
+    const item = columnItemRefs.current.get(columnDropIndicator.targetKey)
+    if (!item) {
+      setColumnDropLineTop(null)
+      return
+    }
+    const listTop = columnListRef.current.getBoundingClientRect().top
+    const itemRect = item.getBoundingClientRect()
+    const relativeTop = itemRect.top - listTop
+    setColumnDropLineTop(
+      columnDropIndicator.position === 'before' ? relativeTop : relativeTop + itemRect.height,
+    )
+  }, [columnDropIndicator, draggedColumnKey, columnMenuOptions])
+
+  const fullColSpan = visibleColumnsInOrder.length + (hasControlColumn ? 1 : 0)
+
+  const hasReviewHistory = useMemo(() => rows.some((row) => row.status !== 'New'), [rows])
+  const historyToggleDisabled = !hasReviewHistory
+
+  const historyFilteredRows = useMemo(() => {
+    if (showReviewHistory) return rows
+    return rows.filter((row) => row.status === 'New')
+  }, [rows, showReviewHistory])
+
   const filteredRows = useMemo(() => {
-    let list = statusFilters.size === 0 ? rows : rows.filter((r) => statusFilters.has(r.status))
+    let list =
+      statusFilters.size === 0
+        ? historyFilteredRows
+        : historyFilteredRows.filter((r) => statusFilters.has(r.status))
     const q = rowSearchQuery.trim().toLowerCase()
     if (q === '') return list
     return list.filter((r) => {
@@ -173,7 +270,7 @@ export function ScreeningResultsTable({
         .toLowerCase()
       return hay.includes(q)
     })
-  }, [rows, statusFilters, rowSearchQuery])
+  }, [historyFilteredRows, statusFilters, rowSearchQuery])
 
   const sortedRows = useMemo(() => {
     const list = [...filteredRows]
@@ -258,7 +355,7 @@ export function ScreeningResultsTable({
 
   useEffect(() => {
     setPage(1)
-  }, [rowSearchQuery, statusFilters])
+  }, [rowSearchQuery, statusFilters, showReviewHistory])
 
   useEffect(() => {
     if (!chrome.showQuickFilters) setStatusFilters(new Set())
@@ -295,7 +392,6 @@ export function ScreeningResultsTable({
 
   const reviewedCount = useMemo(() => rows.filter((r) => r.status === 'Escalated').length, [rows])
   const totalCount = rows.length
-  const progress = totalCount === 0 ? 0 : (reviewedCount / totalCount) * 100
 
   const selectionMode = chrome.showCheckboxes && selectedIds.size > 0
 
@@ -362,32 +458,53 @@ export function ScreeningResultsTable({
     })
   }
 
+  const toggleColumnVisibility = useCallback((key: ScreeningColumnKey, visible: boolean) => {
+    setVisibleColumns((prev) => {
+      const next = new Set(prev)
+      if (visible) {
+        next.add(key)
+        return next
+      }
+      if (next.size <= 1) return prev
+      next.delete(key)
+      return next
+    })
+  }, [])
+
+  const reorderColumns = useCallback(
+    (fromKey: ScreeningColumnKey, toKey: ScreeningColumnKey, position: 'before' | 'after') => {
+      setColumnOrder((prev) => reorderScreeningColumnKeys(prev, fromKey, toKey, position))
+    },
+    [],
+  )
+
   const headerCheckboxState: boolean | 'indeterminate' =
     someVisibleSelected && !allVisibleSelected ? 'indeterminate' : allVisibleSelected
 
-  const showToolbar = chrome.showQuickFilters || chrome.showMatchStringKey || chrome.showRowSearch
+  const showToolbar =
+    chrome.showQuickFilters ||
+    chrome.showColumnMenu ||
+    chrome.showHistoryToggle ||
+    chrome.showRowSearch
+
+  const toolbarTrailing = chrome.showColumnMenu || chrome.showHistoryToggle || chrome.showRowSearch
+  const escalatedCasesVisible = showReviewHistory
+  const historyTooltipLabel = escalatedCasesVisible ? 'Hide' : 'Show'
 
   const mainPanel = (
     <div className="flex max-h-[var(--screening-body-max-height)] min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
       {showToolbar ? (
-        <div className="shrink-0 border-b border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] px-[var(--space-4)] py-[var(--space-3)]">
+        <div className="shrink-0 border-b border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-[var(--space-4)] py-[var(--space-3)]">
           <div
             className={cn(
               'flex flex-wrap items-center gap-x-[var(--space-3)] gap-y-[var(--space-2)]',
-              !chrome.showQuickFilters && (chrome.showMatchStringKey || chrome.showRowSearch) && 'justify-end',
+              !chrome.showQuickFilters && toolbarTrailing && 'justify-end',
             )}
           >
             {chrome.showQuickFilters ? (
-              <>
-                <span
-                  className={cn(
-                    aceTypography(ACE.filterLabel),
-                    'shrink-0 text-[var(--screening-text-primary)]',
-                  )}
-                >
-                  Filter by
-                </span>
-                <div className="flex min-w-0 flex-wrap items-center gap-[var(--space-2)]">
+              <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+                <span className={screeningStatusFilterLabelClass}>Filter by</span>
+                <div className="flex min-w-0 flex-wrap items-center gap-2">
                   {statusChips.map((st) => {
                     const active = statusFilters.has(st)
                     return (
@@ -403,11 +520,10 @@ export function ScreeningResultsTable({
                           })
                         }
                         className={cn(
-                          aceTypography(ACE.chip),
-                          'cursor-pointer rounded-[var(--radius-sm)] border px-[var(--space-3)] py-[var(--space-2)] transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+                          screeningStatusFilterChipClass,
                           active
-                            ? 'border-[var(--screening-chip-active-border)] bg-[var(--screening-primary-soft-bg)] text-[var(--screening-chip-active-text)] hover:border-[var(--screening-primary-hover-border)] hover:bg-[var(--screening-primary-soft-bg-hover)]'
-                            : 'border-[var(--screening-chip-inactive-border)] bg-[var(--screening-chip-inactive-bg)] text-[var(--screening-text-primary)] hover:border-[var(--screening-chip-inactive-hover-border)] hover:bg-[var(--screening-chip-inactive-hover-bg)]',
+                            ? screeningStatusFilterChipActiveClass
+                            : screeningStatusFilterChipInactiveClass,
                         )}
                       >
                         {st}
@@ -415,40 +531,143 @@ export function ScreeningResultsTable({
                     )
                   })}
                 </div>
-              </>
+              </div>
             ) : null}
-            {chrome.showMatchStringKey || chrome.showRowSearch ? (
+            {toolbarTrailing ? (
               <div
                 className={cn(
-                  'flex max-w-full min-w-0 flex-wrap items-center gap-[var(--space-2)]',
+                  'flex max-w-full min-w-0 shrink-0 flex-nowrap items-center gap-[var(--space-3)]',
                   chrome.showQuickFilters && 'ms-auto',
                 )}
               >
-                {chrome.showMatchStringKey ? (
-                  <>
-                    <button
-                      type="button"
-                      aria-expanded={matchKeyOpen}
-                      aria-label={matchKeyOpen ? 'Hide match string key' : 'Show match string key'}
-                      onClick={() => setMatchKeyOpen((o) => !o)}
-                      className="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border border-[var(--screening-border-strong)] bg-[var(--screening-chip-inactive-bg)] text-[var(--screening-text-secondary)] transition-colors duration-200 ease-out hover:border-[var(--screening-chip-inactive-hover-border)] hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]"
-                    >
-                      {matchKeyOpen ? <EyeOff className="size-4" strokeWidth={2} aria-hidden /> : <Eye className="size-4" strokeWidth={2} aria-hidden />}
-                    </button>
-                    <span
-                      className={cn(
-                        aceTypography(ACE.matchKeyHeading),
-                        'shrink-0 text-[var(--screening-text-primary)]',
-                      )}
-                    >
-                      Match string key
-                    </span>
-                  </>
+                {chrome.showColumnMenu ? (
+                  <DropdownMenu.Root
+                    modal={false}
+                    onOpenChange={(open) => {
+                      if (!open) {
+                        setColumnDropIndicator(null)
+                        handleDraggedColumnKeyChange(null)
+                        setColumnDropLineTop(null)
+                      }
+                    }}
+                  >
+                    <AceTooltip>
+                      <AceTooltipTrigger asChild>
+                        <DropdownMenu.Trigger asChild>
+                          <button
+                            type="button"
+                            aria-label="Show or hide columns"
+                            className={screeningToolbarIconButtonClass}
+                          >
+                            <List className="size-4" strokeWidth={2} aria-hidden />
+                          </button>
+                        </DropdownMenu.Trigger>
+                      </AceTooltipTrigger>
+                      <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
+                        Columns
+                      </AceTooltipContent>
+                    </AceTooltip>
+                    <DropdownMenu.Portal>
+                      <DropdownMenu.Content
+                        align="end"
+                        sideOffset={4}
+                        collisionPadding={8}
+                        className={cn(aceDropdownMenuPanelClass, 'min-w-[15rem] p-1')}
+                        onPointerDownOutside={(event) => {
+                          if (draggedColumnKeyRef.current) event.preventDefault()
+                        }}
+                        onInteractOutside={(event) => {
+                          if (draggedColumnKeyRef.current) event.preventDefault()
+                        }}
+                        onDragLeave={(event) => {
+                          if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                            setColumnDropIndicator(null)
+                            setColumnDropLineTop(null)
+                          }
+                        }}
+                      >
+                        <DropdownMenu.Label className={screeningColumnMenuLabelClass}>Columns</DropdownMenu.Label>
+                        <div
+                          ref={columnListRef}
+                          className="relative"
+                          onDragOver={(event) => event.preventDefault()}
+                        >
+                          {columnDropLineTop !== null ? (
+                            <span
+                              aria-hidden
+                              className={cn(
+                                screeningColumnDropLineClass,
+                                draggedColumnKey ? 'scale-x-100 opacity-100' : 'scale-x-[0.98] opacity-0',
+                              )}
+                              style={{ top: columnDropLineTop }}
+                            />
+                          ) : null}
+                          {columnMenuOptions.map((column) => (
+                            <ScreeningColumnReorderMenuItem
+                              key={column.key}
+                              columnKey={column.key}
+                              label={column.label}
+                              checked={visibleColumns.has(column.key)}
+                              disabled={visibleColumns.has(column.key) && visibleColumns.size <= 1}
+                              draggedColumnKey={draggedColumnKey}
+                              dropIndicator={columnDropIndicator}
+                              onCheckedChange={(checked) => toggleColumnVisibility(column.key, checked)}
+                              onReorder={reorderColumns}
+                              onDropIndicatorChange={setColumnDropIndicator}
+                              onDraggedColumnKeyChange={handleDraggedColumnKeyChange}
+                              onItemRef={registerColumnMenuItemRef}
+                            />
+                          ))}
+                        </div>
+                      </DropdownMenu.Content>
+                    </DropdownMenu.Portal>
+                  </DropdownMenu.Root>
+                ) : null}
+                {chrome.showHistoryToggle ? (
+                  <AceTooltip>
+                    {historyToggleDisabled ? (
+                      <AceTooltipTrigger asChild>
+                        <AceTooltipIconWrap>
+                          <button
+                            type="button"
+                            disabled
+                            aria-expanded={showReviewHistory}
+                            aria-label="There is no history to show"
+                            className={cn(
+                              screeningToolbarIconButtonClass,
+                              'cursor-not-allowed opacity-60',
+                            )}
+                          >
+                            <Eye className="size-4" strokeWidth={2} aria-hidden />
+                          </button>
+                        </AceTooltipIconWrap>
+                      </AceTooltipTrigger>
+                    ) : (
+                      <AceTooltipTrigger asChild>
+                        <button
+                          type="button"
+                          aria-expanded={showReviewHistory}
+                          aria-label={historyTooltipLabel}
+                          onClick={() => setShowReviewHistory((open) => !open)}
+                          className={screeningToolbarIconButtonClass}
+                        >
+                          {showReviewHistory ? (
+                            <EyeOff className="size-4" strokeWidth={2} aria-hidden />
+                          ) : (
+                            <Eye className="size-4" strokeWidth={2} aria-hidden />
+                          )}
+                        </button>
+                      </AceTooltipTrigger>
+                    )}
+                    <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
+                      {historyToggleDisabled ? 'There is no history to show.' : historyTooltipLabel}
+                    </AceTooltipContent>
+                  </AceTooltip>
                 ) : null}
                 {chrome.showRowSearch ? (
                   <div
                     className={cn(
-                      'flex h-[var(--screening-input-height-sm)] min-w-[min(100%,12.5rem)] max-w-[16rem] shrink-0 items-center gap-[var(--screening-input-gap)] rounded-[var(--screening-input-radius)] border border-solid border-[var(--screening-input-border)] bg-[var(--screening-surface)] px-[var(--screening-input-px)] transition-[background-color,border-color,box-shadow] duration-150 ease-out',
+                      'flex h-[var(--screening-input-height-sm)] w-[12rem] min-w-[min(100%,12.5rem)] max-w-[16rem] shrink-0 items-center gap-[var(--screening-input-gap)] rounded-[var(--screening-input-radius)] border border-solid border-[var(--screening-input-border)] bg-[var(--screening-surface)] px-[var(--screening-input-px)] transition-[background-color,border-color,box-shadow] duration-150 ease-out',
                       'focus-within:border-[var(--screening-input-border-focus)] focus-within:bg-[var(--screening-input-bg-focus)] focus-within:shadow-[0_0_0_2px_var(--screening-input-focus-ring)]',
                     )}
                   >
@@ -472,34 +691,6 @@ export function ScreeningResultsTable({
                     />
                   </div>
                 ) : null}
-                {chrome.showMatchStringKey && matchKeyOpen ? (
-                  <div className="flex max-w-full flex-wrap items-center gap-x-[var(--space-3)] gap-y-[var(--space-1)]">
-                    {MATCH_KEY_ITEMS.map((item) => (
-                      <span
-                        key={item.code}
-                        className={cn(
-                          aceTypography(ACE.keyLegend),
-                          'inline-flex items-center gap-[var(--space-2)] text-[var(--screening-text-secondary)]',
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            aceTypography(ACE.keyCode),
-                            'inline-flex h-[var(--space-6)] min-w-[var(--space-6)] items-center justify-center rounded border border-solid px-[var(--space-1)] leading-none',
-                          )}
-                          style={{
-                            backgroundColor: item.bg,
-                            color: item.fg,
-                            borderColor: item.border,
-                          }}
-                        >
-                          {item.code}
-                        </span>
-                        {item.label}
-                      </span>
-                    ))}
-                  </div>
-                ) : null}
               </div>
             ) : null}
           </div>
@@ -518,7 +709,7 @@ export function ScreeningResultsTable({
                   {rowSearchQuery.trim() !== '' ? `, search "${rowSearchQuery.trim()}"` : ''}
                 </caption>
                 <thead className="sticky top-0 z-[1] border-b border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] shadow-[var(--screening-shadow-thead)]">
-                  <tr className="h-8">
+                  <tr className={screeningTableHeaderRowClass}>
                     {hasControlColumn ? (
                       <th scope="col" className="w-12 px-[var(--space-2)] py-[var(--space-1)] align-middle">
                         <div className="flex items-center gap-[var(--space-1)]">
@@ -563,43 +754,27 @@ export function ScreeningResultsTable({
                         </span>
                       </th>
                     ) : null}
-                    {(
-                      [
-                        ['status', 'Status'],
-                        ['name', 'Name'],
-                        ['dob', 'Date of Birth'],
-                        ['matchAge', 'Match Age'],
-                        ['matchScore', 'Match Score'],
-                        ['matchString', 'Match String'],
-                      ] as const
-                    ).map(([key, label]) => (
+                    {visibleColumnsInOrder.map((column) => (
                       <th
-                        key={key}
+                        key={column.key}
                         scope="col"
-                        className="px-[var(--space-3)] py-[var(--space-1)] align-middle"
-                        aria-sort={sortKey === key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
+                        className={screeningTableHeaderCellClass}
+                        aria-sort={sortKey === column.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
                       >
                         <button
                           type="button"
-                          onClick={() => toggleSort(key)}
-                          className="-mx-[var(--space-1)] inline-flex items-center gap-[var(--space-2)] rounded px-[var(--space-1)] py-[var(--space-1)] text-[var(--screening-text-primary)] transition-colors duration-200 ease-out hover:bg-[var(--screening-surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]"
+                          onClick={() => toggleSort(column.key)}
+                          className={screeningTableHeaderSortButtonClass}
                         >
-                          <span
-                            className={cn(
-                              aceTypography(ACE.columnHeader),
-                              'uppercase text-[var(--screening-text-muted)]',
-                            )}
-                          >
-                            {label}
-                          </span>
-                          {sortKey === key ? (
+                          <span className={screeningTableHeaderLabelClass}>{column.label}</span>
+                          {sortKey === column.key ? (
                             sortDir === 'asc' ? (
-                              <ArrowUp className="size-4 shrink-0 text-[var(--screening-primary)] transition-transform duration-200 ease-out" strokeWidth={2} />
+                              <ArrowUp className={screeningTableHeaderSortIconActiveClass} strokeWidth={2} />
                             ) : (
-                              <ArrowDown className="size-4 shrink-0 text-[var(--screening-primary)] transition-transform duration-200 ease-out" strokeWidth={2} />
+                              <ArrowDown className={screeningTableHeaderSortIconActiveClass} strokeWidth={2} />
                             )
                           ) : (
-                            <ArrowDownUp className="size-4 shrink-0 text-[var(--screening-icon-muted)] transition-colors duration-200 ease-out" strokeWidth={2} />
+                            <ArrowDownUp className={screeningTableHeaderSortIconIdleClass} strokeWidth={2} />
                           )}
                         </button>
                       </th>
@@ -618,7 +793,9 @@ export function ScreeningResultsTable({
                         >
                           {rows.length === 0
                             ? 'No screening results to display.'
-                            : statusFilters.size > 0 && rowSearchQuery.trim() !== ''
+                            : !showReviewHistory && hasReviewHistory && historyFilteredRows.length === 0
+                              ? 'All screening results have been reviewed. Show review history to see completed items.'
+                              : statusFilters.size > 0 && rowSearchQuery.trim() !== ''
                               ? 'No results match the current filters.'
                               : statusFilters.size > 0
                                 ? 'No results match the current filter.'
@@ -659,14 +836,14 @@ export function ScreeningResultsTable({
                           aria-selected={chrome.showCheckboxes && selected && !rowDone}
                           className={cn(
                             'group/row border-b border-[var(--screening-border-row)] transition-[background-color,box-shadow] duration-200 ease-out',
-                            rowDone && 'bg-[var(--screening-surface-row-muted)] text-[var(--screening-text-muted)] italic',
+                            rowDone && screeningDisabledRowClass,
                             !rowDone &&
                               'bg-[var(--screening-surface)] hover:bg-[var(--screening-surface-row-muted)] hover:shadow-[var(--screening-shadow-row-accent)]',
                             selected && !rowDone && 'bg-[var(--screening-surface-selected)]',
                           )}
                         >
                           {hasControlColumn ? (
-                          <td className="w-12 px-[var(--space-2)] py-[var(--space-3)] align-middle not-italic">
+                          <td className="w-12 px-[var(--space-2)] py-[var(--space-3)] align-middle">
                             <div className="flex items-center gap-[var(--space-1)]">
                               {chrome.showExpandChevrons ? (
                                 <button
@@ -710,96 +887,113 @@ export function ScreeningResultsTable({
                             </div>
                           </td>
                           ) : null}
-                          <td className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)] not-italic">
-                            {row.status === 'New' ? (
-                              <span
-                                className={cn(
-                                  'inline-flex items-center gap-[var(--space-2)] rounded-full py-[var(--space-1)] pl-[var(--space-2)] pr-[var(--space-3)]',
-                                  screeningNewPillSurfaceClass,
-                                )}
-                              >
-                                <span className="size-2 shrink-0 rounded-full bg-[var(--screening-pill-new-dot)]" />
-                                <span className={screeningNewPillLabelClass}>New</span>
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-[var(--space-2)] rounded-full border border-[var(--screening-pill-escalated-border)] bg-[var(--screening-pill-escalated-surface)] py-[var(--space-1)] pl-[var(--space-2)] pr-[var(--space-3)] transition-colors duration-200 ease-out">
-                                <span className="size-2 rounded-full bg-[var(--screening-pill-escalated-dot)]" />
-                                <span
-                                  className={cn(
-                                    aceTypography(ACE.pill),
-                                    'text-[var(--screening-pill-escalated-label)]',
-                                  )}
-                                >
-                                  Escalated
-                                </span>
-                              </span>
-                            )}
-                          </td>
-                          <td
-                            className={cn(
-                              aceTypography(ACE.cell),
-                              'px-[var(--space-3)] py-[var(--space-3)] text-[var(--screening-text-primary)]',
-                            )}
-                          >
-                            {row.name}
-                          </td>
-                          <td
-                            className={cn(
-                              aceTypography(ACE.cell),
-                              'whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)] text-[var(--screening-text-secondary)]',
-                            )}
-                          >
-                            {row.dob}
-                          </td>
-                          <td className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]">
-                            <span
-                              className={cn(
-                                aceTypography(ACE.cell),
-                                'inline-flex items-center gap-[var(--space-2)] text-[var(--screening-text-secondary)]',
-                              )}
-                            >
-                              <span className={cn('size-2 shrink-0 rounded-full', ageDotClass(row.matchAgeTone))} />
-                              {row.matchAgeLabel}
-                            </span>
-                          </td>
-                          <td
-                            className={cn(
-                              aceTypography(ACE.score),
-                              'px-[var(--space-3)] py-[var(--space-3)] tabular-nums transition-colors duration-200 ease-out',
-                              rowDone
-                                ? 'text-[var(--screening-text-muted)]'
-                                : scoreIsHighRisk(row.matchScore)
-                                  ? 'text-[var(--screening-score-high)]'
-                                  : 'text-[var(--screening-text-primary)]',
-                            )}
-                          >
-                            {row.matchScore}
-                          </td>
-                          <td className="px-[var(--space-3)] py-[var(--space-3)]">
-                            <div className="flex items-center gap-[var(--space-1)]">
-                              {row.matchTiles.map((t, i) => {
-                                const s = tileSoftStyle(t)
+                          {visibleColumnsInOrder.map((column) => {
+                            switch (column.key) {
+                              case 'status':
                                 return (
-                                  <span
-                                    key={`${row.id}-t-${i}`}
-                                    title={t}
-                                    className={cn(
-                                      aceTypography(ACE.keyCode),
-                                      'inline-flex h-[var(--space-6)] min-w-[var(--space-6)] items-center justify-center rounded border border-solid px-[var(--space-1)] leading-none transition-transform duration-200 ease-out',
-                                      !rowDone && 'hover:scale-[1.03]',
-                                    )}
-                                    style={{
-                                      backgroundColor: s.bg,
-                                      color: s.fg,
-                                      borderColor: s.border,
-                                    }}
+                                  <td
+                                    key={column.key}
+                                    className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]"
                                   >
-                                    {t}
-                                  </span>
+                                    {row.status === 'New' ? (
+                                      <AceStatusPill variant="purple">New</AceStatusPill>
+                                    ) : (
+                                      <AceStatusPill variant="orange">Escalated</AceStatusPill>
+                                    )}
+                                  </td>
                                 )
-                              })}
-                            </div>
-                          </td>
+                              case 'name':
+                                return (
+                                  <td
+                                    key={column.key}
+                                    className={cn(
+                                      aceTypography(ACE.cell),
+                                      'px-[var(--space-3)] py-[var(--space-3)] text-[var(--screening-text-primary)]',
+                                    )}
+                                  >
+                                    {row.name}
+                                  </td>
+                                )
+                              case 'dob':
+                                return (
+                                  <td
+                                    key={column.key}
+                                    className={cn(
+                                      aceTypography(ACE.cell),
+                                      'whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)] text-[var(--screening-text-secondary)]',
+                                    )}
+                                  >
+                                    {row.dob}
+                                  </td>
+                                )
+                              case 'matchAge':
+                                return (
+                                  <td key={column.key} className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]">
+                                    <span
+                                      className={cn(
+                                        aceTypography(ACE.cell),
+                                        'inline-flex items-center gap-[var(--space-2)] text-[var(--screening-text-secondary)]',
+                                      )}
+                                    >
+                                      {showMatchAgeStaleIndicator(row.matchAgeTone) ? (
+                                        <span
+                                          className="size-2 shrink-0 rounded-full bg-[var(--screening-age-stale)]"
+                                          aria-hidden
+                                        />
+                                      ) : null}
+                                      {row.matchAgeLabel}
+                                    </span>
+                                  </td>
+                                )
+                              case 'matchScore':
+                                return (
+                                  <td
+                                    key={column.key}
+                                    className={cn(
+                                      aceTypography(ACE.score),
+                                      'px-[var(--space-3)] py-[var(--space-3)] tabular-nums transition-colors duration-200 ease-out',
+                                      rowDone
+                                        ? 'text-[var(--screening-text-muted)]'
+                                        : scoreIsHighRisk(row.matchScore)
+                                          ? 'text-[var(--screening-score-high)]'
+                                          : 'text-[var(--screening-text-primary)]',
+                                    )}
+                                  >
+                                    {row.matchScore}
+                                  </td>
+                                )
+                              case 'matchString':
+                                return (
+                                  <td key={column.key} className="px-[var(--space-3)] py-[var(--space-3)]">
+                                    <div className="flex items-center gap-[var(--space-1)]">
+                                      {row.matchTiles.map((t, i) => {
+                                        const s = tileSoftStyle(t)
+                                        return (
+                                          <span
+                                            key={`${row.id}-t-${i}`}
+                                            title={t}
+                                            className={cn(
+                                              aceTypography(ACE.keyCode),
+                                              'inline-flex h-[var(--space-6)] min-w-[var(--space-6)] items-center justify-center rounded border border-solid px-[var(--space-1)] leading-none transition-transform duration-200 ease-out',
+                                              !rowDone && 'hover:scale-[1.03]',
+                                            )}
+                                            style={{
+                                              backgroundColor: s.bg,
+                                              color: s.fg,
+                                              borderColor: s.border,
+                                            }}
+                                          >
+                                            {t}
+                                          </span>
+                                        )
+                                      })}
+                                    </div>
+                                  </td>
+                                )
+                              default:
+                                return null
+                            }
+                          })}
                         </tr>
                         {chrome.showExpandChevrons ? (
                         <tr className="border-b border-[var(--screening-border-row)] border-t-0">
@@ -861,33 +1055,7 @@ export function ScreeningResultsTable({
   )
 
   const tableHeaderTrailing = (
-    <div
-      className="flex shrink-0 items-center gap-[var(--space-3)]"
-      onClick={(e) => e.stopPropagation()}
-      onKeyDown={(e) => e.stopPropagation()}
-    >
-      <span
-        className={cn(
-          aceTypography(ACE.meta),
-          'hidden whitespace-nowrap text-[var(--screening-text-secondary)] sm:inline',
-        )}
-      >
-        {reviewedCount} of {totalCount} Reviewed
-      </span>
-      <div
-        className="h-[var(--screening-progress-height)] w-[var(--screening-progress-width)] overflow-hidden rounded-full border border-[var(--screening-border-soft)] bg-[var(--screening-progress-track)]"
-        role="progressbar"
-        aria-valuemin={0}
-        aria-valuemax={totalCount}
-        aria-valuenow={reviewedCount}
-        aria-label={`Review progress: ${reviewedCount} of ${totalCount} reviewed`}
-      >
-        <div
-          className="h-full rounded-full bg-[var(--screening-progress-fill)] transition-[width] duration-300 ease-out"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-    </div>
+    <AceAccordionReviewProgress reviewed={reviewedCount} total={totalCount} />
   )
 
   const flatShellClass = cn(

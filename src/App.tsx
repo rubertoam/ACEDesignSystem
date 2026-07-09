@@ -26,6 +26,7 @@ import { TabsLab } from './pages/TabsLab'
 import { AnimationsLab } from './pages/AnimationsLab'
 import { FinScanIconLab } from './pages/FinScanIconLab'
 import { BadgesLab } from './pages/BadgesLab'
+import { TooltipLab } from './pages/TooltipLab'
 import { ToastMessagesLab } from './pages/ToastMessagesLab'
 import { TimelineLab } from './pages/TimelineLab'
 import { AttachmentsLab } from './pages/AttachmentsLab'
@@ -46,6 +47,7 @@ export default function App() {
         <Route path="atoms/toggles" element={<TogglePlaygroundLab />} />
         <Route path="atoms/radios" element={<RadioPlaygroundLab />} />
         <Route path="atoms/badges" element={<BadgesLab />} />
+        <Route path="atoms/tooltips" element={<TooltipLab />} />
         <Route path="atoms/tabs" element={<Navigate to="/lab/molecules/tabs" replace />} />
         <Route path="atoms/animations" element={<AnimationsLab />} />
         <Route path="atoms/finscan-logo" element={<FinScanIconLab />} />

@@ -1,6 +1,25 @@
 import './ace-design-system.css'
 
-export { AceBadge, type AceBadgeProps } from './components/atoms/AceBadge/AceBadge'
+export { AceStatusPill, type AceStatusPillProps } from './components/atoms/AceStatusPill/AceStatusPill'
+export {
+  aceStatusPillDotClass,
+  aceStatusPillLabelClass,
+  aceStatusPillShellClass,
+  aceStatusPillVariantTokens,
+  type AceStatusPillVariant,
+} from './components/atoms/AceStatusPill/statusPillFieldStyles'
+export {
+  AceTooltip,
+  AceTooltipContent,
+  AceTooltipIconWrap,
+  AceTooltipProvider,
+  AceTooltipTrigger,
+  type AceTooltipContentProps,
+  type AceTooltipProps,
+  type AceTooltipProviderProps,
+  type AceTooltipTriggerProps,
+} from './components/atoms/AceTooltip/AceTooltip'
+export { aceTooltipContentClass } from './components/atoms/AceTooltip/tooltipFieldStyles'
 export {
   AceAvailabilityTag,
   type AceAvailabilityTagProps,
@@ -54,6 +73,7 @@ export {
   type AceAccordionProps,
   type AceAccordionSurface,
 } from './components/molecules/AceAccordion/AceAccordion'
+export { AceAccordionReviewProgress, type AceAccordionReviewProgressProps } from './components/molecules/AceAccordion/AceAccordionReviewProgress'
 export { MaterialSymbol } from './components/molecules/AceAccordion/MaterialSymbol'
 export {
   AceDropdownMenu,
@@ -177,8 +197,6 @@ export {
   ScreeningResultsTable,
   getScreeningRowsForCase,
   MOCK_ROWS,
-  screeningNewPillLabelClass,
-  screeningNewPillSurfaceClass,
   type ScreeningResultRow,
   type ScreeningResultsTableChrome,
   type ScreeningRowStatus,

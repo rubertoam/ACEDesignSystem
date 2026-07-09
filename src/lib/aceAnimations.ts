@@ -113,6 +113,21 @@ export const ACE_ANIMATIONS: AceAnimationEntry[] = [
     easing: 'var(--ace-motion-ease-standard)',
     tokens: ['--ace-motion-duration-medium', '--ace-motion-ease-standard'],
   },
+  {
+    id: 'tooltip-enter-exit',
+    name: 'Tooltip enter / exit',
+    component: 'AceTooltip',
+    properties: 'opacity, transform (scale, slide)',
+    duration: 'var(--ace-tooltip-duration)',
+    easing: 'var(--ace-tooltip-ease)',
+    tokens: [
+      '--ace-tooltip-duration',
+      '--ace-tooltip-ease',
+      '--ace-motion-duration-fast',
+      '--ace-motion-ease-standard',
+    ],
+    notes: 'Fade + scale from 0.95 with a 2px slide based on `data-side` (top/bottom/left/right).',
+  },
 ]
 
 export function getAnimationById(id: string): AceAnimationEntry | undefined {

@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { AceAccordion, type AceAccordionSurface } from '../components/molecules/AceAccordion/AceAccordion'
+import { AceAccordionReviewProgress } from '../components/molecules/AceAccordion/AceAccordionReviewProgress'
 import { LabCheckbox, LabRadioGroup } from '../lib/labControls'
+
+const DEMO_REVIEWED = 5
+const DEMO_TOTAL = 12
 
 const sampleBody = (
   <p className="m-0 min-h-[18rem] [font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--screening-text-secondary)]">
@@ -18,6 +22,7 @@ export function AccordionLab() {
   const [showDeleteIcon, setShowDeleteIcon] = useState(true)
   const [showEditIcon, setShowEditIcon] = useState(true)
   const [showMoreIcon, setShowMoreIcon] = useState(true)
+  const [showProgressBar, setShowProgressBar] = useState(false)
   const [startOpen, setStartOpen] = useState(false)
 
   const accordionKey = [
@@ -28,13 +33,14 @@ export function AccordionLab() {
     showDeleteIcon,
     showEditIcon,
     showMoreIcon,
+    showProgressBar,
     startOpen,
   ].join('-')
 
   return (
     <ComponentLabPage
       title="Accordions"
-      description="Standard collapsed / expanded accordion from ACE (Figma Accordions). Toggle gray or white background, drop shadow (XS) independently, and show or hide the tag and each Material icon on the right."
+      description="Standard collapsed / expanded accordion from ACE (Figma Accordions). Toggle gray or white background, drop shadow (XS) independently, review progress (data table pattern), and show or hide the tag and each Material icon on the right."
       examplesToolbar={
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
@@ -48,6 +54,7 @@ export function AccordionLab() {
               ]}
             />
             <LabCheckbox label="Drop shadow (XS)" checked={dropShadow} onCheckedChange={setDropShadow} />
+            <LabCheckbox label="Show progress bar" checked={showProgressBar} onCheckedChange={setShowProgressBar} />
             <LabCheckbox label="Show tag" checked={showTag} onCheckedChange={setShowTag} />
             <LabCheckbox label="Start expanded" checked={startOpen} onCheckedChange={setStartOpen} />
           </div>
@@ -74,6 +81,11 @@ export function AccordionLab() {
               showEditIcon={showEditIcon}
               showMoreIcon={showMoreIcon}
               defaultOpen={startOpen}
+              headerTrailing={
+                showProgressBar ? (
+                  <AceAccordionReviewProgress reviewed={DEMO_REVIEWED} total={DEMO_TOTAL} />
+                ) : undefined
+              }
             >
               {sampleBody}
             </AceAccordion>
@@ -90,6 +102,9 @@ export function AccordionLab() {
   showDeleteIcon
   showEditIcon
   showMoreIcon
+  headerTrailing={
+    <AceAccordionReviewProgress reviewed={5} total={12} />
+  }
 >
   {children}
 </AceAccordion>`}</ComponentLabCode>
@@ -103,7 +118,10 @@ export function AccordionLab() {
           Each header icon is controlled with <code className="text-[var(--color-text-primary)]">showAddIcon</code>,{' '}
           <code className="text-[var(--color-text-primary)]">showDeleteIcon</code>,{' '}
           <code className="text-[var(--color-text-primary)]">showEditIcon</code>, and{' '}
-          <code className="text-[var(--color-text-primary)]">showMoreIcon</code>.
+          <code className="text-[var(--color-text-primary)]">showMoreIcon</code>. Pass{' '}
+          <code className="text-[var(--color-text-primary)]">headerTrailing</code> with{' '}
+          <code className="text-[var(--color-text-primary)]">AceAccordionReviewProgress</code> for the data table review
+          progress cluster (can combine with tag and icons).
         </p>
       }
       variables={
@@ -119,6 +137,12 @@ export function AccordionLab() {
           <li>
             <code className="text-[var(--color-text-primary)]">--ace-accordion-duration</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-accordion-ease</code>
+          </li>
+          <li>
+            Progress — <code className="text-[var(--color-text-primary)]">--screening-progress-track</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-progress-fill</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-progress-width</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-progress-height</code>
           </li>
         </ul>
       }

@@ -1,3 +1,5 @@
+import { cn } from '../../../lib/cn'
+
 export type ScreeningRowStatus = 'New' | 'Escalated'
 
 export type ScreeningResultRow = {
@@ -142,10 +144,13 @@ export function tileSoftStyle(code: string): { bg: string; fg: string; border: s
   return { bg: 'var(--screening-tile-b-bg)', fg: 'var(--screening-tile-b-fg)', border: 'var(--screening-tile-b-border)' }
 }
 
+export function showMatchAgeStaleIndicator(tone: ScreeningResultRow['matchAgeTone']): boolean {
+  return tone === 'stale'
+}
+
 export function ageDotClass(tone: ScreeningResultRow['matchAgeTone']): string {
-  if (tone === 'fresh') return 'bg-[var(--screening-age-fresh)]'
-  if (tone === 'warn') return 'bg-[var(--screening-age-warn)]'
-  return 'bg-[var(--screening-age-stale)]'
+  if (showMatchAgeStaleIndicator(tone)) return 'bg-[var(--screening-age-stale)]'
+  return ''
 }
 
 export function parseAgeForSort(label: string): number {
@@ -157,3 +162,10 @@ export function parseAgeForSort(label: string): number {
     u === 'h' ? 1 : u === 'd' ? 24 : u === 'w' ? 24 * 7 : u === 'm' ? 24 * 30 : u === 'y' ? 24 * 365 : 1
   return n * mult
 }
+
+/** Disabled / completed screening rows — italic body text (Review Assigned pattern). */
+export const screeningDisabledRowClass = cn(
+  'bg-[var(--screening-surface-row-muted)]',
+  '[&_td]:italic [&_td_*]:italic',
+  '[&_td]:!text-[var(--ace-button-neutral-600)] [&_td_*]:!text-[var(--ace-button-neutral-600)]',
+)

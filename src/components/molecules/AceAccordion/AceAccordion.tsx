@@ -147,9 +147,7 @@ export function AceAccordion({
 
   const toggle = () => setOpen(!open)
   const surfaceBg = surfaceBgClass(surface)
-  const hasDefaultRightChrome =
-    headerTrailing == null &&
-    (showTag || showAddIcon || showDeleteIcon || showEditIcon || showMoreIcon)
+  const hasDefaultRightChrome = showTag || showAddIcon || showDeleteIcon || showEditIcon || showMoreIcon
 
   return (
     <div
@@ -187,31 +185,33 @@ export function AceAccordion({
           <span className={cn(titleClass, titleClassName, 'min-w-0 truncate')}>{title}</span>
         </span>
 
-        {headerTrailing != null ? (
-          <span className="flex shrink-0 items-center gap-[var(--ace-accordion-gap)]">{headerTrailing}</span>
-        ) : null}
-        {hasDefaultRightChrome ? (
+        {headerTrailing != null || hasDefaultRightChrome ? (
           <span className="flex shrink-0 items-center gap-[var(--ace-accordion-gap)]">
-            {showTag ? <span className={tagClass}>{tagLabel}</span> : null}
-            {showAddIcon ? (
-              <ActionButton label="Add" onClick={onAddClick}>
-                <MaterialSymbol name="add_circle" />
-              </ActionButton>
-            ) : null}
-            {showDeleteIcon ? (
-              <ActionButton label="Delete" onClick={onDeleteClick}>
-                <MaterialSymbol name="delete" />
-              </ActionButton>
-            ) : null}
-            {showEditIcon ? (
-              <ActionButton label="Edit" onClick={onEditClick}>
-                <MaterialSymbol name="edit" />
-              </ActionButton>
-            ) : null}
-            {showMoreIcon ? (
-              <ActionButton label="More options" onClick={onMoreClick}>
-                <MaterialSymbol name="more_horiz" />
-              </ActionButton>
+            {headerTrailing}
+            {hasDefaultRightChrome ? (
+              <>
+                {showTag ? <span className={tagClass}>{tagLabel}</span> : null}
+                {showAddIcon ? (
+                  <ActionButton label="Add" onClick={onAddClick}>
+                    <MaterialSymbol name="add_circle" />
+                  </ActionButton>
+                ) : null}
+                {showDeleteIcon ? (
+                  <ActionButton label="Delete" onClick={onDeleteClick}>
+                    <MaterialSymbol name="delete" />
+                  </ActionButton>
+                ) : null}
+                {showEditIcon ? (
+                  <ActionButton label="Edit" onClick={onEditClick}>
+                    <MaterialSymbol name="edit" />
+                  </ActionButton>
+                ) : null}
+                {showMoreIcon ? (
+                  <ActionButton label="More options" onClick={onMoreClick}>
+                    <MaterialSymbol name="more_horiz" />
+                  </ActionButton>
+                ) : null}
+              </>
             ) : null}
           </span>
         ) : null}
