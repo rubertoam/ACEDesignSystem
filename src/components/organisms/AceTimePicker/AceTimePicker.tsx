@@ -520,8 +520,8 @@ export function AceTimePicker({
       </span>
       <p id={instructionsId} className="sr-only">
         {format === '24'
-          ? '24-hour format. Use hours 0–23 and minutes 0–59. Steppers use 5-minute intervals. Confirm to save or Cancel to revert.'
-          : '12-hour format. Use hours 1–12 and minutes 0–59. Change AM or PM with the period control. Confirm to save or Cancel to revert.'}
+          ? '24-hour format. Use hours 0-23 and minutes 0-59. Steppers use 5-minute intervals. Confirm to save or Cancel to revert.'
+          : '12-hour format. Use hours 1-12 and minutes 0-59. Change AM or PM with the period control. Confirm to save or Cancel to revert.'}
       </p>
 
       <DropdownMenu.Root open={open} onOpenChange={handleOpenChange} modal>
@@ -612,7 +612,7 @@ export function AceTimePicker({
 
               {minuteCorrected ? (
                 <p className="mt-2 text-center text-xs text-[var(--ace-input-error-message)]" role="status">
-                  Minutes adjusted to the nearest valid value (0–59).
+                  Minutes adjusted to the nearest valid value (0-59).
                 </p>
               ) : null}
 

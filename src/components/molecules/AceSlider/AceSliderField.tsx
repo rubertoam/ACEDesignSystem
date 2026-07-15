@@ -14,7 +14,7 @@ export type AceSliderFieldProps = AceSliderProps & {
 
 function valueLabel(value: AceSliderProps['value'], fallback: number): string {
   if (value === undefined) return String(Math.round(fallback))
-  if (Array.isArray(value)) return `${Math.round(value[0])} – ${Math.round(value[1])}`
+  if (Array.isArray(value)) return `${Math.round(value[0])} - ${Math.round(value[1])}`
   return String(Math.round(value))
 }
 
@@ -34,7 +34,7 @@ export function AceSliderField({
   const display =
     value !== undefined
       ? Array.isArray(value)
-        ? `${formatValue(value[0])} – ${formatValue(value[1])}`
+        ? `${formatValue(value[0])} - ${formatValue(value[1])}`
         : formatValue(value)
       : valueLabel(defaultValue, typeof defaultValue === 'number' ? defaultValue : defaultValue[0])
 

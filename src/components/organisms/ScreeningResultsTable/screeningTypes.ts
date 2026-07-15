@@ -77,7 +77,7 @@ function rowStatusForIndex(index: number, total: number, caseIndex: number): Scr
 }
 
 function dobForCase(caseIndex: number): string {
-  const dobs = ['03/23/1978', '04/11/1985', '06/07/1942', '09/14/1992', '—', '—']
+  const dobs = ['03/23/1978', '04/11/1985', '06/07/1942', '09/14/1992', '-', '-']
   return dobs[Math.min(caseIndex, dobs.length - 1)]
 }
 

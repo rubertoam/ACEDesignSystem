@@ -123,7 +123,7 @@ export function splitImplementationRulesMarkdown(markdown: string): {
 }
 
 function isVisualTokensHeading(title: string) {
-  return /visual\s*&\s*design\s*tokens/i.test(title)
+  return /visual\s*(?:&|and)\s*design\s*tokens/i.test(title)
 }
 
 /** Renders lab Implementation Rules markdown (headings, lists, tables, code fences). */
@@ -196,7 +196,9 @@ export function LabImplementationRulesDoc({
         <div key={key++} className="mt-6 flex flex-wrap items-center gap-2 first:mt-0">
           <h4 className={cn(h4Class, 'mt-0')}>{inlineFormat(title)}</h4>
           {visualTokens ? (
-            <span className={wipTagClass}>Work in Progress - Do not reference AI generated tokens</span>
+            <span className={wipTagClass}>
+              Work in Progress. Do not reference AI-generated tokens. Tokens are subject to change.
+            </span>
           ) : null}
         </div>,
       )

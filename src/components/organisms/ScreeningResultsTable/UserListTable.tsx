@@ -88,15 +88,18 @@ export function UserListTable({
   const [pageSize, setPageSize] = useState(10)
 
   const toggleSort = useCallback((key: UserListColumnKey) => {
-    setSortKey((current) => {
-      if (current === key) {
-        setSortDir((dir) => (dir === 'asc' ? 'desc' : 'asc'))
-        return current
-      }
+    if (sortKey !== key) {
+      setSortKey(key)
       setSortDir('asc')
-      return key
-    })
-  }, [])
+      return
+    }
+    if (sortDir === 'asc') {
+      setSortDir('desc')
+      return
+    }
+    setSortKey(null)
+    setSortDir('asc')
+  }, [sortDir, sortKey])
 
   const filteredRows = useMemo(() => {
     const q = rowSearchQuery.trim().toLowerCase()

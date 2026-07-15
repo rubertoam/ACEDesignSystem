@@ -420,7 +420,12 @@ export function ScreeningResultsTable({
       setSortDir('asc')
       return
     }
-    setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
+    if (sortDir === 'asc') {
+      setSortDir('desc')
+      return
+    }
+    setSortKey(null)
+    setSortDir('asc')
   }
 
   const toggleExpanded = useCallback(

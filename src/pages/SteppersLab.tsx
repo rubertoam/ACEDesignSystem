@@ -85,11 +85,11 @@ export function SteppersLab() {
       usage={
         <ul className="m-0 list-disc space-y-1 ps-5 text-sm text-[var(--color-text-muted)]">
           <li>
-            <code className="text-[var(--color-text-primary)]">variant=&quot;horizontal&quot;</code> — minus / plus
+            <code className="text-[var(--color-text-primary)]">variant=&quot;horizontal&quot;</code>: minus / plus
             controls flanking the value
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">variant=&quot;vertical&quot;</code> — chevrons above and
+            <code className="text-[var(--color-text-primary)]">variant=&quot;vertical&quot;</code>: chevrons above and
             below the value
           </li>
           <li>

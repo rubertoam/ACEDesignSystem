@@ -797,26 +797,7 @@ export function IconographyLab() {
             <p className="m-0 text-[var(--screening-text-muted)]">
               ACE product icons are{' '}
               <strong className="font-semibold text-[var(--screening-text-primary)]">Material Symbols Outlined</strong>.
-              Prefer the catalog ligatures above for product UI. All DS components use{' '}
-              <code className="text-[var(--screening-text-primary)]">MaterialSymbol</code>.
             </p>
-          </section>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Fill rules</h4>
-            <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Always filled:</strong> Lock, Sim Card Download
-                (download report).
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Never filled:</strong> Blocked, Escalate,
-                Released, Canceled.
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">State-dependent:</strong> Favorite - outlined
-                default, filled + Error 500 when selected.
-              </li>
-            </ul>
           </section>
           <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Icon button hover</h4>

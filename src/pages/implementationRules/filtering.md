@@ -9,7 +9,6 @@ Components: `FilterTrigger`, `FilterChip`, `FilterToggleChip`, `TableFilterHeade
 | Filter dimension | Host id (lab examples: locked / users / groups / statuses) | Menu checkbox maps to a chip |
 | Applied filters | Host `Set` or array | Checking adds a chip; clearing removes it |
 | Toggle chip state | `pressed: boolean` | Standalone on / off control |
-| View mode | `'client' \| 'compliance'` | Labels come from `filterViewModeLabel` |
 
 These pieces are UI only. The host owns the actual filter logic.
 
@@ -44,32 +43,21 @@ These pieces are UI only. The host owns the actual filter logic.
 ### Filters menu and applied chips (host pattern)
 1. Open Filters and show checkbox options
 2. Checking an option adds an applied chip (for example `Locked: All`)
-3. Unchecking or clearing a chip removes it from the applied set (the host has to keep the menu and chips in sync)
+3. Unchecking or clearing a chip removes it from the applied set
 4. Hide the chips row when nothing is applied
 
 ### Toggle chips
 - Click flips `pressed`
 - Stays in the active Neutral/700 look while pressed, including on hover
-- Not tied to the Filters menu unless the host connects them
+- Not tied to the filters menu, these are meant to be dynamic filters based on user actions in the table
 
 ### Clearable chip
 - Clear stops propagation, then calls `onClear`
 - Open is optional via `onOpen` (the lab may leave it out)
 
-### View mode (used with Data Table)
-- Filter trigger plus a wide primary menu; choosing an item updates the view-mode label
-
 ---
 
-## 5. Keyboard and focus
-
-- Trigger, toggle, open, and clear are native buttons with focus-visible rings
-- Toggle sets `aria-pressed={pressed}`
-- The Filters menu uses Radix / `DropdownMenu` listbox keyboard support
-
----
-
-## 6. Defaults and visual rest state
+## 5. Defaults and visual rest state
 
 | State | Appearance |
 |-------|------------|
@@ -80,7 +68,7 @@ These pieces are UI only. The host owns the actual filter logic.
 
 ---
 
-## 7. API
+## 6. API
 
 ```
 <DropdownMenu triggerLabel="Filters" triggerMode="filter" items={[checkbox…]} />
@@ -93,7 +81,7 @@ Helpers include `FILTER_VIEW_MODES`, `filterViewModeLabel`, `filterViewModeMenuI
 
 ---
 
-## 8. Accessibility
+## 7. Accessibility
 
 - Toggle chips use `aria-pressed`
 - Clear button has an `aria-label` (default `"Clear filter"`)
@@ -104,7 +92,7 @@ Helpers include `FILTER_VIEW_MODES`, `filterViewModeLabel`, `filterViewModeMenuI
 
 ---
 
-## 9. Visual and design tokens
+## 8. Visual and design tokens
 
 | Area | Tokens |
 |------|--------|
@@ -116,7 +104,7 @@ Helpers include `FILTER_VIEW_MODES`, `filterViewModeLabel`, `filterViewModeMenuI
 
 ---
 
-## 10. QA checklist
+## 9. QA checklist
 
 - Filters trigger opens the menu; checkboxes add and remove chips
 - Clearing a chip removes it and unchecks the matching option when the host wires that up

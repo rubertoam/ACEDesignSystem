@@ -77,7 +77,7 @@ The control column shows if expand or checkboxes are on. The toolbar shows if an
 - **Columns menu:** You can’t hide the last remaining column. Reorder columns by drag and drop
 
 ### Table
-- **Sort:** First click sorts ascending. Clicking the same column again toggles ascending / descending. Sort starts as `null`. There’s no UI to clear sort once you’ve sorted
+- **Sort:** First click sorts ascending. Second click on the same column sorts descending. Third click clears sort (`null`). Sort starts as `null`
 - **Selection:** Controlled only when both `selectedIds` and `onSelectedIdsChange` are passed; otherwise selection is internal. Active rows are selectable. Inactive rows are selectable only when `showDisabledRows` is false. The header checkbox selects every actionable row in the full sorted set, not just the current page. Once anything is selected (`selectionMode`), row controls stay visible on every row
 - **Expand:** Single-row and expand-all cover the full sorted set. Detail rows animate with a `0fr` / `1fr` grid. Detail content is still placeholder copy
 - **Empty states (priority):** no rows; history hidden with no active rows left; filters and search / filters only / search only; then a generic empty message
@@ -88,13 +88,7 @@ The control column shows if expand or checkboxes are on. The toolbar shows if an
 
 ---
 
-## 5. Keyboard and focus
-
-No keyboard support at this time.
-
----
-
-## 6. Defaults and initial state
+## 5. Defaults and initial state
 
 | State | Default |
 |-------|---------|
@@ -109,7 +103,7 @@ No keyboard support at this time.
 
 ---
 
-## 7. API
+## 6. API
 
 ```
 DataTableProps = {
@@ -128,7 +122,7 @@ Exports include `DataTable`, `DEFAULT_DATA_TABLE_VISIBILITY_CONTROLS`, and demo 
 
 ---
 
-## 8. Accessibility
+## 7. Accessibility
 
 - The table uses `aria-labelledby` with a screen-reader-only caption (title, counts, filters / search)
 - Expand and select controls use clear `aria-label` / `aria-expanded` text
@@ -138,7 +132,7 @@ Exports include `DataTable`, `DEFAULT_DATA_TABLE_VISIBILITY_CONTROLS`, and demo 
 
 ---
 
-## 9. Visual and design tokens
+## 8. Visual and design tokens
 
 | Area | Tokens |
 |------|--------|
@@ -149,12 +143,12 @@ Exports include `DataTable`, `DEFAULT_DATA_TABLE_VISIBILITY_CONTROLS`, and demo 
 
 ---
 
-## 10. QA checklist
+## 9. QA checklist
 
 - Turning visibility controls off hides the UI and clears related state
 - History show / hide works, and the control disables when there’s no history
 - Status multi-filter and search behave as expected
-- Sorting works per column; you can’t hide the last column; drag reorder works
+- Sorting cycles ascending → descending → cleared per column; you can’t hide the last column; drag reorder works
 - `showDisabledRows` on and off match the selection rules
 - Expand single / all and pagination keep select-all / expand-all global
 - Controlled and uncontrolled selection both work

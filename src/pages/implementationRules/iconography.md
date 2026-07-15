@@ -48,13 +48,6 @@ The Material Symbols Outlined variable font is loaded in app CSS / HTML.
 
 ## 4. Interaction and usage rules
 
-### Fill policy
-| Policy | Icons |
-|--------|-------|
-| Always filled | `lock`, `sim_card_download` (download report) |
-| Never filled | Blocked (`stop_circle`), Escalate (`arrow_circle_up`), Released (`check_circle` for screening), Canceled (`cancel`) |
-| State-dependent | Favorite starts outlined; selected uses `filled` plus `--ace-error-500` (prefer heart over star) |
-
 Prefer the horizontal kebab `more_horiz` for menus.
 
 ### Icon button hover
@@ -68,15 +61,7 @@ Sidebar row actions fade in on row or header hover / focus. An open menu keeps t
 
 ---
 
-## 5. Keyboard and focus
-
-- Glyphs themselves are not interactive; the buttons around them are
-- Icon-button classes use focus-visible rings (sidebar offset 1, toolbar offset 2)
-- Icon-only controls need an `aria-label` (or visible text)
-
----
-
-## 6. Defaults
+## 5. Defaults
 
 | Default | Value |
 |---------|-------|
@@ -89,7 +74,7 @@ Sidebar row actions fade in on row or header hover / focus. An open menu keeps t
 
 ---
 
-## 7. API
+## 6. API
 
 ```
 <MaterialSymbol name="search" size="md" />
@@ -100,11 +85,11 @@ Sidebar row actions fade in on row or header hover / focus. An open menu keeps t
 </button>
 ```
 
-Look up names on fonts.google.com/icons and turn spaces into underscores. Prefer catalog ligatures in product UI, and use `MaterialSymbol` across design system components.
+Look up names on fonts.google.com/icons and turn spaces into underscores.
 
 ---
 
-## 8. Accessibility
+## 7. Accessibility
 
 - Decorative icons default to `aria-hidden`
 - If you need a meaningful glyph, prefer labeling the control; use `title` sparingly
@@ -113,7 +98,7 @@ Look up names on fonts.google.com/icons and turn spaces into underscores. Prefer
 
 ---
 
-## 9. Visual and design tokens
+## 8. Visual and design tokens
 
 | Area | Tokens / notes |
 |------|----------------|
@@ -126,12 +111,10 @@ Look up names on fonts.google.com/icons and turn spaces into underscores. Prefer
 
 ---
 
-## 10. QA checklist
+## 9. QA checklist
 
 - Font loads and ligatures render as icons, not raw text
 - sm / md / lg / xl sizes and outlined vs filled all look right
-- Lock and download stay filled; blocked / escalate / released / canceled stay outlined
-- Favorite selected is filled with Error 500
 - Ghost and stroke hover work on both gray and white surfaces
 - Icon-only buttons have `aria-label`; decorative glyphs stay `aria-hidden`
 - Dense toolbars with `weight={300}` still hit cleanly in 32px (`size-8`) targets
