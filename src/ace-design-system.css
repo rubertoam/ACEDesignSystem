@@ -5,6 +5,20 @@
 @import './styles/toggle.css';
 
 .material-symbols-outlined {
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   font-variation-settings:
     'FILL' 0,
     'wght' 400,

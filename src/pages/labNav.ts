@@ -54,8 +54,13 @@ export const labNavSections: LabNavSection[] = [
         'ACE type tokens and samples from the Figma export JSON.',
       ),
       component(
-        'Animations',
-        '/lab/atoms/animations',
+        'Iconography',
+        '/lab/atoms/iconography',
+        'Material Symbols catalog, sizes, fill rules, and product usage.',
+      ),
+      component(
+        'Motion',
+        '/lab/atoms/motion',
         'motion catalog, easing/duration tokens, and live demos for developers.',
       ),
       component('Drop shadows', '/lab/atoms/drop-shadows', 'elevation tokens (Figma Drop Shadows 71-71).'),
@@ -76,8 +81,8 @@ export const labNavSections: LabNavSection[] = [
         '/lab/atoms/radios',
         'sizes, states, field wrapper (Figma Radio Buttons 331-1755).',
       ),
-      component('Status pills', '/lab/atoms/badges', 'status labels with dot — nine palette variants (data table pattern).'),
-      component('Tooltips', '/lab/atoms/tooltips', 'contextual labels for icon controls — screening toolbar pattern.'),
+      component('Badges', '/lab/atoms/badges', 'pills and tags - shared color variants (Review Assigned).'),
+      component('Tooltips', '/lab/atoms/tooltips', 'contextual labels for icon controls - screening toolbar pattern.'),
     ],
   },
   {
@@ -105,6 +110,11 @@ export const labNavSections: LabNavSection[] = [
         'horizontal value control with label, sizes, and active / inactive states (Figma 2505-47).',
       ),
       component(
+        'Steppers',
+        '/lab/molecules/steppers',
+        'horizontal (−/+) and vertical (chevron) numeric steppers.',
+      ),
+      component(
         'Tabs',
         '/lab/molecules/tabs',
         'standard underline tabs and Tab Cards for inner-feature navigation (Figma Tabs / Tab Cards).',
@@ -113,6 +123,16 @@ export const labNavSections: LabNavSection[] = [
         'Toast messages',
         '/lab/molecules/toast-messages',
         'success, info, warning, and error notifications with action layouts (Figma 2783-5).',
+      ),
+      component(
+        'Inline messages',
+        '/lab/molecules/inline-messages',
+        'error, info, success, and warning in-page / banner alerts (Figma 4481-275).',
+      ),
+      component(
+        'Filtering',
+        '/lab/molecules/filtering',
+        'Filters dropdown and applied filter chips (Figma Table Headers 1540:4577).',
       ),
     ],
   },
@@ -123,7 +143,7 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Dialog modal',
         '/lab/organisms/dialog-modal',
-        'ACE dialog overlay (molecule) used inside organisms.',
+        'Basic Action, Delete, Dropdown, Form, Extended Form + optional inline message (Figma 3047-2036).',
       ),
       component('Data Table', '/lab/organisms/data-table'),
       component(
@@ -132,6 +152,11 @@ export const labNavSections: LabNavSection[] = [
         'time picker prototype (scheduling controls).',
       ),
       component('Sidebar', '/lab/organisms/sidebar', 'navigation and grouped query layouts.'),
+      component(
+        'Inline Drawer',
+        '/lab/organisms/inline-drawer',
+        'right in-flow panel with sidebar open/close motion (Figma 1063-3635).',
+      ),
       component(
         'Site header',
         '/lab/organisms/site-header',

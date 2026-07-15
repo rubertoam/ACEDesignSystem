@@ -1,5 +1,4 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { ChevronDown, ChevronUp } from 'lucide-react'
 import {
   useCallback,
   useEffect,
@@ -10,6 +9,7 @@ import {
   type ReactNode,
 } from 'react'
 import { AceButton } from '../../atoms/AceButton'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
 import {
@@ -182,7 +182,7 @@ function TimeStepperColumn({
           focusInputSelect(inputRef.current)
         }}
       >
-        <ChevronUp className={aceChevronIconClass} strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="keyboard_arrow_up" className={aceChevronIconClass} />
       </StepperButton>
       <input
         ref={inputRef}
@@ -211,7 +211,7 @@ function TimeStepperColumn({
           focusInputSelect(inputRef.current)
         }}
       >
-        <ChevronDown className={aceChevronIconClass} strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="keyboard_arrow_down" className={aceChevronIconClass} />
       </StepperButton>
     </div>
   )
@@ -267,7 +267,7 @@ function PeriodStepperColumn({
       onKeyDown={handleKeyDown}
     >
       <StepperButton label="Toggle to PM" onClick={onStepUp}>
-        <ChevronUp className={aceChevronIconClass} strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="keyboard_arrow_up" className={aceChevronIconClass} />
       </StepperButton>
       <span
         className={cn(p1, 'w-[2.625rem] text-center text-[var(--screening-text-primary)]')}
@@ -277,7 +277,7 @@ function PeriodStepperColumn({
         {period}
       </span>
       <StepperButton label="Toggle to AM" onClick={onStepDown}>
-        <ChevronDown className={aceChevronIconClass} strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="keyboard_arrow_down" className={aceChevronIconClass} />
       </StepperButton>
     </div>
   )
@@ -538,7 +538,7 @@ export function AceTimePicker({
             <span className={cn('min-w-0 flex-1 truncate text-left', p1, !displayConfirmed && 'font-normal text-[var(--screening-text-muted)]')}>
               {displayConfirmed ?? placeholder}
             </span>
-            <ChevronDown className={cn('ml-auto text-[var(--screening-icon-muted)]', aceChevronIconClass)} aria-hidden />
+            <MaterialSymbol name="keyboard_arrow_down" className={cn('ml-auto text-[var(--screening-icon-muted)]', aceChevronIconClass)} />
           </button>
         </DropdownMenu.Trigger>
 

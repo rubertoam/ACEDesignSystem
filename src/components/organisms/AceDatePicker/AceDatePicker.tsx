@@ -1,5 +1,4 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react'
 import {
   useCallback,
   useEffect,
@@ -9,6 +8,7 @@ import {
   type KeyboardEvent,
 } from 'react'
 import { AceButton } from '../../atoms/AceButton'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { cn } from '../../../lib/cn'
 import {
   addMonths,
@@ -463,10 +463,10 @@ export function AceDatePicker(props: AceDatePickerProps) {
             >
               {triggerLabel ?? placeholder}
             </span>
-            <Calendar
-              className="size-4 shrink-0 text-[var(--screening-icon-muted)]"
-              strokeWidth={1.75}
-              aria-hidden
+            <MaterialSymbol
+              name="calendar_month"
+              size="md"
+              className="shrink-0 text-[var(--screening-icon-muted)]"
             />
           </button>
         </DropdownMenu.Trigger>
@@ -498,7 +498,7 @@ export function AceDatePicker(props: AceDatePickerProps) {
                   onClick={() => shiftView(-1)}
                   className="inline-flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-[var(--screening-primary)] transition-colors hover:bg-[var(--screening-primary-soft-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]"
                 >
-                  <ChevronLeft className="size-4" strokeWidth={2} aria-hidden />
+                  <MaterialSymbol name="keyboard_arrow_left" size="md" />
                 </button>
                 <p
                   className={cn(
@@ -520,7 +520,7 @@ export function AceDatePicker(props: AceDatePickerProps) {
                   onClick={() => shiftView(1)}
                   className="inline-flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-[var(--screening-primary)] transition-colors hover:bg-[var(--screening-primary-soft-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]"
                 >
-                  <ChevronRight className="size-4" strokeWidth={2} aria-hidden />
+                  <MaterialSymbol name="keyboard_arrow_right" size="md" />
                 </button>
               </div>
 

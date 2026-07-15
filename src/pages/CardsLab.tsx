@@ -167,7 +167,7 @@ export function CardsLab() {
   return (
     <ComponentLabPage
       title="Cards"
-      description="Landing page and medium data cards — expandable sections, header actions, and design-token shadows."
+      description="Landing page and medium data cards - expandable sections, header actions, and design-token shadows."
       examplesCanvas={false}
       examples={
         <div className="flex flex-col gap-10">
@@ -233,14 +233,14 @@ export function CardsLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--screening-text-muted)]">
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-landing-page-card-*</code> — landing page card layout and tag.
+            <code className="text-[var(--screening-text-primary)]">--ace-landing-page-card-*</code> - landing page card layout and tag.
           </li>
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-data-card-*</code> — medium data card width (692px), header, shadows.
+            <code className="text-[var(--screening-text-primary)]">--ace-data-card-*</code> - medium data card width (692px), header, shadows.
           </li>
           <li>
             <code className="text-[var(--screening-text-primary)]">--ace-accordion-duration</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-accordion-ease</code> — expand panel motion.
+            <code className="text-[var(--screening-text-primary)]">--ace-accordion-ease</code> - expand panel motion.
           </li>
         </ul>
       }

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { AceInputField, type AceInputFieldIcon, type AceInputFieldSize, type AceInputVisualState } from '../components/atoms/AceInputField'
 import { cn } from '../lib/cn'
 import { LabCheckbox, LabControlField, LabRadioGroup } from '../lib/labControls'
-import { labExampleSectionClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 const SIZES: AceInputFieldSize[] = ['sm', 'md', 'lg']
@@ -115,7 +115,7 @@ export function InputPlaygroundLab() {
           </div>
 
           <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className="max-w-3xl space-y-2">
+            <div className={cn('max-w-3xl', labUsageSectionClass)}>
               <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
               <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
                 Rows match Figma states; columns are sizes. Each cell uses a frozen{' '}
@@ -154,25 +154,25 @@ export function InputPlaygroundLab() {
             <code className="text-[var(--color-text-primary)]">--screening-input-border-focus</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--screening-input-bg-focus</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--screening-input-focus-ring</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-input-placeholder</code> — outline, active/focus
+            <code className="text-[var(--color-text-primary)]">--screening-input-placeholder</code> - outline, active/focus
             border, focus fill, 2px ring, placeholder (shared with data table search).
           </li>
           <li>
             <code className="text-[var(--color-text-primary)]">--ace-input-height-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-input-font-*</code> — 36 / 44 / 52px heights and Inter
+            <code className="text-[var(--color-text-primary)]">--ace-input-font-*</code> - 36 / 44 / 52px heights and Inter
             text sizes from Figma.
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-input-error-*</code> — error surface, border, and
+            <code className="text-[var(--color-text-primary)]">--ace-input-error-*</code> - error surface, border, and
             helper text color (<code className="text-[var(--color-text-primary)]">#FDF4F6</code> /{' '}
             <code className="text-[var(--color-text-primary)]">#DC264B</code> / <code className="text-[var(--color-text-primary)]">#EF4444</code>).
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-input-disabled-*</code> — disabled field and text
+            <code className="text-[var(--color-text-primary)]">--ace-input-disabled-*</code> - disabled field and text
             colors from Figma.
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--font-ace-inter</code> — input value and placeholder face.
+            <code className="text-[var(--color-text-primary)]">--font-ace-inter</code> - input value and placeholder face.
           </li>
         </ul>
       }

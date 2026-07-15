@@ -30,7 +30,7 @@ function LabRow({
 
 export function DropdownsLab() {
   const [menuHost, setMenuHost] = useState<HTMLDivElement | null>(null)
-  const [lastAction, setLastAction] = useState<string>('—')
+  const [lastAction, setLastAction] = useState<string>(' - ')
 
   const [section1Item1, setSection1Item1] = useState(false)
   const [section1Item2, setSection1Item2] = useState(false)

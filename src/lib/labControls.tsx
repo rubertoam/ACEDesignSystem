@@ -5,13 +5,16 @@ import { RadioGroup, RadioItem } from '../components/atoms/Radio/RadioGroup'
 import type { AceRadioSize } from '../components/atoms/Radio/radioFieldStyles'
 import {
   AceDropdownMenu,
+  type AceButtonSize,
   type AceDropdownMenuEntry,
 } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
 import { cn } from './cn'
-import { labSegmentedGroupClass } from './labChrome'
 
-export const labControlLegendClass =
-  'mb-2.5 block text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]'
+/** Matches ACE field labels above controls (e.g. Data Table “Context”). */
+export const labControlLegendClass = cn(
+  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  'text-[var(--screening-text-primary)]',
+)
 
 export function LabControlField({
   label,
@@ -24,8 +27,9 @@ export function LabControlField({
 }) {
   return (
     <fieldset className={cn('min-w-0 border-0 p-0', className)}>
-      <legend className={labControlLegendClass}>{label}</legend>
-      {children}
+      {/* Legend margin is unreliable in fieldsets — space the control group instead. */}
+      <legend className={cn(labControlLegendClass, 'p-0')}>{label}</legend>
+      <div className="mt-[var(--ace-section-label-gap)]">{children}</div>
     </fieldset>
   )
 }
@@ -173,7 +177,7 @@ export function LabRadioGroup<T extends string>({
       <RadioGroup
         value={value}
         onValueChange={(v) => onChange(v as T)}
-        className={cn(labSegmentedGroupClass, 'flex flex-wrap gap-x-6 gap-y-3 p-3')}
+        className="flex flex-wrap gap-x-6 gap-y-3"
         aria-label={label}
       >
         {options.map((opt) => (
@@ -193,14 +197,18 @@ export function LabSelect<T extends string>({
   onChange,
   options,
   className,
+  size = 'md',
   panelWidth = 'default',
+  disabled,
 }: {
   label: string
   value: T
   onChange: (value: T) => void
   options: { value: T; label: string }[]
   className?: string
+  size?: AceButtonSize
   panelWidth?: 'default' | 'compact' | 'wide'
+  disabled?: boolean
 }) {
   const selectedLabel = options.find((o) => o.value === value)?.label ?? 'Select'
 
@@ -217,13 +225,19 @@ export function LabSelect<T extends string>({
   )
 
   return (
-    <fieldset className={cn('min-w-0 border-0 p-0', className)}>
-      <legend className={labControlLegendClass}>{label}</legend>
+    <fieldset className={cn('min-w-0 border-0 p-0', className)} disabled={disabled}>
+      <legend className={cn(labControlLegendClass, 'mb-[var(--ace-section-label-gap)] block w-full')}>
+        {label}
+      </legend>
       <AceDropdownMenu
         triggerLabel={selectedLabel}
+        triggerMode="field"
+        size={size}
         items={items}
         align="start"
         panelWidth={panelWidth}
+        disabled={disabled}
+        className="!w-full !max-w-full"
       />
     </fieldset>
   )

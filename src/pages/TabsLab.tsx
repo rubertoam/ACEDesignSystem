@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { AceTabCards } from '../components/atoms/AceTabs/AceTabCards'
 import { AceTabs } from '../components/atoms/AceTabs/AceTabs'
 import { LabSelect } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
-import { cn } from '../lib/cn'
+import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 const DEMO_TABS = [
@@ -64,7 +63,7 @@ export function TabsLab() {
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-8">
-          <div className={cn('space-y-6', labExampleSectionClass)}>
+          <div className={labExampleSectionClass}>
             <p className={labSectionLabelClass}>Interactive</p>
             {variant === 'standard' ? (
               <AceTabs items={DEMO_TABS} value={active} onValueChange={setActive} aria-label="Demo tabs" />
@@ -88,7 +87,7 @@ export function TabsLab() {
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
-            Controlled tabs — pass <code className="text-[var(--screening-text-primary)]">items</code>,{' '}
+            Controlled tabs - pass <code className="text-[var(--screening-text-primary)]">items</code>,{' '}
             <code className="text-[var(--screening-text-primary)]">value</code>, and{' '}
             <code className="text-[var(--screening-text-primary)]">onValueChange</code>.
           </p>
@@ -116,7 +115,7 @@ import { AceTabCards } from '../components/atoms/AceTabs/AceTabCards'
       }
       usage={
         <>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
               Use <strong className="text-[var(--screening-text-primary)]">standard tabs</strong> to organize peer
@@ -125,20 +124,20 @@ import { AceTabCards } from '../components/atoms/AceTabs/AceTabCards'
               when each option needs a title, optional meta line, description, and a decorative header icon.
             </p>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tab Card anatomy</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>Title — H5 Small Bold</li>
-              <li>Header icon — 16px, primary accent (decorative)</li>
-              <li>Subtitle — Footer Regular (optional)</li>
-              <li>Description — Caption Regular</li>
+              <li>Title - H5 Small Bold</li>
+              <li>Header icon - 16px, primary accent (decorative)</li>
+              <li>Subtitle - Footer Regular (optional)</li>
+              <li>Description - Caption Regular</li>
               <li>
-                States — default (white + neutral border), hover (Primary 50 fill + XS drop shadow), selected (Primary
+                States - default (white + neutral border), hover (Primary 50 fill + XS drop shadow), selected (Primary
                 50 fill + primary border)
               </li>
             </ul>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Accessibility</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
               Both variants use <code className="text-[var(--screening-text-primary)]">role="tablist"</code> and{' '}
@@ -147,15 +146,15 @@ import { AceTabCards } from '../components/atoms/AceTabs/AceTabCards'
               <code className="text-[var(--screening-text-primary)]">aria-controls</code> on the consuming page.
             </p>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Design tokens</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                Standard — <code className="text-[var(--screening-text-primary)]">--ace-tabs-text-*</code>,{' '}
+                Standard - <code className="text-[var(--screening-text-primary)]">--ace-tabs-text-*</code>,{' '}
                 <code className="text-[var(--screening-text-primary)]">--ace-tabs-indicator-*</code>
               </li>
               <li>
-                Tab Card — <code className="text-[var(--screening-text-primary)]">--ace-tab-card-surface-*</code>,{' '}
+                Tab Card - <code className="text-[var(--screening-text-primary)]">--ace-tab-card-surface-*</code>,{' '}
                 <code className="text-[var(--screening-text-primary)]">--ace-tab-card-border-*</code>, hover elevation{' '}
                 <code className="text-[var(--screening-text-primary)]">--ace-drop-shadow-xs</code>, emphasis fill{' '}
                 <code className="text-[var(--screening-text-primary)]">--screening-primary-soft-bg</code> (Primary 50)

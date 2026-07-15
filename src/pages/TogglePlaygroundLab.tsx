@@ -7,7 +7,7 @@ import {
 } from '../components/atoms/Toggle/toggleFieldStyles'
 import { cn } from '../lib/cn'
 import { LabRadioGroup, LabSelect } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 /** Column keys align with Figma state titles. */
@@ -166,7 +166,7 @@ export function TogglePlaygroundLab() {
           </div>
 
           <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className="max-w-3xl space-y-2">
+            <div className={cn('max-w-3xl', labUsageSectionClass)}>
               <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
               <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
                 Matches the Figma state matrix: active vs inactive (disabled) × off vs on, plus hover (unselected track).
@@ -232,16 +232,16 @@ export function TogglePlaygroundLab() {
             <code className="text-[var(--color-text-primary)]">onCheckedChange</code> (boolean).
           </p>
           <p className="m-0 leading-relaxed">
-            <strong className="text-[var(--screening-text-primary)]">Standard</strong> — toggle beside a single label that reflects the current state (e.g. Off / On).
+            <strong className="text-[var(--screening-text-primary)]">Standard</strong>: toggle beside a single label that reflects the current state (e.g. Off / On).
           </p>
           <p className="m-0 leading-relaxed">
-            <strong className="text-[var(--screening-text-primary)]">Icon</strong> — same tracks and white thumb as standard; white check on purple when on, dark X on neutral 200 when off (no adjacent Off/On label). Sizes: Small and Large only.
+            <strong className="text-[var(--screening-text-primary)]">Icon</strong>: same tracks and white thumb as standard; white check on purple when on, dark X on neutral 200 when off (no adjacent Off/On label). Sizes: Small and Large only.
           </p>
           <p className="m-0 leading-relaxed">
-            <strong className="text-[var(--screening-text-primary)]">Descriptive Toggle</strong> — switch with YES / NO under the control and a supporting text block (Figma descriptive pattern).
+            <strong className="text-[var(--screening-text-primary)]">Descriptive Toggle</strong>: switch with YES / NO under the control and a supporting text block (Figma descriptive pattern).
           </p>
           <p className="m-0 leading-relaxed">
-            <strong className="text-[var(--screening-text-primary)]">Track padding</strong> —{' '}
+            <strong className="text-[var(--screening-text-primary)]">Track padding</strong>  - {' '}
             <code className="text-[var(--screening-text-primary)]">--ace-toggle-track-padding</code> (4px) on every variant;
             sizes above are tuned for that inset.
           </p>
@@ -252,7 +252,7 @@ export function TogglePlaygroundLab() {
           <li>
             <code className="text-[var(--color-text-primary)]">aceToggleClass()</code> /{' '}
             <code className="text-[var(--color-text-primary)]">aceToggleThumbClass()</code> in{' '}
-            <code className="text-[var(--color-text-primary)]">toggleFieldStyles.ts</code> — used by the atom.
+            <code className="text-[var(--color-text-primary)]">toggleFieldStyles.ts</code> - used by the atom.
           </li>
           <li>
             <code className="text-[var(--color-text-primary)]">--ace-toggle-track-off</code>,{' '}

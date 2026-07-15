@@ -8,9 +8,11 @@ import {
 import { formatDateLabel, formatRangeDisplay } from '../components/organisms/AceDatePicker/datePickerUtils'
 import { AceTimePicker, type TimeFormat, type TimeValue } from '../components/organisms/AceTimePicker/AceTimePicker'
 import { formatTimeDisplay, fromHour24, toHour24 } from '../components/organisms/AceTimePicker/timePickerUtils'
-import { LabCheckbox, LabSegmentedToggle } from '../lib/labControls'
+import { LabCheckbox, LabSelect } from '../lib/labControls'
 import { cn } from '../lib/cn'
+import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+import timePickerRules from './implementationRules/timePicker.md?raw'
 
 const DATE_MODE_OPTIONS = [
   { value: 'single' as const, label: 'Single date' },
@@ -78,16 +80,19 @@ export function DateAndTimePickersLab() {
   const datePickerControls = (
     <LabControlsPanel title="Date picker">
       <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Range and single-date modes from node 419:3010. Toggle the mode below to switch the preview.
+        Range and single-date modes from node 419:3010. Choose the mode below to switch the preview.
       </p>
-      <div className="flex flex-wrap items-center gap-4">
-        <LabSegmentedToggle
-          aria-label="Date picker mode"
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <LabSelect
+          label="Mode"
           value={dateMode}
           onChange={setDateMode}
           options={DATE_MODE_OPTIONS}
+          className="max-w-xs"
         />
-        <LabCheckbox label="Disabled" checked={dateDisabled} onCheckedChange={setDateDisabled} />
+        <div className="flex items-end pb-1">
+          <LabCheckbox label="Disabled" checked={dateDisabled} onCheckedChange={setDateDisabled} />
+        </div>
       </div>
       {dateMode === 'range' && dateRange ? (
         <p className="m-0 text-xs text-[var(--screening-text-muted)]">
@@ -164,28 +169,28 @@ import { AceDatePicker } from '../components/organisms/AceDatePicker/AceDatePick
       }
       usage={
         <>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Time picker</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>Hour step: ±1 (12h: 1–12 wrap; 24h: 0–23 wrap). AM/PM never auto-flips on hour rollover.</li>
+              <li>Hour step: ±1 (12h: 1-12 wrap; 24h: 0-23 wrap). AM/PM never auto-flips on hour rollover.</li>
               <li>Minute step: ±5 with carry into hours (55 → 00 +1h; 00 → 55 −1h).</li>
               <li>Tab to Set, then Enter (or click Set) to confirm; Escape / Cancel / outside click reverts.</li>
             </ul>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Date picker</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                <code className="text-[var(--screening-text-primary)]">mode="range"</code> — dual-month range;
+                <code className="text-[var(--screening-text-primary)]">mode="range"</code> - dual-month range;
                 first click start, second end.
               </li>
               <li>
-                <code className="text-[var(--screening-text-primary)]">mode="single"</code> — one month, one date.
+                <code className="text-[var(--screening-text-primary)]">mode="single"</code> - one month, one date.
               </li>
               <li>Footer: Reset (tertiary, left), Cancel (secondary), Set (primary).</li>
             </ul>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tokens</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
@@ -196,6 +201,7 @@ import { AceDatePicker } from '../components/organisms/AceDatePicker/AceDatePick
           </section>
         </>
       }
+      implementationRulesMarkdown={timePickerRules}
     />
   )
 }

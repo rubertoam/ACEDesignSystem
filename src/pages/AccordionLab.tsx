@@ -139,7 +139,7 @@ export function AccordionLab() {
             <code className="text-[var(--color-text-primary)]">--ace-accordion-ease</code>
           </li>
           <li>
-            Progress — <code className="text-[var(--color-text-primary)]">--screening-progress-track</code>,{' '}
+            Progress - <code className="text-[var(--color-text-primary)]">--screening-progress-track</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--screening-progress-fill</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--screening-progress-width</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--screening-progress-height</code>

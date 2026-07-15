@@ -77,7 +77,7 @@ export function DropShadowsLab() {
         <ul className="m-0 list-disc space-y-2 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
             <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-none</code> through{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code> — defined in{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code> - defined in{' '}
             <code className="text-[var(--color-text-primary)]">src/styles/variables.css</code>; dark theme bumps alpha for legibility on dark surfaces.
           </li>
           <li>

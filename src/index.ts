@@ -1,13 +1,22 @@
 import './ace-design-system.css'
 
-export { AceStatusPill, type AceStatusPillProps } from './components/atoms/AceStatusPill/AceStatusPill'
+export { AceBadge, AceStatusPill, type AceBadgeProps, type AceStatusPillProps } from './components/atoms/AceBadge/AceBadge'
 export {
+  aceBadgeStatusDotClass,
+  aceBadgeStatusLabelClass,
+  aceBadgeStatusShellClass,
+  aceBadgeTagLabelClass,
+  aceBadgeTagShellClass,
+  aceBadgeVariantTokens,
+  aceBadgeWarningIconClass,
   aceStatusPillDotClass,
   aceStatusPillLabelClass,
   aceStatusPillShellClass,
   aceStatusPillVariantTokens,
+  type AceBadgeAppearance,
+  type AceBadgeVariant,
   type AceStatusPillVariant,
-} from './components/atoms/AceStatusPill/statusPillFieldStyles'
+} from './components/atoms/AceBadge/badgeFieldStyles'
 export {
   AceTooltip,
   AceTooltipContent,
@@ -96,11 +105,59 @@ export {
 } from './components/molecules/AcePagination/AcePagination'
 export { AceSlider, type AceSliderProps, type AceSliderValue, type AceSliderVariant } from './components/molecules/AceSlider'
 export { AceSliderField, type AceSliderFieldProps } from './components/molecules/AceSlider/AceSliderField'
+export { AceStepper, type AceStepperProps, type AceStepperVariant } from './components/molecules/AceStepper'
 export { AceTable, type AceTableColumn, type AceTableProps } from './components/molecules/AceTable/AceTable'
 export { AceToast, type AceToastProps } from './components/molecules/AceToast/AceToast'
 export {
+  AceInlineMessage,
+  type AceInlineMessageProps,
+} from './components/molecules/AceInlineMessage/AceInlineMessage'
+export {
+  ACE_INLINE_MESSAGE_TONES,
+  aceInlineMessageClass,
+  aceInlineMessageIconClass,
+  aceInlineMessageIconName,
+  aceInlineMessageShellClass,
+  aceInlineMessageTextClass,
+  aceInlineMessageToneClass,
+  type AceInlineMessageTone,
+} from './components/molecules/AceInlineMessage/inlineMessageFieldStyles'
+export {
+  AceFilterChip,
+  AceFilterToggleChip,
+  AceFilterTrigger,
+  AceTableFilterHeader,
+  FILTER_VIEW_MODES,
+  FILTER_VIEW_MODE_PANEL_WIDTH,
+  filterViewModeLabel,
+  filterViewModeMenuItems,
+  aceFilterChipClass,
+  aceFilterChipClearButtonClass,
+  aceFilterChipClearIconClass,
+  aceFilterChipChevronClass,
+  aceFilterChipLabelClass,
+  aceFilterChipOpenButtonClass,
+  aceFilterHeaderActionsClass,
+  aceFilterHeaderChipsClass,
+  aceFilterHeaderRowClass,
+  aceFilterHeaderSearchClass,
+  aceFilterHeaderShellClass,
+  aceFilterHeaderTitleClass,
+  aceFilterToggleChipClass,
+  aceFilterToggleChipPressedClass,
+  aceFilterTriggerClass,
+  type AceFilterChipProps,
+  type AceFilterToggleChipProps,
+  type AceFilterTriggerProps,
+  type AceTableFilterHeaderProps,
+  type FilterViewMode,
+} from './components/molecules/AceFiltering'
+export {
   DialogModal,
   DialogModalInlineError,
+  DialogModalInlineMessage,
+  type DialogModalInlineMessageProps,
+  type DialogModalPresentation,
   type DialogModalProps,
 } from './components/molecules/DialogModal/DialogModal'
 export { TablePagination } from './components/molecules/TablePagination'
@@ -139,9 +196,14 @@ export {
   type AceSidebarMenuAction,
   type AceSidebarNavItem,
   type AceSidebarOrganization,
+  type AceSidebarOrganizationDisplay,
   type AceSidebarProps,
   type AceSidebarVariant,
 } from './components/organisms/AceSidebar/AceSidebar'
+export {
+  AceInlineDrawer,
+  type AceInlineDrawerProps,
+} from './components/organisms/AceInlineDrawer/AceInlineDrawer'
 export {
   EditGroupDialog,
   type EditGroupDialogItem,
@@ -193,13 +255,22 @@ export {
   type AceAttachmentsProps,
 } from './components/organisms/AceAttachments/AceAttachments'
 export {
-  DEFAULT_SCREENING_TABLE_CHROME,
+  DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS,
   ScreeningResultsTable,
   getScreeningRowsForCase,
   MOCK_ROWS,
   type ScreeningResultRow,
-  type ScreeningResultsTableChrome,
+  type ScreeningResultsTableVisibilityControls,
   type ScreeningRowStatus,
 } from './components/organisms/ScreeningResultsTable/ScreeningResultsTable'
+export {
+  UserListTable,
+  type UserListTableProps,
+} from './components/organisms/ScreeningResultsTable/UserListTable'
+export {
+  MOCK_USER_LIST_ROWS,
+  type UserListRow,
+  type UserListStatus,
+} from './components/organisms/ScreeningResultsTable/userListTypes'
 
 export { cn } from './lib/cn'

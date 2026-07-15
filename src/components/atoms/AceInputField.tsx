@@ -1,6 +1,6 @@
 import { forwardRef, useId, type InputHTMLAttributes, type ReactNode } from 'react'
-import { Search } from 'lucide-react'
 import { cn } from '../../lib/cn'
+import { MaterialSymbol } from '../molecules/AceAccordion/MaterialSymbol'
 
 export type AceInputFieldSize = 'sm' | 'md' | 'lg'
 export type AceInputFieldIcon = 'none' | 'left' | 'right'
@@ -20,10 +20,18 @@ const labelClass: Record<AceInputFieldSize, string> = {
 }
 
 const iconClass: Record<AceInputFieldSize, string> = {
-  sm: 'size-4 shrink-0 text-[var(--screening-text-primary)]',
-  md: 'size-4 shrink-0 text-[var(--screening-text-primary)]',
-  lg: 'size-[1.125rem] shrink-0 text-[var(--screening-text-primary)]',
+  sm: 'shrink-0 text-[var(--screening-text-primary)]',
+  md: 'shrink-0 text-[var(--screening-text-primary)]',
+  lg: 'shrink-0 text-[1.125rem] text-[var(--screening-text-primary)]',
 }
+
+/** Matches table toolbar / row-action icons: 16px, secondary → primary on hover. */
+const clearButtonClass = cn(
+  'inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
+  'text-[var(--screening-text-secondary)] transition-colors duration-150 ease-out',
+  'hover:text-[var(--screening-text-primary)]',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+)
 
 function shellFromVisual(
   visual: AceInputVisualState,
@@ -68,6 +76,8 @@ export type AceInputFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'si
   error?: boolean
   errorMessage?: string
   visualState?: AceInputVisualState
+  /** When set, shows a clear (X) control while the field has a value. */
+  onClear?: () => void
 }
 
 export const AceInputField = forwardRef<HTMLInputElement, AceInputFieldProps>(function AceInputField(
@@ -78,9 +88,13 @@ export const AceInputField = forwardRef<HTMLInputElement, AceInputFieldProps>(fu
     error = false,
     errorMessage = 'Error Message',
     visualState,
+    onClear,
     disabled,
     className,
     id: idProp,
+    value,
+    defaultValue,
+    type,
     ...rest
   },
   ref,
@@ -93,6 +107,14 @@ export const AceInputField = forwardRef<HTMLInputElement, AceInputFieldProps>(fu
   const showError = (error && !locked) || visualState === 'error'
   const nativeDisabled = !!disabled || visualState === 'disabled'
   const readOnly = locked && visualState !== 'disabled'
+
+  const hasValue =
+    value != null
+      ? String(value).length > 0
+      : defaultValue != null
+        ? String(defaultValue).length > 0
+        : false
+  const showClear = onClear != null && hasValue && !nativeDisabled && !locked
 
   let shell: string
   let ring = false
@@ -125,11 +147,14 @@ export const AceInputField = forwardRef<HTMLInputElement, AceInputFieldProps>(fu
     'min-w-0 flex-1 border-0 bg-transparent p-0 outline-none',
     'text-[var(--screening-text-primary)] placeholder:text-[var(--screening-input-placeholder)]',
     nativeDisabled ? 'cursor-not-allowed text-[var(--ace-input-disabled-text)] placeholder:text-[var(--ace-input-disabled-text)]' : null,
+    type === 'search'
+      ? '[&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none'
+      : null,
   )
 
   const showLeft = icon === 'left'
-  const showRight = icon === 'right'
-  const icn = <Search className={iconClass[fieldSize]} strokeWidth={2} aria-hidden />
+  const showRight = icon === 'right' && !showClear
+  const icn = <MaterialSymbol name="search" size="md" className={iconClass[fieldSize]} />
 
   return (
     <div className="flex w-full max-w-full min-w-0 flex-col gap-1.5">
@@ -143,14 +168,27 @@ export const AceInputField = forwardRef<HTMLInputElement, AceInputFieldProps>(fu
         <input
           ref={ref}
           id={inputId}
+          type={type}
           disabled={nativeDisabled}
           readOnly={readOnly}
           tabIndex={locked ? -1 : undefined}
           aria-invalid={showError || undefined}
           aria-describedby={showError ? errId : undefined}
           className={inputClass}
+          value={value}
+          defaultValue={defaultValue}
           {...rest}
         />
+        {showClear ? (
+          <button
+            type="button"
+            aria-label="Clear search"
+            className={clearButtonClass}
+            onClick={onClear}
+          >
+            <MaterialSymbol name="close" size="md" />
+          </button>
+        ) : null}
         {showRight ? icn : null}
       </div>
       {showError ? (

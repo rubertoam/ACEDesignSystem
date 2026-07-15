@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { PanelLeftClose } from 'lucide-react'
+import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
 import { AceInputField } from '../components/atoms/AceInputField'
 import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
 import { DialogModal } from '../components/molecules/DialogModal/DialogModal'
@@ -14,11 +14,15 @@ import {
   type AceSidebarGroup,
   type AceSidebarMenuAction,
   type AceSidebarNavItem,
+  type AceSidebarOrganizationDisplay,
   type AceSidebarVariant,
 } from '../components/organisms/AceSidebar/AceSidebar'
+import { sidebarIconButtonClass } from '../components/organisms/AceSidebar/sidebarRowActions'
 import { cn } from '../lib/cn'
-import { LabCheckbox } from '../lib/labControls'
+import { labUsageSectionClass } from '../lib/labExampleSection'
+import { LabCheckbox, LabRadioGroup, labControlLegendClass } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+import sidebarRules from './implementationRules/sidebar.md?raw'
 
 const ORGANIZATIONS = [
   { id: 'org-1', label: 'Organization 1' },
@@ -77,8 +81,6 @@ const h6Bold =
   '[font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]'
 const p1 =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
-const captionBold =
-  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]'
 
 function SidebarMockHeader({
   open,
@@ -95,15 +97,15 @@ function SidebarMockHeader({
           onClick={onToggleSidebar}
           aria-label={open ? 'Close sidebar' : 'Open sidebar'}
           aria-expanded={open}
-          className="inline-flex size-4 shrink-0 items-center justify-center text-[var(--ace-neutral-800)] transition-colors hover:text-[var(--screening-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]"
+          className={sidebarIconButtonClass}
         >
-          <PanelLeftClose
+          <MaterialSymbol
+            name="left_panel_close"
+            size="md"
             className={cn(
-              'size-4 transition-transform duration-[var(--ace-motion-duration-medium)] [transition-timing-function:var(--ace-motion-ease-standard)] motion-reduce:transition-none',
+              'text-current transition-transform duration-[var(--ace-motion-duration-medium)] [transition-timing-function:var(--ace-motion-ease-standard)] motion-reduce:transition-none',
               open && 'rotate-180',
             )}
-            strokeWidth={1.75}
-            aria-hidden
           />
         </button>
         <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--ace-neutral-800)]')}>Header</h1>
@@ -123,6 +125,8 @@ export function SidebarLab() {
   const [menuHost, setMenuHost] = useState<HTMLDivElement | null>(null)
   const [open, setOpen] = useState(true)
   const [variant, setVariant] = useState<AceSidebarVariant>('navigation')
+  const [organizationDisplay, setOrganizationDisplay] =
+    useState<AceSidebarOrganizationDisplay>('switcher')
   const [showGroupAdd, setShowGroupAdd] = useState(false)
   const [selectedOrg, setSelectedOrg] = useState('org-1')
   const [selectedNav, setSelectedNav] = useState('nav-1')
@@ -340,11 +344,9 @@ export function SidebarLab() {
       <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
         Switch variants below. Open and close the sidebar from the header icon in the mock app frame.
       </p>
-      <div className="flex flex-wrap items-end gap-4">
-        <div className="flex flex-col gap-1.5">
-          <span className={cn(captionBold, 'text-xs text-[var(--screening-text-primary)]')}>
-            Sidebar variant
-          </span>
+        <div className="flex flex-wrap items-end gap-4">
+        <div className="flex flex-col gap-[var(--ace-section-label-gap)]">
+          <span className={labControlLegendClass}>Sidebar variant</span>
           <AceDropdownMenu
             triggerLabel={variantLabel}
             triggerMode="field"
@@ -369,7 +371,17 @@ export function SidebarLab() {
             checked={showGroupAdd}
             onCheckedChange={setShowGroupAdd}
           />
-        ) : null}
+        ) : (
+          <LabRadioGroup
+            label="Organization"
+            value={organizationDisplay}
+            onChange={setOrganizationDisplay}
+            options={[
+              { value: 'switcher', label: 'Switcher' },
+              { value: 'label', label: 'Label' },
+            ]}
+          />
+        )}
       </div>
     </div>
   )
@@ -393,6 +405,7 @@ export function SidebarLab() {
                 organizations={ORGANIZATIONS}
                 selectedOrganizationId={selectedOrg}
                 onOrganizationChange={setSelectedOrg}
+                organizationDisplay={organizationDisplay}
                 navItems={navItems}
                 addLabel="New Group"
                 onNewGroup={() => {
@@ -408,10 +421,10 @@ export function SidebarLab() {
                 <p className="mt-2 text-sm text-[var(--screening-text-muted)]">
                   App shell preview based on Review Assigned header. Sidebar motion is documented on the{' '}
                   <Link
-                    to="/lab/atoms/animations"
+                    to="/lab/atoms/motion"
                     className="text-[var(--screening-primary)] underline underline-offset-2"
                   >
-                    Animations
+                    Motion
                   </Link>{' '}
                   page.
                 </p>
@@ -440,32 +453,36 @@ const [open, setOpen] = useState(true)
 
 <AceSidebar
   variant="navigation"
+  organizationDisplay="label"
   organizations={[
     { id: 'org-1', label: 'Organization 1' },
     { id: 'org-2', label: 'Organization 2' },
   ]}
   selectedOrganizationId={orgId}
-  onOrganizationChange={setOrgId}
   navItems={navItems}
 />`}</ComponentLabCode>
           </>
         }
         usage={
           <>
-            <section className="space-y-2">
+            <section className={labUsageSectionClass}>
               <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
               <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Navigation</strong> — flat settings routes
-                  with an organization switcher at the top.
+                  <strong className="text-[var(--screening-text-primary)]">Navigation</strong>: flat settings routes
+                  with an organization control at the top. Use{' '}
+                  <code className="text-[var(--screening-text-primary)]">organizationDisplay=&quot;switcher&quot;</code>{' '}
+                  for the dropdown, or{' '}
+                  <code className="text-[var(--screening-text-primary)]">organizationDisplay=&quot;label&quot;</code> for a
+                  static name (e.g. Organization 1).
                 </li>
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Groups</strong> — collapsible query groups,
+                  <strong className="text-[var(--screening-text-primary)]">Groups</strong>: collapsible query groups,
                   New Group, and group-header overflow menus (Edit, Copy, Delete). Query rows are select-only.
                 </li>
               </ul>
             </section>
-            <section className="space-y-2">
+            <section className={labUsageSectionClass}>
               <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Groups actions</h4>
               <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
                 <li>
@@ -473,19 +490,19 @@ const [open, setOpen] = useState(true)
                   (<code className="text-[var(--screening-text-primary)]">showGroupAdd</code>) to open a new query dialog,
                   and overflow menu (Edit, Copy, Delete).
                 </li>
-                <li>Query rows: selection only — no overflow menu.</li>
+                <li>Query rows: selection only - no overflow menu.</li>
                 <li>Edit and Copy use <code className="text-[var(--screening-text-primary)]">GroupFormDialog</code>; Delete requires typing <strong className="text-[var(--screening-text-primary)]">delete</strong>.</li>
               </ul>
             </section>
-            <section className="space-y-2">
+            <section className={labUsageSectionClass}>
               <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Group form dialog (Edit / Copy)</h4>
               <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Edit</strong> — trash marks an item for removal; restore uses a Success/500 (
+                  <strong className="text-[var(--screening-text-primary)]">Edit</strong>: trash marks an item for removal; restore uses a Success/500 (
                   <code className="text-[var(--screening-text-primary)]">--ace-success-500</code>) circle with a white plus.
                 </li>
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Dimming</strong> — only the item label is dimmed (
+                  <strong className="text-[var(--screening-text-primary)]">Dimming</strong>: only the item label is dimmed (
                   <code className="text-[var(--screening-text-primary)]">opacity-50</code>); action icons stay at full strength so Success/500 and danger colors read correctly.
                 </li>
                 <li>
@@ -494,24 +511,25 @@ const [open, setOpen] = useState(true)
                   <code className="text-[var(--screening-text-primary)]">--ace-success-50</code>).
                 </li>
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Copy</strong> — checkboxes include/exclude items; included count uses purple 400 (
+                  <strong className="text-[var(--screening-text-primary)]">Copy</strong>: checkboxes include/exclude items; included count uses purple 400 (
                   <code className="text-[var(--screening-text-primary)]">--ace-button-purple-400</code>).
                 </li>
               </ul>
             </section>
-            <section className="space-y-2">
+            <section className={labUsageSectionClass}>
               <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Motion</h4>
               <p className="m-0 text-[var(--screening-text-muted)]">
                 Panel width, group expand/collapse, chevron rotation, row hover, and action opacity use{' '}
                 <code className="text-[var(--screening-text-primary)]">--ace-motion-ease-standard</code>. See the{' '}
-                <Link to="/lab/atoms/animations" className="text-[var(--screening-primary)] underline underline-offset-2">
-                  Animations
+                <Link to="/lab/atoms/motion" className="text-[var(--screening-primary)] underline underline-offset-2">
+                  Motion
                 </Link>{' '}
                 lab.
               </p>
             </section>
           </>
         }
+        implementationRulesMarkdown={sidebarRules}
       />
 
       <DialogModal

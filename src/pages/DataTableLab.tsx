@@ -1,22 +1,38 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { AceButton } from '../components/atoms/AceButton'
-import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
 import {
-  DEFAULT_SCREENING_TABLE_CHROME,
+  AceFilterChip,
+  AceFilterToggleChip,
+  AceTableFilterHeader,
+  FILTER_VIEW_MODE_PANEL_WIDTH,
+  filterViewModeLabel,
+  filterViewModeMenuItems,
+  type FilterViewMode,
+} from '../components/molecules/AceFiltering'
+import {
+  AceDropdownMenu,
+  type AceDropdownMenuEntry,
+} from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+import {
+  DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS,
   ScreeningResultsTable,
-  type ScreeningResultsTableChrome,
+  type ScreeningResultsTableVisibilityControls,
 } from '../components/organisms/ScreeningResultsTable/ScreeningResultsTable'
+import { ScreeningColumnsMenu } from '../components/organisms/ScreeningResultsTable/ScreeningColumnsMenu'
 import { DialogModal } from '../components/molecules/DialogModal/DialogModal'
-import { LabCheckbox } from '../lib/labControls'
+import { LabCheckbox, LabSelect } from '../lib/labControls'
+import { labComponentContainerClass } from '../lib/labChrome'
+import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+import dataTableRules from './implementationRules/dataTable.md?raw'
 import { cn } from '../lib/cn'
 
 function aceTypography(token: string) {
   return `[font:var(${token})] [letter-spacing:var(${token}-tracking)]`
 }
 
-const CHROME_OPTIONS: {
-  key: keyof ScreeningResultsTableChrome
+const VISIBILITY_CONTROL_OPTIONS: {
+  key: keyof ScreeningResultsTableVisibilityControls
   label: string
   hint?: string
 }[] = [
@@ -37,153 +53,343 @@ const CHROME_OPTIONS: {
   },
   {
     key: 'showAccordionHeader',
-    label: 'Accordion header',
-    hint: 'Collapsible title bar; off renders a flat table shell',
+    label: 'Show accordion container',
+    hint: 'Wraps the table in a collapsible accordion; off renders a flat table shell',
+  },
+  {
+    key: 'showDisabledRows',
+    label: 'Disabled rows',
+    hint: 'Escalated rows use disabled styling; off shows them as enabled (New)',
+  },
+  {
+    key: 'showEditableCells',
+    label: 'Editable Cells',
+    hint: 'Adds a Notes column with text inputs',
+  },
+  {
+    key: 'showDraggableRows',
+    label: 'Draggable',
+    hint: 'Adds drag handles so rows can be reordered',
+  },
+  {
+    key: 'showDropdownColumn',
+    label: 'Dropdowns',
+    hint: 'Adds a Decision column with select menus',
+  },
+  {
+    key: 'showStepperColumn',
+    label: 'Stepper',
+    hint: 'Adds a Count column with plus/minus steppers',
   },
 ]
 
-const TABLE_CONTEXT_OPTIONS = [{ value: 'Watchlist Screening', label: 'Watchlist Screening' }] as const
+/** Scroll the options list only after more than 10 rows (~3.75rem each). */
+const PREVIEW_OPTIONS_LIST_SCROLL_CLASS = 'max-h-[calc(10*3.75rem)] overflow-y-auto'
+
+const FILTER_OPTIONS = [
+  { id: 'locked', menuLabel: 'Locked', chipLabel: 'Locked: All' },
+  { id: 'users', menuLabel: 'Users', chipLabel: 'User: All' },
+  { id: 'groups', menuLabel: 'Groups', chipLabel: 'Group: All' },
+  { id: 'statuses', menuLabel: 'Statuses', chipLabel: 'Status: All' },
+] as const
+
+type FilterOptionId = (typeof FILTER_OPTIONS)[number]['id']
+type HeaderFilterType = 'triggers' | 'chips'
+
+const FILTER_TYPE_OPTIONS = [
+  { value: 'triggers' as const, label: 'Filter Triggers' },
+  { value: 'chips' as const, label: 'Filter Chips' },
+]
+
+const examplesToolbarPanel = cn(
+  'w-full min-w-0 rounded-[var(--radius-lg)] border border-solid border-[var(--screening-border-strong)]',
+  'bg-[var(--screening-surface)] p-4 shadow-[var(--ace-drop-shadow-xs)] sm:p-5',
+)
 
 export function DataTableLab() {
-  const [chrome, setChrome] = useState<ScreeningResultsTableChrome>(() => ({ ...DEFAULT_SCREENING_TABLE_CHROME }))
+  const [visibilityControls, setVisibilityControls] = useState<ScreeningResultsTableVisibilityControls>(() => ({ ...DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS }))
+  const [draftVisibilityControls, setDraftVisibilityControls] = useState<ScreeningResultsTableVisibilityControls>(() => ({
+    ...DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS,
+  }))
+  const [columnResizing, setColumnResizing] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
-  const [tableContext, setTableContext] = useState('Watchlist Screening')
+  const [headerSearch, setHeaderSearch] = useState('')
+  const [filterType, setFilterType] = useState<HeaderFilterType>('triggers')
+  const [viewMode, setViewMode] = useState<FilterViewMode>('client')
+  const [activeFilters, setActiveFilters] = useState<Set<FilterOptionId>>(() => new Set())
+  const [toggledChips, setToggledChips] = useState<Set<FilterOptionId>>(() => new Set())
 
-  const toggleChrome = useCallback((key: keyof ScreeningResultsTableChrome) => {
-    setChrome((c) => ({ ...c, [key]: !c[key] }))
+  const openPreviewOptions = useCallback(() => {
+    setDraftVisibilityControls({ ...visibilityControls })
+    setModalOpen(true)
+  }, [visibilityControls])
+
+  const closePreviewOptions = useCallback(() => {
+    setModalOpen(false)
   }, [])
 
-  const previewToolbar = (
-    <>
-      <div className="flex w-full flex-wrap items-end gap-3">
-        <AceButton type="button" variant="secondary" size="sm" onClick={() => setModalOpen(true)}>
-          Table preview options
-        </AceButton>
-        <div className="flex min-w-0 flex-col gap-1.5">
-          <span
-            className={cn(
-              aceTypography('--ace-type-paragraph-p1-regular'),
-              'text-[var(--screening-text-primary)]',
-            )}
-          >
-            Context
-          </span>
-          <AceDropdownMenu
-            triggerLabel={tableContext}
-            triggerMode="field"
-            size="sm"
-            panelWidth="wide"
-            align="start"
-            items={TABLE_CONTEXT_OPTIONS.map((option) => ({
-              type: 'item' as const,
-              label: option.label,
-              selected: option.value === tableContext,
-              onSelect: () => setTableContext(option.value),
-            }))}
-          />
-        </div>
-      </div>
-      <DialogModal
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        title="Table preview options"
-        description="Toggle regions of the data table. Changes apply to the preview below."
-        size="lg"
-        secondaryAction={{ label: 'Cancel', onClick: () => setModalOpen(false) }}
-        primaryAction={{ label: 'Done', onClick: () => setModalOpen(false) }}
-        bodyClassName="max-h-[min(60vh,22rem)]"
-      >
-        <ul className="m-0 list-none space-y-1 p-0">
-          {CHROME_OPTIONS.map(({ key, label, hint }) => (
-            <li key={key}>
-              <div className="rounded-[var(--dialog-modal-btn-radius)] px-1 py-2 hover:bg-[var(--dialog-modal-close-hover)]">
-                <LabCheckbox
-                  label={label}
-                  checked={chrome[key]}
-                  onCheckedChange={() => toggleChrome(key)}
-                  className="items-start gap-3"
-                />
-                {hint ? (
-                  <span
-                    className={cn(
-                      aceTypography('--ace-type-caption-regular'),
-                      'mt-0.5 block pl-6 text-[var(--dialog-modal-muted)]',
-                    )}
-                  >
-                    {hint}
-                  </span>
-                ) : null}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </DialogModal>
-    </>
+  const applyPreviewOptions = useCallback(() => {
+    setVisibilityControls({ ...draftVisibilityControls })
+    setModalOpen(false)
+  }, [draftVisibilityControls])
+
+  const toggleDraftVisibilityControl = useCallback((key: keyof ScreeningResultsTableVisibilityControls) => {
+    setDraftVisibilityControls((c) => ({ ...c, [key]: !c[key] }))
+  }, [])
+
+  const toggleFilter = (id: FilterOptionId, checked: boolean) => {
+    setActiveFilters((prev) => {
+      const next = new Set(prev)
+      if (checked) next.add(id)
+      else next.delete(id)
+      return next
+    })
+  }
+
+  const clearFilter = (id: FilterOptionId) => {
+    setActiveFilters((prev) => {
+      const next = new Set(prev)
+      next.delete(id)
+      return next
+    })
+  }
+
+  const toggleChip = (id: FilterOptionId) => {
+    setToggledChips((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  const filterMenuItems: AceDropdownMenuEntry[] = useMemo(
+    () =>
+      FILTER_OPTIONS.map((option) => ({
+        type: 'checkbox' as const,
+        id: option.id,
+        label: option.menuLabel,
+        checked: activeFilters.has(option.id),
+        onCheckedChange: (checked: boolean) => toggleFilter(option.id, checked),
+        style: 'assignment' as const,
+      })),
+    [activeFilters],
   )
+
+  const viewModeItems = useMemo(
+    () => filterViewModeMenuItems(viewMode, setViewMode),
+    [viewMode],
+  )
+
+  const activeChips = FILTER_OPTIONS.filter((option) => activeFilters.has(option.id))
+
+  const viewModeMenu = (
+    <AceDropdownMenu
+      triggerLabel={filterViewModeLabel(viewMode)}
+      triggerMode="filter"
+      panelWidth={FILTER_VIEW_MODE_PANEL_WIDTH}
+      items={viewModeItems}
+    />
+  )
+
+  const headerActions =
+    filterType === 'triggers' ? (
+      <>
+        {viewModeMenu}
+        <AceDropdownMenu triggerLabel="Filters" triggerMode="filter" items={filterMenuItems} />
+      </>
+    ) : (
+      <>
+        {viewModeMenu}
+        {FILTER_OPTIONS.map((option) => (
+          <AceFilterToggleChip
+            key={option.id}
+            label={option.menuLabel}
+            pressed={toggledChips.has(option.id)}
+            onClick={() => toggleChip(option.id)}
+          />
+        ))}
+      </>
+    )
+
+  const headerChips =
+    filterType === 'triggers' && activeChips.length > 0
+      ? activeChips.map((option) => (
+          <AceFilterChip
+            key={option.id}
+            label={option.chipLabel}
+            onClear={() => clearFilter(option.id)}
+          />
+        ))
+      : null
 
   return (
     <ComponentLabPage
       title="Data Table"
-      description="Dense results grid with filters, sortable columns, row expansion, bulk selection (New rows only), and review progress. Organism — composed of table regions, filter controls, and the Checkbox atom."
-      examplesToolbar={previewToolbar}
+      description="Dense results grid with filters, sortable columns, row expansion, bulk selection (New rows only), and review progress. Built from table regions, filter controls, and the Checkbox atom."
+      examplesCanvas={false}
       examples={
-        <div className="w-full min-w-0">
-          <ScreeningResultsTable className="max-w-full" chrome={chrome} title={tableContext} />
+        <div className="space-y-10">
+          <div className={cn('w-full', labExampleSectionClass)}>
+            <p className={labSectionLabelClass}>Headers / Table / Default</p>
+            <div className={labComponentContainerClass}>
+              <div className="mb-4">
+                <LabSelect
+                  label="Filter Type"
+                  value={filterType}
+                  onChange={setFilterType}
+                  options={FILTER_TYPE_OPTIONS}
+                  size="sm"
+                />
+              </div>
+              <AceTableFilterHeader
+                title="Table Header"
+                actions={headerActions}
+                trailing={<ScreeningColumnsMenu />}
+                searchValue={headerSearch}
+                onSearchChange={setHeaderSearch}
+                onSearchClear={() => setHeaderSearch('')}
+                searchPlaceholder="Search"
+                chips={headerChips}
+              />
+            </div>
+          </div>
+
+          <div className={cn('w-full', labExampleSectionClass)}>
+            <p className={labSectionLabelClass}>Table preview</p>
+            <div className="flex flex-col gap-3">
+              <div className={examplesToolbarPanel}>
+                <div className="flex w-full flex-wrap items-center gap-4">
+                  <AceButton type="button" variant="secondary" size="sm" onClick={openPreviewOptions}>
+                    Table View Options
+                  </AceButton>
+                  <LabCheckbox
+                    label="Column Resizing"
+                    checked={columnResizing}
+                    onCheckedChange={setColumnResizing}
+                    className="min-h-8"
+                  />
+                </div>
+              </div>
+              <div className={labComponentContainerClass}>
+                <ScreeningResultsTable
+                  className="max-w-full"
+                  visibilityControls={visibilityControls}
+                  columnResizing={columnResizing}
+                  title="Watchlist Screening"
+                />
+              </div>
+            </div>
+          </div>
+
+          <DialogModal
+            open={modalOpen}
+            onClose={closePreviewOptions}
+            title="Table View Options"
+            description="Toggle regions of the data table. Choose Done to apply, or Cancel to discard."
+            size="lg"
+            fitContent
+            secondaryAction={{ label: 'Cancel', onClick: closePreviewOptions }}
+            primaryAction={{ label: 'Done', onClick: applyPreviewOptions }}
+          >
+            <ul
+              className={cn(
+                'm-0 list-none space-y-1 p-0',
+                VISIBILITY_CONTROL_OPTIONS.length > 10 && PREVIEW_OPTIONS_LIST_SCROLL_CLASS,
+              )}
+            >
+              {VISIBILITY_CONTROL_OPTIONS.map(({ key, label, hint }) => (
+                <li key={key}>
+                  <div className="rounded-[var(--dialog-modal-btn-radius)] px-1 py-2 hover:bg-[var(--dialog-modal-close-hover)]">
+                    <LabCheckbox
+                      label={label}
+                      checked={draftVisibilityControls[key]}
+                      onCheckedChange={() => toggleDraftVisibilityControl(key)}
+                      className="items-start gap-3"
+                    />
+                    {hint ? (
+                      <span
+                        className={cn(
+                          aceTypography('--ace-type-caption-regular'),
+                          'mt-0.5 block pl-6 text-[var(--dialog-modal-muted)]',
+                        )}
+                      >
+                        {hint}
+                      </span>
+                    ) : null}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </DialogModal>
         </div>
       }
       code={
         <ComponentLabCode>{`import {
   ScreeningResultsTable,
   MOCK_ROWS,
-  DEFAULT_SCREENING_TABLE_CHROME,
 } from '../components/organisms/ScreeningResultsTable/ScreeningResultsTable'
+import { ScreeningColumnsMenu } from '../components/organisms/ScreeningResultsTable/ScreeningColumnsMenu'
+import {
+  AceFilterChip,
+  AceFilterToggleChip,
+  AceTableFilterHeader,
+  filterViewModeLabel,
+  filterViewModeMenuItems,
+} from '../components/molecules/AceFiltering'
+import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
 
-<ScreeningResultsTable
-  rows={MOCK_ROWS}
-  title="Watchlist Screening"
-  chrome={{ showPagination: true }}
-/>`}</ComponentLabCode>
+<AceTableFilterHeader
+  title="Table Header"
+  actions={
+    <>
+      <AceDropdownMenu
+        triggerLabel={filterViewModeLabel(viewMode)}
+        triggerMode="filter"
+        panelWidth="wide"
+        items={filterViewModeMenuItems(viewMode, setViewMode)}
+      />
+      <AceDropdownMenu triggerLabel="Filters" triggerMode="filter" items={...} />
+    </>
+  }
+  trailing={<ScreeningColumnsMenu />}
+  searchPlaceholder="Search"
+  chips={active.map((f) => <AceFilterChip key={f.id} label={f.label} onClear={...} />)}
+/>
+
+{/* Filter Chips mode */}
+<AceFilterToggleChip label="Locked" pressed={on} onClick={toggle} />
+
+<ScreeningResultsTable rows={MOCK_ROWS} title="Watchlist Screening" />`}</ComponentLabCode>
       }
       usage={
         <p className="m-0 text-[var(--color-text-muted)]">
-          Import the organism and pass optional <code className="text-[var(--color-text-primary)]">rows</code>,{' '}
-          <code className="text-[var(--color-text-primary)]">title</code>, <code className="text-[var(--color-text-primary)]">chrome</code>, or controlled
-          selection props.
+          Import the component and pass optional <code className="text-[var(--color-text-primary)]">rows</code>,{' '}
+          <code className="text-[var(--color-text-primary)]">title</code>,{' '}
+          <code className="text-[var(--color-text-primary)]">visibilityControls</code>, or controlled selection props.
+          Use <code className="text-[var(--color-text-primary)]">Filter Type</code> on the header demo to switch
+          between Filters dropdown + clearable chips and on/off filter chips. Interactive filter atoms are also
+          documented on the Filtering molecules page.
         </p>
       }
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            All table chrome uses <code className="text-[var(--color-text-primary)]">--screening-*</code> tokens in{' '}
-            <code className="text-[var(--color-text-primary)]">src/styles/variables.css</code>. Dark values apply when an ancestor has{' '}
-            the lab <strong>Theme</strong> control in the top bar (sets <code className="text-[var(--color-text-primary)]">data-theme</code> on the document).
+            Table surfaces and controls use <code className="text-[var(--color-text-primary)]">--screening-*</code>{' '}
+            tokens in <code className="text-[var(--color-text-primary)]">src/styles/variables.css</code>.
           </li>
           <li>
-            Typography uses ACE tokens from <code className="text-[var(--color-text-primary)]">typography-tokens.css</code> (e.g.{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code> + matching{' '}
-            <code className="text-[var(--color-text-primary)]">-tracking</code>) via <code className="text-[var(--color-text-primary)]">aceTypography()</code> in the
-            table source.
+            Typography uses ACE tokens from{' '}
+            <code className="text-[var(--color-text-primary)]">typography-tokens.css</code>.
           </li>
           <li>
-            Spacing / layout: <code className="text-[var(--color-text-primary)]">--space-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-header-min-height</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-table-min-width</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-body-max-height</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-progress-width</code>, etc.
-          </li>
-          <li>
-            Match-string tiles: <code className="text-[var(--color-text-primary)]">--screening-tile-e-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-tile-n-*</code>, <code className="text-[var(--color-text-primary)]">--screening-tile-c1-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-tile-c2-*</code>, <code className="text-[var(--color-text-primary)]">--screening-tile-b-*</code>.
-          </li>
-          <li>
-            Layout toggles: pass a <code className="text-[var(--color-text-primary)]">chrome</code> object (see{' '}
-            <code className="text-[var(--color-text-primary)]">DEFAULT_SCREENING_TABLE_CHROME</code> in the organism) to hide accordion chrome, filters, search, column menu, history toggle,
-            chevrons, checkboxes, or enable the pagination footer (<code className="text-[var(--color-text-primary)]">AcePagination</code>). The preview-options UI uses the shared{' '}
-            <code className="text-[var(--color-text-primary)]">DialogModal</code> molecule (<code className="text-[var(--color-text-primary)]">--dialog-modal-*</code>).
+            Visibility controls: pass a{' '}
+            <code className="text-[var(--color-text-primary)]">visibilityControls</code> object (see{' '}
+            <code className="text-[var(--color-text-primary)]">DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS</code>).
           </li>
         </ul>
       }
+      implementationRulesMarkdown={dataTableRules}
     />
   )
 }

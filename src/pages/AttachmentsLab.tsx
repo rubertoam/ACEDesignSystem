@@ -7,7 +7,7 @@ import {
   type AceAttachmentLink,
 } from '../components/organisms/AceAttachments/AceAttachments'
 import { labComponentContainerClass } from '../lib/labChrome'
-import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
@@ -114,7 +114,7 @@ export function AttachmentsLab() {
       }
       usage={
         <>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
               Use when users need to attach supporting documents and external reference links to a record. The dropzone
@@ -122,18 +122,18 @@ export function AttachmentsLab() {
               action.
             </p>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">File statuses</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Uploading / Queued</strong> — in-progress
+                <strong className="text-[var(--screening-text-primary)]">Uploading / Queued</strong>: in-progress
                 transfer
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Failed</strong> — error with alert icon
+                <strong className="text-[var(--screening-text-primary)]">Failed</strong>: error with alert icon
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Complete</strong> — removable with trash
+                <strong className="text-[var(--screening-text-primary)]">Complete</strong>: removable with trash
                 control
               </li>
             </ul>
@@ -143,17 +143,17 @@ export function AttachmentsLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Shell — <code className="text-[var(--color-text-primary)]">--ace-attachments-border</code>, padding, gap
+            Shell - <code className="text-[var(--color-text-primary)]">--ace-attachments-border</code>, padding, gap
           </li>
           <li>
-            Typography — H6 Small Bold title, footer labels, caption file names
+            Typography - H6 Small Bold title, footer labels, caption file names
           </li>
           <li>
-            Dropzone — dashed primary border on{' '}
+            Dropzone - dashed primary border on{' '}
             <code className="text-[var(--color-text-primary)]">--ace-attachments-dropzone-bg</code>
           </li>
           <li>
-            Status — link and progress text use{' '}
+            Status - link and progress text use{' '}
             <code className="text-[var(--color-text-primary)]">--ace-attachments-status</code>; errors use{' '}
             <code className="text-[var(--color-text-primary)]">--ace-attachments-error</code>
           </li>

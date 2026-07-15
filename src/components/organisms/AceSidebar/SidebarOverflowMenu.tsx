@@ -1,9 +1,9 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { MoreHorizontal } from 'lucide-react'
 import {
   type AceDropdownMenuEntry,
   aceDropdownMenuPanelClass,
 } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { cn } from '../../../lib/cn'
 import { sidebarRowActionButtonClass, sidebarRowActionIconClass } from './sidebarRowActions'
 
@@ -47,7 +47,7 @@ export function SidebarOverflowMenu({
           )}
           onClick={(e) => e.stopPropagation()}
         >
-          <MoreHorizontal className={sidebarRowActionIconClass} strokeWidth={2} aria-hidden />
+          <MaterialSymbol name="more_horiz" size="md" className={sidebarRowActionIconClass} />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal container={portalContainer ?? undefined}>

@@ -3,36 +3,25 @@ import {
   useCallback,
   useEffect,
   useId,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
   type Dispatch,
   type SetStateAction,
 } from 'react'
-import {
-  ArrowDown,
-  ArrowDownUp,
-  ArrowUp,
-  ChevronDown,
-  ChevronRight,
-  Eye,
-  EyeOff,
-  List,
-  Search,
-} from 'lucide-react'
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Checkbox } from '../../atoms/Checkbox/Checkbox'
-import { AceStatusPill } from '../../atoms/AceStatusPill/AceStatusPill'
+import { AceBadge } from '../../atoms/AceBadge/AceBadge'
+import { AceInputField } from '../../atoms/AceInputField'
 import {
   AceTooltip,
   AceTooltipContent,
   AceTooltipIconWrap,
   AceTooltipTrigger,
 } from '../../atoms/AceTooltip/AceTooltip'
+import { AceFilterToggleChip } from '../../molecules/AceFiltering'
 import { AceAccordion } from '../../molecules/AceAccordion/AceAccordion'
 import { AceAccordionReviewProgress } from '../../molecules/AceAccordion/AceAccordionReviewProgress'
-import { aceDropdownMenuPanelClass } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { TablePagination } from '../../molecules/TablePagination'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
@@ -42,17 +31,9 @@ import {
   SCREENING_COLUMN_DEFINITIONS,
   type ScreeningColumnKey,
 } from './screeningTableColumns'
+import { ScreeningColumnsMenu } from './ScreeningColumnsMenu'
+import { ScreeningRowActionsMenu } from './ScreeningRowActionsMenu'
 import {
-  type ColumnDropIndicator,
-  ScreeningColumnReorderMenuItem,
-  reorderScreeningColumnKeys,
-  screeningColumnDropLineClass,
-  screeningColumnMenuLabelClass,
-} from './screeningTableColumnMenu'
-import {
-  screeningStatusFilterChipActiveClass,
-  screeningStatusFilterChipClass,
-  screeningStatusFilterChipInactiveClass,
   screeningStatusFilterLabelClass,
   screeningToolbarIconButtonClass,
 } from './screeningTableToolbar'
@@ -64,6 +45,24 @@ import {
   screeningTableHeaderSortIconActiveClass,
   screeningTableHeaderSortIconIdleClass,
 } from './screeningTableHeader'
+import {
+  applyManualRowOrder,
+  ColumnResizeGuide,
+  ColumnResizeHandle,
+  DemoFeatureHeaderCells,
+  DropdownCell,
+  EditableCell,
+  reorderIds,
+  RowDragHandle,
+  StepperCell,
+  useColumnResize,
+  usePointerRowReorder,
+  columnWidthStyle,
+  screeningTableRowDraggingClass,
+  screeningTableRowDragPeerClass,
+  screeningTableRowDropLineClass,
+  type DemoDropdownValue,
+} from './screeningTableDemoFeatures'
 import type { SortKey } from './screeningTableTypes'
 import {
   MOCK_ROWS,
@@ -103,11 +102,15 @@ type SortDir = 'asc' | 'desc'
 const checkboxPadWrapClass =
   'inline-flex items-center justify-center rounded p-[var(--space-1)] transition-opacity duration-200 ease-out'
 
+/** Same hit box as medium checkbox pad wrap so expand chevron aligns with the checkbox. */
+const expandChevronButtonClass =
+  'inline-flex size-7 shrink-0 items-center justify-center rounded text-[var(--screening-text-primary)] transition-colors duration-200 ease-out hover:bg-[var(--screening-surface-hover)]'
+
 const easeAccordion = '[transition-timing-function:var(--screening-ease-accordion)]'
 const durationAccordion = 'duration-[var(--screening-duration-accordion)]'
 
-export type ScreeningResultsTableChrome = {
-  /** Collapsible section header with title and progress */
+export type ScreeningResultsTableVisibilityControls = {
+  /** Collapsible accordion container around the table */
   showAccordionHeader: boolean
   /** “Filter by” label and status chips */
   showQuickFilters: boolean
@@ -123,10 +126,20 @@ export type ScreeningResultsTableChrome = {
   showExpandChevrons: boolean
   /** Footer: result range, rows-per-page, and paging controls */
   showPagination: boolean
+  /** Last three rows use disabled (reviewed) styling when on */
+  showDisabledRows: boolean
+  /** Demo: editable input cells column */
+  showEditableCells: boolean
+  /** Demo: drag handles to reorder rows */
+  showDraggableRows: boolean
+  /** Demo: dropdown select column */
+  showDropdownColumn: boolean
+  /** Demo: numeric stepper column */
+  showStepperColumn: boolean
 }
 
-export const DEFAULT_SCREENING_TABLE_CHROME: ScreeningResultsTableChrome = {
-  showAccordionHeader: true,
+export const DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS: ScreeningResultsTableVisibilityControls = {
+  showAccordionHeader: false,
   showQuickFilters: true,
   showColumnMenu: true,
   showHistoryToggle: true,
@@ -134,6 +147,11 @@ export const DEFAULT_SCREENING_TABLE_CHROME: ScreeningResultsTableChrome = {
   showCheckboxes: true,
   showExpandChevrons: true,
   showPagination: false,
+  showDisabledRows: true,
+  showEditableCells: false,
+  showDraggableRows: false,
+  showDropdownColumn: false,
+  showStepperColumn: false,
 }
 
 interface ScreeningResultsTableProps {
@@ -142,8 +160,10 @@ interface ScreeningResultsTableProps {
   className?: string
   selectedIds?: Set<string>
   onSelectedIdsChange?: Dispatch<SetStateAction<Set<string>>>
-  /** Toggle regions of the organism for different embed contexts */
-  chrome?: Partial<ScreeningResultsTableChrome>
+  /** Toggle which regions of the table are visible for different embed contexts */
+  visibilityControls?: Partial<ScreeningResultsTableVisibilityControls>
+  /** When on, hovering a column header shows a drag handle to resize width */
+  columnResizing?: boolean
 }
 
 export function ScreeningResultsTable({
@@ -152,10 +172,15 @@ export function ScreeningResultsTable({
   className,
   selectedIds: selectedIdsProp,
   onSelectedIdsChange,
-  chrome: chromeProp,
+  visibilityControls: visibilityControlsProp,
+  columnResizing = false,
 }: ScreeningResultsTableProps) {
-  const chrome = { ...DEFAULT_SCREENING_TABLE_CHROME, ...chromeProp }
-  const hasControlColumn = chrome.showExpandChevrons || chrome.showCheckboxes
+  const visibilityControls = { ...DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS, ...visibilityControlsProp }
+  const hasControlColumn = visibilityControls.showExpandChevrons || visibilityControls.showCheckboxes
+  const demoFeatureColumnCount =
+    (visibilityControls.showEditableCells ? 1 : 0) +
+    (visibilityControls.showDropdownColumn ? 1 : 0) +
+    (visibilityControls.showStepperColumn ? 1 : 0)
   const tableCaptionId = useId()
   const [statusFilters, setStatusFilters] = useState<Set<ScreeningRowStatus>>(() => new Set())
   const [showReviewHistory, setShowReviewHistory] = useState(true)
@@ -165,12 +190,6 @@ export function ScreeningResultsTable({
   const [columnOrder, setColumnOrder] = useState<ScreeningColumnKey[]>(
     () => [...DEFAULT_SCREENING_COLUMN_ORDER],
   )
-  const [columnDropIndicator, setColumnDropIndicator] = useState<ColumnDropIndicator>(null)
-  const [draggedColumnKey, setDraggedColumnKey] = useState<ScreeningColumnKey | null>(null)
-  const [columnDropLineTop, setColumnDropLineTop] = useState<number | null>(null)
-  const columnListRef = useRef<HTMLDivElement>(null)
-  const columnItemRefs = useRef(new Map<ScreeningColumnKey, HTMLElement>())
-  const draggedColumnKeyRef = useRef<ScreeningColumnKey | null>(null)
   const [sortKey, setSortKey] = useState<SortKey | null>(null)
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
@@ -191,6 +210,12 @@ export function ScreeningResultsTable({
   const [rowSearchQuery, setRowSearchQuery] = useState('')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+  const [manualRowOrder, setManualRowOrder] = useState<string[] | null>(null)
+  const [editableValues, setEditableValues] = useState<Record<string, string>>({})
+  const [dropdownValues, setDropdownValues] = useState<Record<string, DemoDropdownValue>>({})
+  const [stepperValues, setStepperValues] = useState<Record<string, number>>({})
+  const { columnWidths, startResize, resizeGuideLeft, showGuideForColumn, hideGuideIfIdle } =
+    useColumnResize(columnResizing)
 
   const statusChips = useMemo(() => {
     const set = new Set<ScreeningRowStatus>()
@@ -212,35 +237,12 @@ export function ScreeningResultsTable({
     [columnMenuOptions, visibleColumns],
   )
 
-  const registerColumnMenuItemRef = useCallback((key: ScreeningColumnKey, node: HTMLElement | null) => {
-    if (node) columnItemRefs.current.set(key, node)
-    else columnItemRefs.current.delete(key)
-  }, [])
-
-  const handleDraggedColumnKeyChange = useCallback((key: ScreeningColumnKey | null) => {
-    draggedColumnKeyRef.current = key
-    setDraggedColumnKey(key)
-  }, [])
-
-  useLayoutEffect(() => {
-    if (!columnDropIndicator || !draggedColumnKey || !columnListRef.current) {
-      setColumnDropLineTop(null)
-      return
-    }
-    const item = columnItemRefs.current.get(columnDropIndicator.targetKey)
-    if (!item) {
-      setColumnDropLineTop(null)
-      return
-    }
-    const listTop = columnListRef.current.getBoundingClientRect().top
-    const itemRect = item.getBoundingClientRect()
-    const relativeTop = itemRect.top - listTop
-    setColumnDropLineTop(
-      columnDropIndicator.position === 'before' ? relativeTop : relativeTop + itemRect.height,
-    )
-  }, [columnDropIndicator, draggedColumnKey, columnMenuOptions])
-
-  const fullColSpan = visibleColumnsInOrder.length + (hasControlColumn ? 1 : 0)
+  const fullColSpan =
+    visibleColumnsInOrder.length +
+    (hasControlColumn ? 1 : 0) +
+    (visibilityControls.showDraggableRows ? 1 : 0) +
+    demoFeatureColumnCount +
+    1
 
   const hasReviewHistory = useMemo(() => rows.some((row) => row.status !== 'New'), [rows])
   const historyToggleDisabled = !hasReviewHistory
@@ -302,8 +304,23 @@ export function ScreeningResultsTable({
       }
       return cmp * dir
     })
-    return list
-  }, [filteredRows, sortKey, sortDir])
+    return applyManualRowOrder(list, visibilityControls.showDraggableRows ? manualRowOrder : null)
+  }, [filteredRows, sortKey, sortDir, manualRowOrder, visibilityControls.showDraggableRows])
+
+  const sortedRowsRef = useRef(sortedRows)
+  sortedRowsRef.current = sortedRows
+
+  const handleRowReorder = useCallback((fromId: string, toId: string, position: 'before' | 'after') => {
+    setManualRowOrder((prev) => {
+      const base = prev ?? sortedRowsRef.current.map((item) => item.id)
+      return reorderIds(base, fromId, toId, position)
+    })
+  }, [])
+
+  const { draggedRowId, rowDropIndicator, beginDrag } = usePointerRowReorder({
+    enabled: visibilityControls.showDraggableRows,
+    onReorder: handleRowReorder,
+  })
 
   const totalPages = Math.max(1, Math.ceil(sortedRows.length / pageSize))
 
@@ -311,11 +328,21 @@ export function ScreeningResultsTable({
     setPage((p) => Math.min(p, totalPages))
   }, [totalPages])
 
+  useEffect(() => {
+    if (!visibilityControls.showDraggableRows) {
+      setManualRowOrder(null)
+    }
+  }, [visibilityControls.showDraggableRows])
+
+  useEffect(() => {
+    setManualRowOrder(null)
+  }, [sortKey, sortDir, rowSearchQuery, statusFilters, showReviewHistory])
+
   const paginatedRows = useMemo(() => {
-    if (!chrome.showPagination) return sortedRows
+    if (!visibilityControls.showPagination) return sortedRows
     const start = (page - 1) * pageSize
     return sortedRows.slice(start, start + pageSize)
-  }, [chrome.showPagination, sortedRows, page, pageSize])
+  }, [visibilityControls.showPagination, sortedRows, page, pageSize])
 
   const selectionRowsSignature = useMemo(
     () => sortedRows.map((r) => `${r.id}:${r.status}`).join(','),
@@ -324,11 +351,15 @@ export function ScreeningResultsTable({
 
   useEffect(() => {
     const allow = new Set(sortedRows.map((r) => r.id))
-    const allowNew = new Set(sortedRows.filter((r) => r.status === 'New').map((r) => r.id))
+    const allowSelectable = new Set(
+      sortedRows
+        .filter((r) => r.status === 'New' || (!visibilityControls.showDisabledRows && r.status === 'Escalated'))
+        .map((r) => r.id),
+    )
     setSelectedIds((prev) => {
       const next = new Set<string>()
       prev.forEach((id) => {
-        if (allowNew.has(id)) next.add(id)
+        if (allowSelectable.has(id)) next.add(id)
       })
       return next
     })
@@ -339,68 +370,45 @@ export function ScreeningResultsTable({
       })
       return next
     })
-  }, [selectionRowsSignature, setSelectedIds, sortedRows])
+  }, [selectionRowsSignature, setSelectedIds, sortedRows, visibilityControls.showDisabledRows])
 
   useEffect(() => {
-    if (!chrome.showCheckboxes) setSelectedIds(new Set())
-  }, [chrome.showCheckboxes, setSelectedIds])
+    if (!visibilityControls.showCheckboxes) setSelectedIds(new Set())
+  }, [visibilityControls.showCheckboxes, setSelectedIds])
 
   useEffect(() => {
-    if (!chrome.showExpandChevrons) setExpandedIds(new Set())
-  }, [chrome.showExpandChevrons])
+    if (!visibilityControls.showExpandChevrons) setExpandedIds(new Set())
+  }, [visibilityControls.showExpandChevrons])
 
   useEffect(() => {
-    if (!chrome.showRowSearch) setRowSearchQuery('')
-  }, [chrome.showRowSearch])
+    if (!visibilityControls.showRowSearch) setRowSearchQuery('')
+  }, [visibilityControls.showRowSearch])
 
   useEffect(() => {
     setPage(1)
   }, [rowSearchQuery, statusFilters, showReviewHistory])
 
   useEffect(() => {
-    if (!chrome.showQuickFilters) setStatusFilters(new Set())
-  }, [chrome.showQuickFilters])
-
-  const selectedRef = useRef(selectedIds)
-  const filterRef = useRef(statusFilters)
-  const rowSearchRef = useRef(rowSearchQuery)
-  selectedRef.current = selectedIds
-  filterRef.current = statusFilters
-  rowSearchRef.current = rowSearchQuery
-
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return
-      if (selectedRef.current.size > 0) {
-        e.preventDefault()
-        setSelectedIds(new Set())
-        return
-      }
-      if (filterRef.current.size > 0) {
-        e.preventDefault()
-        setStatusFilters(new Set())
-        return
-      }
-      if (rowSearchRef.current.trim().length > 0) {
-        e.preventDefault()
-        setRowSearchQuery('')
-      }
-    }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
-  }, [setSelectedIds])
+    if (!visibilityControls.showQuickFilters) setStatusFilters(new Set())
+  }, [visibilityControls.showQuickFilters])
 
   const reviewedCount = useMemo(() => rows.filter((r) => r.status === 'Escalated').length, [rows])
   const totalCount = rows.length
 
-  const selectionMode = chrome.showCheckboxes && selectedIds.size > 0
+  const selectionMode = visibilityControls.showCheckboxes && selectedIds.size > 0
 
   const allVisibleExpanded =
-    chrome.showExpandChevrons &&
+    visibilityControls.showExpandChevrons &&
     sortedRows.length > 0 &&
     sortedRows.every((r) => expandedIds.has(r.id))
 
-  const actionableRows = useMemo(() => sortedRows.filter((r) => r.status === 'New'), [sortedRows])
+  const actionableRows = useMemo(
+    () =>
+      sortedRows.filter(
+        (r) => r.status === 'New' || (!visibilityControls.showDisabledRows && r.status === 'Escalated'),
+      ),
+    [sortedRows, visibilityControls.showDisabledRows],
+  )
 
   const allVisibleSelected =
     actionableRows.length > 0 && actionableRows.every((r) => selectedIds.has(r.id))
@@ -417,7 +425,7 @@ export function ScreeningResultsTable({
 
   const toggleExpanded = useCallback(
     (id: string) => {
-      if (!chrome.showExpandChevrons) return
+      if (!visibilityControls.showExpandChevrons) return
       setExpandedIds((prev) => {
         const next = new Set(prev)
         if (next.has(id)) next.delete(id)
@@ -425,11 +433,11 @@ export function ScreeningResultsTable({
         return next
       })
     },
-    [chrome.showExpandChevrons],
+    [visibilityControls.showExpandChevrons],
   )
 
   const toggleExpandAll = () => {
-    if (!chrome.showExpandChevrons) return
+    if (!visibilityControls.showExpandChevrons) return
     if (allVisibleExpanded) {
       setExpandedIds(new Set())
       return
@@ -438,7 +446,7 @@ export function ScreeningResultsTable({
   }
 
   const onHeaderSelectAllChange = (value: boolean | 'indeterminate') => {
-    if (!chrome.showCheckboxes || actionableRows.length === 0) return
+    if (!visibilityControls.showCheckboxes || actionableRows.length === 0) return
     if (value === true) {
       setSelectedIds(new Set(actionableRows.map((r) => r.id)))
       return
@@ -449,7 +457,7 @@ export function ScreeningResultsTable({
   }
 
   const toggleRowSelect = (id: string, checked: boolean) => {
-    if (!chrome.showCheckboxes) return
+    if (!visibilityControls.showCheckboxes) return
     setSelectedIds((prev) => {
       const next = new Set(prev)
       if (checked) next.add(id)
@@ -458,59 +466,41 @@ export function ScreeningResultsTable({
     })
   }
 
-  const toggleColumnVisibility = useCallback((key: ScreeningColumnKey, visible: boolean) => {
-    setVisibleColumns((prev) => {
-      const next = new Set(prev)
-      if (visible) {
-        next.add(key)
-        return next
-      }
-      if (next.size <= 1) return prev
-      next.delete(key)
-      return next
-    })
-  }, [])
-
-  const reorderColumns = useCallback(
-    (fromKey: ScreeningColumnKey, toKey: ScreeningColumnKey, position: 'before' | 'after') => {
-      setColumnOrder((prev) => reorderScreeningColumnKeys(prev, fromKey, toKey, position))
-    },
-    [],
-  )
-
   const headerCheckboxState: boolean | 'indeterminate' =
     someVisibleSelected && !allVisibleSelected ? 'indeterminate' : allVisibleSelected
 
   const showToolbar =
-    chrome.showQuickFilters ||
-    chrome.showColumnMenu ||
-    chrome.showHistoryToggle ||
-    chrome.showRowSearch
+    visibilityControls.showQuickFilters ||
+    visibilityControls.showColumnMenu ||
+    visibilityControls.showHistoryToggle ||
+    visibilityControls.showRowSearch
 
-  const toolbarTrailing = chrome.showColumnMenu || chrome.showHistoryToggle || chrome.showRowSearch
+  const toolbarTrailing = visibilityControls.showColumnMenu || visibilityControls.showHistoryToggle || visibilityControls.showRowSearch
   const escalatedCasesVisible = showReviewHistory
   const historyTooltipLabel = escalatedCasesVisible ? 'Hide' : 'Show'
 
   const mainPanel = (
+    <>
     <div className="flex max-h-[var(--screening-body-max-height)] min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
       {showToolbar ? (
         <div className="shrink-0 border-b border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-[var(--space-4)] py-[var(--space-3)]">
           <div
             className={cn(
               'flex flex-wrap items-center gap-x-[var(--space-3)] gap-y-[var(--space-2)]',
-              !chrome.showQuickFilters && toolbarTrailing && 'justify-end',
+              !visibilityControls.showQuickFilters && toolbarTrailing && 'justify-end',
             )}
           >
-            {chrome.showQuickFilters ? (
+            {visibilityControls.showQuickFilters ? (
               <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
                 <span className={screeningStatusFilterLabelClass}>Filter by</span>
                 <div className="flex min-w-0 flex-wrap items-center gap-2">
                   {statusChips.map((st) => {
                     const active = statusFilters.has(st)
                     return (
-                      <button
+                      <AceFilterToggleChip
                         key={st}
-                        type="button"
+                        label={st}
+                        pressed={active}
                         onClick={() =>
                           setStatusFilters((prev) => {
                             const next = new Set(prev)
@@ -519,15 +509,7 @@ export function ScreeningResultsTable({
                             return next
                           })
                         }
-                        className={cn(
-                          screeningStatusFilterChipClass,
-                          active
-                            ? screeningStatusFilterChipActiveClass
-                            : screeningStatusFilterChipInactiveClass,
-                        )}
-                      >
-                        {st}
-                      </button>
+                      />
                     )
                   })}
                 </div>
@@ -537,93 +519,18 @@ export function ScreeningResultsTable({
               <div
                 className={cn(
                   'flex max-w-full min-w-0 shrink-0 flex-nowrap items-center gap-[var(--space-3)]',
-                  chrome.showQuickFilters && 'ms-auto',
+                  visibilityControls.showQuickFilters && 'ms-auto',
                 )}
               >
-                {chrome.showColumnMenu ? (
-                  <DropdownMenu.Root
-                    modal={false}
-                    onOpenChange={(open) => {
-                      if (!open) {
-                        setColumnDropIndicator(null)
-                        handleDraggedColumnKeyChange(null)
-                        setColumnDropLineTop(null)
-                      }
-                    }}
-                  >
-                    <AceTooltip>
-                      <AceTooltipTrigger asChild>
-                        <DropdownMenu.Trigger asChild>
-                          <button
-                            type="button"
-                            aria-label="Show or hide columns"
-                            className={screeningToolbarIconButtonClass}
-                          >
-                            <List className="size-4" strokeWidth={2} aria-hidden />
-                          </button>
-                        </DropdownMenu.Trigger>
-                      </AceTooltipTrigger>
-                      <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
-                        Columns
-                      </AceTooltipContent>
-                    </AceTooltip>
-                    <DropdownMenu.Portal>
-                      <DropdownMenu.Content
-                        align="end"
-                        sideOffset={4}
-                        collisionPadding={8}
-                        className={cn(aceDropdownMenuPanelClass, 'min-w-[15rem] p-1')}
-                        onPointerDownOutside={(event) => {
-                          if (draggedColumnKeyRef.current) event.preventDefault()
-                        }}
-                        onInteractOutside={(event) => {
-                          if (draggedColumnKeyRef.current) event.preventDefault()
-                        }}
-                        onDragLeave={(event) => {
-                          if (!event.currentTarget.contains(event.relatedTarget as Node)) {
-                            setColumnDropIndicator(null)
-                            setColumnDropLineTop(null)
-                          }
-                        }}
-                      >
-                        <DropdownMenu.Label className={screeningColumnMenuLabelClass}>Columns</DropdownMenu.Label>
-                        <div
-                          ref={columnListRef}
-                          className="relative"
-                          onDragOver={(event) => event.preventDefault()}
-                        >
-                          {columnDropLineTop !== null ? (
-                            <span
-                              aria-hidden
-                              className={cn(
-                                screeningColumnDropLineClass,
-                                draggedColumnKey ? 'scale-x-100 opacity-100' : 'scale-x-[0.98] opacity-0',
-                              )}
-                              style={{ top: columnDropLineTop }}
-                            />
-                          ) : null}
-                          {columnMenuOptions.map((column) => (
-                            <ScreeningColumnReorderMenuItem
-                              key={column.key}
-                              columnKey={column.key}
-                              label={column.label}
-                              checked={visibleColumns.has(column.key)}
-                              disabled={visibleColumns.has(column.key) && visibleColumns.size <= 1}
-                              draggedColumnKey={draggedColumnKey}
-                              dropIndicator={columnDropIndicator}
-                              onCheckedChange={(checked) => toggleColumnVisibility(column.key, checked)}
-                              onReorder={reorderColumns}
-                              onDropIndicatorChange={setColumnDropIndicator}
-                              onDraggedColumnKeyChange={handleDraggedColumnKeyChange}
-                              onItemRef={registerColumnMenuItemRef}
-                            />
-                          ))}
-                        </div>
-                      </DropdownMenu.Content>
-                    </DropdownMenu.Portal>
-                  </DropdownMenu.Root>
+                {visibilityControls.showColumnMenu ? (
+                  <ScreeningColumnsMenu
+                    visibleColumns={visibleColumns}
+                    onVisibleColumnsChange={setVisibleColumns}
+                    columnOrder={columnOrder}
+                    onColumnOrderChange={setColumnOrder}
+                  />
                 ) : null}
-                {chrome.showHistoryToggle ? (
+                {visibilityControls.showHistoryToggle ? (
                   <AceTooltip>
                     {historyToggleDisabled ? (
                       <AceTooltipTrigger asChild>
@@ -638,7 +545,7 @@ export function ScreeningResultsTable({
                               'cursor-not-allowed opacity-60',
                             )}
                           >
-                            <Eye className="size-4" strokeWidth={2} aria-hidden />
+                            <MaterialSymbol name="visibility" size="md" weight={300} />
                           </button>
                         </AceTooltipIconWrap>
                       </AceTooltipTrigger>
@@ -652,9 +559,9 @@ export function ScreeningResultsTable({
                           className={screeningToolbarIconButtonClass}
                         >
                           {showReviewHistory ? (
-                            <EyeOff className="size-4" strokeWidth={2} aria-hidden />
+                            <MaterialSymbol name="visibility_off" size="md" weight={300} />
                           ) : (
-                            <Eye className="size-4" strokeWidth={2} aria-hidden />
+                            <MaterialSymbol name="visibility" size="md" weight={300} />
                           )}
                         </button>
                       </AceTooltipTrigger>
@@ -664,30 +571,20 @@ export function ScreeningResultsTable({
                     </AceTooltipContent>
                   </AceTooltip>
                 ) : null}
-                {chrome.showRowSearch ? (
-                  <div
-                    className={cn(
-                      'flex h-[var(--screening-input-height-sm)] w-[12rem] min-w-[min(100%,12.5rem)] max-w-[16rem] shrink-0 items-center gap-[var(--screening-input-gap)] rounded-[var(--screening-input-radius)] border border-solid border-[var(--screening-input-border)] bg-[var(--screening-surface)] px-[var(--screening-input-px)] transition-[background-color,border-color,box-shadow] duration-150 ease-out',
-                      'focus-within:border-[var(--screening-input-border-focus)] focus-within:bg-[var(--screening-input-bg-focus)] focus-within:shadow-[0_0_0_2px_var(--screening-input-focus-ring)]',
-                    )}
-                  >
-                    <Search
-                      className="size-4 shrink-0 text-[var(--screening-text-primary)]"
-                      strokeWidth={2}
-                      aria-hidden
-                    />
-                    <input
+                {visibilityControls.showRowSearch ? (
+                  <div className="w-[12rem] min-w-[min(100%,12.5rem)] max-w-[16rem] shrink-0">
+                    <AceInputField
+                      fieldSize="sm"
+                      icon="left"
                       type="search"
                       value={rowSearchQuery}
                       onChange={(e) => setRowSearchQuery(e.target.value)}
+                      onClear={() => setRowSearchQuery('')}
                       placeholder="Search"
                       autoComplete="off"
                       spellCheck={false}
                       aria-label="Search rows by visible columns"
-                      className={cn(
-                        aceTypography(ACE.cell),
-                        'min-w-0 flex-1 border-0 bg-transparent p-0 text-[var(--screening-text-primary)] outline-none placeholder:text-[var(--screening-input-placeholder)]',
-                      )}
+                      className="w-full bg-[var(--screening-surface)]"
                     />
                   </div>
                 ) : null}
@@ -697,6 +594,7 @@ export function ScreeningResultsTable({
         </div>
       ) : null}
       <div className="min-h-0 flex-1 overflow-x-auto overflow-y-auto scroll-smooth">
+              <div className="relative w-full min-w-[var(--screening-table-min-width)]">
               <table
                 className="w-full min-w-[var(--screening-table-min-width)] border-collapse text-left"
                 aria-labelledby={tableCaptionId}
@@ -710,27 +608,41 @@ export function ScreeningResultsTable({
                 </caption>
                 <thead className="sticky top-0 z-[1] border-b border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] shadow-[var(--screening-shadow-thead)]">
                   <tr className={screeningTableHeaderRowClass}>
+                    {visibilityControls.showDraggableRows ? (
+                      <th scope="col" className="w-8 px-[var(--space-1)] py-0 align-middle">
+                        <span className="sr-only">Reorder</span>
+                      </th>
+                    ) : null}
                     {hasControlColumn ? (
                       <th scope="col" className="w-12 px-[var(--space-2)] py-[var(--space-1)] align-middle">
                         <div className="flex items-center gap-[var(--space-1)]">
-                          {chrome.showExpandChevrons ? (
+                          {visibilityControls.showExpandChevrons ? (
                             <button
                               type="button"
-                              className="rounded p-[var(--space-1)] text-[var(--screening-text-primary)] transition-colors duration-200 ease-out hover:bg-[var(--screening-surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]"
+                              className={cn(
+                                expandChevronButtonClass,
+                                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+                              )}
                               aria-label={allVisibleExpanded ? 'Collapse all rows' : 'Expand all rows'}
                               onClick={toggleExpandAll}
                             >
-                              {allVisibleExpanded ? (
-                                <ChevronDown className={cn(aceChevronIconClass, durationAccordion, easeAccordion, 'transition-transform')} />
-                              ) : (
-                                <ChevronRight className={cn(aceChevronIconClass, durationAccordion, easeAccordion, 'transition-transform')} />
-                              )}
+                              <span
+                                className={cn(
+                                  'inline-flex items-center justify-center transition-transform',
+                                  durationAccordion,
+                                  easeAccordion,
+                                  allVisibleExpanded ? 'rotate-0' : '-rotate-90',
+                                )}
+                                aria-hidden
+                              >
+                                <MaterialSymbol name="keyboard_arrow_down" size="md" className={aceChevronIconClass} />
+                              </span>
                             </button>
                           ) : null}
-                          {chrome.showCheckboxes ? (
+                          {visibilityControls.showCheckboxes ? (
                             <span className={cn(checkboxPadWrapClass, 'opacity-100')}>
                               <Checkbox
-                                size="sm"
+                                size="md"
                                 checked={headerCheckboxState}
                                 disabled={actionableRows.length === 0}
                                 onCheckedChange={onHeaderSelectAllChange}
@@ -746,9 +658,9 @@ export function ScreeningResultsTable({
                           ) : null}
                         </div>
                         <span className="sr-only">
-                          {chrome.showExpandChevrons && chrome.showCheckboxes
+                          {visibilityControls.showExpandChevrons && visibilityControls.showCheckboxes
                             ? 'Expand and select'
-                            : chrome.showExpandChevrons
+                            : visibilityControls.showExpandChevrons
                               ? 'Expand rows'
                               : 'Select rows'}
                         </span>
@@ -758,8 +670,19 @@ export function ScreeningResultsTable({
                       <th
                         key={column.key}
                         scope="col"
-                        className={screeningTableHeaderCellClass}
+                        className={cn(
+                          screeningTableHeaderCellClass,
+                          'group/th relative',
+                          columnResizing && 'select-none',
+                        )}
+                        style={columnWidthStyle(columnWidths[column.key])}
                         aria-sort={sortKey === column.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
+                        onMouseEnter={
+                          columnResizing
+                            ? (event) => showGuideForColumn(event.currentTarget)
+                            : undefined
+                        }
+                        onMouseLeave={columnResizing ? () => hideGuideIfIdle() : undefined}
                       >
                         <button
                           type="button"
@@ -769,16 +692,48 @@ export function ScreeningResultsTable({
                           <span className={screeningTableHeaderLabelClass}>{column.label}</span>
                           {sortKey === column.key ? (
                             sortDir === 'asc' ? (
-                              <ArrowUp className={screeningTableHeaderSortIconActiveClass} strokeWidth={2} />
+                              <MaterialSymbol
+                                name="arrow_upward"
+                                size="sm"
+                                weight={400}
+                                className={screeningTableHeaderSortIconActiveClass}
+                              />
                             ) : (
-                              <ArrowDown className={screeningTableHeaderSortIconActiveClass} strokeWidth={2} />
+                              <MaterialSymbol
+                                name="arrow_downward"
+                                size="sm"
+                                weight={400}
+                                className={screeningTableHeaderSortIconActiveClass}
+                              />
                             )
                           ) : (
-                            <ArrowDownUp className={screeningTableHeaderSortIconIdleClass} strokeWidth={2} />
+                            <MaterialSymbol
+                              name="swap_vert"
+                              size="sm"
+                              weight={400}
+                              className={screeningTableHeaderSortIconIdleClass}
+                            />
                           )}
                         </button>
+                        <ColumnResizeHandle
+                          columnKey={column.key}
+                          label={column.label}
+                          enabled={columnResizing}
+                          onResizeStart={startResize}
+                        />
                       </th>
                     ))}
+                    <DemoFeatureHeaderCells
+                      showEditableCells={visibilityControls.showEditableCells}
+                      showDropdownColumn={visibilityControls.showDropdownColumn}
+                      showStepperColumn={visibilityControls.showStepperColumn}
+                      columnWidths={columnWidths}
+                      columnResizing={columnResizing}
+                      onResizeStart={startResize}
+                      onGuideShow={showGuideForColumn}
+                      onGuideHide={hideGuideIfIdle}
+                    />
+                    <th scope="col" className="w-10 p-0 pr-[var(--space-3)] align-middle" aria-hidden />
                   </tr>
                 </thead>
                 <tbody>
@@ -828,53 +783,84 @@ export function ScreeningResultsTable({
                   {paginatedRows.map((row) => {
                     const expanded = expandedIds.has(row.id)
                     const selected = selectedIds.has(row.id)
-                    const rowDone = row.status === 'Escalated'
-                    const rowChromeControls = expanded || selectionMode
+                    const rowDone = visibilityControls.showDisabledRows && row.status === 'Escalated'
+                    const statusLabel = rowDone ? row.status : 'New'
+                    const rowControlsVisible = expanded || selectionMode
                     return (
                       <Fragment key={row.id}>
+                        {visibilityControls.showDraggableRows &&
+                        rowDropIndicator?.targetId === row.id &&
+                        rowDropIndicator.position === 'before' ? (
+                          <tr aria-hidden className="pointer-events-none h-0">
+                            <td colSpan={fullColSpan} className="p-0">
+                              <div className={screeningTableRowDropLineClass} />
+                            </td>
+                          </tr>
+                        ) : null}
                         <tr
-                          aria-selected={chrome.showCheckboxes && selected && !rowDone}
+                          data-screening-row-id={row.id}
+                          aria-selected={visibilityControls.showCheckboxes && selected && !rowDone}
                           className={cn(
-                            'group/row border-b border-[var(--screening-border-row)] transition-[background-color,box-shadow] duration-200 ease-out',
+                            'group/row relative border-b border-[var(--screening-border-row)]',
                             rowDone && screeningDisabledRowClass,
                             !rowDone &&
+                              draggedRowId !== row.id &&
                               'bg-[var(--screening-surface)] hover:bg-[var(--screening-surface-row-muted)] hover:shadow-[var(--screening-shadow-row-accent)]',
-                            selected && !rowDone && 'bg-[var(--screening-surface-selected)]',
+                            selected && !rowDone && draggedRowId !== row.id && 'bg-[var(--screening-surface-selected)]',
+                            draggedRowId === row.id && screeningTableRowDraggingClass,
+                            draggedRowId != null &&
+                              draggedRowId !== row.id &&
+                              screeningTableRowDragPeerClass,
                           )}
                         >
+                          {visibilityControls.showDraggableRows ? (
+                            <td className="w-8 px-[var(--space-1)] py-[var(--space-3)] align-middle">
+                              <div className="flex items-center justify-center">
+                                <RowDragHandle
+                                  onPointerDragStart={(event) => beginDrag(row.id, event)}
+                                />
+                              </div>
+                            </td>
+                          ) : null}
                           {hasControlColumn ? (
                           <td className="w-12 px-[var(--space-2)] py-[var(--space-3)] align-middle">
                             <div className="flex items-center gap-[var(--space-1)]">
-                              {chrome.showExpandChevrons ? (
+                              {visibilityControls.showExpandChevrons ? (
                                 <button
                                   type="button"
                                   aria-expanded={expanded}
                                   aria-label={expanded ? 'Collapse row' : 'Expand row'}
                                   onClick={() => toggleExpanded(row.id)}
                                   className={cn(
-                                    'rounded p-[var(--space-1)] text-[var(--screening-text-primary)] transition-colors duration-200 ease-out hover:bg-[var(--screening-surface-hover)]',
-                                    expanded || rowChromeControls
+                                    expandChevronButtonClass,
+                                    expanded || rowControlsVisible
                                       ? 'pointer-events-auto opacity-100'
                                       : 'pointer-events-none opacity-0 group-hover/row:pointer-events-auto group-hover/row:opacity-100',
                                   )}
                                 >
-                                  {expanded ? (
-                                    <ChevronDown className={cn(aceChevronIconClass, durationAccordion, easeAccordion, 'transition-transform')} />
-                                  ) : (
-                                    <ChevronRight className={cn(aceChevronIconClass, durationAccordion, easeAccordion, 'transition-transform')} />
-                                  )}
+                                  <span
+                                    className={cn(
+                                      'inline-flex items-center justify-center transition-transform',
+                                      durationAccordion,
+                                      easeAccordion,
+                                      expanded ? 'rotate-0' : '-rotate-90',
+                                    )}
+                                    aria-hidden
+                                  >
+                                    <MaterialSymbol name="keyboard_arrow_down" size="md" className={aceChevronIconClass} />
+                                  </span>
                                 </button>
                               ) : null}
-                              {chrome.showCheckboxes ? (
+                              {visibilityControls.showCheckboxes ? (
                                 <span
                                   className={cn(
                                     checkboxPadWrapClass,
                                     rowDone && 'cursor-default hover:bg-[var(--screening-surface-row-muted)]',
-                                    rowChromeControls ? 'opacity-100' : 'opacity-0 group-hover/row:opacity-100',
+                                    rowControlsVisible ? 'opacity-100' : 'opacity-0 group-hover/row:opacity-100',
                                   )}
                                 >
                                   <Checkbox
-                                    size="sm"
+                                    size="md"
                                     checked={selected}
                                     disabled={rowDone}
                                     onCheckedChange={(v) => {
@@ -894,11 +880,16 @@ export function ScreeningResultsTable({
                                   <td
                                     key={column.key}
                                     className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]"
+                                    style={columnWidthStyle(columnWidths[column.key])}
                                   >
-                                    {row.status === 'New' ? (
-                                      <AceStatusPill variant="purple">New</AceStatusPill>
+                                    {statusLabel === 'New' ? (
+                                      <AceBadge appearance="pill" variant="purple">
+                                        New
+                                      </AceBadge>
                                     ) : (
-                                      <AceStatusPill variant="orange">Escalated</AceStatusPill>
+                                      <AceBadge appearance="pill" variant="orange">
+                                        Escalate
+                                      </AceBadge>
                                     )}
                                   </td>
                                 )
@@ -910,6 +901,7 @@ export function ScreeningResultsTable({
                                       aceTypography(ACE.cell),
                                       'px-[var(--space-3)] py-[var(--space-3)] text-[var(--screening-text-primary)]',
                                     )}
+                                    style={columnWidthStyle(columnWidths[column.key])}
                                   >
                                     {row.name}
                                   </td>
@@ -922,13 +914,18 @@ export function ScreeningResultsTable({
                                       aceTypography(ACE.cell),
                                       'whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)] text-[var(--screening-text-secondary)]',
                                     )}
+                                    style={columnWidthStyle(columnWidths[column.key])}
                                   >
                                     {row.dob}
                                   </td>
                                 )
                               case 'matchAge':
                                 return (
-                                  <td key={column.key} className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]">
+                                  <td
+                                    key={column.key}
+                                    className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]"
+                                    style={columnWidthStyle(columnWidths[column.key])}
+                                  >
                                     <span
                                       className={cn(
                                         aceTypography(ACE.cell),
@@ -958,13 +955,18 @@ export function ScreeningResultsTable({
                                           ? 'text-[var(--screening-score-high)]'
                                           : 'text-[var(--screening-text-primary)]',
                                     )}
+                                    style={columnWidthStyle(columnWidths[column.key])}
                                   >
                                     {row.matchScore}
                                   </td>
                                 )
                               case 'matchString':
                                 return (
-                                  <td key={column.key} className="px-[var(--space-3)] py-[var(--space-3)]">
+                                  <td
+                                    key={column.key}
+                                    className="px-[var(--space-3)] py-[var(--space-3)]"
+                                    style={columnWidthStyle(columnWidths[column.key])}
+                                  >
                                     <div className="flex items-center gap-[var(--space-1)]">
                                       {row.matchTiles.map((t, i) => {
                                         const s = tileSoftStyle(t)
@@ -994,8 +996,52 @@ export function ScreeningResultsTable({
                                 return null
                             }
                           })}
+                          {visibilityControls.showEditableCells ? (
+                            <EditableCell
+                              value={editableValues[row.id] ?? ''}
+                              disabled={rowDone}
+                              width={columnWidths.editable}
+                              onChange={(value) =>
+                                setEditableValues((prev) => ({ ...prev, [row.id]: value }))
+                              }
+                            />
+                          ) : null}
+                          {visibilityControls.showDropdownColumn ? (
+                            <DropdownCell
+                              value={dropdownValues[row.id] ?? 'pending'}
+                              disabled={rowDone}
+                              width={columnWidths.dropdown}
+                              onChange={(value) =>
+                                setDropdownValues((prev) => ({ ...prev, [row.id]: value }))
+                              }
+                            />
+                          ) : null}
+                          {visibilityControls.showStepperColumn ? (
+                            <StepperCell
+                              value={stepperValues[row.id] ?? 1}
+                              disabled={rowDone}
+                              width={columnWidths.stepper}
+                              onChange={(value) =>
+                                setStepperValues((prev) => ({ ...prev, [row.id]: value }))
+                              }
+                            />
+                          ) : null}
+                          <td className="h-px w-10 py-0 pl-0 pr-[var(--space-3)] align-middle">
+                            <div className="flex h-full min-h-10 w-full items-center justify-center">
+                              <ScreeningRowActionsMenu rowName={row.name} />
+                            </div>
+                          </td>
                         </tr>
-                        {chrome.showExpandChevrons ? (
+                        {visibilityControls.showDraggableRows &&
+                        rowDropIndicator?.targetId === row.id &&
+                        rowDropIndicator.position === 'after' ? (
+                          <tr aria-hidden className="pointer-events-none h-0">
+                            <td colSpan={fullColSpan} className="p-0">
+                              <div className={screeningTableRowDropLineClass} />
+                            </td>
+                          </tr>
+                        ) : null}
+                        {visibilityControls.showExpandChevrons ? (
                         <tr className="border-b border-[var(--screening-border-row)] border-t-0">
                           <td colSpan={fullColSpan} className="p-0 align-top">
                             <div
@@ -1036,8 +1082,10 @@ export function ScreeningResultsTable({
                   })}
                 </tbody>
               </table>
+              <ColumnResizeGuide left={resizeGuideLeft} />
+              </div>
             </div>
-            {chrome.showPagination ? (
+            {visibilityControls.showPagination ? (
               <div className="shrink-0 border-t border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] px-[var(--space-4)] py-[var(--space-3)]">
                 <TablePagination
                   totalItems={sortedRows.length}
@@ -1052,6 +1100,7 @@ export function ScreeningResultsTable({
               </div>
             ) : null}
           </div>
+    </>
   )
 
   const tableHeaderTrailing = (
@@ -1063,7 +1112,7 @@ export function ScreeningResultsTable({
     className,
   )
 
-  if (chrome.showAccordionHeader) {
+  if (visibilityControls.showAccordionHeader) {
     return (
       <AceAccordion
         className={cn(

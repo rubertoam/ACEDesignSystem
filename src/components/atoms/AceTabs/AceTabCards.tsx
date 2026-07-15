@@ -1,6 +1,6 @@
-import { Activity } from 'lucide-react'
 import { useId } from 'react'
 import { cn } from '../../../lib/cn'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { aceTabButtonId } from './AceTabs'
 
 const titleClass =
@@ -11,10 +11,10 @@ const descriptionClass = '[font:var(--ace-type-caption-regular)] [letter-spacing
 
 function TabCardHeaderIcon() {
   return (
-    <Activity
-      className="size-4 shrink-0 text-[var(--ace-tab-card-icon-primary)]"
-      strokeWidth={2}
-      aria-hidden
+    <MaterialSymbol
+      name="vital_signs"
+      size="md"
+      className="shrink-0 text-[var(--ace-tab-card-icon-primary)]"
     />
   )
 }

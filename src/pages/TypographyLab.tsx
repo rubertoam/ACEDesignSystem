@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { cn } from '../lib/cn'
+import { labUsageSectionClass } from '../lib/labExampleSection'
 import aceTypographyDoc from '../styles/ace-typography-from-figma.json'
 
 type AceTypographyRow = {
@@ -64,19 +65,19 @@ export function TypographyLab() {
       description="ACE type tokens from typography-tokens.css, documented from the Figma font variable export. Each row uses the font shorthand token plus its matching -tracking custom property."
       examples={
         <div className="space-y-8">
-          <section className="space-y-3">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Font stacks</h4>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
                 <p className="m-0 text-xs font-medium text-[var(--color-text-muted)]">--font-ace-noto</p>
                 <p className="m-0 mt-2 text-lg" style={{ fontFamily: 'var(--font-ace-noto)' }}>
-                  Noto Sans — {SAMPLE}
+                  Noto Sans - {SAMPLE}
                 </p>
               </div>
               <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
                 <p className="m-0 text-xs font-medium text-[var(--color-text-muted)]">--font-ace-inter</p>
                 <p className="m-0 mt-2 text-lg" style={{ fontFamily: 'var(--font-ace-inter)' }}>
-                  Inter — {SAMPLE}
+                  Inter - {SAMPLE}
                 </p>
               </div>
             </div>

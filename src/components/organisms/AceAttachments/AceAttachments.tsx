@@ -1,16 +1,11 @@
-import {
-  AlertCircle,
-  CloudUpload,
-  FileText,
-  Link2,
-  Trash2,
-} from 'lucide-react'
 import { useId, useRef, type DragEvent } from 'react'
 import { AceButton } from '../../atoms/AceButton'
 import { AceInputField } from '../../atoms/AceInputField'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { cn } from '../../../lib/cn'
 import {
   aceAttachmentsActionsRowClass,
+  aceAttachmentsDeleteIconClass,
   aceAttachmentsDividerClass,
   aceAttachmentsDropzoneClass,
   aceAttachmentsDropzonePromptClass,
@@ -29,6 +24,7 @@ import {
   aceAttachmentsSectionLabelClass,
   aceAttachmentsShellClass,
   aceAttachmentsStatusClass,
+  aceAttachmentsStatusGroupClass,
   aceAttachmentsTitleClass,
   aceAttachmentsUploadIconClass,
   aceAttachmentsUploadedHeaderClass,
@@ -85,14 +81,14 @@ function AttachmentFileRow({
   return (
     <div className={aceAttachmentsFileRowClass}>
       <div className={aceAttachmentsFileNameGroupClass}>
-        <FileText className={aceAttachmentsFileIconClass} strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="draft" size="sm" className={aceAttachmentsFileIconClass} />
         <span className={aceAttachmentsFileNameClass}>{file.name}</span>
         {showSize && file.sizeLabel ? (
           <span className={aceAttachmentsFileMetaClass}>{file.sizeLabel}</span>
         ) : null}
       </div>
 
-      <div className="flex shrink-0 items-center gap-1">
+      <div className={aceAttachmentsStatusGroupClass}>
         {statusLabel ? (
           <span
             className={cn(
@@ -103,7 +99,7 @@ function AttachmentFileRow({
           </span>
         ) : null}
         {file.status === 'failed' ? (
-          <AlertCircle className={aceAttachmentsErrorIconClass} strokeWidth={2} aria-hidden />
+          <MaterialSymbol name="error" size="sm" className={aceAttachmentsErrorIconClass} />
         ) : null}
         {file.status === 'complete' ? (
           <button
@@ -113,7 +109,7 @@ function AttachmentFileRow({
             disabled={disabled}
             onClick={() => onRemove?.(file.id)}
           >
-            <Trash2 className="size-3" strokeWidth={2} aria-hidden />
+            <MaterialSymbol name="delete" size="sm" className={aceAttachmentsDeleteIconClass} />
           </button>
         ) : null}
       </div>
@@ -133,7 +129,7 @@ function AttachmentLinkRow({
   return (
     <div className={aceAttachmentsLinkRowClass}>
       <div className="flex min-w-0 items-center gap-2">
-        <Link2 className={aceAttachmentsLinkIconClass} strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="link" size="sm" className={aceAttachmentsLinkIconClass} />
         <span className={aceAttachmentsLinkTextClass}>{link.url}</span>
       </div>
       <button
@@ -143,7 +139,7 @@ function AttachmentLinkRow({
         disabled={disabled}
         onClick={() => onRemove?.(link.id)}
       >
-        <Trash2 className="size-3" strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="delete" size="sm" className={aceAttachmentsDeleteIconClass} />
       </button>
     </div>
   )
@@ -203,8 +199,8 @@ export function AceAttachments({
         >
           <div className="flex w-full min-w-0 items-center justify-between gap-3">
             <div className={aceAttachmentsDropzonePromptClass}>
-              <CloudUpload className={aceAttachmentsUploadIconClass} strokeWidth={2} aria-hidden />
-              <span>Drag and drop files here or upload</span>
+              <MaterialSymbol name="cloud_upload" size="md" className={aceAttachmentsUploadIconClass} />
+              <span className="min-w-0 leading-none">Drag and drop files here or upload</span>
             </div>
             <AceButton
               type="button"

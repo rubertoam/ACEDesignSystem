@@ -38,7 +38,7 @@
 
   /* ACE drop shadows — Figma Drop Shadows (71:71); single-layer elevation, 10% alpha */
   /** Space between a subsection label and its content (labs, documentation). */
-  --ace-section-label-gap: 1.25rem;
+  --ace-section-label-gap: var(--space-3); /* 12px */
 
   --ace-drop-shadow-none: none;
   --ace-drop-shadow-xs: 0 4px 8px rgb(0 0 0 / 0.1);
@@ -98,6 +98,7 @@
   --screening-text-muted: #6a7285;
   --screening-text-on-primary: #ffffff;
   --screening-primary: #523eb9;
+  --screening-primary-200: #a296dc; /* Primary / 200 */
   --screening-primary-hover-border: #4334a3;
   --screening-primary-soft-bg: #efeef9;
   --screening-primary-soft-bg-hover: #e4dff3;
@@ -123,7 +124,6 @@
   --screening-pill-new-label: #523eb9;
   --screening-chip-active-text: #523eb9;
   --screening-chip-active-border: #523eb9;
-  --screening-checkbox-inner-bg: #ffffff;
   --screening-pill-escalated-border: #ffcc80;
   --screening-pill-escalated-surface: #fff4e8;
   --screening-pill-escalated-dot: #ef6c00;
@@ -288,8 +288,8 @@
   /** Neutral 400 — expanded group container stroke (Figma). */
   --ace-sidebar-group-expanded-border: var(--ace-button-neutral-400);
   --ace-sidebar-group-hover-bg: var(--ace-neutral-100);
-  /** White wash on + / ⋯ over Neutral 100 group header hover */
-  --ace-sidebar-row-action-hover-bg: var(--screening-surface);
+  /** No-border icon hover fill — `--screening-surface-hover` / `--ace-neutral-100` (Iconography) */
+  --ace-sidebar-row-action-hover-bg: var(--screening-surface-hover);
   --ace-sidebar-group-gap: var(--space-3);
   --ace-sidebar-nav-px: var(--space-3);
   --ace-sidebar-nav-py: 0.375rem;
@@ -304,13 +304,25 @@
     5 * var(--ace-edit-group-item-row-height) + 4 * var(--space-1) + 2 * var(--space-2)
   );
 
-  /* Motion — shared easing/duration tokens (see Animations lab + aceAnimations.ts) */
+  /* Motion — shared easing/duration tokens (see Motion lab + aceAnimations.ts) */
   --ace-motion-ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
   --ace-motion-duration-fast: 150ms;
   --ace-motion-duration-medium: 300ms;
   --ace-motion-duration-slow: 420ms;
   --ace-sidebar-duration-panel: var(--ace-motion-duration-medium);
   --ace-sidebar-duration-expand: var(--ace-motion-duration-medium);
+
+  /* Inline Drawer — right in-flow panel (Figma 1063:3635 / 4081:943+) */
+  --ace-inline-drawer-width: 32rem; /* 512px */
+  --ace-inline-drawer-border: var(--ace-neutral-400);
+  --ace-inline-drawer-shadow: -6px 0 5px rgb(0 0 0 / 0.03);
+  --ace-inline-drawer-duration-panel: var(--ace-sidebar-duration-panel);
+  --ace-inline-drawer-header-px: 1.5rem; /* 24px */
+  --ace-inline-drawer-header-py: 1rem; /* 16px */
+  --ace-inline-drawer-body-px: 1.5rem;
+  --ace-inline-drawer-body-py: 1rem;
+  --ace-inline-drawer-section-gap: 0.625rem; /* 10px */
+  --ace-inline-drawer-footer-gap: 1rem; /* 16px */
 
   /* Tabs (Figma 2045:4334) */
   --ace-tabs-gap: var(--space-3);
@@ -381,9 +393,19 @@
   --screening-progress-height: var(--space-2);
   --screening-table-min-width: 45rem;
   --screening-body-max-height: calc(100dvh - 14rem);
-  --screening-checkbox-border: #523eb9;
+  /* ACE Checkbox — Figma Checkboxes 317:1492 */
+  --screening-checkbox-inner-bg: #ffffff;
+  --screening-checkbox-border: #262d3b; /* Neutrals / Coal Grey — regular */
+  --screening-checkbox-border-hover: var(--screening-primary); /* 1px purple */
+  --screening-checkbox-bg-hover: var(--screening-primary-soft-bg); /* Primary/50 */
+  --screening-checkbox-checked-bg: var(--screening-primary);
+  --screening-checkbox-checked-border: var(--screening-primary);
+  --screening-checkbox-checked-inset: #ffffff; /* white ring inside filled square */
+  --screening-checkbox-check: #ffffff; /* indeterminate bar */
   --screening-checkbox-disabled-border: #cfd2d9;
-  --screening-checkbox-disabled-checked-bg: #d4d6db;
+  --screening-checkbox-disabled-bg: #eff0f2; /* Neutral/100 */
+  --screening-checkbox-disabled-check: #949baa;
+  --screening-checkbox-disabled-checked-bg: #cfd2d9;
 
   /* ACE Toggle — Figma Toggles (117:1265) */
   --ace-toggle-duration: var(--ace-motion-duration-medium);
@@ -411,50 +433,77 @@
   --ace-tooltip-text: var(--screening-text-primary);
   --ace-tooltip-shadow: var(--ace-drop-shadow-xs);
   --ace-tooltip-duration: var(--ace-motion-duration-fast);
-  --ace-tooltip-ease: var(--ace-motion-ease-standard);
+  --ace-tooltip-ease: ease;
 
-  /* ACE Status pill — Review Assigned screening table pattern */
-  --ace-status-pill-gap: 0.375rem;
-  --ace-status-pill-py: 0.25rem;
-  --ace-status-pill-pl: 0.375rem;
-  --ace-status-pill-pr: 0.5rem;
-  --ace-status-pill-dot-size: 0.5rem;
+  /* ACE Status pill — Review Assigned ScreeningResultsTable STATUS_PILL_STYLES */
+  --ace-status-pill-gap: 0.375rem; /* gap-1.5 */
+  --ace-status-pill-py: 0.25rem; /* py-1 */
+  --ace-status-pill-pl: 0.375rem; /* pl-1.5 */
+  --ace-status-pill-pr: 0.5rem; /* pr-2 */
+  --ace-status-pill-dot-size: 0.5rem; /* size-2 */
+  --ace-status-pill-label-size: 0.6875rem; /* 11px */
+  --ace-status-pill-label-size-sm: 0.75rem; /* 12px @ sm+ */
+  /* New */
   --ace-status-pill-purple-border: var(--screening-pill-new-border);
   --ace-status-pill-purple-surface: var(--screening-pill-new-surface);
-  --ace-status-pill-purple-dot: var(--screening-pill-new-dot);
+  --ace-status-pill-purple-dot: #523eb9;
   --ace-status-pill-purple-label: var(--screening-pill-new-label);
-  --ace-status-pill-orange-border: var(--screening-pill-escalated-border);
-  --ace-status-pill-orange-surface: var(--screening-pill-escalated-surface);
-  --ace-status-pill-orange-dot: var(--screening-pill-escalated-dot);
-  --ace-status-pill-orange-label: var(--screening-pill-escalated-label);
+  /* Escalate */
+  --ace-status-pill-orange-border: #ffcc80;
+  --ace-status-pill-orange-surface: #fff4e8;
+  --ace-status-pill-orange-dot: #ef6c00;
+  --ace-status-pill-orange-label: #e65100;
+  /* Safe / Confirmed Safe */
   --ace-status-pill-green-border: #a5d6a7;
-  --ace-status-pill-green-surface: var(--screening-tile-n-bg);
-  --ace-status-pill-green-dot: var(--screening-age-fresh);
-  --ace-status-pill-green-label: var(--screening-tile-n-fg);
-  --ace-status-pill-gray-border: var(--ace-button-neutral-400);
-  --ace-status-pill-gray-surface: var(--ace-neutral-100);
-  --ace-status-pill-gray-dot: var(--ace-button-neutral-600);
-  --ace-status-pill-gray-label: var(--screening-text-secondary);
-  --ace-status-pill-blue-border: var(--ace-button-blue-200);
-  --ace-status-pill-blue-surface: var(--ace-button-blue-50);
-  --ace-status-pill-blue-dot: var(--ace-button-blue-500);
-  --ace-status-pill-blue-label: var(--ace-button-blue-500);
-  --ace-status-pill-yellow-border: var(--ace-notice-200);
-  --ace-status-pill-yellow-surface: var(--ace-notice-50);
-  --ace-status-pill-yellow-dot: var(--ace-notice-500);
-  --ace-status-pill-yellow-label: var(--ace-notice-600);
-  --ace-status-pill-pink-border: var(--ace-secondary-enlighten-violet-200);
-  --ace-status-pill-pink-surface: var(--ace-secondary-enlighten-violet-50);
-  --ace-status-pill-pink-dot: var(--ace-secondary-enlighten-violet-400);
-  --ace-status-pill-pink-label: var(--ace-secondary-enlighten-violet-600);
-  --ace-status-pill-teal-border: var(--ace-secondary-teal-200);
-  --ace-status-pill-teal-surface: var(--ace-secondary-teal-50);
-  --ace-status-pill-teal-dot: var(--ace-secondary-teal-500);
-  --ace-status-pill-teal-label: var(--ace-secondary-teal-700);
+  --ace-status-pill-green-surface: #e8f4ea;
+  --ace-status-pill-green-dot: #2e7d32;
+  --ace-status-pill-green-label: #2d6a3e;
+  /* False Positive */
+  --ace-status-pill-gray-border: #cfd2d9;
+  --ace-status-pill-gray-surface: #f5f6f8;
+  --ace-status-pill-gray-dot: #6a7285;
+  --ace-status-pill-gray-label: #464c59;
+  /* Research (Internal) */
+  --ace-status-pill-blue-border: #90caf9;
+  --ace-status-pill-blue-surface: #e3f2fd;
+  --ace-status-pill-blue-dot: #1976d2;
+  --ace-status-pill-blue-label: #1565c0;
+  /* Flag for EDD */
+  --ace-status-pill-yellow-border: #ffe082;
+  --ace-status-pill-yellow-surface: #fff8e1;
+  --ace-status-pill-yellow-dot: #f9a825;
+  --ace-status-pill-yellow-label: #f57f17;
+  /* Route to Supervisor */
+  --ace-status-pill-pink-border: #ce93d8;
+  --ace-status-pill-pink-surface: #f3e5f5;
+  --ace-status-pill-pink-dot: #8e24aa;
+  --ace-status-pill-pink-label: #6a1b9a;
+  /* Research (External) */
+  --ace-status-pill-teal-border: #80cbc4;
+  --ace-status-pill-teal-surface: #e0f2f1;
+  --ace-status-pill-teal-dot: #00897b;
+  --ace-status-pill-teal-label: #00695c;
+  /* Remediate */
   --ace-status-pill-red-border: #ef9a9a;
-  --ace-status-pill-red-surface: var(--ace-error-50);
-  --ace-status-pill-red-dot: var(--ace-error-500);
+  --ace-status-pill-red-surface: #fdecea;
+  --ace-status-pill-red-dot: #c62828;
   --ace-status-pill-red-label: #b71c1c;
+
+  /* ACE Badge tag — Review Assigned ReviewMetaTag / client profile accordion */
+  --ace-badge-tag-gap: 0.375rem; /* gap-1.5 */
+  --ace-badge-tag-radius: var(--radius-sm);
+  --ace-badge-tag-px: 0.5rem; /* px-2 */
+  --ace-badge-tag-py: 0.125rem; /* py-0.5 */
+  --ace-badge-tag-border: var(--screening-border-strong);
+  --ace-badge-tag-surface: var(--screening-surface-muted);
+  --ace-badge-tag-label: var(--screening-text-secondary);
+  --ace-badge-tag-warning-border: var(--screening-pill-escalated-dot);
+  --ace-badge-tag-warning-surface: var(--ace-warning-50);
+  --ace-badge-tag-warning-label: var(--screening-pill-escalated-label);
+  --ace-badge-tag-warning-icon-size: 0.75rem; /* size-3 */
+  --ace-badge-tag-warning-icon-text-size: 0.5rem; /* 8px */
+  --ace-badge-tag-warning-icon-bg: #ef6c00;
+  --ace-badge-tag-warning-icon-fg: #ffffff;
 
   /* ACE Toast — Figma Toast Messages (2783:5) */
   --ace-toast-width: 25rem;
@@ -466,7 +515,7 @@
   --ace-toast-action-gap: 1rem;
   --ace-toast-bg: #ffffff;
   --ace-toast-border: #cfd2d9;
-  --ace-toast-shadow: 0 8px 8px rgb(0 0 0 / 0.1);
+  --ace-toast-shadow: var(--ace-drop-shadow-md);
   --ace-toast-text: var(--screening-text-secondary);
   --ace-toast-action-text: var(--ace-button-purple-500);
   --ace-toast-action-text-hover: var(--screening-primary);
@@ -483,6 +532,25 @@
   --ace-toast-icon-info: var(--ace-button-purple-500);
   --ace-toast-icon-warning: var(--ace-warning-500);
   --ace-toast-icon-error: var(--dialog-modal-danger);
+
+  /* ACE Inline Messages — Figma Inline Messages 4481:275 (banner / in-page alerts) */
+  --ace-inline-message-radius: 4px;
+  --ace-inline-message-px: 1rem;
+  --ace-inline-message-py: 0.5rem;
+  --ace-inline-message-gap: 0.75rem;
+  --ace-inline-message-text: var(--ace-neutral-800);
+  --ace-inline-message-error-bg: var(--ace-error-50);
+  --ace-inline-message-error-border: var(--ace-error-500);
+  --ace-inline-message-error-icon: var(--ace-error-500);
+  --ace-inline-message-success-bg: var(--ace-success-50);
+  --ace-inline-message-success-border: var(--ace-success-500);
+  --ace-inline-message-success-icon: var(--ace-success-500);
+  --ace-inline-message-info-bg: var(--ace-button-blue-50);
+  --ace-inline-message-info-border: var(--ace-button-blue-500);
+  --ace-inline-message-info-icon: var(--ace-button-blue-500);
+  --ace-inline-message-warning-bg: var(--ace-warning-50);
+  --ace-inline-message-warning-border: var(--ace-warning-500);
+  --ace-inline-message-warning-icon: var(--ace-warning-500);
 
   /* ACE Timeline — Figma Timeline (4622:1645) */
   --ace-timeline-radius: 4px;
@@ -533,6 +601,28 @@
   --ace-attachments-status: var(--screening-primary);
   --ace-attachments-error: var(--dialog-modal-danger);
   --ace-attachments-divider: #cfd2d9;
+
+  /* ACE Filtering — Figma Table Headers / filters (1540:4577) */
+  --ace-filter-radius: 4px;
+  --ace-filter-gap: 0.5rem;
+  --ace-filter-px: 0.5rem;
+  --ace-filter-py: 0.25rem;
+  --ace-filter-trigger-border: #cfd2d9;
+  --ace-filter-trigger-bg: var(--screening-surface);
+  --ace-filter-trigger-text: var(--ace-neutral-800);
+  --ace-filter-trigger-active-bg: #464c59;
+  --ace-filter-trigger-active-text: #eff0f2;
+  --ace-filter-chip-border: #cfd2d9;
+  --ace-filter-chip-bg: var(--screening-surface);
+  --ace-filter-chip-text: var(--ace-neutral-800);
+  --ace-filter-chip-icon: var(--ace-neutral-800);
+  --ace-filter-chip-clear: #949baa;
+  --ace-filter-chip-selected-bg: #464c59;
+  --ace-filter-chip-selected-text: #eff0f2;
+  --ace-filter-chip-selected-icon: #eff0f2;
+  --ace-filter-header-title: #464c59;
+  --ace-filter-header-gap: 0.75rem;
+  --ace-filter-search-width: 12.5rem;
 
   /* ACE Slider — Figma Sliders (2505:47) */
   --ace-slider-track-height: 0.625rem;
@@ -706,9 +796,17 @@
     --screening-chip-active-text: #dcd7e8;
     --screening-chip-active-border: #7c6bc4;
     --screening-checkbox-inner-bg: var(--ace-dark-mode-800);
-    --screening-score-high: #f48a8a;
-    --screening-shadow-thead: 0 1px 0 rgb(0 0 0 / 0.45);
+    --screening-checkbox-border: #b6c2cf;
+    --screening-checkbox-border-hover: var(--screening-primary);
+    --screening-checkbox-bg-hover: var(--screening-primary-soft-bg);
+    --screening-checkbox-checked-bg: var(--screening-primary);
+    --screening-checkbox-checked-border: var(--screening-primary);
+    --screening-checkbox-checked-inset: #ffffff;
+    --screening-checkbox-check: #ffffff;
     --screening-checkbox-disabled-border: #454c59;
+    --screening-checkbox-disabled-bg: var(--ace-dark-mode-600);
+    --screening-checkbox-disabled-check: #8696a7;
+    --screening-checkbox-disabled-checked-bg: #454c59;
     --ace-toggle-track-off: #5c6773;
     --ace-toggle-track-on: #7c6bc4;
     --ace-toggle-track-off-hover: #6f7b8a;
@@ -759,8 +857,6 @@
     --screening-primary-hover-border: #b5aae0;
     --screening-primary-ring: rgb(155 142 212 / 0.45);
     --screening-text-on-primary: #ffffff;
-    --screening-checkbox-border: #7c6bc4;
-    --screening-checkbox-disabled-checked-bg: #454c59;
     --screening-input-border: #5c6773;
     --screening-input-border-focus: #8696a7;
     --screening-input-bg-focus: var(--screening-primary-soft-bg);
@@ -768,6 +864,8 @@
     --screening-input-placeholder: #8696a7;
     --ace-success-50: #1a2210;
     --ace-error-50: #3d2529;
+    --ace-warning-50: #3a2a1c;
+    --ace-button-blue-50: #0f2a38;
     --ace-input-error-bg: var(--ace-error-50);
     --ace-input-error-border: #f48a8a;
     --ace-input-error-message: #f48a8a;
@@ -817,7 +915,7 @@
     --ace-sidebar-menu-icon: var(--screening-icon-muted);
     --ace-sidebar-item-hover-bg: var(--ace-neutral-100);
     --ace-sidebar-group-hover-bg: var(--ace-neutral-100);
-    --ace-sidebar-row-action-hover-bg: var(--screening-surface);
+    --ace-sidebar-row-action-hover-bg: var(--screening-surface-hover);
     --ace-guidelines-principle-title: #9b8ed4;
 
     /* Dialog actions */

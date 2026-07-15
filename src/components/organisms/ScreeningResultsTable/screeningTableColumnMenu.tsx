@@ -1,6 +1,6 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { GripVertical } from 'lucide-react'
 import { Toggle } from '../../atoms/Toggle/Toggle'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { cn } from '../../../lib/cn'
 import type { ScreeningColumnKey } from './screeningTableColumns'
 
@@ -13,7 +13,7 @@ export const screeningColumnMenuLabelClass = cn(
 
 export const screeningColumnMenuRowClass = cn(
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
-  'flex w-full cursor-pointer select-none items-center gap-1.5 px-[var(--space-3)] py-[var(--space-2)] text-[var(--screening-text-primary)] outline-none',
+  'flex w-full cursor-pointer select-none items-center gap-2 px-[var(--space-3)] py-[var(--space-2)] text-[var(--screening-text-primary)] outline-none',
   'data-[highlighted]:bg-[var(--screening-surface-hover)]',
 )
 
@@ -21,6 +21,9 @@ const screeningColumnDragMotionClass = cn(
   'duration-[140ms]',
   '[transition-timing-function:cubic-bezier(0.32,0.72,0,1)]',
 )
+
+/** Shared with table row reorder so drag feedback matches column toggles. */
+export const screeningReorderDragMotionClass = screeningColumnDragMotionClass
 
 export const screeningColumnDropLineClass = cn(
   'pointer-events-none absolute inset-x-2 z-20 h-0.5 rounded-full',
@@ -126,7 +129,7 @@ export function ScreeningColumnReorderMenuItem({
         draggable
         aria-label={`Reorder ${label}`}
         className={cn(
-          'inline-flex size-5 shrink-0 items-center justify-center rounded text-[var(--screening-icon-muted)]',
+          'inline-flex h-5 w-5 shrink-0 items-center justify-center self-center rounded text-[var(--screening-icon-muted)]',
           'cursor-grab opacity-0 active:cursor-grabbing',
           'transition-opacity',
           screeningColumnDragMotionClass,
@@ -152,17 +155,17 @@ export function ScreeningColumnReorderMenuItem({
         }}
         onPointerDown={(event) => event.stopPropagation()}
       >
-        <GripVertical className="size-3.5" strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="drag_handle" size="sm" weight={300} className="leading-none" />
       </button>
       <Toggle
         size="sm"
         checked={checked}
         disabled={disabled}
         tabIndex={-1}
-        className="pointer-events-none"
+        className="pointer-events-none self-center"
         aria-hidden
       />
-      <span className="min-w-0 flex-1 truncate text-left">{label}</span>
+      <span className="min-w-0 flex-1 truncate self-center text-left">{label}</span>
     </DropdownMenu.Item>
   )
 }

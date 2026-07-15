@@ -47,14 +47,15 @@ const aceToggleThumbTranslate: Record<AceToggleSize, string> = {
 
 export const aceToggleIconGlyphMotion = 'ace-toggle-icon-glyph'
 
+/** Icon glyph box — sized to sit in the track half beside the thumb (not Material Symbol metrics). */
 export const aceToggleIconCheckClass: Record<AceToggleSize, string> = {
-  sm: 'size-2 shrink-0 text-[var(--ace-toggle-icon-glyph-on)]',
-  md: 'size-2.5 shrink-0 text-[var(--ace-toggle-icon-glyph-on)]',
+  sm: 'size-[6px] shrink-0 text-[var(--ace-toggle-icon-glyph-on)]',
+  md: 'size-2 shrink-0 text-[var(--ace-toggle-icon-glyph-on)]',
 }
 
 export const aceToggleIconXClass: Record<AceToggleSize, string> = {
-  sm: 'size-2 shrink-0 text-[var(--ace-toggle-icon-glyph-off)]',
-  md: 'size-2.5 shrink-0 text-[var(--ace-toggle-icon-glyph-off)]',
+  sm: 'size-[6px] shrink-0 text-[var(--ace-toggle-icon-glyph-off)]',
+  md: 'size-2 shrink-0 text-[var(--ace-toggle-icon-glyph-off)]',
 }
 
 export function aceToggleClass(size: AceToggleSize = 'md', _variant: AceToggleVariant = 'standard'): string {

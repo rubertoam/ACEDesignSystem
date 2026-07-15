@@ -1,6 +1,7 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { aceChevronIconClass } from '../../lib/aceChevron'
 import { cn } from '../../lib/cn'
+import { MaterialSymbol } from '../molecules/AceAccordion/MaterialSymbol'
 
 export type AceButtonVariant = 'primary' | 'secondary' | 'tertiary'
 export type AceButtonPalette = 'purple' | 'blue'
@@ -31,17 +32,7 @@ const baseFlex =
   'inline-flex cursor-pointer items-center justify-center border border-solid font-bold leading-[1.65] transition-colors disabled:cursor-not-allowed'
 
 function Chevron({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 12 8" fill="none" aria-hidden>
-      <path
-        d="M1.2 2L6 6.8L10.8 2"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
+  return <MaterialSymbol name="keyboard_arrow_down" size="md" className={cn('text-current', className)} />
 }
 
 function interactivePrimary(palette: AceButtonPalette): string {
@@ -253,7 +244,7 @@ export const AceButton = forwardRef<HTMLButtonElement, AceButtonProps>(function 
 
   const showLeft = icon === 'left'
   const showRight = icon === 'right'
-  const icn = <Chevron className="block size-full" />
+  const icn = <Chevron />
 
   return (
     <button

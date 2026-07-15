@@ -1,9 +1,8 @@
-import { ChevronDown } from 'lucide-react'
 import { type ReactNode } from 'react'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
 import { FinScanLogo } from './FinScanLogo'
-import { SiteHeaderHelpIcon, SiteHeaderNotificationIcon } from './SiteHeaderToolbarIcons'
 
 const p1 =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
@@ -58,7 +57,7 @@ function SiteHeaderNavButton({
     <>
       <span>{item.label}</span>
       {showChevron ? (
-        <ChevronDown className={aceChevronIconClass} strokeWidth={2} aria-hidden />
+        <MaterialSymbol name="keyboard_arrow_down" className={aceChevronIconClass} />
       ) : null}
     </>
   )
@@ -164,12 +163,20 @@ export function AceSiteHeader({
         <div className="flex items-center gap-[var(--ace-site-header-toolbar-gap)] overflow-visible py-1">
           {showNotifications ? (
             <ToolbarIconButton label="Notifications" onClick={onNotificationsClick}>
-              <SiteHeaderNotificationIcon />
+              <MaterialSymbol
+                name="notifications"
+                size="xl"
+                className="text-[var(--ace-site-header-toolbar-icon-color)] text-[length:var(--ace-site-header-icon-notifications-height)]"
+              />
             </ToolbarIconButton>
           ) : null}
           {showHelp ? (
             <ToolbarIconButton label="Help" onClick={onHelpClick}>
-              <SiteHeaderHelpIcon />
+              <MaterialSymbol
+                name="help"
+                size="xl"
+                className="text-[var(--ace-site-header-toolbar-icon-color)] text-[length:var(--ace-site-header-icon-help-size)]"
+              />
             </ToolbarIconButton>
           ) : null}
           {showProfile ? (

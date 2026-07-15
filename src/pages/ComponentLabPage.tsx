@@ -4,9 +4,15 @@ import { AceAvailabilityTag } from '../components/atoms/AceAvailabilityTag/AceAv
 import { AceTabs, aceTabButtonId } from '../components/atoms/AceTabs/AceTabs'
 import { getLabAvailability } from '../lib/labAvailability'
 import { cn } from '../lib/cn'
+import {
+  EMPTY_IMPLEMENTATION_RULES,
+  EMPTY_QA_CHECKLIST,
+  LabImplementationRulesDoc,
+  splitImplementationRulesMarkdown,
+} from './LabImplementationRules'
 import { labUsageSections } from './labContent'
 
-export type ComponentLabTab = 'examples' | 'code' | 'usage'
+export type ComponentLabTab = 'examples' | 'code' | 'usage' | 'qa'
 
 const p1 =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
@@ -40,6 +46,11 @@ export type ComponentLabPageProps = {
   examplesToolbar?: ReactNode
   code?: ReactNode
   usage?: ReactNode
+  /**
+   * Business rules markdown. Merged into the Usage tab (without QA checklist).
+   * The QA checklist section becomes the QA tab content.
+   */
+  implementationRulesMarkdown?: string
   /** @deprecated Use `examples` */
   preview?: ReactNode
   /** @deprecated Use `examplesToolbar` */
@@ -60,6 +71,7 @@ export function ComponentLabPage({
   examplesToolbar,
   code,
   usage,
+  implementationRulesMarkdown,
   preview,
   previewToolbar,
   variables,
@@ -70,27 +82,58 @@ export function ComponentLabPage({
   const examplesPanelId = `${tabListId}-examples-panel`
   const codePanelId = `${tabListId}-code-panel`
   const usagePanelId = `${tabListId}-usage-panel`
+  const qaPanelId = `${tabListId}-qa-panel`
 
   const examplesContent = examples ?? preview
   const toolbarContent = examplesToolbar ?? previewToolbar
 
-  const usageContent = usage
+  const legacyUsageContent = usage
     ? labUsageSections(usage, variables)
     : variables
       ? labUsageSections(null, variables)
       : null
 
+  const { usageMarkdown, qaMarkdown } = useMemo(
+    () =>
+      implementationRulesMarkdown
+        ? splitImplementationRulesMarkdown(implementationRulesMarkdown)
+        : { usageMarkdown: '', qaMarkdown: null },
+    [implementationRulesMarkdown],
+  )
+
   const hasExamples = examplesContent != null
   const hasCode = code != null
-  const hasUsage = usageContent != null
+
+  const usageTabContent = (
+    <>
+      {legacyUsageContent}
+      {implementationRulesMarkdown ? (
+        <>
+          {legacyUsageContent ? (
+            <hr className="my-8 border-0 border-t border-solid border-[var(--screening-border-soft)]" />
+          ) : null}
+          <LabImplementationRulesDoc markdown={usageMarkdown} />
+        </>
+      ) : legacyUsageContent == null ? (
+        EMPTY_IMPLEMENTATION_RULES
+      ) : null}
+    </>
+  )
+
+  const qaTabContent = qaMarkdown ? (
+    <LabImplementationRulesDoc markdown={qaMarkdown} showDocumentTitle={false} />
+  ) : (
+    EMPTY_QA_CHECKLIST
+  )
 
   const tabItems = useMemo(() => {
     const items: { id: ComponentLabTab; label: string }[] = []
     if (hasExamples) items.push({ id: 'examples', label: 'Examples' })
     if (hasCode) items.push({ id: 'code', label: 'Code' })
-    if (hasUsage) items.push({ id: 'usage', label: 'Usage' })
+    items.push({ id: 'usage', label: 'Usage' })
+    items.push({ id: 'qa', label: 'QA' })
     return items
-  }, [hasExamples, hasCode, hasUsage])
+  }, [hasExamples, hasCode])
 
   const [tab, setTab] = useState<ComponentLabTab>(tabItems[0]?.id ?? 'examples')
 
@@ -115,7 +158,7 @@ export function ComponentLabPage({
               {title}
             </h2>
             {description ? (
-              <p className={cn('mt-2', p1, 'text-[var(--screening-text-muted)]')}>{description}</p>
+              <p className={cn('mt-[var(--ace-section-label-gap)]', p1, 'text-[var(--screening-text-muted)]')}>{description}</p>
             ) : null}
           </div>
           {availability ? (
@@ -165,14 +208,29 @@ export function ComponentLabPage({
             </section>
           ) : null}
 
-          {hasUsage && tab === 'usage' ? (
+          {tab === 'usage' ? (
             <section
               id={usagePanelId}
               role="tabpanel"
               aria-labelledby={aceTabButtonId(tabListId, 'usage')}
               className="pt-6"
             >
-              <div className={cn(panel, 'space-y-4', p1, 'text-[var(--screening-text-primary)]')}>{usageContent}</div>
+              <div className={cn(panel, 'space-y-4', p1, 'text-[var(--screening-text-primary)]')}>
+                {usageTabContent}
+              </div>
+            </section>
+          ) : null}
+
+          {tab === 'qa' ? (
+            <section
+              id={qaPanelId}
+              role="tabpanel"
+              aria-labelledby={aceTabButtonId(tabListId, 'qa')}
+              className="pt-6"
+            >
+              <div className={cn(panel, 'space-y-4', p1, 'text-[var(--screening-text-primary)]')}>
+                {qaTabContent}
+              </div>
             </section>
           ) : null}
         </div>

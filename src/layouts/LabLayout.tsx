@@ -1,12 +1,17 @@
-import { ChevronRight } from 'lucide-react'
-import { useEffect, useId, useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { useCallback, useEffect, useId, useState } from 'react'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
 import { AceSiteHeader } from '../components/organisms/AceSiteHeader/AceSiteHeader'
 import { LabThemeProvider, type LabTheme } from '../contexts/LabThemeContext'
 import { aceChevronIconClass } from '../lib/aceChevron'
 import { cn } from '../lib/cn'
 import { LabSegmentedToggle } from '../lib/labControls'
-import { getLabNavMatch, labNavGuidelinesItem, labNavSections } from '../pages/labNav'
+import {
+  getLabNavFlat,
+  getLabNavMatch,
+  labNavGuidelinesItem,
+  labNavSections,
+} from '../pages/labNav'
 
 const p1 =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
@@ -40,6 +45,14 @@ const navMotion =
 const chevronMotion =
   'transition-transform duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] motion-reduce:transition-none motion-reduce:duration-0'
 
+function isTypingTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) return false
+  if (target.isContentEditable) return true
+  const tag = target.tagName
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true
+  return Boolean(target.closest('[role="textbox"], [role="combobox"], [role="menu"], [role="listbox"]'))
+}
+
 function LabThemeToggle({
   theme,
   onThemeChange,
@@ -71,12 +84,21 @@ function LabThemeToggle({
 
 export function LabLayout() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const [theme, setTheme] = useState<LabTheme>('light')
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     Atoms: false,
     Molecules: false,
     Organisms: false,
   })
+
+  const toggleSection = useCallback((title: string) => {
+    setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }))
+  }, [])
+
+  const setSectionOpen = useCallback((title: string, open: boolean) => {
+    setOpenSections((prev) => (prev[title] === open ? prev : { ...prev, [title]: open }))
+  }, [])
 
   useEffect(() => {
     const match = getLabNavMatch(pathname)
@@ -94,6 +116,37 @@ export function LabLayout() {
       document.documentElement.style.colorScheme = ''
     }
   }, [theme])
+
+  /** ← / → page through lab routes (skip when typing or a modal is open). */
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+      if (isTypingTarget(event.target)) return
+      if (document.querySelector('[role="dialog"][aria-modal="true"]')) return
+
+      const focusEl = event.target instanceof HTMLElement ? event.target : null
+      // Section headers use ←/→ to collapse / expand instead of paging.
+      if (focusEl?.matches('button[data-lab-nav-section]')) return
+
+      const pages = getLabNavFlat()
+      const index = pages.findIndex((p) => p.to === pathname)
+      if (index < 0) return
+
+      const nextIndex = event.key === 'ArrowRight' ? index + 1 : index - 1
+      if (nextIndex < 0 || nextIndex >= pages.length) return
+
+      event.preventDefault()
+      const next = pages[nextIndex]
+      if (COLLAPSIBLE_SECTIONS.has(next.section)) {
+        setSectionOpen(next.section, true)
+      }
+      navigate(next.to)
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [navigate, pathname, setSectionOpen])
 
   return (
     <LabThemeProvider theme={theme}>
@@ -146,23 +199,37 @@ export function LabLayout() {
                     <button
                       type="button"
                       id={headingId}
+                      data-lab-nav-section={section.title}
                       aria-expanded={isOpen}
                       aria-controls={`${headingId}-links`}
-                      onClick={() =>
-                        setOpenSections((prev) => ({
-                          ...prev,
-                          [section.title]: !prev[section.title],
-                        }))
-                      }
+                      onClick={() => toggleSection(section.title)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault()
+                          toggleSection(section.title)
+                          return
+                        }
+                        if (event.key === 'ArrowRight') {
+                          event.preventDefault()
+                          setSectionOpen(section.title, true)
+                          return
+                        }
+                        if (event.key === 'ArrowLeft') {
+                          event.preventDefault()
+                          setSectionOpen(section.title, false)
+                        }
+                      }}
                       className={cn(
                         p1,
                         'mb-0 flex w-full items-center gap-2 rounded-[var(--radius-md)] px-2 py-1 text-left text-sm font-semibold',
                         'text-[var(--screening-text-muted)] transition-colors hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)]',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-surface)]',
                       )}
                     >
-                      <ChevronRight
+                      <MaterialSymbol
+                        name="keyboard_arrow_right"
+                        size="md"
                         className={cn(aceChevronIconClass, 'opacity-70', chevronMotion, isOpen && 'rotate-90')}
-                        aria-hidden
                       />
                       <span>{section.title}</span>
                     </button>

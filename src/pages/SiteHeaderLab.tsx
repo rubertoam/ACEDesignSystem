@@ -153,7 +153,7 @@ export function SiteHeaderLab() {
   return (
     <ComponentLabPage
       title="Site header"
-      description="Top navigation for FinScan — brand, primary menu items with dropdown chevrons, and user toolbar actions."
+      description="Top navigation for FinScan - brand, primary menu items with dropdown chevrons, and user toolbar actions."
       examplesToolbar={examplesToolbar}
       examples={
         <div className="overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]">

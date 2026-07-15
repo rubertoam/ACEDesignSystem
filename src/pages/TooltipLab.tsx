@@ -8,7 +8,7 @@ import {
   aceScreeningToolbarTooltipContentClass,
   aceTooltipContentClass,
 } from '../components/atoms/AceTooltip/tooltipFieldStyles'
-import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
@@ -18,8 +18,8 @@ export function TooltipLab() {
       title="Tooltips"
       description="Short contextual labels on hover or focus. Screening toolbar tooltips use Caption Regular on a bordered surface with XS drop shadow and no arrow."
       examples={
-        <div className={cn('space-y-8', labExampleSectionClass)}>
-          <div className="space-y-4">
+        <div className="space-y-8">
+          <div className={labExampleSectionClass}>
             <p className={labSectionLabelClass}>Default</p>
             <div
               className={cn(aceTooltipContentClass, 'static')}
@@ -30,7 +30,7 @@ export function TooltipLab() {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className={labExampleSectionClass}>
             <p className={labSectionLabelClass}>Screening toolbar</p>
             <div
               className={cn(aceScreeningToolbarTooltipContentClass, 'static')}
@@ -41,18 +41,20 @@ export function TooltipLab() {
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className={labExampleSectionClass}>
             <p className={labSectionLabelClass}>Interactive</p>
-            <AceTooltip>
-              <AceTooltipTrigger asChild>
-                <AceButton type="button" variant="secondary" size="sm">
-                  Show tooltip
-                </AceButton>
-              </AceTooltipTrigger>
-              <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
-                Show
-              </AceTooltipContent>
-            </AceTooltip>
+            <div className="w-fit">
+              <AceTooltip>
+                <AceTooltipTrigger asChild>
+                  <AceButton type="button" variant="secondary" size="sm">
+                    Show tooltip
+                  </AceButton>
+                </AceTooltipTrigger>
+                <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
+                  Show
+                </AceTooltipContent>
+              </AceTooltip>
+            </div>
           </div>
         </div>
       }
@@ -83,38 +85,37 @@ export function TooltipLab() {
       }
       usage={
         <>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
               Use tooltips for icon-only controls where the visible label would clutter the toolbar. Keep copy to one or
               two words when possible (Show / Hide, Columns).
             </p>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Animation</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Properties</strong> — opacity, transform
-                (scale 0.95 → 1, 2px slide on the open side)
+                <strong className="text-[var(--screening-text-primary)]">Properties</strong>: opacity, scale, and
+                side-aware slide via <code className="text-[var(--screening-text-primary)]">tw-animate-css</code>{' '}
+                (<code className="text-[var(--screening-text-primary)]">animate-in fade-in-0 zoom-in-95</code>, plus{' '}
+                <code className="text-[var(--screening-text-primary)]">slide-in-from-*</code> by{' '}
+                <code className="text-[var(--screening-text-primary)]">data-side</code>)
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Duration</strong> —{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-tooltip-duration</code> (
-                <code className="text-[var(--screening-text-primary)]">--ace-motion-duration-fast</code>, 150ms)
+                <strong className="text-[var(--screening-text-primary)]">Duration / easing</strong>  - {' '}
+                <code className="text-[var(--screening-text-primary)]">150ms</code> /{' '}
+                <code className="text-[var(--screening-text-primary)]">ease</code> (same defaults as Review Assigned)
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Easing</strong> —{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-tooltip-ease</code> (
-                <code className="text-[var(--screening-text-primary)]">--ace-motion-ease-standard</code>)
-              </li>
-              <li>
-                Slide offset follows Radix <code className="text-[var(--screening-text-primary)]">data-side</code> via{' '}
-                <code className="text-[var(--screening-text-primary)]">src/styles/tooltip.css</code>. Catalog entry:{' '}
-                <code className="text-[var(--screening-text-primary)]">tooltip-enter-exit</code> on the Animations lab.
+                Transform origin uses{' '}
+                <code className="text-[var(--screening-text-primary)]">--radix-tooltip-content-transform-origin</code>.
+                Catalog entry: <code className="text-[var(--screening-text-primary)]">tooltip-enter-exit</code> on the
+                Motion lab.
               </li>
             </ul>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Accessibility</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
               The trigger still needs an <code className="text-[var(--screening-text-primary)]">aria-label</code> when it
@@ -128,22 +129,24 @@ export function TooltipLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Surface — <code className="text-[var(--color-text-primary)]">--ace-tooltip-surface</code>,{' '}
+            Surface - <code className="text-[var(--color-text-primary)]">--ace-tooltip-surface</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-tooltip-border</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-tooltip-text</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-tooltip-shadow</code>
+            <code className="text-[var(--color-text-primary)]">--ace-tooltip-shadow</code> (aliases{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code>)
           </li>
           <li>
-            Layout — <code className="text-[var(--color-text-primary)]">--ace-tooltip-radius</code>,{' '}
+            Layout - <code className="text-[var(--color-text-primary)]">--ace-tooltip-radius</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-tooltip-px</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-tooltip-py</code>
           </li>
           <li>
-            Motion — <code className="text-[var(--color-text-primary)]">--ace-tooltip-duration</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-tooltip-ease</code>
+            Motion - Review Assigned pattern via <code className="text-[var(--color-text-primary)]">tw-animate-css</code>{' '}
+            (<code className="text-[var(--color-text-primary)]">animate-in</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">animate-out</code>, 150ms ease)
           </li>
           <li>
-            Type — Caption Regular (<code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>)
+            Type - Caption Regular (<code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>)
           </li>
         </ul>
       }

@@ -1,8 +1,10 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { ChevronDown, ChevronRight, Search, X, type LucideIcon } from 'lucide-react'
+import { type ComponentType } from 'react'
 import { AceButton, type AceButtonPalette, type AceButtonSize, type AceButtonVariant } from '../../atoms/AceButton'
 import { Checkbox } from '../../atoms/Checkbox/Checkbox'
 import { Toggle } from '../../atoms/Toggle/Toggle'
+import { AceFilterTrigger } from '../AceFiltering/AceFilterTrigger'
+import { MaterialSymbol } from '../AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
 import { highlightMenuLabel } from './menuEntryHighlight'
@@ -26,7 +28,7 @@ export type AceDropdownMenuSubItem =
       label: string
       disabled?: boolean
       destructive?: boolean
-      icon?: LucideIcon
+      icon?: ComponentType<{ className?: string }>
       shortcut?: string
       selected?: boolean
       highlighted?: boolean
@@ -87,12 +89,12 @@ export type AceDropdownMenuEntry =
       disabled?: boolean
     }
 
-export type AceDropdownTriggerMode = 'field' | 'aceButton'
+export type AceDropdownTriggerMode = 'field' | 'aceButton' | 'filter'
 
 export type AceDropdownMenuProps = {
   triggerLabel: string
   items: AceDropdownMenuEntry[]
-  /** Field = screening toolbar style; aceButton = same variants as `AceButton`. */
+  /** Field = screening toolbar style; aceButton = AceButton; filter = AceFilterTrigger. */
   triggerMode?: AceDropdownTriggerMode
   variant?: AceButtonVariant
   palette?: AceButtonPalette
@@ -145,14 +147,15 @@ const fieldSizeClass: Record<AceButtonSize, string> = {
 }
 
 const fieldTriggerBase = cn(
-  'inline-flex w-[var(--ace-dropdown-trigger-width)] max-w-[var(--ace-dropdown-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] font-semibold leading-[1.65] text-[var(--screening-text-primary)] outline-none transition-colors [font-family:var(--font-screening)]',
+  'inline-flex w-[var(--ace-dropdown-trigger-width)] max-w-[var(--ace-dropdown-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] [font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)] leading-[1.65] text-[var(--screening-text-primary)] outline-none transition-colors',
   'hover:bg-[var(--screening-surface-hover)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
   'data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:ring-2 data-[state=open]:ring-[var(--screening-primary-ring)] data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-[var(--screening-primary-ring-offset)]',
   'disabled:pointer-events-none disabled:opacity-50',
 )
 
 export const aceDropdownMenuPanelClass = cn(
-  'z-[250] overflow-hidden rounded-[var(--radius-md)] border border-solid border-[var(--ace-dropdown-menu-border)] bg-[var(--ace-dropdown-menu-surface)]',
+  /* Above dialog overlay (z-200) so menus open on top of modals */
+  'z-[300] overflow-hidden rounded-[var(--radius-md)] border border-solid border-[var(--ace-dropdown-menu-border)] bg-[var(--ace-dropdown-menu-surface)]',
   'shadow-[var(--ace-dropdown-menu-shadow)]',
 )
 
@@ -414,10 +417,10 @@ function MenuEntries({
               onPointerDown={preventMenuClose}
               onClick={() => entry.onClear?.()}
             >
-              <X className="size-3" strokeWidth={2} />
+              <MaterialSymbol name="close" size="sm" className="text-[var(--screening-icon-muted)]" />
             </button>
           ) : (
-            <Search className="size-3 shrink-0 text-[var(--screening-icon-muted)]" aria-hidden />
+            <MaterialSymbol name="search" size="sm" className="shrink-0 text-[var(--screening-icon-muted)]" />
           )}
         </div>
       )
@@ -539,7 +542,7 @@ function MenuEntries({
             className={cn(itemClass, 'justify-between gap-[var(--space-2)] px-[var(--space-3)] py-[var(--space-2)] pr-[var(--space-2)]')}
           >
             <span className="min-w-0 truncate">{entry.label}</span>
-            <ChevronRight className={cn(aceChevronIconClass, 'opacity-70')} aria-hidden />
+            <MaterialSymbol name="keyboard_arrow_right" size="md" className={cn(aceChevronIconClass, 'opacity-70')} />
           </DropdownMenu.SubTrigger>
           <DropdownMenu.Portal container={portalContainer ?? undefined}>
             <DropdownMenu.SubContent
@@ -647,11 +650,13 @@ export function AceDropdownMenu({
       >
         {triggerLabel}
       </AceButton>
+    ) : triggerMode === 'filter' ? (
+      <AceFilterTrigger label={triggerLabel} showChevron={showChevron} disabled={disabled} className={className} />
     ) : (
       <button type="button" disabled={disabled} className={fieldClass}>
         <span className="min-w-0 flex-1 truncate text-left">{triggerLabel}</span>
         {showChevron ? (
-          <ChevronDown className={cn('ml-auto opacity-70', aceChevronIconClass)} aria-hidden />
+          <MaterialSymbol name="keyboard_arrow_down" size="md" className={cn('ml-auto opacity-70', aceChevronIconClass)} />
         ) : null}
       </button>
     )
@@ -663,7 +668,7 @@ export function AceDropdownMenu({
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal container={portalContainer ?? undefined}>
         <DropdownMenu.Content
-          className={cn(panelShellClass(panelWidth), 'z-50')}
+          className={panelShellClass(panelWidth)}
           sideOffset={sideOffset}
           align={align}
           collisionPadding={8}

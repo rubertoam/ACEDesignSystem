@@ -1,9 +1,9 @@
-import { ChevronRight, Plus } from 'lucide-react'
 import { type ReactNode } from 'react'
 import {
   AceDropdownMenu,
   type AceDropdownMenuEntry,
 } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
 import { SidebarOverflowMenu } from './SidebarOverflowMenu'
@@ -43,6 +43,9 @@ const chevronMotion = cn(
 
 export type AceSidebarVariant = 'navigation' | 'groups'
 
+/** How the navigation variant shows the current organization. */
+export type AceSidebarOrganizationDisplay = 'switcher' | 'label'
+
 export type AceSidebarMenuAction = 'edit' | 'copy' | 'delete'
 
 export type AceSidebarOrganization = {
@@ -77,6 +80,11 @@ export type AceSidebarProps = {
   organizations?: AceSidebarOrganization[]
   selectedOrganizationId?: string
   onOrganizationChange?: (id: string) => void
+  /**
+   * Navigation variant — `switcher` shows the org dropdown (default);
+   * `label` shows the selected org name as non-interactive text.
+   */
+  organizationDisplay?: AceSidebarOrganizationDisplay
   navItems?: AceSidebarNavItem[]
   addLabel?: string
   onNewGroup?: () => void
@@ -223,7 +231,7 @@ function SidebarGroupBlock({
           aria-label={`${group.label} group`}
           className="min-w-0 flex-1 gap-3 px-1 py-0.5 hover:bg-transparent"
         >
-          <ChevronRight className={cn(chevronMotion, expanded && 'rotate-90')} aria-hidden />
+          <MaterialSymbol name="keyboard_arrow_right" className={cn(chevronMotion, expanded && 'rotate-90')} />
           <span className={cn(p1, 'truncate text-sm')}>{group.label}</span>
         </SidebarRowButton>
         <div className="flex shrink-0 items-center gap-0.5 pr-0.5">
@@ -240,7 +248,7 @@ function SidebarGroupBlock({
                 expanded && sidebarRowActionButtonExpandedClass,
               )}
             >
-              <Plus className={sidebarRowActionIconClass} strokeWidth={2} aria-hidden />
+              <MaterialSymbol name="add" size="md" className={sidebarRowActionIconClass} />
             </button>
           ) : null}
           <SidebarOverflowMenu
@@ -288,6 +296,7 @@ export function AceSidebar({
   organizations = [],
   selectedOrganizationId,
   onOrganizationChange,
+  organizationDisplay = 'switcher',
   navItems = [],
   addLabel = 'New Group',
   onNewGroup,
@@ -309,6 +318,28 @@ export function AceSidebar({
     selected: org.id === selectedOrg?.id,
     onSelect: () => onOrganizationChange?.(org.id),
   }))
+
+  const organizationHeader =
+    variant !== 'navigation' || !selectedOrg ? null : organizationDisplay === 'label' ? (
+      <p
+        className={cn(
+          '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+          'm-0 w-[var(--ace-sidebar-control-width)] truncate px-3 py-2 text-[var(--screening-text-primary)]',
+        )}
+      >
+        {selectedOrg.label}
+      </p>
+    ) : (
+      <AceDropdownMenu
+        triggerLabel={selectedOrg.label}
+        items={orgMenuItems}
+        triggerMode="field"
+        size="md"
+        className="!w-[var(--ace-sidebar-control-width)] !max-w-[var(--ace-sidebar-control-width)] [&_button]:!w-full [&_button]:!max-w-full"
+        portalContainer={menuPortalContainer}
+        align="start"
+      />
+    )
 
   return (
     <aside
@@ -346,20 +377,12 @@ export function AceSidebar({
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
               )}
             >
-              <Plus className="size-4 shrink-0 text-[var(--screening-text-primary)]" strokeWidth={2} aria-hidden />
+              <MaterialSymbol name="add" size="md" className="size-4 shrink-0 text-[var(--screening-text-primary)]" />
               <span className={cn(p1, 'truncate text-sm')}>{addLabel}</span>
             </button>
-          ) : selectedOrg ? (
-            <AceDropdownMenu
-              triggerLabel={selectedOrg.label}
-              items={orgMenuItems}
-              triggerMode="field"
-              size="md"
-              className="!w-[var(--ace-sidebar-control-width)] !max-w-[var(--ace-sidebar-control-width)] [&_button]:!w-full [&_button]:!max-w-full"
-              portalContainer={menuPortalContainer}
-              align="start"
-            />
-          ) : null}
+          ) : (
+            organizationHeader
+          )}
         </div>
 
         <nav

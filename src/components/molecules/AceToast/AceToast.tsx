@@ -1,6 +1,6 @@
-import { AlertCircle, Check, Info, TriangleAlert, X } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { cn } from '../../../lib/cn'
+import { MaterialSymbol } from '../AceAccordion/MaterialSymbol'
 import {
   aceToastActionLinkClass,
   aceToastActionRowClass,
@@ -9,7 +9,6 @@ import {
   aceToastDismissButtonClass,
   aceToastDismissIconClass,
   aceToastDoubleActionRowClass,
-  aceToastIconShellClass,
   aceToastIndentedBodyClass,
   aceToastMessageRowClass,
   aceToastShellClass,
@@ -37,27 +36,28 @@ export type AceToastProps = {
   className?: string
 }
 
+const toastStatusIconName: Record<AceToastTone, string> = {
+  success: 'check_circle',
+  info: 'info',
+  warning: 'warning',
+  error: 'error',
+}
+
+const toastStatusIconColor: Record<AceToastTone, string> = {
+  success: 'text-[var(--ace-toast-icon-success)]',
+  info: 'text-[var(--ace-toast-icon-info)]',
+  warning: 'text-[var(--ace-toast-icon-warning)]',
+  error: 'text-[var(--ace-toast-icon-error)]',
+}
+
 function ToastStatusIcon({ tone }: { tone: AceToastTone }) {
-  const shell = cn(
-    'inline-flex size-4 shrink-0 items-center justify-center',
-    tone === 'warning' ? 'text-[var(--ace-toast-icon-warning)]' : aceToastIconShellClass[tone],
-    tone === 'warning' ? '' : 'rounded-full',
+  return (
+    <MaterialSymbol
+      name={toastStatusIconName[tone]}
+      size="md"
+      className={cn('shrink-0 text-[16px]', toastStatusIconColor[tone])}
+    />
   )
-
-  const iconClass = tone === 'warning' ? 'size-4' : 'size-2.5'
-
-  const glyph =
-    tone === 'success' ? (
-      <Check className={iconClass} strokeWidth={2.5} aria-hidden />
-    ) : tone === 'info' ? (
-      <Info className={iconClass} strokeWidth={2.5} aria-hidden />
-    ) : tone === 'warning' ? (
-      <TriangleAlert className={iconClass} fill="currentColor" strokeWidth={0} aria-hidden />
-    ) : (
-      <AlertCircle className={iconClass} strokeWidth={2.5} aria-hidden />
-    )
-
-  return <span className={shell}>{glyph}</span>
 }
 
 function DismissButton({
@@ -74,7 +74,7 @@ function DismissButton({
       aria-label={dismissLabel}
       onClick={onDismiss}
     >
-      <X className={aceToastDismissIconClass} strokeWidth={2} aria-hidden />
+      <MaterialSymbol name="close" size="md" className={aceToastDismissIconClass} />
     </button>
   )
 }

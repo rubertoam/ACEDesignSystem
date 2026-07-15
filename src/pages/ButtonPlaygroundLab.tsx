@@ -9,7 +9,7 @@ import {
 } from '../components/atoms/AceButton'
 import { labPanelClass, labTableSurfaceClass } from '../lib/labChrome'
 import { LabCheckbox, LabRadioGroup } from '../lib/labControls'
-import { labExampleSectionClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { cn } from '../lib/cn'
 
@@ -145,7 +145,7 @@ export function ButtonPlaygroundLab() {
           </div>
 
           <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className="max-w-3xl space-y-2">
+            <div className={cn('max-w-3xl', labUsageSectionClass)}>
               <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference (icon right)</h4>
               <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
                 Matches the Figma matrix: default, hover, active (clicked), and disabled for each size. Preview cells
@@ -182,21 +182,21 @@ export function ButtonPlaygroundLab() {
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
             <code className="text-[var(--color-text-primary)]">--ace-button-purple-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-button-blue-*</code> — default / hover / active fills
+            <code className="text-[var(--color-text-primary)]">--ace-button-blue-*</code> - default / hover / active fills
             and outlines.
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-button-neutral-*</code> — disabled secondary/tertiary
+            <code className="text-[var(--color-text-primary)]">--ace-button-neutral-*</code> - disabled secondary/tertiary
             text and borders; primary disabled surface.
           </li>
           <li>
             <code className="text-[var(--color-text-primary)]">--ace-button-px-*</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-button-py-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-button-gap-*</code> — padding and icon gap by size
+            <code className="text-[var(--color-text-primary)]">--ace-button-gap-*</code> - padding and icon gap by size
             (small / medium / large from Figma).
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-button-radius</code> — matches dialog modal button
+            <code className="text-[var(--color-text-primary)]">--ace-button-radius</code> - matches dialog modal button
             radius (<code className="text-[var(--color-text-primary)]">--dialog-modal-btn-radius</code>, 4px).
           </li>
           <li>

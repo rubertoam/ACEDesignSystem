@@ -1,7 +1,7 @@
 import { AceTimeline, DEMO_TIMELINE_ITEMS } from '../components/organisms/AceTimeline/AceTimeline'
 import { AceTimelineItem } from '../components/organisms/AceTimeline/AceTimelineItem'
 import { labComponentContainerClass } from '../lib/labChrome'
-import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
@@ -107,7 +107,7 @@ export function TimelineLab() {
       }
       usage={
         <>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
               Use the timeline for auditable histories where users scan status, timestamp, and process metadata, then
@@ -115,24 +115,24 @@ export function TimelineLab() {
               icons grow subtly (10%) on hover.
             </p>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Variants</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                <strong className="text-[var(--screening-text-primary)]">System action</strong> — automated process
+                <strong className="text-[var(--screening-text-primary)]">System action</strong>: automated process
                 events
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Escalation</strong> — elevated review
+                <strong className="text-[var(--screening-text-primary)]">Escalation</strong>: elevated review
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Pending</strong> — awaiting action
+                <strong className="text-[var(--screening-text-primary)]">Pending</strong>: awaiting action
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Blocked</strong> — stopped / failed path
+                <strong className="text-[var(--screening-text-primary)]">Blocked</strong>: stopped / failed path
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Safe</strong> — cleared / successful outcome
+                <strong className="text-[var(--screening-text-primary)]">Safe</strong>: cleared / successful outcome
               </li>
             </ul>
           </section>
@@ -141,18 +141,18 @@ export function TimelineLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Shell — <code className="text-[var(--color-text-primary)]">--ace-timeline-border</code>, padding, item gap
+            Shell - <code className="text-[var(--color-text-primary)]">--ace-timeline-border</code>, padding, item gap
           </li>
           <li>
-            Typography — P2 title row, P1 subtitle, caption sort control
+            Typography - P2 title row, P1 subtitle, caption sort control
           </li>
           <li>
-            Variants — icon and highlight tokens per status (
+            Variants - icon and highlight tokens per status (
             <code className="text-[var(--color-text-primary)]">--ace-timeline-icon-*</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-timeline-highlight-*</code>)
           </li>
           <li>
-            Motion — expand/collapse uses accordion tokens (
+            Motion - expand/collapse uses accordion tokens (
             <code className="text-[var(--color-text-primary)]">--ace-accordion-duration</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-accordion-ease</code>)
           </li>

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AceAccordion } from '../components/molecules/AceAccordion/AceAccordion'
 import { AceSidebar, type AceSidebarGroup } from '../components/organisms/AceSidebar/AceSidebar'
 import { ACE_ANIMATIONS, ACE_MOTION_EASE_STANDARD } from '../lib/aceAnimations'
+import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 function AnimationCatalogTable() {
@@ -111,7 +112,7 @@ function AccordionMotionDemo() {
 export function AnimationsLab() {
   return (
     <ComponentLabPage
-      title="Animations"
+      title="Motion"
       description="Central registry of ACE motion: easing curves, durations, and per-component transitions. Update src/lib/aceAnimations.ts whenever you add animation to a component."
       examples={
         <div className="space-y-10">
@@ -177,7 +178,7 @@ className={cn(
       }
       usage={
         <>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Workflow for developers</h4>
             <ol className="m-0 list-decimal space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>Prefer existing motion tokens in variables.css before introducing new durations or curves.</li>
@@ -190,7 +191,7 @@ className={cn(
               <li>Respect <code className="text-[var(--screening-text-primary)]">prefers-reduced-motion</code> via motion-reduce utilities.</li>
             </ol>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Expand / collapse pattern</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
               Use a grid wrapper with <code className="text-[var(--screening-text-primary)]">grid-rows-[0fr]</code> →{' '}

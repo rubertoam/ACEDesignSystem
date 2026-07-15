@@ -14,7 +14,6 @@ const externals = [
   '@radix-ui/react-slider',
   '@radix-ui/react-switch',
   'clsx',
-  'lucide-react',
   'tailwind-merge',
 ]
 

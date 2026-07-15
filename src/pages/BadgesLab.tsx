@@ -1,82 +1,126 @@
-import { AceStatusPill } from '../components/atoms/AceStatusPill/AceStatusPill'
-import type { AceStatusPillVariant } from '../components/atoms/AceStatusPill/statusPillFieldStyles'
-import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
+import { AceBadge } from '../components/atoms/AceBadge/AceBadge'
+import type { AceBadgeVariant } from '../components/atoms/AceBadge/badgeFieldStyles'
+import { labComponentContainerClass } from '../lib/labChrome'
+import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 const VARIANTS: {
-  value: AceStatusPillVariant
+  value: AceBadgeVariant
   label: string
-  accentToken: string
-  surfaceToken: string
-  borderToken: string
 }[] = [
-  { value: 'purple', label: 'Purple', accentToken: 'Primary 400', surfaceToken: 'Primary 50', borderToken: 'Primary tint' },
-  { value: 'orange', label: 'Orange', accentToken: 'Warning 500', surfaceToken: 'Warning 50', borderToken: 'Warning tint' },
-  { value: 'green', label: 'Green', accentToken: 'Success 500', surfaceToken: 'Success 50', borderToken: 'Success tint' },
-  { value: 'gray', label: 'Gray', accentToken: 'Neutral 700', surfaceToken: 'Neutral 50', borderToken: 'Neutral 400' },
-  { value: 'blue', label: 'Blue', accentToken: 'Primary 500', surfaceToken: 'Primary 50', borderToken: 'Primary 200' },
-  { value: 'yellow', label: 'Yellow', accentToken: 'Notice 500', surfaceToken: 'Notice 50', borderToken: 'Notice 200' },
-  { value: 'pink', label: 'Pink', accentToken: 'Secondary Violet 400', surfaceToken: 'Secondary Violet 50', borderToken: 'Secondary Violet 200' },
-  { value: 'teal', label: 'Teal', accentToken: 'Secondary FinScan Teal 500', surfaceToken: 'Secondary FinScan Teal 50', borderToken: 'Secondary FinScan Teal 200' },
-  { value: 'red', label: 'Red', accentToken: 'Error 500', surfaceToken: 'Error 50', borderToken: 'Error tint' },
+  { value: 'purple', label: 'Purple' },
+  { value: 'orange', label: 'Orange' },
+  { value: 'green', label: 'Green' },
+  { value: 'gray', label: 'Gray' },
+  { value: 'blue', label: 'Blue' },
+  { value: 'yellow', label: 'Yellow' },
+  { value: 'pink', label: 'Pink' },
+  { value: 'teal', label: 'Teal' },
+  { value: 'red', label: 'Red' },
 ]
 
 export function BadgesLab() {
   return (
     <ComponentLabPage
-      title="Status pills"
-      description="Compact status labels with a leading dot, matching the Review Assigned screening results table. Each variant uses a tinted border, 50-shade fill, saturated dot, and caption label — same pattern as New and Escalate in the prototype."
+      title="Badges"
+      description="Pills for screening table rows and tags for client profile accordion headers - both from the Review Assigned prototype, sharing the same color variants."
+      examplesCanvas={false}
       examples={
-        <div className={cn('space-y-4', labExampleSectionClass)}>
-          <p className={labSectionLabelClass}>All variants</p>
-          <div className="flex flex-wrap items-center gap-4">
-            {VARIANTS.map(({ value, label }) => (
-              <AceStatusPill key={value} variant={value}>
-                {label}
-              </AceStatusPill>
-            ))}
+        <div className="space-y-10">
+          <div className={cn('w-full', labExampleSectionClass)}>
+            <p className={labSectionLabelClass}>Pills</p>
+            <div className={labComponentContainerClass}>
+              <div className="flex flex-wrap items-center gap-4">
+                {VARIANTS.map(({ value, label }) => (
+                  <AceBadge key={value} appearance="pill" variant={value}>
+                    {label}
+                  </AceBadge>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className={cn('w-full', labExampleSectionClass)}>
+            <p className={labSectionLabelClass}>Tags</p>
+            <div className={labComponentContainerClass}>
+              <div className="flex flex-wrap items-center gap-4">
+                {VARIANTS.map(({ value, label }) => (
+                  <AceBadge key={value} appearance="tag" variant={value}>
+                    {label}
+                  </AceBadge>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       }
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
-            Pass label text as <code className="text-[var(--screening-text-primary)]">children</code>. Choose a color
-            with <code className="text-[var(--screening-text-primary)]">variant</code>.
+            Use <code className="text-[var(--screening-text-primary)]">appearance=&quot;pill&quot;</code> or{' '}
+            <code className="text-[var(--screening-text-primary)]">appearance=&quot;tag&quot;</code>. Both share the same{' '}
+            <code className="text-[var(--screening-text-primary)]">variant</code> colors. Pass label text as{' '}
+            <code className="text-[var(--screening-text-primary)]">children</code>.
           </p>
-          <ComponentLabCode>{`import { AceStatusPill } from '../components/atoms/AceStatusPill/AceStatusPill'
+          <ComponentLabCode>{`import { AceBadge } from '../components/atoms/AceBadge/AceBadge'
 
-<AceStatusPill variant="purple">New</AceStatusPill>
-<AceStatusPill variant="orange">Escalated</AceStatusPill>
-<AceStatusPill variant="green">Complete</AceStatusPill>`}</ComponentLabCode>
+<AceBadge appearance="pill" variant="purple">Purple</AceBadge>
+<AceBadge appearance="pill" variant="orange">Orange</AceBadge>
+
+<AceBadge appearance="tag" variant="purple">Purple</AceBadge>
+<AceBadge appearance="tag" variant="gray">Gray</AceBadge>`}</ComponentLabCode>
         </>
       }
       usage={
         <>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
-              Use status pills for short, non-interactive row or field status labels. Keep copy concise — Caption
-              Semi-Bold, matching the Review Assigned screening table.
+              <strong className="text-[var(--screening-text-primary)]">Pills</strong>: short row or field status
+              labels with a leading color dot (screening results table).{' '}
+              <strong className="text-[var(--screening-text-primary)]">Tags</strong>: compact meta chips in headers
+              (client ID, country, DOB), same palette, squared corners, no dot.
             </p>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Variants</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              {VARIANTS.map(({ label, accentToken, surfaceToken, borderToken }) => (
-                <li key={label}>
-                  <strong className="text-[var(--screening-text-primary)]">{label}</strong> — {borderToken} border,{' '}
-                  {surfaceToken} fill, {accentToken} dot and label
-                </li>
-              ))}
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">purple</strong>: Purple · New
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">orange</strong>: Orange · Escalate
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">green</strong>: Green · Safe
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">gray</strong>: Gray · False Positive
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">blue</strong>: Blue · Research
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">yellow</strong>: Yellow · Flag
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">pink</strong>: Pink · Route
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">teal</strong>: Teal · Research
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">red</strong>: Red · Remediate
+              </li>
             </ul>
           </section>
-          <section className="space-y-2">
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Accessibility</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
-              The leading dot is decorative (<code className="text-[var(--screening-text-primary)]">aria-hidden</code>
-              ). Status meaning should be conveyed by the visible label text.
+              Leading dots are decorative (
+              <code className="text-[var(--screening-text-primary)]">aria-hidden</code>). Meaning should come from the
+              visible label text.
             </p>
           </section>
         </>
@@ -84,19 +128,15 @@ export function BadgesLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Layout — <code className="text-[var(--color-text-primary)]">--ace-status-pill-gap</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-status-pill-py</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-status-pill-pl</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-status-pill-pr</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-status-pill-dot-size</code>
+            Pill layout - <code className="text-[var(--color-text-primary)]">--ace-status-pill-*</code>
           </li>
           <li>
-            Type — Caption Semi-Bold (
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-semi-bold</code>)
+            Tag layout - <code className="text-[var(--color-text-primary)]">--ace-badge-tag-*</code> (radius, padding);
+            colors reuse the pill variant tokens
           </li>
           <li>
-            Accent and surface colors are mapped per variant in{' '}
-            <code className="text-[var(--color-text-primary)]">aceStatusPillVariantTokens</code>
+            Tag type - Caption Regular (
+            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>)
           </li>
         </ul>
       }

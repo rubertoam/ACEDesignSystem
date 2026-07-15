@@ -62,12 +62,18 @@ export const aceToastConfirmButtonClass = cn(
 )
 
 export const aceToastDismissButtonClass = cn(
-  'inline-flex shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-[var(--ace-toast-dismiss-icon)]',
-  'transition-colors hover:text-[var(--ace-toast-dismiss-icon-hover)]',
+  'inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
+  'text-[var(--ace-toast-dismiss-icon)]',
+  'transition-[background-color,box-shadow,color]',
+  'duration-[var(--ace-motion-duration-medium)]',
+  '[transition-timing-function:var(--ace-motion-ease-standard)]',
+  'motion-reduce:transition-none motion-reduce:duration-0',
+  /* Iconography “No border stroke” — toast sits on white; hover = surface-hover + 1px ring */
+  'hover:bg-[var(--screening-surface-hover)] hover:shadow-[0_0_0_1px_var(--screening-border-strong)] hover:text-[var(--ace-toast-dismiss-icon-hover)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 
-export const aceToastDismissIconClass = 'size-2 shrink-0'
+export const aceToastDismissIconClass = 'shrink-0 text-current'
 
 export const aceToastIconShellClass: Record<AceToastTone, string> = {
   success: 'bg-[var(--ace-toast-icon-success)] text-[var(--ace-toast-icon-glyph)]',

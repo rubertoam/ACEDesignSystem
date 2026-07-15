@@ -1,44 +1,44 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { Check, Minus } from 'lucide-react'
 import { forwardRef } from 'react'
 import type { ComponentPropsWithoutRef, ComponentRef } from 'react'
 import { cn } from '../../../lib/cn'
-import { aceCheckboxClass, type AceCheckboxSize } from './checkboxFieldStyles'
-
-const iconSize: Record<AceCheckboxSize, string> = {
-  sm: 'size-3 stroke-[3]',
-  md: 'size-[0.875rem] stroke-[2.5]',
-  lg: 'size-4 stroke-[2.5]',
-}
+import {
+  aceCheckboxClass,
+  aceCheckboxIconSizeClass,
+  type AceCheckboxSize,
+} from './checkboxFieldStyles'
 
 export type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
-  /** Default matches data table (16px). */
+  /** Default is Small (16px). Data table uses Medium. */
   size?: AceCheckboxSize
+}
+
+/** Horizontal bar for indeterminate — Figma selected mark is a filled square, not a check. */
+function IndeterminateGlyph({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn('rounded-full bg-current', className)}
+      aria-hidden
+    />
+  )
 }
 
 export const Checkbox = forwardRef<ComponentRef<typeof CheckboxPrimitive.Root>, CheckboxProps>(
   ({ className, size = 'sm', ...props }, ref) => {
-    const icn = iconSize[size]
+    const iconClass = aceCheckboxIconSizeClass[size]
     return (
       <CheckboxPrimitive.Root
         ref={ref}
-        className={cn('group peer shrink-0 outline-none', aceCheckboxClass(size), className)}
+        className={cn('group peer shrink-0', aceCheckboxClass(size), className)}
         {...props}
       >
-        <CheckboxPrimitive.Indicator className="relative flex size-full items-center justify-center text-current">
-          <Check
+        <CheckboxPrimitive.Indicator className="flex size-full items-center justify-center text-current">
+          {/* Checked: empty — purple fill + white inset ring come from root styles */}
+          <IndeterminateGlyph
             className={cn(
-              'absolute opacity-0 transition-opacity duration-150 group-data-[state=checked]:opacity-100 group-data-[state=indeterminate]:opacity-0',
-              icn,
+              'opacity-0 transition-opacity duration-150 group-data-[state=indeterminate]:opacity-100',
+              iconClass,
             )}
-            aria-hidden
-          />
-          <Minus
-            className={cn(
-              'absolute opacity-0 transition-opacity duration-150 group-data-[state=indeterminate]:opacity-100',
-              icn,
-            )}
-            aria-hidden
           />
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>

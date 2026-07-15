@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
 import { Checkbox } from '../../atoms/Checkbox/Checkbox'
 import { AceTable } from '../../molecules/AceTable/AceTable'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { cn } from '../../../lib/cn'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import {
@@ -9,7 +9,6 @@ import {
   aceExpandPanelEaseClass,
   aceExpandPanelGridClass,
 } from '../../../lib/aceExpandPanel'
-import { DATA_CARD_ICONS } from './dataCardAssets'
 
 const p1 =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
@@ -97,18 +96,18 @@ function DataPointLine({ label, value }: AceDataCardDataPoint) {
 
 function HeaderIconButton({
   label,
-  src,
+  name,
   className,
   onClick,
 }: {
   label: string
-  src: string
+  name: string
   className?: string
   onClick?: () => void
 }) {
   return (
     <button type="button" aria-label={label} className={iconButtonClass} onClick={onClick}>
-      <img src={src} alt="" className={cn('block size-4 object-contain', className)} width={16} height={16} />
+      <MaterialSymbol name={name} size="md" className={className} />
     </button>
   )
 }
@@ -212,7 +211,7 @@ export function AceDataCard({
             </span>
           )}
           {showHeadingInfo ? (
-            <HeaderIconButton label="More information" src={DATA_CARD_ICONS.info} />
+            <HeaderIconButton label="More information" name="info" />
           ) : null}
         </div>
         {showEnterData ? (
@@ -222,15 +221,9 @@ export function AceDataCard({
             </span>
             {showHeaderActions ? (
               <>
-                <HeaderIconButton label="Data info" src={DATA_CARD_ICONS.info} />
+                <HeaderIconButton label="Data info" name="info" />
                 <button type="button" aria-label="Quick action" className={iconButtonClass}>
-                  <img
-                    src={DATA_CARD_ICONS.lightning}
-                    alt=""
-                    className="block h-5 w-2.5 object-contain"
-                    width={10}
-                    height={20}
-                  />
+                  <MaterialSymbol name="flash_on" size="lg" />
                 </button>
               </>
             ) : null}
@@ -271,13 +264,7 @@ export function AceDataCard({
               {showInfoBlock ? (
                 <div className="flex flex-col gap-4 rounded-[var(--ace-data-card-radius)] border-[0.5px] border-solid border-[var(--ace-data-card-insight-border)] bg-[var(--ace-data-card-insight-bg)] p-6">
                   <div className="flex items-center gap-2.5">
-                    <img
-                      src={DATA_CARD_ICONS.lightbulb}
-                      alt=""
-                      className="h-[1.07rem] w-3 object-contain"
-                      width={12}
-                      height={17}
-                    />
+                    <MaterialSymbol name="lightbulb" size="md" className="text-[var(--screening-primary)]" />
                     <p className={cn('m-0 text-sm leading-[1.65]', p1Bold, 'text-[var(--screening-primary)]')}>
                       {insightTitle}
                     </p>
@@ -316,7 +303,8 @@ export function AceDataCard({
           )}
         >
           {expanded ? 'Show less' : 'Show more'}
-          <ChevronDown
+          <MaterialSymbol
+            name="keyboard_arrow_down"
             className={cn(
               aceChevronIconClass,
               'transition-transform',
@@ -324,7 +312,6 @@ export function AceDataCard({
               easeAccordion,
               expanded && 'rotate-180',
             )}
-            aria-hidden
           />
         </button>
       </footer>

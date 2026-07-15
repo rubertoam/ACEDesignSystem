@@ -1,6 +1,6 @@
-import { Plus, Trash2 } from 'lucide-react'
 import { AceInputField } from '../../atoms/AceInputField'
 import { Checkbox } from '../../atoms/Checkbox/Checkbox'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { DialogModal } from '../../molecules/DialogModal/DialogModal'
 import { cn } from '../../../lib/cn'
 
@@ -221,14 +221,14 @@ export function GroupFormDialog({
                           className="inline-flex size-4 items-center justify-center rounded-full bg-[var(--ace-edit-group-restore-bg)]"
                           aria-hidden
                         >
-                          <Plus
-                            className="size-3 text-[var(--screening-text-on-primary)]"
-                            strokeWidth={2.5}
-                            aria-hidden
+                          <MaterialSymbol
+                            name="add"
+                            size="sm"
+                            className="text-[var(--screening-text-on-primary)]"
                           />
                         </span>
                       ) : (
-                        <Trash2 className="size-4" strokeWidth={2} aria-hidden />
+                        <MaterialSymbol name="delete" size="md" className="size-4" />
                       )}
                     </button>
                   </div>

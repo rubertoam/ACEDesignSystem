@@ -3,7 +3,7 @@ import type { CheckedState } from '@radix-ui/react-checkbox'
 import { Checkbox } from '../components/atoms/Checkbox/Checkbox'
 import type { AceCheckboxSize } from '../components/atoms/Checkbox/checkboxFieldStyles'
 import { LabRadioGroup } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { cn } from '../lib/cn'
 
@@ -28,9 +28,11 @@ const SECTIONS: { title: string; withLabel: boolean; size: AceCheckboxSize }[] =
 
 const labelClass: Record<AceCheckboxSize, string> = {
   sm: 'text-sm text-[var(--screening-text-primary)] font-[family-name:var(--font-screening)]',
-  md: 'text-sm text-[var(--screening-text-primary)] font-[family-name:var(--font-screening)] font-medium',
-  lg: 'text-base text-[var(--screening-text-primary)] font-[family-name:var(--font-screening)] font-medium',
+  md: 'text-sm text-[var(--screening-text-primary)] font-[family-name:var(--font-screening)]',
+  lg: 'text-base text-[var(--screening-text-primary)] font-[family-name:var(--font-screening)]',
 }
+
+const labelDisabledClass = 'text-[var(--screening-checkbox-disabled-check)]'
 
 function PreviewCell({
   col,
@@ -54,7 +56,7 @@ function PreviewCell({
       className={cn(
         'pointer-events-none select-none',
         hoverVisual &&
-          'border-[var(--screening-primary)] ring-2 ring-[var(--screening-primary-ring)] ring-offset-0',
+          'border-[var(--screening-checkbox-border-hover)] bg-[var(--screening-checkbox-bg-hover)] shadow-none',
       )}
       aria-label={`${col} ${size}${withLabel ? ' with label' : ''}`}
     />
@@ -67,7 +69,7 @@ function PreviewCell({
   return (
     <div className="flex items-center justify-center gap-2">
       {box}
-      <span className={labelClass[size]}>Label</span>
+      <span className={cn(labelClass[size], disabled && labelDisabledClass)}>Text</span>
     </div>
   )
 }
@@ -89,7 +91,7 @@ export function CheckboxPlaygroundLab() {
   return (
     <ComponentLabPage
       title="Checkboxes"
-      description="ACE Design System v.3 checkboxes: with or without label, small / medium / large hit targets, and states (regular, hover, active/checked, disabled, disabled selected). Built on Radix Checkbox with screening color tokens."
+      description="ACE Design System v.3 checkboxes (Figma 317:1492): with or without text, small / medium / large, and states - regular, hover (purple border + light purple fill), active (filled square with white inset), disabled, disabled selected."
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">
@@ -115,16 +117,17 @@ export function CheckboxPlaygroundLab() {
               </label>
             </div>
             <p className="mt-4 m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              Hover an unchecked box to see the focus ring treatment. Use the size control above.
+              Hover an unchecked box for the purple border and light purple fill. Selected uses a filled square with a
+              white inset ring (not a checkmark). Use the size control above.
             </p>
           </div>
 
           <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className="max-w-3xl space-y-2">
+            <div className={cn('max-w-3xl', labUsageSectionClass)}>
               <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
               <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                Matches the Figma matrix. The Hover column uses a forced border + ring on an unchecked control; use the
-                interactive row to feel real hover.
+                Matches the Figma matrix. Hover uses a 1px purple border and Primary/50 fill; active is a filled square
+                with a white inset. Use the interactive row for live hover.
               </p>
             </div>
             <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
@@ -180,14 +183,16 @@ export function CheckboxPlaygroundLab() {
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
             <code className="text-[var(--color-text-primary)]">aceCheckboxClass()</code> in{' '}
-            <code className="text-[var(--color-text-primary)]">checkboxFieldStyles.ts</code> — combines surface + size;
+            <code className="text-[var(--color-text-primary)]">checkboxFieldStyles.ts</code> - combines surface + size;
             used by the atom by default.
           </li>
           <li>
             <code className="text-[var(--color-text-primary)]">--screening-checkbox-border</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-checkbox-border-hover</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-checkbox-bg-hover</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-checkbox-checked-bg</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-checkbox-checked-inset</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--screening-checkbox-disabled-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-primary-ring</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--radius-checkbox</code>.
           </li>
         </ul>

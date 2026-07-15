@@ -1,14 +1,6 @@
-import {
-  Ban,
-  Building2,
-  Check,
-  ChevronDown,
-  Clock,
-  TrendingUp,
-  type LucideIcon,
-} from 'lucide-react'
 import { useId, type ReactNode } from 'react'
 import { cn } from '../../../lib/cn'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import {
   aceTimelineBodyClass,
   aceTimelineBodyPanelClass,
@@ -29,12 +21,12 @@ import {
   type AceTimelineVariant,
 } from './timelineFieldStyles'
 
-const VARIANT_ICONS: Record<AceTimelineVariant, LucideIcon> = {
-  'system-action': Building2,
-  escalation: TrendingUp,
-  pending: Clock,
-  blocked: Ban,
-  safe: Check,
+const VARIANT_ICON_NAMES: Record<AceTimelineVariant, string> = {
+  'system-action': 'apartment',
+  escalation: 'arrow_circle_up',
+  pending: 'schedule',
+  blocked: 'stop_circle',
+  safe: 'check_circle',
 }
 
 export type AceTimelineItemData = {
@@ -68,8 +60,6 @@ function TimelineStatusIcon({
   variant: AceTimelineVariant
   interactive: boolean
 }) {
-  const Icon = VARIANT_ICONS[variant]
-
   return (
     <span
       className={cn(
@@ -82,17 +72,17 @@ function TimelineStatusIcon({
           : 'size-[var(--ace-timeline-icon-size)]',
       )}
     >
-      <Icon
+      <MaterialSymbol
+        name={VARIANT_ICON_NAMES[variant]}
         className={cn(
           aceTimelineIconClass,
+          'transition-[font-size]',
           interactive
             ? cn(
-                'size-[var(--ace-timeline-icon-glyph-size)] group-hover/timeline-item:size-[var(--ace-timeline-icon-glyph-size-hover)]',
+                'text-[length:var(--ace-timeline-icon-glyph-size)] group-hover/timeline-item:text-[length:var(--ace-timeline-icon-glyph-size-hover)]',
               )
-            : 'size-[var(--ace-timeline-icon-glyph-size)]',
+            : 'text-[length:var(--ace-timeline-icon-glyph-size)]',
         )}
-        strokeWidth={2}
-        aria-hidden
       />
     </span>
   )
@@ -125,10 +115,10 @@ function TimelineToggleHint({ expanded }: { expanded: boolean }) {
   return (
     <span className={cn(aceTimelineToggleClass, 'pointer-events-none')}>
       {expanded ? 'Show less' : 'Show more'}
-      <ChevronDown
+      <MaterialSymbol
+        name="keyboard_arrow_down"
+        size="sm"
         className={cn(aceTimelineToggleIconClass, expanded ? 'rotate-180' : 'rotate-0')}
-        strokeWidth={2}
-        aria-hidden
       />
     </span>
   )

@@ -118,15 +118,11 @@ export const ACE_ANIMATIONS: AceAnimationEntry[] = [
     name: 'Tooltip enter / exit',
     component: 'AceTooltip',
     properties: 'opacity, transform (scale, slide)',
-    duration: 'var(--ace-tooltip-duration)',
-    easing: 'var(--ace-tooltip-ease)',
-    tokens: [
-      '--ace-tooltip-duration',
-      '--ace-tooltip-ease',
-      '--ace-motion-duration-fast',
-      '--ace-motion-ease-standard',
-    ],
-    notes: 'Fade + scale from 0.95 with a 2px slide based on `data-side` (top/bottom/left/right).',
+    duration: '150ms (tw-animate-css default)',
+    easing: 'ease (tw-animate-css default)',
+    tokens: ['--radix-tooltip-content-transform-origin'],
+    notes:
+      'Same as Review Assigned ui/tooltip: animate-in fade-in-0 zoom-in-95 + side slide-in-from-* via tw-animate-css.',
   },
 ]
 

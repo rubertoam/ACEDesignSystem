@@ -1,4 +1,4 @@
-/** Figma FinScan Colors (2794:5) — palette scales and per-component token groups. */
+/** Figma FinScan Colors (2794:5) - palette scales and per-component token groups. */
 
 export type ColorToken = {
   name: string
@@ -62,7 +62,7 @@ export const COLOR_PALETTE_FAMILIES: ColorPaletteFamily[] = [
     swatches: [
       { shade: '50', hex: '#EFEEF9', hsl: 'HSL 246 38 95 100', cssVar: '--screening-primary-soft-bg' },
       { shade: '100', hex: '#CBC5EC', hsl: 'HSL 249 51 85 100' },
-      { shade: '200', hex: '#A296DC', hsl: 'HSL 250 50 73 100' },
+      { shade: '200', hex: '#A296DC', hsl: 'HSL 250 50 73 100', cssVar: '--screening-primary-200' },
       { shade: '300', hex: '#7868CD', hsl: 'HSL 250 50 61 100' },
       { shade: '400', hex: '#523EB9', hsl: 'HSL 250 50 58 100', cssVar: '--screening-primary' },
       { shade: '500', hex: '#3D2E8A', hsl: 'HSL 250 50 36 100', cssVar: '--ace-button-purple-500' },
@@ -132,7 +132,7 @@ export const COLOR_PALETTE_FAMILIES: ColorPaletteFamily[] = [
   {
     id: 'success',
     title: 'Success',
-    description: 'These colors depict positivity — generally used across success and complete states.',
+    description: 'These colors depict positivity - generally used across success and complete states.',
     swatches: [
       { shade: '50', hex: '#F8FBF1', hsl: 'HSL 78 56 96 100', cssVar: '--ace-success-50' },
       { shade: '100', hex: '#E2F0C8', hsl: 'HSL 81 57 86 100' },
@@ -168,7 +168,7 @@ export const COLOR_PALETTE_FAMILIES: ColorPaletteFamily[] = [
     id: 'notice',
     title: 'Notice',
     description:
-      'These colors draw attention — generally used for notices, alerts, and highlight states.',
+      'These colors draw attention - generally used for notices, alerts, and highlight states.',
     swatches: [
       { shade: '50', hex: '#FFFCF3', hsl: 'HSL 45 100 98 100', cssVar: '--ace-notice-50', bordered: true },
       { shade: '100', hex: '#FFF2CE', hsl: 'HSL 44 100 90 100' },
@@ -185,7 +185,7 @@ export const COLOR_PALETTE_FAMILIES: ColorPaletteFamily[] = [
   {
     id: 'error',
     title: 'Error',
-    description: 'These colors depict negativity — generally used across error states.',
+    description: 'These colors depict negativity - generally used across error states.',
     swatches: [
       { shade: '50', hex: '#FDF4F6', hsl: 'HSL 347 69 97 100', cssVar: '--ace-error-50' },
       { shade: '100', hex: '#FADEE4', hsl: 'HSL 347 74 93 100' },
@@ -425,15 +425,36 @@ export const COLOR_COMPONENT_GROUPS: ColorComponentGroup[] = [
     ]),
   },
   {
+    id: 'inline-message',
+    title: 'ACE Inline Messages',
+    description: 'In-page / banner alerts (Figma Inline Messages 4481:275; see Inline messages lab).',
+    tokens: solidTokens([
+      { name: 'Inline message text', cssVar: '--ace-inline-message-text' },
+      { name: 'Error surface', cssVar: '--ace-inline-message-error-bg' },
+      { name: 'Error border', cssVar: '--ace-inline-message-error-border' },
+      { name: 'Success surface', cssVar: '--ace-inline-message-success-bg' },
+      { name: 'Success border', cssVar: '--ace-inline-message-success-border' },
+      { name: 'Info surface', cssVar: '--ace-inline-message-info-bg' },
+      { name: 'Info border', cssVar: '--ace-inline-message-info-border' },
+      { name: 'Warning surface', cssVar: '--ace-inline-message-warning-bg' },
+      { name: 'Warning border', cssVar: '--ace-inline-message-warning-border' },
+    ]),
+  },
+  {
     id: 'status-pill',
-    title: 'ACE Status pill',
-    description: 'Status labels with leading dot (data table pattern; see Status pills lab).',
+    title: 'ACE Badges',
+    description: 'Status pills and client profile meta tags (see Badges lab).',
     tokens: solidTokens([
       { name: 'Status pill gap', cssVar: '--ace-status-pill-gap' },
       { name: 'Status pill padding Y', cssVar: '--ace-status-pill-py' },
       { name: 'Status pill padding left', cssVar: '--ace-status-pill-pl' },
       { name: 'Status pill padding right', cssVar: '--ace-status-pill-pr' },
       { name: 'Status pill dot size', cssVar: '--ace-status-pill-dot-size' },
+      { name: 'Tag gap', cssVar: '--ace-badge-tag-gap' },
+      { name: 'Tag surface', cssVar: '--ace-badge-tag-surface' },
+      { name: 'Tag border', cssVar: '--ace-badge-tag-border' },
+      { name: 'Tag label', cssVar: '--ace-badge-tag-label' },
+      { name: 'Tag warning surface', cssVar: '--ace-badge-tag-warning-surface' },
     ]),
   },
   {

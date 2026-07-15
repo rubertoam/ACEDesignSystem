@@ -1,2 +1,3 @@
-/** 16px — standard size for all Chevron / Chevrons icons (see --screening-icon-chevron) */
-export const aceChevronIconClass = 'size-[var(--screening-icon-chevron)] shrink-0'
+/** 16px — standard size for chevrons (width/height box + Material Symbol font-size). */
+export const aceChevronIconClass =
+  'inline-flex size-[1rem] shrink-0 items-center justify-center text-[length:var(--screening-icon-chevron)] leading-none'

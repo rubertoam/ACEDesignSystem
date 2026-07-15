@@ -18,7 +18,7 @@ export function FinScanIconLab() {
   return (
     <ComponentLabPage
       title="FinScan Logo"
-      description="Official FinScan brand lockup from ACE Design System — hash mark dot grid and wordmark with registered trademark."
+      description="Official FinScan brand lockup from ACE Design System - hash mark dot grid and wordmark with registered trademark."
       examplesToolbar={
         <div className="flex flex-wrap items-end gap-6">
           <LabSelect

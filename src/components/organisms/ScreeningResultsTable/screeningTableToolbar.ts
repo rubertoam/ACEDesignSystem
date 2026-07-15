@@ -7,6 +7,17 @@ export const screeningToolbarIconButtonClass = cn(
   'disabled:cursor-not-allowed disabled:border-[var(--screening-border-strong)] disabled:bg-[var(--screening-surface-muted)] disabled:text-[var(--screening-icon-muted)] disabled:opacity-60',
 )
 
+/** Review Assigned row actions — same chrome as toolbar icons; visible on row hover / open / focus. */
+export const screeningRowActionsMenuTriggerClass = cn(
+  screeningToolbarIconButtonClass,
+  'opacity-0 pointer-events-none group-hover/row:pointer-events-auto group-hover/row:opacity-100',
+  'data-[state=open]:pointer-events-auto data-[state=open]:opacity-100',
+  'data-[state=open]:border-[var(--screening-chip-inactive-hover-border)] data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:text-[var(--screening-text-primary)]',
+  'focus-visible:pointer-events-auto focus-visible:opacity-100',
+)
+
+export const screeningRowActionsMenuIconClass = 'text-current'
+
 /** Review Assigned screening table — “Filter by” label. */
 export const screeningStatusFilterLabelClass = cn(
   'shrink-0 text-[14px] font-normal [font-family:var(--font-screening)] text-[var(--screening-text-primary)]',

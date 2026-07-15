@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactNode } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { AceDropdownMenu, type AceDropdownMenuEntry } from '../AceDropdownMenu/AceDropdownMenu'
+import { MaterialSymbol } from '../AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
 
@@ -62,17 +62,13 @@ export function AcePagination({
   const portalContainer = portalContainerProp ?? portalHost
 
   const pageSizeMenuItems = useMemo<AceDropdownMenuEntry[]>(
-    () => [
-      {
-        type: 'radioGroup',
-        value: String(pageSize),
-        onValueChange: (value) => onPageSizeChange?.(Number(value)),
-        options: pageSizeOptions.map((n) => ({
-          value: String(n),
-          label: String(n),
-        })),
-      },
-    ],
+    () =>
+      pageSizeOptions.map((n) => ({
+        type: 'item' as const,
+        label: String(n),
+        selected: n === pageSize,
+        onSelect: () => onPageSizeChange?.(n),
+      })),
     [pageSize, pageSizeOptions, onPageSizeChange],
   )
 
@@ -122,7 +118,7 @@ export function AcePagination({
               triggerMode="field"
               size="sm"
               align="start"
-              panelWidth="compact"
+              panelWidth="wide"
               items={pageSizeMenuItems}
               portalContainer={portalContainer}
               className="w-auto min-w-[4.375rem] max-w-[5.5rem] shrink-0"
@@ -133,7 +129,7 @@ export function AcePagination({
 
       <div className="flex shrink-0 flex-wrap items-center gap-[var(--screening-pagination-gap)]">
         <IconNavButton label="Previous page" disabled={!canPrev} onClick={() => onPageChange(pageSafe - 1)}>
-          <ChevronLeft className={aceChevronIconClass} strokeWidth={2} />
+          <MaterialSymbol name="keyboard_arrow_left" size="md" className={aceChevronIconClass} />
         </IconNavButton>
         {items.map((item, i) =>
           item === 'ellipsis' ? (
@@ -149,7 +145,7 @@ export function AcePagination({
           ),
         )}
         <IconNavButton label="Next page" disabled={!canNext} onClick={() => onPageChange(pageSafe + 1)}>
-          <ChevronRight className={aceChevronIconClass} strokeWidth={2} />
+          <MaterialSymbol name="keyboard_arrow_right" size="md" className={aceChevronIconClass} />
         </IconNavButton>
       </div>
     </div>

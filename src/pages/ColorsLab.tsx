@@ -67,7 +67,7 @@ background: var(--screening-surface-muted);`}</ComponentLabCode>
             specific molecule or lab area. Drop shadows are documented on the Drop shadows lab, not here.
           </p>
           <p className="m-0 leading-relaxed">
-            Reference tokens by name — for the data table prefer <code className="text-[var(--screening-text-primary)]">--screening-*</code>;
+            Reference tokens by name - for the data table prefer <code className="text-[var(--screening-text-primary)]">--screening-*</code>;
             for modals <code className="text-[var(--screening-text-primary)]">--dialog-modal-*</code>.
           </p>
         </div>

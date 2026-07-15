@@ -7,7 +7,7 @@ import {
   type AceRadioSize,
 } from '../components/atoms/Radio/radioFieldStyles'
 import { LabRadioGroup } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { cn } from '../lib/cn'
 
@@ -106,10 +106,16 @@ function PreviewCell({
   return <div className="flex justify-center">{control}</div>
 }
 
+const FIELD_OPTIONS = [
+  { value: 'a', label: 'Option A', id: 'radio-lab-field-a' },
+  { value: 'b', label: 'Option B', id: 'radio-lab-field-b' },
+  { value: 'c', label: 'Option C', id: 'radio-lab-field-c' },
+] as const
+
 export function RadioPlaygroundLab() {
   const [size, setSize] = useState<AceRadioSize>('md')
   const [value, setValue] = useState('a')
-  const [fieldChecked, setFieldChecked] = useState(false)
+  const [fieldValue, setFieldValue] = useState('a')
   const sizes: AceRadioSize[] = ['sm', 'md', 'lg']
 
   const toolbar = (
@@ -131,7 +137,7 @@ export function RadioPlaygroundLab() {
               labExampleSectionClass,
             )}
           >
-            <p className={labSectionLabelClass}>Interactive — plain</p>
+            <p className={labSectionLabelClass}>Interactive - plain</p>
             <RadioGroup
               value={value}
               onValueChange={setValue}
@@ -159,37 +165,30 @@ export function RadioPlaygroundLab() {
               labExampleSectionClass,
             )}
           >
-            <p className={labSectionLabelClass}>Interactive — with background</p>
-            <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              One radio + label inside <code className="text-[var(--color-text-primary)]">aceRadioFieldInteractiveClass()</code>. Hover fills the field with Primary/50 (#EFEEF9); selected state adds the purple border (Figma With background).
+            <p className={labSectionLabelClass}>Interactive - with background</p>
+            <p className="mb-4 m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
+              Each option sits in <code className="text-[var(--color-text-primary)]">aceRadioFieldInteractiveClass()</code>.
+              Hover fills the field with Primary/50 (#EFEEF9); the selected option gets the purple border (Figma With
+              background).
             </p>
-            <div className="flex justify-start">
-              <div className={aceRadioFieldInteractiveClass({ checked: fieldChecked })}>
-              <RadioGroup
-                value={fieldChecked ? 'field-on' : ''}
-                onValueChange={(v) => {
-                  if (v === 'field-on') {
-                    setFieldChecked(true)
-                  }
-                }}
-                className="inline-flex"
-                aria-label="Single radio in field"
-              >
-                <RadioItem value="field-on" size={size} id="radio-lab-field-single">
-                  <span className={labelClass[size]}>Radio Button</span>
-                </RadioItem>
-              </RadioGroup>
-            </div>
-            </div>
-            {!fieldChecked ? (
-              <p className="mt-3 m-0 text-xs text-[var(--color-text-muted)]">
-                Select the radio to apply the active field border (Figma “With background” / Active).
-              </p>
-            ) : null}
+            <RadioGroup
+              value={fieldValue}
+              onValueChange={setFieldValue}
+              className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
+              aria-label="Example radio group with background"
+            >
+              {FIELD_OPTIONS.map((opt) => (
+                <div key={opt.value} className={aceRadioFieldInteractiveClass({ checked: fieldValue === opt.value })}>
+                  <RadioItem value={opt.value} size={size} id={opt.id}>
+                    <span className={labelClass[size]}>{opt.label}</span>
+                  </RadioItem>
+                </div>
+              ))}
+            </RadioGroup>
           </div>
 
           <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className="max-w-3xl space-y-2">
+            <div className={cn('max-w-3xl', labUsageSectionClass)}>
               <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
               <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
                 Matches the Figma matrix. Hover uses a faux fill on the circle; use the interactive group for real hover.

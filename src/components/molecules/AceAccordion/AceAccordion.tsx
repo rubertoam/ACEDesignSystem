@@ -1,4 +1,3 @@
-import { ChevronDown } from 'lucide-react'
 import { useCallback, useId, useState, type ReactNode } from 'react'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
@@ -180,7 +179,11 @@ export function AceAccordion({
             )}
             aria-hidden
           >
-            <ChevronDown className={cn(aceChevronIconClass, 'text-[var(--ace-accordion-title)]')} strokeWidth={2} />
+            <MaterialSymbol
+              name="keyboard_arrow_down"
+              size="md"
+              className={cn(aceChevronIconClass, 'text-[var(--ace-accordion-title)]')}
+            />
           </span>
           <span className={cn(titleClass, titleClassName, 'min-w-0 truncate')}>{title}</span>
         </span>
@@ -193,22 +196,22 @@ export function AceAccordion({
                 {showTag ? <span className={tagClass}>{tagLabel}</span> : null}
                 {showAddIcon ? (
                   <ActionButton label="Add" onClick={onAddClick}>
-                    <MaterialSymbol name="add_circle" />
+                    <MaterialSymbol name="add_circle" size="sm" className="text-[var(--ace-accordion-icon)]" />
                   </ActionButton>
                 ) : null}
                 {showDeleteIcon ? (
                   <ActionButton label="Delete" onClick={onDeleteClick}>
-                    <MaterialSymbol name="delete" />
+                    <MaterialSymbol name="delete" size="sm" className="text-[var(--ace-accordion-icon)]" />
                   </ActionButton>
                 ) : null}
                 {showEditIcon ? (
                   <ActionButton label="Edit" onClick={onEditClick}>
-                    <MaterialSymbol name="edit" />
+                    <MaterialSymbol name="edit" size="sm" className="text-[var(--ace-accordion-icon)]" />
                   </ActionButton>
                 ) : null}
                 {showMoreIcon ? (
                   <ActionButton label="More options" onClick={onMoreClick}>
-                    <MaterialSymbol name="more_horiz" />
+                    <MaterialSymbol name="more_horiz" size="sm" className="text-[var(--ace-accordion-icon)]" />
                   </ActionButton>
                 ) : null}
               </>

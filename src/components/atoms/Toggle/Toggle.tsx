@@ -1,5 +1,4 @@
 import * as SwitchPrimitive from '@radix-ui/react-switch'
-import { Check, X } from 'lucide-react'
 import { forwardRef } from 'react'
 import type { ComponentPropsWithoutRef, ComponentRef } from 'react'
 import { cn } from '../../../lib/cn'
@@ -19,6 +18,34 @@ export type ToggleProps = ComponentPropsWithoutRef<typeof SwitchPrimitive.Root> 
   variant?: AceToggleVariant
 }
 
+/** Compact stroke icons — Material Symbols stay too large in the track half. */
+function ToggleCheckIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 12 12" fill="none" aria-hidden>
+      <path
+        d="M2.5 6.2 5 8.6 9.5 3.5"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function ToggleCloseIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 12 12" fill="none" aria-hidden>
+      <path
+        d="M3.25 3.25 8.75 8.75M8.75 3.25 3.25 8.75"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, ToggleProps>(
   ({ className, size = 'md', variant = 'standard', ...props }, ref) => {
     return (
@@ -33,24 +60,24 @@ export const Toggle = forwardRef<ComponentRef<typeof SwitchPrimitive.Root>, Togg
               className="pointer-events-none absolute inset-y-0 left-0 flex w-1/2 items-center justify-center"
               aria-hidden
             >
-              <Check
+              <ToggleCheckIcon
                 className={cn(
                   aceToggleIconCheckClass[size],
-                  cn(aceToggleIconGlyphMotion, 'opacity-0 group-data-[state=checked]:opacity-100'),
+                  aceToggleIconGlyphMotion,
+                  'opacity-0 group-data-[state=checked]:opacity-100',
                 )}
-                strokeWidth={2}
               />
             </span>
             <span
               className="pointer-events-none absolute inset-y-0 right-0 flex w-1/2 items-center justify-center"
               aria-hidden
             >
-              <X
+              <ToggleCloseIcon
                 className={cn(
                   aceToggleIconXClass[size],
-                  cn(aceToggleIconGlyphMotion, 'opacity-100 group-data-[state=checked]:opacity-0'),
+                  aceToggleIconGlyphMotion,
+                  'opacity-100 group-data-[state=checked]:opacity-0',
                 )}
-                strokeWidth={2}
               />
             </span>
           </>
