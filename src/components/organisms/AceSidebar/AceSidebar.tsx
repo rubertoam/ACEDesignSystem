@@ -251,12 +251,14 @@ function SidebarGroupBlock({
               <MaterialSymbol name="add" size="md" className={sidebarRowActionIconClass} />
             </button>
           ) : null}
-          <SidebarOverflowMenu
-            items={rowMenuItems(group.onMenuAction)}
-            ariaLabel={`Actions for ${group.label}`}
-            portalContainer={menuPortalContainer}
-            className={cn(expanded && sidebarRowActionButtonExpandedClass)}
-          />
+          {group.onMenuAction ? (
+            <SidebarOverflowMenu
+              items={rowMenuItems(group.onMenuAction)}
+              ariaLabel={`Actions for ${group.label}`}
+              portalContainer={menuPortalContainer}
+              className={cn(expanded && sidebarRowActionButtonExpandedClass)}
+            />
+          ) : null}
         </div>
       </div>
       <div
