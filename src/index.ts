@@ -113,6 +113,18 @@ export {
   type AceInlineMessageProps,
 } from './components/molecules/AceInlineMessage/AceInlineMessage'
 export {
+  AceDescriptiveButton,
+  ACE_DESCRIPTIVE_BUTTON_PREVIEW_STATES,
+  aceDescriptiveButtonClass,
+  aceDescriptiveButtonDescriptionClass,
+  aceDescriptiveButtonIconClass,
+  aceDescriptiveButtonIconWrapClass,
+  aceDescriptiveButtonTextClass,
+  aceDescriptiveButtonTitleClass,
+  type AceDescriptiveButtonPreviewState,
+  type AceDescriptiveButtonProps,
+} from './components/molecules/AceDescriptiveButton'
+export {
   ACE_INLINE_MESSAGE_TONES,
   aceInlineMessageClass,
   aceInlineMessageIconClass,

@@ -755,6 +755,26 @@
   --ace-button-px-lg: 1.125rem;
   --ace-button-py-lg: 0.75rem;
   --ace-button-gap-lg: 0.75rem;
+
+  /* ACE Descriptive Buttons — Figma ButtonDescriptive 4118:682 */
+  --ace-descriptive-button-width: 16.5rem;
+  --ace-descriptive-button-radius: 0.25rem;
+  --ace-descriptive-button-padding: 0.75rem;
+  --ace-descriptive-button-gap: 0.75rem;
+  --ace-descriptive-button-text-gap: 0.25rem;
+  --ace-descriptive-button-icon-w: 1.25rem;
+  --ace-descriptive-button-icon-h: 1.6875rem;
+  --ace-descriptive-button-bg: #ffffff;
+  --ace-descriptive-button-border: var(--ace-button-neutral-400);
+  --ace-descriptive-button-hover-bg: #eae8f7; /* FinScan Primary/50 (component) */
+  --ace-descriptive-button-hover-border: var(--screening-primary);
+  --ace-descriptive-button-active-bg: #cbc5ec; /* FinScan Primary/100 */
+  --ace-descriptive-button-active-border: var(--screening-primary);
+  --ace-descriptive-button-disabled-bg: #eff0f2; /* Neutral/100 */
+  --ace-descriptive-button-disabled-border: var(--ace-button-neutral-400);
+  --ace-descriptive-button-text: var(--screening-text-primary);
+  --ace-descriptive-button-disabled-text: var(--ace-button-neutral-600);
+  --ace-descriptive-button-focus-ring: var(--ace-button-focus-ring);
 }
 
 [data-theme='dark'] {

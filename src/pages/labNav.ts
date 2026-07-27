@@ -134,6 +134,11 @@ export const labNavSections: LabNavSection[] = [
         '/lab/molecules/filtering',
         'Filters dropdown and applied filter chips (Figma Table Headers 1540:4577).',
       ),
+      component(
+        'Descriptive buttons',
+        '/lab/molecules/descriptive-buttons',
+        'contextual title + description action tiles (Figma ButtonDescriptive 4118:682).',
+      ),
     ],
   },
   {

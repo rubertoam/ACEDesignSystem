@@ -31,6 +31,7 @@ export const LAB_AVAILABILITY_BY_PATH: Record<string, LabAvailabilityStatus> = {
   '/lab/molecules/toast-messages': 'available',
   '/lab/molecules/inline-messages': 'available',
   '/lab/molecules/filtering': 'in-progress',
+  '/lab/molecules/descriptive-buttons': 'in-progress',
   '/lab/organisms/dialog-modal': 'available',
   '/lab/organisms/data-table': 'in-progress',
   '/lab/organisms/date-time-pickers': 'in-progress',

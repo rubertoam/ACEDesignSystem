@@ -33,6 +33,7 @@ import { IconographyLab } from './pages/IconographyLab'
 import { ToastMessagesLab } from './pages/ToastMessagesLab'
 import { InlineMessagesLab } from './pages/InlineMessagesLab'
 import { FilteringLab } from './pages/FilteringLab'
+import { DescriptiveButtonsLab } from './pages/DescriptiveButtonsLab'
 import { TimelineLab } from './pages/TimelineLab'
 import { AttachmentsLab } from './pages/AttachmentsLab'
 
@@ -69,6 +70,7 @@ export default function App() {
         <Route path="molecules/toast-messages" element={<ToastMessagesLab />} />
         <Route path="molecules/inline-messages" element={<InlineMessagesLab />} />
         <Route path="molecules/filtering" element={<FilteringLab />} />
+        <Route path="molecules/descriptive-buttons" element={<DescriptiveButtonsLab />} />
         <Route path="organisms" element={<OrganismsLab />} />
         <Route path="organisms/data-table" element={<DataTableLab />} />
         <Route path="organisms/screening-results-table" element={<Navigate to="/lab/organisms/data-table" replace />} />
