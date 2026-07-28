@@ -3,6 +3,7 @@ import { cn } from '../../../lib/cn'
 import { MaterialSymbol } from '../AceAccordion/MaterialSymbol'
 import {
   aceToastActionLinkClass,
+  aceToastActionLinkToneClass,
   aceToastActionRowClass,
   aceToastBodyClass,
   aceToastConfirmButtonClass,
@@ -11,6 +12,10 @@ import {
   aceToastDoubleActionRowClass,
   aceToastIndentedBodyClass,
   aceToastMessageRowClass,
+  aceToastProgressFillClass,
+  aceToastProgressFillToneClass,
+  aceToastProgressTrackClass,
+  aceToastProgressTrackToneClass,
   aceToastShellClass,
   aceToastTitleClass,
   aceToastTopRowClass,
@@ -23,8 +28,8 @@ export type AceToastProps = {
   layout?: AceToastLayout
   /** Shown on the default layout for success-style toasts. */
   title?: string
-  /** Single string or multiple lines (multi-line layouts). */
-  message: string | string[]
+  /** Single string, multiple lines (multi-line layouts), or rich content. */
+  message: ReactNode | string | string[]
   onDismiss?: () => void
   dismissLabel?: string
   actionLabel?: string
@@ -33,6 +38,11 @@ export type AceToastProps = {
   onCancel?: () => void
   confirmLabel?: string
   onConfirm?: () => void
+  /**
+   * Optional countdown fill (0–1). Renders a tone-tinted bar along the bottom edge.
+   * Product hosts own the timer; pass remaining/total each frame.
+   */
+  progress?: number
   className?: string
 }
 
@@ -82,12 +92,18 @@ function DismissButton({
 function ActionLink({
   label,
   onClick,
+  tone = 'success',
 }: {
   label: string
   onClick?: () => void
+  tone?: AceToastTone
 }) {
   return (
-    <button type="button" className={aceToastActionLinkClass} onClick={onClick}>
+    <button
+      type="button"
+      className={cn(aceToastActionLinkClass, aceToastActionLinkToneClass[tone])}
+      onClick={onClick}
+    >
       {label}
     </button>
   )
@@ -133,8 +149,19 @@ function ToastLines({
   )
 }
 
+function ToastMessageBody({ message }: { message: ReactNode | string | string[] }) {
+  if (Array.isArray(message)) {
+    return <ToastLines lines={message} />
+  }
+  if (typeof message === 'string') {
+    return <p className={aceToastBodyClass}>{message}</p>
+  }
+  return <div className={aceToastBodyClass}>{message}</div>
+}
+
 function renderActions({
   layout,
+  tone,
   actionLabel,
   onAction,
   cancelLabel,
@@ -143,17 +170,26 @@ function renderActions({
   onConfirm,
 }: Pick<
   AceToastProps,
-  'layout' | 'actionLabel' | 'onAction' | 'cancelLabel' | 'onCancel' | 'confirmLabel' | 'onConfirm'
+  | 'layout'
+  | 'tone'
+  | 'actionLabel'
+  | 'onAction'
+  | 'cancelLabel'
+  | 'onCancel'
+  | 'confirmLabel'
+  | 'onConfirm'
 >): ReactNode {
   const hasSingleAction =
-    layout === 'action' || layout === 'multi-line-action'
+    layout === 'action' ||
+    layout === 'multi-line-action' ||
+    (layout === 'default' && Boolean(actionLabel))
   const hasDoubleAction =
     layout === 'double-action' || layout === 'multi-line-double-action'
 
   if (hasDoubleAction) {
     return (
       <div className={aceToastDoubleActionRowClass}>
-        <ActionLink label={cancelLabel ?? 'Cancel'} onClick={onCancel} />
+        <ActionLink label={cancelLabel ?? 'Cancel'} onClick={onCancel} tone={tone} />
         <ConfirmButton label={confirmLabel ?? 'Confirm'} onClick={onConfirm} />
       </div>
     )
@@ -162,12 +198,27 @@ function renderActions({
   if (hasSingleAction) {
     return (
       <div className={aceToastActionRowClass}>
-        <ActionLink label={actionLabel ?? 'Action'} onClick={onAction} />
+        <ActionLink label={actionLabel ?? 'Action'} onClick={onAction} tone={tone} />
       </div>
     )
   }
 
   return null
+}
+
+function ToastProgress({ progress, tone }: { progress: number; tone: AceToastTone }) {
+  const clamped = Math.min(1, Math.max(0, progress))
+  return (
+    <div
+      className={cn(aceToastProgressTrackClass, aceToastProgressTrackToneClass[tone])}
+      aria-hidden
+    >
+      <div
+        className={cn(aceToastProgressFillClass, aceToastProgressFillToneClass[tone])}
+        style={{ transform: `scaleX(${clamped})` }}
+      />
+    </div>
+  )
 }
 
 export function AceToast({
@@ -183,24 +234,37 @@ export function AceToast({
   onCancel,
   confirmLabel,
   onConfirm,
+  progress,
   className,
 }: AceToastProps) {
-  const lines = Array.isArray(message) ? message : [message]
+  const lines = Array.isArray(message) ? message : null
   const isMultiLine = layout.startsWith('multi-line')
   const hasTitle = layout === 'default' && Boolean(title)
   const hasActions =
     layout === 'action' ||
     layout === 'double-action' ||
     layout === 'multi-line-action' ||
-    layout === 'multi-line-double-action'
+    layout === 'multi-line-double-action' ||
+    (layout === 'default' && Boolean(actionLabel))
   const compactActionLayout = layout === 'action' || layout === 'double-action'
+  const showProgress = typeof progress === 'number'
+
+  const actions = renderActions({
+    layout,
+    tone,
+    actionLabel,
+    onAction,
+    cancelLabel,
+    onCancel,
+    confirmLabel,
+    onConfirm,
+  })
+
+  let body: ReactNode
 
   if (hasTitle) {
-    return (
-      <div
-        role="status"
-        className={cn(aceToastShellClass, 'gap-[var(--ace-toast-gap)]', className)}
-      >
+    body = (
+      <>
         <div className={aceToastTopRowClass}>
           <div className={aceToastMessageRowClass}>
             <ToastStatusIcon tone={tone} />
@@ -208,19 +272,14 @@ export function AceToast({
           </div>
           <DismissButton onDismiss={onDismiss} dismissLabel={dismissLabel} />
         </div>
-        <ToastLines lines={lines} />
-      </div>
+        <ToastMessageBody message={message} />
+        {actions}
+      </>
     )
-  }
-
-  if (isMultiLine) {
+  } else if (isMultiLine && lines) {
     const [first, ...rest] = lines
-
-    return (
-      <div
-        role="status"
-        className={cn(aceToastShellClass, hasActions ? 'gap-[var(--ace-toast-gap)]' : '', className)}
-      >
+    body = (
+      <>
         <div className={aceToastTopRowClass}>
           <div className={aceToastMessageRowClass}>
             <ToastStatusIcon tone={tone} />
@@ -233,16 +292,27 @@ export function AceToast({
             {line}
           </p>
         ))}
-        {renderActions({
-          layout,
-          actionLabel,
-          onAction,
-          cancelLabel,
-          onCancel,
-          confirmLabel,
-          onConfirm,
-        })}
-      </div>
+        {actions}
+      </>
+    )
+  } else {
+    body = (
+      <>
+        <div className={aceToastTopRowClass}>
+          <div className={aceToastMessageRowClass}>
+            <ToastStatusIcon tone={tone} />
+            {lines ? (
+              <p className={aceToastBodyClass}>{lines[0]}</p>
+            ) : typeof message === 'string' ? (
+              <p className={aceToastBodyClass}>{message}</p>
+            ) : (
+              <div className={aceToastBodyClass}>{message}</div>
+            )}
+          </div>
+          <DismissButton onDismiss={onDismiss} dismissLabel={dismissLabel} />
+        </div>
+        {actions}
+      </>
     )
   }
 
@@ -251,28 +321,26 @@ export function AceToast({
       role="status"
       className={cn(
         aceToastShellClass,
-        compactActionLayout && hasActions
-          ? 'min-h-[6.25rem] justify-between gap-[var(--ace-toast-gap)]'
-          : 'gap-[var(--ace-toast-gap)]',
+        showProgress && 'gap-0 overflow-hidden',
+        !showProgress &&
+          (compactActionLayout && hasActions
+            ? 'min-h-[6.25rem] justify-between gap-[var(--ace-toast-gap)]'
+            : 'gap-[var(--ace-toast-gap)]'),
         className,
       )}
     >
-      <div className={aceToastTopRowClass}>
-        <div className={aceToastMessageRowClass}>
-          <ToastStatusIcon tone={tone} />
-          <p className={aceToastBodyClass}>{lines[0]}</p>
-        </div>
-        <DismissButton onDismiss={onDismiss} dismissLabel={dismissLabel} />
-      </div>
-      {renderActions({
-        layout,
-        actionLabel,
-        onAction,
-        cancelLabel,
-        onCancel,
-        confirmLabel,
-        onConfirm,
-      })}
+      {showProgress ? (
+        <>
+          <div className="flex w-full flex-col gap-[var(--ace-toast-gap)]">
+            {body}
+          </div>
+          <div className="-mx-[var(--ace-toast-px)] -mb-[var(--ace-toast-py)] mt-[var(--ace-toast-gap)]">
+            <ToastProgress progress={progress!} tone={tone} />
+          </div>
+        </>
+      ) : (
+        body
+      )}
     </div>
   )
 }

@@ -47,6 +47,7 @@ import {
 } from './screeningTableHeader'
 import {
   applyManualRowOrder,
+  columnResizeActiveClass,
   ColumnResizeGuide,
   ColumnResizeHandle,
   DemoFeatureHeaderCells,
@@ -214,8 +215,16 @@ export function ScreeningResultsTable({
   const [editableValues, setEditableValues] = useState<Record<string, string>>({})
   const [dropdownValues, setDropdownValues] = useState<Record<string, DemoDropdownValue>>({})
   const [stepperValues, setStepperValues] = useState<Record<string, number>>({})
-  const { columnWidths, startResize, resizeGuideLeft, showGuideForColumn, hideGuideIfIdle } =
-    useColumnResize(columnResizing)
+  const {
+    columnWidths,
+    tableWidth,
+    activeColumnKey,
+    startResize,
+    resizeGuideLeft,
+    showGuideForColumn,
+    hideGuideIfIdle,
+  } = useColumnResize(columnResizing)
+  const hasLockedColumnWidths = Object.keys(columnWidths).length > 0
 
   const statusChips = useMemo(() => {
     const set = new Set<ScreeningRowStatus>()
@@ -601,7 +610,16 @@ export function ScreeningResultsTable({
       <div className="min-h-0 flex-1 overflow-x-auto overflow-y-auto scroll-smooth">
               <div className="relative w-full min-w-[var(--screening-table-min-width)]">
               <table
-                className="w-full min-w-[var(--screening-table-min-width)] border-collapse text-left"
+                className={cn(
+                  'min-w-[var(--screening-table-min-width)] border-collapse text-left',
+                  hasLockedColumnWidths || columnResizing ? 'table-fixed' : 'w-full',
+                  !hasLockedColumnWidths && 'w-full',
+                )}
+                style={
+                  tableWidth != null
+                    ? { width: tableWidth, minWidth: Math.max(tableWidth, 0) }
+                    : undefined
+                }
                 aria-labelledby={tableCaptionId}
               >
                 <caption id={tableCaptionId} className="sr-only">
@@ -675,19 +693,15 @@ export function ScreeningResultsTable({
                       <th
                         key={column.key}
                         scope="col"
+                        data-column-key={column.key}
                         className={cn(
                           screeningTableHeaderCellClass,
                           'group/th relative',
                           columnResizing && 'select-none',
+                          columnResizeActiveClass(activeColumnKey === column.key),
                         )}
                         style={columnWidthStyle(columnWidths[column.key])}
                         aria-sort={sortKey === column.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
-                        onMouseEnter={
-                          columnResizing
-                            ? (event) => showGuideForColumn(event.currentTarget)
-                            : undefined
-                        }
-                        onMouseLeave={columnResizing ? () => hideGuideIfIdle() : undefined}
                       >
                         <button
                           type="button"
@@ -724,7 +738,10 @@ export function ScreeningResultsTable({
                           columnKey={column.key}
                           label={column.label}
                           enabled={columnResizing}
+                          resizing={activeColumnKey === column.key}
                           onResizeStart={startResize}
+                          onGuideShow={showGuideForColumn}
+                          onGuideHide={hideGuideIfIdle}
                         />
                       </th>
                     ))}
@@ -734,6 +751,7 @@ export function ScreeningResultsTable({
                       showStepperColumn={visibilityControls.showStepperColumn}
                       columnWidths={columnWidths}
                       columnResizing={columnResizing}
+                      activeColumnKey={activeColumnKey}
                       onResizeStart={startResize}
                       onGuideShow={showGuideForColumn}
                       onGuideHide={hideGuideIfIdle}
@@ -879,12 +897,17 @@ export function ScreeningResultsTable({
                           </td>
                           ) : null}
                           {visibleColumnsInOrder.map((column) => {
+                            const columnActive = activeColumnKey === column.key
                             switch (column.key) {
                               case 'status':
                                 return (
                                   <td
                                     key={column.key}
-                                    className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]"
+                                    data-column-key={column.key}
+                                    className={cn(
+                                      'whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]',
+                                      columnResizeActiveClass(columnActive),
+                                    )}
                                     style={columnWidthStyle(columnWidths[column.key])}
                                   >
                                     {statusLabel === 'New' ? (
@@ -902,9 +925,11 @@ export function ScreeningResultsTable({
                                 return (
                                   <td
                                     key={column.key}
+                                    data-column-key={column.key}
                                     className={cn(
                                       aceTypography(ACE.cell),
                                       'px-[var(--space-3)] py-[var(--space-3)] text-[var(--screening-text-primary)]',
+                                      columnResizeActiveClass(columnActive),
                                     )}
                                     style={columnWidthStyle(columnWidths[column.key])}
                                   >
@@ -915,9 +940,11 @@ export function ScreeningResultsTable({
                                 return (
                                   <td
                                     key={column.key}
+                                    data-column-key={column.key}
                                     className={cn(
                                       aceTypography(ACE.cell),
                                       'whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)] text-[var(--screening-text-secondary)]',
+                                      columnResizeActiveClass(columnActive),
                                     )}
                                     style={columnWidthStyle(columnWidths[column.key])}
                                   >
@@ -928,7 +955,11 @@ export function ScreeningResultsTable({
                                 return (
                                   <td
                                     key={column.key}
-                                    className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]"
+                                    data-column-key={column.key}
+                                    className={cn(
+                                      'whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]',
+                                      columnResizeActiveClass(columnActive),
+                                    )}
                                     style={columnWidthStyle(columnWidths[column.key])}
                                   >
                                     <span
@@ -951,6 +982,7 @@ export function ScreeningResultsTable({
                                 return (
                                   <td
                                     key={column.key}
+                                    data-column-key={column.key}
                                     className={cn(
                                       aceTypography(ACE.score),
                                       'px-[var(--space-3)] py-[var(--space-3)] tabular-nums transition-colors duration-200 ease-out',
@@ -959,6 +991,7 @@ export function ScreeningResultsTable({
                                         : scoreIsHighRisk(row.matchScore)
                                           ? 'text-[var(--screening-score-high)]'
                                           : 'text-[var(--screening-text-primary)]',
+                                      columnResizeActiveClass(columnActive),
                                     )}
                                     style={columnWidthStyle(columnWidths[column.key])}
                                   >
@@ -969,7 +1002,11 @@ export function ScreeningResultsTable({
                                 return (
                                   <td
                                     key={column.key}
-                                    className="px-[var(--space-3)] py-[var(--space-3)]"
+                                    data-column-key={column.key}
+                                    className={cn(
+                                      'px-[var(--space-3)] py-[var(--space-3)]',
+                                      columnResizeActiveClass(columnActive),
+                                    )}
                                     style={columnWidthStyle(columnWidths[column.key])}
                                   >
                                     <div className="flex items-center gap-[var(--space-1)]">
@@ -1006,6 +1043,7 @@ export function ScreeningResultsTable({
                               value={editableValues[row.id] ?? ''}
                               disabled={rowDone}
                               width={columnWidths.editable}
+                              highlighted={activeColumnKey === 'editable'}
                               onChange={(value) =>
                                 setEditableValues((prev) => ({ ...prev, [row.id]: value }))
                               }
@@ -1016,6 +1054,7 @@ export function ScreeningResultsTable({
                               value={dropdownValues[row.id] ?? 'pending'}
                               disabled={rowDone}
                               width={columnWidths.dropdown}
+                              highlighted={activeColumnKey === 'dropdown'}
                               onChange={(value) =>
                                 setDropdownValues((prev) => ({ ...prev, [row.id]: value }))
                               }
@@ -1026,6 +1065,7 @@ export function ScreeningResultsTable({
                               value={stepperValues[row.id] ?? 1}
                               disabled={rowDone}
                               width={columnWidths.stepper}
+                              highlighted={activeColumnKey === 'stepper'}
                               onChange={(value) =>
                                 setStepperValues((prev) => ({ ...prev, [row.id]: value }))
                               }

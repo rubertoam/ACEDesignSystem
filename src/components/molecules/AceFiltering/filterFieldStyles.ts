@@ -1,7 +1,9 @@
 import { cn } from '../../../lib/cn'
 
-const filterType =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+const filterType = cn(
+  'font-normal [font-family:var(--font-ace-noto)] text-sm leading-[1.65]',
+  '[letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+)
 
 /** Shade 0 resting; Neutral/700 fill + light text on hover. */
 export const aceFilterTriggerClass = cn(

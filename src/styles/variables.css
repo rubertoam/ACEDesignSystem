@@ -508,9 +508,9 @@
   /* ACE Toast — Figma Toast Messages (2783:5) */
   --ace-toast-width: 25rem;
   --ace-toast-radius: 4px;
-  --ace-toast-px: 1.5rem;
-  --ace-toast-py: 1rem;
-  --ace-toast-gap: 0.75rem;
+  --ace-toast-px: 1rem;
+  --ace-toast-py: 0.75rem;
+  --ace-toast-gap: 0.5rem;
   --ace-toast-body-indent: 2rem;
   --ace-toast-action-gap: 1rem;
   --ace-toast-bg: #ffffff;
@@ -532,6 +532,9 @@
   --ace-toast-icon-info: var(--ace-button-purple-500);
   --ace-toast-icon-warning: var(--ace-warning-500);
   --ace-toast-icon-error: var(--dialog-modal-danger);
+  --ace-toast-progress-height: 0.25rem;
+  --ace-toast-progress-track: var(--ace-success-50);
+  --ace-toast-progress-fill: var(--ace-success-500);
 
   /* ACE Inline Messages — Figma Inline Messages 4481:275 (banner / in-page alerts) */
   --ace-inline-message-radius: 4px;
@@ -958,6 +961,41 @@
     --screening-pill-escalated-surface: #3d2a14;
     --screening-pill-escalated-dot: #ffb74d;
     --screening-pill-escalated-label: #ffcc80;
+
+    /* Status / badge pills — match purple dark treatment (tinted surface + light label) */
+    --ace-status-pill-purple-dot: var(--screening-pill-new-dot);
+    --ace-status-pill-orange-border: #8a5a24;
+    --ace-status-pill-orange-surface: #4a3218;
+    --ace-status-pill-orange-dot: #ffb74d;
+    --ace-status-pill-orange-label: #ffcc80;
+    --ace-status-pill-green-border: #3a6b3e;
+    --ace-status-pill-green-surface: #243d2a;
+    --ace-status-pill-green-dot: #81c784;
+    --ace-status-pill-green-label: #a5d6a7;
+    --ace-status-pill-gray-border: #5c6773;
+    --ace-status-pill-gray-surface: #2c333a;
+    --ace-status-pill-gray-dot: #9fadbc;
+    --ace-status-pill-gray-label: #b6c2cf;
+    --ace-status-pill-blue-border: #2a6a8a;
+    --ace-status-pill-blue-surface: #153a4d;
+    --ace-status-pill-blue-dot: #64b5f6;
+    --ace-status-pill-blue-label: #90caf9;
+    --ace-status-pill-yellow-border: #8a7020;
+    --ace-status-pill-yellow-surface: #4a4018;
+    --ace-status-pill-yellow-dot: #ffd54f;
+    --ace-status-pill-yellow-label: #ffe082;
+    --ace-status-pill-pink-border: #7a4a80;
+    --ace-status-pill-pink-surface: #4a2848;
+    --ace-status-pill-pink-dot: #ce93d8;
+    --ace-status-pill-pink-label: #e1bee7;
+    --ace-status-pill-teal-border: #2a6a60;
+    --ace-status-pill-teal-surface: #1a3d38;
+    --ace-status-pill-teal-dot: #4db6ac;
+    --ace-status-pill-teal-label: #80cbc4;
+    --ace-status-pill-red-border: #8a4548;
+    --ace-status-pill-red-surface: #4a2a2e;
+    --ace-status-pill-red-dot: #f48a8a;
+    --ace-status-pill-red-label: #ef9a9a;
     --screening-age-fresh: #81c784;
     --screening-age-warn: #ffb74d;
     --screening-age-stale: #f48a8a;

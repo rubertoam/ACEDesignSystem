@@ -4,7 +4,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type MouseEvent as ReactMouseEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from 'react'
@@ -29,19 +28,32 @@ export const DEMO_DROPDOWN_OPTIONS = [
 
 export type DemoDropdownValue = (typeof DEMO_DROPDOWN_OPTIONS)[number]['value']
 
-/** Hit target only — the full-column guide draws the visible line. */
+const COLUMN_RESIZE_MIN = 80
+const COLUMN_RESIZE_MAX = 560
+
+/** Hit target; visible edge line appears on hover / active resize. */
 export const screeningTableResizeHandleClass = cn(
-  'absolute inset-y-0 -right-1 z-20 w-2 cursor-col-resize touch-none',
+  'absolute inset-y-0 -right-1.5 z-20 flex w-3 cursor-col-resize touch-none items-stretch justify-center',
   'opacity-0 transition-opacity duration-150 ease-out',
-  'group-hover/th:opacity-100 focus-visible:opacity-100',
+  'hover:opacity-100 focus-visible:opacity-100 group-hover/th:opacity-100',
+  'data-[resizing=true]:opacity-100',
   'focus-visible:outline-none',
 )
 
-/** Full-height resize guide — Primary / 200. */
+export const screeningTableResizeHandleLineClass = cn(
+  'my-1 w-0.5 shrink-0 rounded-full bg-[var(--screening-primary-200)]',
+)
+
+/** Full-height resize guide. Primary / 200. */
 export const screeningTableResizeGuideClass = cn(
   'pointer-events-none absolute top-0 bottom-0 z-30 w-0.5',
   'bg-[var(--screening-primary-200)]',
 )
+
+/** Column highlight while resizing or hovering the resize handle. Primary / 50. */
+export function columnResizeActiveClass(active: boolean | undefined) {
+  return active ? 'bg-[var(--screening-primary-soft-bg)]' : undefined
+}
 
 export function columnWidthStyle(width: number | undefined): CSSProperties | undefined {
   if (width == null) return undefined
@@ -56,49 +68,74 @@ function guideLeftForColumn(columnEl: HTMLElement): number | null {
   return Math.round(colRect.right - tableRect.left)
 }
 
+function measureResizableColumns(table: HTMLTableElement): {
+  widths: Partial<Record<ResizableColumnKey, number>>
+  tableWidth: number
+} {
+  const widths: Partial<Record<ResizableColumnKey, number>> = {}
+  table.querySelectorAll<HTMLElement>('thead th[data-column-key]').forEach((th) => {
+    const key = th.getAttribute('data-column-key') as ResizableColumnKey | null
+    if (!key) return
+    widths[key] = Math.round(th.getBoundingClientRect().width)
+  })
+  return {
+    widths,
+    tableWidth: Math.round(table.getBoundingClientRect().width),
+  }
+}
+
+function clampColumnWidth(width: number) {
+  return Math.min(COLUMN_RESIZE_MAX, Math.max(COLUMN_RESIZE_MIN, Math.round(width)))
+}
+
 export function useColumnResize(enabled: boolean) {
   const [columnWidths, setColumnWidths] = useState<Partial<Record<ResizableColumnKey, number>>>({})
+  const [tableWidth, setTableWidth] = useState<number | null>(null)
   const [resizeGuideLeft, setResizeGuideLeft] = useState<number | null>(null)
+  const [activeColumnKey, setActiveColumnKey] = useState<ResizableColumnKey | null>(null)
   const sessionRef = useRef<{
     key: ResizableColumnKey
     startX: number
     startWidth: number
+    startGuideLeft: number
+    startTableWidth: number
   } | null>(null)
-  const activeColumnElRef = useRef<HTMLElement | null>(null)
+  const hoverKeyRef = useRef<ResizableColumnKey | null>(null)
 
-  const showGuideForColumn = useCallback((columnEl: HTMLElement | null) => {
-    if (!columnEl) {
-      setResizeGuideLeft(null)
-      return
-    }
-    activeColumnElRef.current = columnEl
+  const showGuideForColumn = useCallback((key: ResizableColumnKey, columnEl: HTMLElement | null) => {
+    if (!columnEl) return
+    hoverKeyRef.current = key
+    setActiveColumnKey(key)
     setResizeGuideLeft(guideLeftForColumn(columnEl))
   }, [])
 
   const hideGuideIfIdle = useCallback(() => {
+    hoverKeyRef.current = null
     if (sessionRef.current) return
-    activeColumnElRef.current = null
     setResizeGuideLeft(null)
+    setActiveColumnKey(null)
   }, [])
 
   useEffect(() => {
     if (!enabled) {
       sessionRef.current = null
-      activeColumnElRef.current = null
+      hoverKeyRef.current = null
       setResizeGuideLeft(null)
+      setActiveColumnKey(null)
+      setTableWidth(null)
+      setColumnWidths({})
       return
     }
 
-    const onMove = (event: MouseEvent) => {
+    const onMove = (event: PointerEvent) => {
       const session = sessionRef.current
       if (!session) return
-      const next = Math.max(72, Math.round(session.startWidth + (event.clientX - session.startX)))
+      const delta = event.clientX - session.startX
+      const next = clampColumnWidth(session.startWidth + delta)
+      const appliedDelta = next - session.startWidth
       setColumnWidths((prev) => ({ ...prev, [session.key]: next }))
-      window.requestAnimationFrame(() => {
-        if (activeColumnElRef.current) {
-          setResizeGuideLeft(guideLeftForColumn(activeColumnElRef.current))
-        }
-      })
+      setTableWidth(session.startTableWidth + appliedDelta)
+      setResizeGuideLeft(session.startGuideLeft + appliedDelta)
     }
 
     const onUp = () => {
@@ -106,14 +143,19 @@ export function useColumnResize(enabled: boolean) {
       sessionRef.current = null
       document.body.style.removeProperty('cursor')
       document.body.style.removeProperty('user-select')
-      // Keep guide if still hovering the handle; clear will happen on mouse leave.
+      if (!hoverKeyRef.current) {
+        setActiveColumnKey(null)
+        setResizeGuideLeft(null)
+      }
     }
 
-    window.addEventListener('mousemove', onMove)
-    window.addEventListener('mouseup', onUp)
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    window.addEventListener('pointercancel', onUp)
     return () => {
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseup', onUp)
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
       sessionRef.current = null
       document.body.style.removeProperty('cursor')
       document.body.style.removeProperty('user-select')
@@ -121,17 +163,31 @@ export function useColumnResize(enabled: boolean) {
   }, [enabled])
 
   const startResize = useCallback(
-    (key: ResizableColumnKey, event: ReactMouseEvent<HTMLElement>, columnEl: HTMLElement | null) => {
+    (key: ResizableColumnKey, event: ReactPointerEvent<HTMLElement>, columnEl: HTMLElement | null) => {
       if (!enabled || !columnEl) return
+      const table = columnEl.closest('table')
+      if (!table) return
+
       event.preventDefault()
       event.stopPropagation()
-      activeColumnElRef.current = columnEl
+      event.currentTarget.setPointerCapture?.(event.pointerId)
+
+      const measured = measureResizableColumns(table)
+      const startWidth = measured.widths[key] ?? Math.round(columnEl.getBoundingClientRect().width)
+      const startGuideLeft = guideLeftForColumn(columnEl)
+      if (startGuideLeft == null) return
+
+      setColumnWidths(measured.widths)
+      setTableWidth(measured.tableWidth)
+      setActiveColumnKey(key)
+      setResizeGuideLeft(startGuideLeft)
       sessionRef.current = {
         key,
         startX: event.clientX,
-        startWidth: columnEl.getBoundingClientRect().width,
+        startWidth,
+        startGuideLeft,
+        startTableWidth: measured.tableWidth,
       }
-      setResizeGuideLeft(guideLeftForColumn(columnEl))
       document.body.style.cursor = 'col-resize'
       document.body.style.userSelect = 'none'
     },
@@ -140,6 +196,8 @@ export function useColumnResize(enabled: boolean) {
 
   return {
     columnWidths,
+    tableWidth,
+    activeColumnKey,
     startResize,
     resizeGuideLeft,
     showGuideForColumn,
@@ -156,32 +214,47 @@ export function ColumnResizeHandle({
   columnKey,
   label,
   enabled,
+  resizing,
   onResizeStart,
+  onGuideShow,
+  onGuideHide,
 }: {
   columnKey: ResizableColumnKey
   label: string
   enabled: boolean
+  resizing?: boolean
   onResizeStart: (
     key: ResizableColumnKey,
-    event: ReactMouseEvent<HTMLElement>,
+    event: ReactPointerEvent<HTMLElement>,
     columnEl: HTMLElement | null,
   ) => void
+  onGuideShow?: (key: ResizableColumnKey, columnEl: HTMLElement) => void
+  onGuideHide?: () => void
 }) {
   if (!enabled) return null
   return (
     <button
       type="button"
       aria-label={`Resize ${label} column`}
+      data-resizing={resizing ? 'true' : undefined}
       className={screeningTableResizeHandleClass}
-      onMouseDown={(event) => {
+      onPointerDown={(event) => {
+        if (event.button !== 0) return
         const th = event.currentTarget.parentElement
         onResizeStart(columnKey, event, th)
       }}
+      onPointerEnter={(event) => {
+        const th = event.currentTarget.parentElement
+        if (th) onGuideShow?.(columnKey, th)
+      }}
+      onPointerLeave={() => onGuideHide?.()}
       onClick={(event) => {
         event.preventDefault()
         event.stopPropagation()
       }}
-    />
+    >
+      <span className={screeningTableResizeHandleLineClass} aria-hidden />
+    </button>
   )
 }
 
@@ -196,6 +269,7 @@ export function DemoFeatureHeaderCell({
   label,
   width,
   columnResizing,
+  highlighted,
   onResizeStart,
   onGuideShow,
   onGuideHide,
@@ -204,35 +278,35 @@ export function DemoFeatureHeaderCell({
   label: string
   width?: number
   columnResizing: boolean
+  highlighted?: boolean
   onResizeStart: (
     key: ResizableColumnKey,
-    event: ReactMouseEvent<HTMLElement>,
+    event: ReactPointerEvent<HTMLElement>,
     columnEl: HTMLElement | null,
   ) => void
-  onGuideShow?: (columnEl: HTMLElement) => void
+  onGuideShow?: (key: ResizableColumnKey, columnEl: HTMLElement) => void
   onGuideHide?: () => void
 }) {
   return (
     <th
       scope="col"
+      data-column-key={columnKey}
       className={cn(
         'group/th relative h-8 px-[var(--space-3)] py-0 align-middle',
         columnResizing && 'select-none',
+        columnResizeActiveClass(highlighted),
       )}
       style={columnWidthStyle(width)}
-      onMouseEnter={
-        columnResizing
-          ? (event) => onGuideShow?.(event.currentTarget)
-          : undefined
-      }
-      onMouseLeave={columnResizing ? () => onGuideHide?.() : undefined}
     >
       <span className={demoHeaderLabelClass}>{label}</span>
       <ColumnResizeHandle
         columnKey={columnKey}
         label={label}
         enabled={columnResizing}
+        resizing={highlighted}
         onResizeStart={onResizeStart}
+        onGuideShow={onGuideShow}
+        onGuideHide={onGuideHide}
       />
     </th>
   )
@@ -243,14 +317,20 @@ export function EditableCell({
   disabled,
   onChange,
   width,
+  highlighted,
 }: {
   value: string
   disabled?: boolean
   onChange: (value: string) => void
   width?: number
+  highlighted?: boolean
 }) {
   return (
-    <td className="px-[var(--space-3)] py-[var(--space-2)] align-middle" style={columnWidthStyle(width)}>
+    <td
+      data-column-key="editable"
+      className={cn('px-[var(--space-3)] py-[var(--space-2)] align-middle', columnResizeActiveClass(highlighted))}
+      style={columnWidthStyle(width)}
+    >
       <AceInputField
         fieldSize="md"
         value={value}
@@ -269,11 +349,13 @@ export function DropdownCell({
   disabled,
   onChange,
   width,
+  highlighted,
 }: {
   value: DemoDropdownValue
   disabled?: boolean
   onChange: (value: DemoDropdownValue) => void
   width?: number
+  highlighted?: boolean
 }) {
   const items: AceDropdownMenuEntry[] = DEMO_DROPDOWN_OPTIONS.map((option) => ({
     type: 'item',
@@ -284,7 +366,11 @@ export function DropdownCell({
   const label = DEMO_DROPDOWN_OPTIONS.find((option) => option.value === value)?.label ?? 'Select'
 
   return (
-    <td className="px-[var(--space-3)] py-[var(--space-2)] align-middle" style={columnWidthStyle(width)}>
+    <td
+      data-column-key="dropdown"
+      className={cn('px-[var(--space-3)] py-[var(--space-2)] align-middle', columnResizeActiveClass(highlighted))}
+      style={columnWidthStyle(width)}
+    >
       <AceDropdownMenu
         triggerLabel={label}
         triggerMode="field"
@@ -305,6 +391,7 @@ export function StepperCell({
   max = 99,
   onChange,
   width,
+  highlighted,
 }: {
   value: number
   disabled?: boolean
@@ -312,9 +399,14 @@ export function StepperCell({
   max?: number
   onChange: (value: number) => void
   width?: number
+  highlighted?: boolean
 }) {
   return (
-    <td className="px-[var(--space-3)] py-[var(--space-2)] align-middle" style={columnWidthStyle(width)}>
+    <td
+      data-column-key="stepper"
+      className={cn('px-[var(--space-3)] py-[var(--space-2)] align-middle', columnResizeActiveClass(highlighted))}
+      style={columnWidthStyle(width)}
+    >
       <AceStepper
         variant="horizontal"
         value={value}
@@ -530,6 +622,7 @@ export function DemoFeatureHeaderCells({
   showStepperColumn,
   columnWidths,
   columnResizing,
+  activeColumnKey,
   onResizeStart,
   onGuideShow,
   onGuideHide,
@@ -539,12 +632,13 @@ export function DemoFeatureHeaderCells({
   showStepperColumn: boolean
   columnWidths: Partial<Record<ResizableColumnKey, number>>
   columnResizing: boolean
+  activeColumnKey?: ResizableColumnKey | null
   onResizeStart: (
     key: ResizableColumnKey,
-    event: ReactMouseEvent<HTMLElement>,
+    event: ReactPointerEvent<HTMLElement>,
     columnEl: HTMLElement | null,
   ) => void
-  onGuideShow?: (columnEl: HTMLElement) => void
+  onGuideShow?: (key: ResizableColumnKey, columnEl: HTMLElement) => void
   onGuideHide?: () => void
 }): ReactNode {
   return (
@@ -555,6 +649,7 @@ export function DemoFeatureHeaderCells({
           label="Notes"
           width={columnWidths.editable}
           columnResizing={columnResizing}
+          highlighted={activeColumnKey === 'editable'}
           onResizeStart={onResizeStart}
           onGuideShow={onGuideShow}
           onGuideHide={onGuideHide}
@@ -566,6 +661,7 @@ export function DemoFeatureHeaderCells({
           label="Decision"
           width={columnWidths.dropdown}
           columnResizing={columnResizing}
+          highlighted={activeColumnKey === 'dropdown'}
           onResizeStart={onResizeStart}
           onGuideShow={onGuideShow}
           onGuideHide={onGuideHide}
@@ -577,6 +673,7 @@ export function DemoFeatureHeaderCells({
           label="Count"
           width={columnWidths.stepper}
           columnResizing={columnResizing}
+          highlighted={activeColumnKey === 'stepper'}
           onResizeStart={onResizeStart}
           onGuideShow={onGuideShow}
           onGuideHide={onGuideHide}

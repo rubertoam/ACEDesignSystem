@@ -20,18 +20,19 @@ export const aceToastShellClass = cn(
   'shadow-[var(--ace-toast-shadow)]',
 )
 
-export const aceToastTopRowClass = 'flex w-full items-start justify-between gap-3'
+export const aceToastTopRowClass = 'flex w-full items-center justify-between gap-3'
 
 export const aceToastMessageRowClass = cn(
-  'flex min-w-0 flex-1 items-start gap-[var(--ace-toast-gap)]',
+  'flex min-w-0 flex-1 items-center gap-[var(--ace-toast-gap)]',
 )
 
 export const aceToastTitleClass = cn(
   bodyClass,
+  'm-0',
   '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]',
 )
 
-export const aceToastBodyClass = cn(bodyClass, 'm-0 min-w-0 leading-[1.65]')
+export const aceToastBodyClass = cn(bodyClass, 'm-0 min-w-0 leading-[1.4]')
 
 export const aceToastIndentedBodyClass = cn(
   aceToastBodyClass,
@@ -48,10 +49,20 @@ export const aceToastDoubleActionRowClass = cn(
 export const aceToastActionLinkClass = cn(
   bodyClass,
   '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
-  'rounded-[var(--radius-sm)] text-[var(--ace-toast-action-text)]',
-  'transition-colors hover:text-[var(--ace-toast-action-text-hover)]',
+  'rounded-[var(--radius-sm)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
+
+/** Default (purple) action — success / info. Warning & error use tone-specific classes. */
+export const aceToastActionLinkToneClass: Record<AceToastTone, string> = {
+  success:
+    'text-[var(--ace-toast-action-text)] transition-colors hover:text-[var(--ace-toast-action-text-hover)]',
+  info: 'text-[var(--ace-toast-action-text)] transition-colors hover:text-[var(--ace-toast-action-text-hover)]',
+  warning:
+    'text-[var(--ace-toast-icon-warning)] transition-colors hover:text-[var(--ace-warning-600)]',
+  error:
+    'text-[var(--ace-toast-icon-error)] transition-colors hover:text-[var(--dialog-modal-danger)]',
+}
 
 export const aceToastConfirmButtonClass = cn(
   bodyClass,
@@ -62,7 +73,7 @@ export const aceToastConfirmButtonClass = cn(
 )
 
 export const aceToastDismissButtonClass = cn(
-  'inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
+  'inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
   'text-[var(--ace-toast-dismiss-icon)]',
   'transition-[background-color,box-shadow,color]',
   'duration-[var(--ace-motion-duration-medium)]',
@@ -74,6 +85,29 @@ export const aceToastDismissButtonClass = cn(
 )
 
 export const aceToastDismissIconClass = 'shrink-0 text-current'
+
+export const aceToastProgressTrackClass = cn(
+  'h-[var(--ace-toast-progress-height)] w-full shrink-0',
+)
+
+export const aceToastProgressFillClass = cn(
+  'h-full w-full origin-left',
+  'motion-reduce:transition-none',
+)
+
+export const aceToastProgressTrackToneClass: Record<AceToastTone, string> = {
+  success: 'bg-[var(--ace-success-50)]',
+  info: 'bg-[var(--ace-neutral-50)]',
+  warning: 'bg-[var(--ace-warning-100)]',
+  error: 'bg-[var(--ace-error-50)]',
+}
+
+export const aceToastProgressFillToneClass: Record<AceToastTone, string> = {
+  success: 'bg-[var(--ace-success-500)]',
+  info: 'bg-[var(--ace-button-purple-500)]',
+  warning: 'bg-[var(--ace-warning-300)]',
+  error: 'bg-[var(--ace-toast-icon-error)]',
+}
 
 export const aceToastIconShellClass: Record<AceToastTone, string> = {
   success: 'bg-[var(--ace-toast-icon-success)] text-[var(--ace-toast-icon-glyph)]',

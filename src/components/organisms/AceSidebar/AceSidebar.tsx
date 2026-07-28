@@ -57,6 +57,10 @@ export type AceSidebarNavItem = {
   id: string
   label: string
   selected?: boolean
+  /** Non-interactive row (muted, no hover / select). */
+  disabled?: boolean
+  /** Optional trailing content (e.g. count badge). */
+  trailing?: ReactNode
   onSelect?: () => void
   onMenuAction?: (action: AceSidebarMenuAction) => void
 }
@@ -158,22 +162,30 @@ function NavItemRow({
   menuPortalContainer?: HTMLElement | null
 }) {
   const selected = item.selected
+  const disabled = item.disabled === true
   return (
     <div
       className={cn(
         'group/row relative z-[1] flex items-center rounded-[var(--ace-sidebar-item-radius)]',
         selected
           ? 'bg-[var(--ace-sidebar-item-selected-bg)] text-[var(--ace-sidebar-item-selected-text)]'
-          : 'text-[var(--screening-text-primary)] hover:bg-[var(--ace-sidebar-item-hover-bg)]',
+          : disabled
+            ? 'text-[var(--screening-text-muted)]'
+            : 'text-[var(--screening-text-primary)] hover:bg-[var(--ace-sidebar-item-hover-bg)]',
       )}
     >
       <SidebarRowButton
-        onClick={item.onSelect}
+        onClick={disabled ? undefined : item.onSelect}
         aria-label={item.label}
-        className={cn('min-w-0 flex-1 px-3 py-1.5', nested && 'pl-4')}
+        className={cn(
+          'min-w-0 flex-1 px-3 py-1.5',
+          nested && 'pl-4',
+          disabled && 'cursor-not-allowed',
+        )}
       >
         <span className={cn(p1, 'min-w-0 flex-1 truncate text-sm leading-[1.3125rem]')}>{item.label}</span>
       </SidebarRowButton>
+      {item.trailing != null ? item.trailing : null}
       {showRowMenu ? (
         <SidebarOverflowMenu
           items={rowMenuItems(item.onMenuAction)}
@@ -322,7 +334,7 @@ export function AceSidebar({
   }))
 
   const organizationHeader =
-    variant !== 'navigation' || !selectedOrg ? null : organizationDisplay === 'label' ? (
+    !selectedOrg ? null : organizationDisplay === 'label' ? (
       <p
         className={cn(
           '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
@@ -342,6 +354,30 @@ export function AceSidebar({
         align="start"
       />
     )
+
+  const groupsHeader =
+    onNewGroup != null ? (
+      <button
+        type="button"
+        onClick={onNewGroup}
+        className={cn(
+          'inline-flex w-[var(--ace-sidebar-control-width)] items-center gap-3 rounded-[var(--radius-sm)] border border-solid',
+          'border-[var(--ace-sidebar-heading-border)] bg-[var(--ace-sidebar-heading-bg)] px-3 py-2',
+          'text-[var(--screening-text-primary)] transition-colors duration-[var(--ace-motion-duration-fast)]',
+          motionEase,
+          motionReduce,
+          'hover:bg-[var(--screening-surface-hover)]',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
+        )}
+      >
+        <MaterialSymbol name="add" size="md" className="size-4 shrink-0 text-[var(--screening-text-primary)]" />
+        <span className={cn(p1, 'truncate text-sm')}>{addLabel}</span>
+      </button>
+    ) : (
+      organizationHeader
+    )
+
+  const headerContent = variant === 'groups' ? groupsHeader : organizationHeader
 
   return (
     <aside
@@ -364,28 +400,13 @@ export function AceSidebar({
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
         )}
       >
-        <div className="flex shrink-0 justify-center px-[var(--ace-sidebar-nav-px)] py-4">
-          {variant === 'groups' ? (
-            <button
-              type="button"
-              onClick={onNewGroup}
-              className={cn(
-                'inline-flex w-[var(--ace-sidebar-control-width)] items-center gap-3 rounded-[var(--radius-sm)] border border-solid',
-                'border-[var(--ace-sidebar-heading-border)] bg-[var(--ace-sidebar-heading-bg)] px-3 py-2',
-                'text-[var(--screening-text-primary)] transition-colors duration-[var(--ace-motion-duration-fast)]',
-                motionEase,
-                motionReduce,
-                'hover:bg-[var(--screening-surface-hover)]',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
-              )}
-            >
-              <MaterialSymbol name="add" size="md" className="size-4 shrink-0 text-[var(--screening-text-primary)]" />
-              <span className={cn(p1, 'truncate text-sm')}>{addLabel}</span>
-            </button>
-          ) : (
-            organizationHeader
-          )}
-        </div>
+        {headerContent ? (
+          <div className="flex shrink-0 justify-center px-[var(--ace-sidebar-nav-px)] py-4">
+            {headerContent}
+          </div>
+        ) : (
+          <div className="shrink-0 pt-5" aria-hidden />
+        )}
 
         <nav
           className={cn(

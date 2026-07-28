@@ -5,7 +5,7 @@ import { AceDropdownMenu, type AceDropdownMenuEntry } from '../components/molecu
 const rowClass =
   'flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 border-b border-[var(--screening-border-row)] pb-4 last:border-0 last:pb-0'
 
-const rowLabelClass = 'm-0 text-sm font-medium text-[var(--screening-text-primary)]'
+const rowLabelClass = 'm-0 text-sm font-normal text-[var(--screening-text-primary)]'
 const rowHintClass = 'm-0 text-xs text-[var(--screening-text-muted)]'
 
 function LabRow({

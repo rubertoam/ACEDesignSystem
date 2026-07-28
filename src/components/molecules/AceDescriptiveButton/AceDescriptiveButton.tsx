@@ -1,5 +1,6 @@
 import { forwardRef, type ButtonHTMLAttributes } from 'react'
 import { cn } from '../../../lib/cn'
+import { MaterialSymbol } from '../AceAccordion/MaterialSymbol'
 import {
   DESCRIPTIVE_BUTTON_ICON,
   DESCRIPTIVE_BUTTON_ICON_DISABLED,
@@ -19,6 +20,11 @@ export type AceDescriptiveButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElem
   title: string
   /** Supporting copy — Footer Regular (Figma). */
   description: string
+  /**
+   * Material Symbols ligature from Iconography (e.g. `file_export`).
+   * Prefer this over `iconSrc` when a catalog glyph exists.
+   */
+  iconName?: string
   /** Optional custom icon URL; defaults to the Figma report/export glyph. */
   iconSrc?: string
   /** Frozen appearance for documentation grids (no hover/active transitions). */
@@ -34,6 +40,7 @@ export const AceDescriptiveButton = forwardRef<HTMLButtonElement, AceDescriptive
     {
       title,
       description,
+      iconName,
       iconSrc,
       previewState,
       disabled,
@@ -55,14 +62,31 @@ export const AceDescriptiveButton = forwardRef<HTMLButtonElement, AceDescriptive
         className={cn(aceDescriptiveButtonClass(previewState), className)}
         {...props}
       >
-        <span className={aceDescriptiveButtonIconWrapClass} aria-hidden>
-          <img
-            src={resolvedIcon}
-            alt=""
-            width={20}
-            height={27}
-            className={aceDescriptiveButtonIconClass}
-          />
+        <span
+          className={cn(
+            aceDescriptiveButtonIconWrapClass,
+            iconName && 'flex items-center justify-center',
+          )}
+          aria-hidden
+        >
+          {iconName ? (
+            <MaterialSymbol
+              name={iconName}
+              size="lg"
+              className={cn(
+                'text-[var(--screening-primary)]',
+                isDisabled && 'text-[var(--ace-descriptive-button-disabled-text)]',
+              )}
+            />
+          ) : (
+            <img
+              src={resolvedIcon}
+              alt=""
+              width={20}
+              height={27}
+              className={aceDescriptiveButtonIconClass}
+            />
+          )}
         </span>
         <span className={aceDescriptiveButtonTextClass}>
           <span className={aceDescriptiveButtonTitleClass}>{title}</span>

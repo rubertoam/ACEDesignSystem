@@ -120,25 +120,36 @@ export type AceDropdownMenuPanelProps = {
   'aria-label'?: string
 }
 
-const itemType =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+const itemType = cn(
+  'font-normal [font-family:var(--font-ace-noto)] text-sm leading-[1.65]',
+  '[letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+)
 
-const labelType =
-  '[font:var(--ace-type-label-bold)] [letter-spacing:var(--ace-type-label-bold-tracking)] px-[var(--space-3)] py-[var(--space-2)] text-[var(--screening-text-muted)]'
+const labelType = cn(
+  'font-normal [font-family:var(--font-ace-noto)] px-[var(--space-3)] py-[var(--space-2)]',
+  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  'text-[var(--screening-text-muted)]',
+)
 
 const menuHeaderClass = cn(
   itemType,
-  'px-[var(--space-3)] pb-[var(--space-2)] pt-[var(--space-3)] font-bold text-[var(--screening-text-primary)]',
+  'px-[var(--space-3)] pb-[var(--space-2)] pt-[var(--space-3)] text-[var(--screening-text-primary)]',
 )
 
-const sectionHeaderClass =
-  '[font:var(--ace-type-label-bold)] [letter-spacing:var(--ace-type-label-bold-tracking)] uppercase text-[var(--screening-text-primary)]'
+const sectionHeaderClass = cn(
+  'font-normal uppercase text-[var(--screening-text-primary)]',
+  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+)
 
-const sectionActionClass =
-  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)] text-[var(--screening-primary)] hover:underline'
+const sectionActionClass = cn(
+  'font-normal text-[var(--screening-primary)] hover:underline',
+  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+)
 
-const footerActionClass =
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--screening-primary)] hover:underline'
+const footerActionClass = cn(
+  'font-normal text-[var(--screening-primary)] hover:underline',
+  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+)
 
 const fieldSizeClass: Record<AceButtonSize, string> = {
   sm: 'gap-[var(--ace-button-gap-sm)] px-[var(--ace-button-px-sm)] py-[var(--ace-button-py-sm)] text-xs',
@@ -147,7 +158,9 @@ const fieldSizeClass: Record<AceButtonSize, string> = {
 }
 
 const fieldTriggerBase = cn(
-  'inline-flex w-[var(--ace-dropdown-trigger-width)] max-w-[var(--ace-dropdown-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] [font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)] leading-[1.65] text-[var(--screening-text-primary)] outline-none transition-colors',
+  'inline-flex w-[var(--ace-dropdown-trigger-width)] max-w-[var(--ace-dropdown-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]',
+  'font-normal [font-family:var(--font-ace-noto)] leading-[1.65] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  'text-[var(--screening-text-primary)] outline-none transition-colors',
   'hover:bg-[var(--screening-surface-hover)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
   'data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:ring-2 data-[state=open]:ring-[var(--screening-primary-ring)] data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-[var(--screening-primary-ring-offset)]',
   'disabled:pointer-events-none disabled:opacity-50',
@@ -184,7 +197,7 @@ const assignmentCheckboxRow = cn(
 )
 
 const shortcutClass =
-  'ml-auto shrink-0 pl-4 [font:var(--ace-type-footer-semi-bold)] [letter-spacing:var(--ace-type-footer-semi-bold-tracking)] text-[var(--screening-text-muted)]'
+  'ml-auto shrink-0 pl-4 [font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)] text-[var(--screening-text-muted)]'
 
 function entryKey(entry: { id?: string; type: string }, i: number, extra?: string) {
   return entry.id ?? `${entry.type}-${i}-${extra ?? ''}`
@@ -642,7 +655,7 @@ export function AceDropdownMenu({
         icon="right"
         disabled={disabled}
         className={cn(
-          'w-[var(--ace-dropdown-trigger-width)] max-w-[var(--ace-dropdown-trigger-width)] shrink-0 justify-between',
+          'w-[var(--ace-dropdown-trigger-width)] max-w-[var(--ace-dropdown-trigger-width)] shrink-0 justify-between font-normal',
           '[&>span:first-of-type]:min-w-0 [&>span:first-of-type]:flex-1 [&>span:first-of-type]:truncate [&>span:first-of-type]:text-left',
           'data-[state=open]:ring-2 data-[state=open]:ring-[var(--ace-button-focus-ring)] data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-[var(--color-surface)]',
           className,
