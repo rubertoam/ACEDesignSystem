@@ -11,7 +11,8 @@ import {
 } from './filterFieldStyles'
 
 export type AceTableFilterHeaderProps = {
-  title: string
+  /** Omit or pass empty string to hide the title. */
+  title?: string
   /** Left-side dropdown triggers (Client Centric, Filters, …). */
   actions?: ReactNode
   /** Right-aligned controls next to search (e.g. columns menu). */
@@ -27,7 +28,7 @@ export type AceTableFilterHeaderProps = {
 }
 
 export function AceTableFilterHeader({
-  title,
+  title = '',
   actions,
   trailing,
   chips,
@@ -42,7 +43,7 @@ export function AceTableFilterHeader({
     <div className={cn(aceFilterHeaderShellClass, className)}>
       <div className={aceFilterHeaderRowClass}>
         <div className={aceFilterHeaderActionsClass}>
-          <span className={aceFilterHeaderTitleClass}>{title}</span>
+          {title ? <span className={aceFilterHeaderTitleClass}>{title}</span> : null}
           {actions}
         </div>
         <div className="flex shrink-0 items-center gap-[var(--ace-filter-header-gap)]">

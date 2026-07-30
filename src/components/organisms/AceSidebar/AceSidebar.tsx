@@ -99,6 +99,11 @@ export type AceSidebarProps = {
   emptyGroupMessage?: string
   /** Portal target for row overflow menus inside scroll/clip regions */
   menuPortalContainer?: HTMLElement | null
+  /**
+   * Optional control to the right of the organization switcher / groups header
+   * (e.g. Work Log). Shrinks the org field so both fit the sidebar width.
+   */
+  headerTrailing?: ReactNode
   className?: string
   children?: ReactNode
 }
@@ -318,6 +323,7 @@ export function AceSidebar({
   showGroupAdd = false,
   emptyGroupMessage = defaultEmptyGroupMessage,
   menuPortalContainer,
+  headerTrailing,
   className,
   children,
 }: AceSidebarProps) {
@@ -333,12 +339,19 @@ export function AceSidebar({
     onSelect: () => onOrganizationChange?.(org.id),
   }))
 
+  const orgFieldWidthClass = headerTrailing
+    ? 'min-w-0 w-full max-w-full [&_button]:!w-full [&_button]:!max-w-full'
+    : '!w-[var(--ace-sidebar-control-width)] !max-w-[var(--ace-sidebar-control-width)] [&_button]:!w-full [&_button]:!max-w-full'
+
   const organizationHeader =
     !selectedOrg ? null : organizationDisplay === 'label' ? (
       <p
         className={cn(
           '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
-          'm-0 w-[var(--ace-sidebar-control-width)] truncate px-3 py-2 text-[var(--screening-text-primary)]',
+          'm-0 truncate px-3 py-2 text-[var(--screening-text-primary)]',
+          headerTrailing
+            ? 'w-full min-w-0'
+            : 'w-[var(--ace-sidebar-control-width)]',
         )}
       >
         {selectedOrg.label}
@@ -349,7 +362,8 @@ export function AceSidebar({
         items={orgMenuItems}
         triggerMode="field"
         size="md"
-        className="!w-[var(--ace-sidebar-control-width)] !max-w-[var(--ace-sidebar-control-width)] [&_button]:!w-full [&_button]:!max-w-full"
+        panelWidth="wide"
+        className={orgFieldWidthClass}
         portalContainer={menuPortalContainer}
         align="start"
       />
@@ -361,13 +375,14 @@ export function AceSidebar({
         type="button"
         onClick={onNewGroup}
         className={cn(
-          'inline-flex w-[var(--ace-sidebar-control-width)] items-center gap-3 rounded-[var(--radius-sm)] border border-solid',
+          'inline-flex items-center gap-3 rounded-[var(--radius-sm)] border border-solid',
           'border-[var(--ace-sidebar-heading-border)] bg-[var(--ace-sidebar-heading-bg)] px-3 py-2',
           'text-[var(--screening-text-primary)] transition-colors duration-[var(--ace-motion-duration-fast)]',
           motionEase,
           motionReduce,
           'hover:bg-[var(--screening-surface-hover)]',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
+          headerTrailing ? 'w-full min-w-0' : 'w-[var(--ace-sidebar-control-width)]',
         )}
       >
         <MaterialSymbol name="add" size="md" className="size-4 shrink-0 text-[var(--screening-text-primary)]" />
@@ -400,9 +415,19 @@ export function AceSidebar({
           open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
         )}
       >
-        {headerContent ? (
-          <div className="flex shrink-0 justify-center px-[var(--ace-sidebar-nav-px)] py-4">
-            {headerContent}
+        {headerContent || headerTrailing ? (
+          <div
+            className={cn(
+              'flex shrink-0 items-center px-[var(--ace-sidebar-nav-px)] py-4',
+              headerTrailing ? 'gap-2' : 'justify-center',
+            )}
+          >
+            {headerContent ? (
+              <div className={cn(headerTrailing ? 'min-w-0 flex-1' : undefined)}>
+                {headerContent}
+              </div>
+            ) : null}
+            {headerTrailing ? <div className="shrink-0">{headerTrailing}</div> : null}
           </div>
         ) : (
           <div className="shrink-0 pt-5" aria-hidden />

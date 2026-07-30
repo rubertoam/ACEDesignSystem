@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { cn } from '../../../lib/cn'
 
 function aceTypography(token: string) {
@@ -9,7 +10,10 @@ const columnHeaderClass = cn(
   'uppercase text-[var(--screening-text-muted)]',
 )
 
-const cellClass = cn(aceTypography('--ace-type-paragraph-p1-regular'), 'text-[var(--screening-text-primary)]')
+const cellTextClass = cn(
+  aceTypography('--ace-type-paragraph-p1-regular'),
+  'text-[var(--screening-text-primary)]',
+)
 
 export type AceTableColumn = {
   key: string
@@ -18,10 +22,15 @@ export type AceTableColumn = {
 
 export type AceTableProps = {
   columns: AceTableColumn[]
-  rows: Record<string, string>[]
+  /** Cell values may be plain text or custom nodes (e.g. status pills). */
+  rows: Record<string, ReactNode>[]
   /** Accessible table name (visually hidden). */
   caption?: string
   className?: string
+}
+
+function isPlainTextCell(value: ReactNode): value is string | number {
+  return typeof value === 'string' || typeof value === 'number'
 }
 
 export function AceTable({ columns, rows, caption, className }: AceTableProps) {
@@ -51,11 +60,14 @@ export function AceTable({ columns, rows, caption, className }: AceTableProps) {
               key={rowIndex}
               className="border-b border-solid border-[var(--screening-border-row)] bg-[var(--screening-surface)] last:border-b-0"
             >
-              {columns.map((col) => (
-                <td key={col.key} className={cn('px-[var(--space-3)] py-[var(--space-3)] align-middle', cellClass)}>
-                  {row[col.key] ?? ''}
-                </td>
-              ))}
+              {columns.map((col) => {
+                const value = row[col.key]
+                return (
+                  <td key={col.key} className="px-[var(--space-3)] py-[var(--space-3)] align-middle">
+                    {isPlainTextCell(value) ? <span className={cellTextClass}>{value}</span> : (value ?? null)}
+                  </td>
+                )
+              })}
             </tr>
           ))}
         </tbody>
