@@ -361,9 +361,26 @@ export function AceSidebar({
         triggerLabel={selectedOrg.label}
         items={orgMenuItems}
         triggerMode="field"
-        size="md"
+        size="sm"
         panelWidth="wide"
-        className={orgFieldWidthClass}
+        className={cn(
+          orgFieldWidthClass,
+          // Match trailing icon buttons (e.g. history) at 32px; keep chevron flush right.
+          headerTrailing &&
+            [
+              '!box-border !h-8 !min-h-8 !max-h-8 !py-0',
+              '!w-full !justify-between !text-sm !leading-none',
+              '[&>span:first-of-type]:!min-w-0 [&>span:first-of-type]:!flex-1 [&>span:first-of-type]:!truncate [&>span:first-of-type]:!leading-none',
+              '[&>.material-symbols-outlined]:!ml-auto',
+              '[&>.material-symbols-outlined]:!shrink-0',
+              '[&>.material-symbols-outlined]:!inline-flex',
+              '[&>.material-symbols-outlined]:!size-4',
+              '[&>.material-symbols-outlined]:!items-center',
+              '[&>.material-symbols-outlined]:!justify-center',
+              '[&>.material-symbols-outlined]:!leading-none',
+              '[&>.material-symbols-outlined]:![font-size:16px]',
+            ].join(' '),
+        )}
         portalContainer={menuPortalContainer}
         align="start"
       />
@@ -427,7 +444,9 @@ export function AceSidebar({
                 {headerContent}
               </div>
             ) : null}
-            {headerTrailing ? <div className="shrink-0">{headerTrailing}</div> : null}
+            {headerTrailing ? (
+              <div className="inline-flex shrink-0 items-center leading-none">{headerTrailing}</div>
+            ) : null}
           </div>
         ) : (
           <div className="shrink-0 pt-5" aria-hidden />

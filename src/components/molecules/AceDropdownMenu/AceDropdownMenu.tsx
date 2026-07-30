@@ -666,10 +666,14 @@ export function AceDropdownMenu({
     ) : triggerMode === 'filter' ? (
       <AceFilterTrigger label={triggerLabel} showChevron={showChevron} disabled={disabled} className={className} />
     ) : (
-      <button type="button" disabled={disabled} className={fieldClass}>
+      <button type="button" disabled={disabled} className={cn(fieldClass, 'justify-between')}>
         <span className="min-w-0 flex-1 truncate text-left">{triggerLabel}</span>
         {showChevron ? (
-          <MaterialSymbol name="keyboard_arrow_down" size="md" className={cn('ml-auto opacity-70', aceChevronIconClass)} />
+          <MaterialSymbol
+            name="keyboard_arrow_down"
+            size="md"
+            className={cn('ml-auto shrink-0 opacity-70', aceChevronIconClass)}
+          />
         ) : null}
       </button>
     )
