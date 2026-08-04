@@ -589,11 +589,27 @@ const CATALOG: CatalogIcon[] = [
   },
   {
     id: 51,
+    label: 'Workflow',
+    name: 'arrow_split',
+    materialIoName: 'Arrow Split',
+    fill: 'outlined',
+    notes: 'Landing page card workflow / process data point.',
+  },
+  {
+    id: 52,
+    label: 'Sidebar expand',
+    name: 'left_panel_open',
+    materialIoName: 'Left Panel Open',
+    fill: 'outlined',
+    notes: 'Lab / shell sidebar expand control (closed state).',
+  },
+  {
+    id: 53,
     label: 'Sidebar collapse',
     name: 'left_panel_close',
     materialIoName: 'Left Panel Close',
     fill: 'outlined',
-    notes: 'Lab / shell sidebar collapse control.',
+    notes: 'Lab / shell sidebar collapse control (open state).',
   },
 ]
 

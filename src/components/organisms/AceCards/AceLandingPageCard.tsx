@@ -1,4 +1,5 @@
 import { cn } from '../../../lib/cn'
+import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import {
   LandingPageCardHeaderActions,
   type LandingPageCardHeaderActionsProps,
@@ -17,6 +18,8 @@ export type AceLandingPageCardVariant = 'stats' | 'description'
 export type AceLandingPageCardStatItem = {
   id: string
   label: string
+  /** Material Symbols ligature (preferred when a catalog glyph exists). */
+  iconName?: string
   iconSrc?: string
   iconClassName?: string
 }
@@ -62,8 +65,7 @@ const DEFAULT_STAT_ITEMS: AceLandingPageCardStatItem[] = [
   {
     id: 'workflow',
     label: 'Data Point',
-    iconSrc: LANDING_PAGE_CARD_ICONS.statWorkflow,
-    iconClassName: 'h-3 w-6',
+    iconName: 'arrow_split',
   },
 ]
 
@@ -204,7 +206,13 @@ export function AceLandingPageCard({
                 key={item.id}
                 className="flex flex-col items-center justify-center gap-1 text-[var(--ace-landing-page-card-body-color)]"
               >
-                {item.iconSrc ? (
+                {item.iconName ? (
+                  <MaterialSymbol
+                    name={item.iconName}
+                    size="md"
+                    className={cn('text-current', item.iconClassName)}
+                  />
+                ) : item.iconSrc ? (
                   <StatIcon src={item.iconSrc} className={item.iconClassName} />
                 ) : null}
                 <span className={cn('whitespace-nowrap', caption)}>{item.label}</span>

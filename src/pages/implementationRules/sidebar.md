@@ -53,7 +53,7 @@ Nearby pieces include `SidebarOverflowMenu`, `GroupFormDialog`, and the lab’s 
 ## 4. Interaction rules
 
 ### Open and close
-- The parent owns `open` (the lab header uses `left_panel_close` and rotates it when open)
+- The parent owns `open` (the lab header uses `left_panel_open` when closed and `left_panel_close` when open)
 - When closed: width is `0`, border and shadow are gone, content is hidden and non-interactive, and `aria-hidden` is set
 
 ### Navigation

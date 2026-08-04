@@ -100,12 +100,9 @@ function SidebarMockHeader({
           className={sidebarIconButtonClass}
         >
           <MaterialSymbol
-            name="left_panel_close"
+            name={open ? 'left_panel_close' : 'left_panel_open'}
             size="md"
-            className={cn(
-              'text-current transition-transform duration-[var(--ace-motion-duration-medium)] [transition-timing-function:var(--ace-motion-ease-standard)] motion-reduce:transition-none',
-              open && 'rotate-180',
-            )}
+            className="text-current"
           />
         </button>
         <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--ace-neutral-800)]')}>Header</h1>

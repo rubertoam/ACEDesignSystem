@@ -65,8 +65,7 @@ export function CardsLab() {
       {
         id: 'workflow',
         label: statLabel,
-        iconSrc: LANDING_PAGE_CARD_ICONS.statWorkflow,
-        iconClassName: 'h-3 w-6',
+        iconName: 'arrow_split',
       },
     ],
     [statLabel],
