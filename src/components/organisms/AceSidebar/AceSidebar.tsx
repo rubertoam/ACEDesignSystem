@@ -222,6 +222,7 @@ function SidebarGroupBlock({
 
   return (
     <div
+      data-sidebar-group-id={group.id}
       className={cn(
         'relative flex flex-col overflow-hidden rounded-[var(--radius-sm)]',
         expanded && [
