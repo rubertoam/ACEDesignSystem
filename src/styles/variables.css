@@ -132,21 +132,22 @@
   --screening-age-fresh: #2e7d32;
   --screening-age-warn: #ef6c00;
   --screening-age-stale: #c62828;
-  --screening-tile-e-bg: #fdeaea;
-  --screening-tile-e-fg: #9e2a2a;
-  --screening-tile-e-border: rgb(194 40 40 / 0.12);
-  --screening-tile-n-bg: #e8f4ea;
-  --screening-tile-n-fg: #2d6a3e;
-  --screening-tile-n-border: rgb(46 125 50 / 0.12);
-  --screening-tile-c1-bg: #fff4e8;
-  --screening-tile-c1-fg: #b35c00;
-  --screening-tile-c1-border: rgb(230 126 0 / 0.12);
-  --screening-tile-c2-bg: #fff9e6;
-  --screening-tile-c2-fg: #9a6b00;
-  --screening-tile-c2-border: rgb(249 168 37 / 0.15);
-  --screening-tile-b-bg: #f0f1f3;
-  --screening-tile-b-fg: #5c6370;
-  --screening-tile-b-border: rgb(106 114 130 / 0.15);
+  /* Match-string tiles — same surface/label/border as AceBadge status pills */
+  --screening-tile-e-bg: var(--ace-status-pill-red-surface);
+  --screening-tile-e-fg: var(--ace-status-pill-red-label);
+  --screening-tile-e-border: var(--ace-status-pill-red-border);
+  --screening-tile-n-bg: var(--ace-status-pill-green-surface);
+  --screening-tile-n-fg: var(--ace-status-pill-green-label);
+  --screening-tile-n-border: var(--ace-status-pill-green-border);
+  --screening-tile-c1-bg: var(--ace-status-pill-orange-surface);
+  --screening-tile-c1-fg: var(--ace-status-pill-orange-label);
+  --screening-tile-c1-border: var(--ace-status-pill-orange-border);
+  --screening-tile-c2-bg: var(--ace-status-pill-yellow-surface);
+  --screening-tile-c2-fg: var(--ace-status-pill-yellow-label);
+  --screening-tile-c2-border: var(--ace-status-pill-yellow-border);
+  --screening-tile-b-bg: var(--ace-status-pill-gray-surface);
+  --screening-tile-b-fg: var(--ace-status-pill-gray-label);
+  --screening-tile-b-border: var(--ace-status-pill-gray-border);
   /* Dropdown menu panel (Figma Menu Lists 1541:5729) */
   --ace-dropdown-trigger-width: 12.5rem; /* 200px — field / button triggers */
   --ace-dropdown-menu-shadow: var(--ace-drop-shadow-xs);
@@ -797,9 +798,10 @@
     --screening-surface-expanded: var(--ace-dark-mode-900);
     --screening-surface-selected: rgb(56 65 74 / 0.45);
     --screening-border: var(--screening-border-strong);
-    --screening-border-strong: var(--ace-dark-mode-600);
+    /* Match sidebar group strokes (`--ace-button-neutral-400`) so cards/menus stay visible. */
+    --screening-border-strong: var(--ace-button-neutral-400);
     --screening-border-row: var(--ace-dark-mode-500);
-    --screening-border-soft: var(--ace-dark-mode-600);
+    --screening-border-soft: var(--ace-button-neutral-400);
     --screening-text-primary: #b6c2cf;
     --screening-text-secondary: #9fadbc;
     --screening-text-muted: #8696a7;
@@ -910,7 +912,7 @@
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.35);
     --ace-accordion-surface: var(--ace-dark-mode-800);
     --ace-accordion-surface-muted: var(--ace-dark-mode-900);
-    --ace-accordion-border: var(--ace-dark-mode-600);
+    --ace-accordion-border: var(--ace-button-neutral-400);
     --ace-accordion-title: #b6c2cf;
     --ace-accordion-tag-bg: var(--ace-dark-mode-600);
     --ace-accordion-tag-text: #b6c2cf;
@@ -999,21 +1001,7 @@
     --screening-age-fresh: #81c784;
     --screening-age-warn: #ffb74d;
     --screening-age-stale: #f48a8a;
-    --screening-tile-e-bg: #3d2529;
-    --screening-tile-e-fg: #f48a8a;
-    --screening-tile-e-border: rgb(244 138 138 / 0.3);
-    --screening-tile-n-bg: #1e3324;
-    --screening-tile-n-fg: #81c784;
-    --screening-tile-n-border: rgb(129 199 132 / 0.25);
-    --screening-tile-c1-bg: #3d2a14;
-    --screening-tile-c1-fg: #ffb74d;
-    --screening-tile-c1-border: rgb(255 183 77 / 0.25);
-    --screening-tile-c2-bg: #3d3510;
-    --screening-tile-c2-fg: #ffd54f;
-    --screening-tile-c2-border: rgb(255 213 79 / 0.25);
-    --screening-tile-b-bg: var(--ace-dark-mode-700);
-    --screening-tile-b-fg: #9fadbc;
-    --screening-tile-b-border: rgb(159 173 188 / 0.2);
+    /* Match-string tiles inherit AceBadge dark status-pill tokens via light aliases */
 
     /* Cards */
     --ace-landing-page-card-surface: var(--screening-surface);

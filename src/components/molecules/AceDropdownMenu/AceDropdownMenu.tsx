@@ -45,7 +45,8 @@ export type AceDropdownMenuSubItem =
       disabled?: boolean
       style?: 'menu' | 'assignment'
       matchHighlight?: string
-      emphasized?: boolean
+      /** Soft row fill — `warning` uses `--ace-warning-50`. */
+      emphasized?: boolean | 'warning'
     }
   | {
       id?: string
@@ -207,6 +208,12 @@ function panelShellClass(panelWidth: AceDropdownMenuPanelWidth, className?: stri
   return cn(aceDropdownMenuPanelClass, panelWidthClass[panelWidth], className)
 }
 
+function checkboxEmphasizedClass(emphasized?: boolean | 'warning') {
+  if (emphasized === 'warning') return 'bg-[var(--ace-warning-50)]'
+  if (emphasized) return 'bg-[var(--screening-surface-muted)]'
+  return null
+}
+
 function MenuCheckboxRow({
   checked,
   disabled,
@@ -219,7 +226,7 @@ function MenuCheckboxRow({
   disabled?: boolean
   label: string
   matchHighlight?: string
-  emphasized?: boolean
+  emphasized?: boolean | 'warning'
   onCheckedChange: (checked: boolean) => void
 }) {
   return (
@@ -229,7 +236,7 @@ function MenuCheckboxRow({
       className={cn(
         assignmentCheckboxRow,
         'w-full outline-none',
-        emphasized && 'bg-[var(--screening-surface-muted)]',
+        checkboxEmphasizedClass(emphasized),
         'data-[highlighted]:bg-[var(--screening-surface-hover)]',
       )}
       onSelect={(e) => {
@@ -518,7 +525,7 @@ function MenuEntries({
             key={entryKey(entry, i, entry.label)}
             className={cn(
               assignmentCheckboxRow,
-              entry.emphasized && 'bg-[var(--screening-surface-muted)]',
+              checkboxEmphasizedClass(entry.emphasized),
               entry.disabled && 'cursor-not-allowed opacity-50',
             )}
           >
