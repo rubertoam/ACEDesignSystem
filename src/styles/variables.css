@@ -593,18 +593,18 @@
   --ace-attachments-radius: 4px;
   --ace-attachments-padding: 0.75rem;
   --ace-attachments-gap: 0.75rem;
-  --ace-attachments-border: #cfd2d9;
+  --ace-attachments-border: var(--screening-border-strong);
   --ace-attachments-surface: var(--screening-surface);
-  --ace-attachments-dropzone-bg: #fafafb;
+  --ace-attachments-dropzone-bg: var(--screening-surface-muted);
   --ace-attachments-dropzone-border: var(--screening-primary);
-  --ace-attachments-panel-bg: #fafafb;
+  --ace-attachments-panel-bg: var(--screening-surface-muted);
   --ace-attachments-title: var(--screening-primary);
-  --ace-attachments-label: var(--ace-neutral-800);
+  --ace-attachments-label: var(--screening-text-secondary);
   --ace-attachments-link: var(--screening-primary);
-  --ace-attachments-muted: #6a7285;
+  --ace-attachments-muted: var(--screening-text-muted);
   --ace-attachments-status: var(--screening-primary);
   --ace-attachments-error: var(--dialog-modal-danger);
-  --ace-attachments-divider: #cfd2d9;
+  --ace-attachments-divider: var(--screening-border-strong);
 
   /* ACE Filtering — Figma Table Headers / filters (1540:4577) */
   --ace-filter-radius: 4px;
@@ -890,6 +890,10 @@
     --ace-success-50: #1a2210;
     --ace-error-50: #3d2529;
     --ace-warning-50: #3a2a1c;
+    /* Notice yellow — keep soft amber fills readable with dark text tokens */
+    --ace-notice-50: #342e14;
+    --ace-notice-100: #4a4018;
+    --ace-notice-200: #5c4f1e;
     --ace-button-blue-50: #0f2a38;
     --ace-input-error-bg: var(--ace-error-50);
     --ace-input-error-border: #f48a8a;
@@ -1003,6 +1007,15 @@
     --screening-age-stale: #f48a8a;
     /* Match-string tiles inherit AceBadge dark status-pill tokens via light aliases */
 
+    /* Attachments — muted panels track dark surfaces (not light #fafafb) */
+    --ace-attachments-border: var(--screening-border-strong);
+    --ace-attachments-surface: var(--screening-surface);
+    --ace-attachments-dropzone-bg: var(--ace-dark-mode-700);
+    --ace-attachments-panel-bg: var(--ace-dark-mode-700);
+    --ace-attachments-label: var(--screening-text-secondary);
+    --ace-attachments-muted: var(--screening-text-muted);
+    --ace-attachments-divider: var(--screening-border-strong);
+
     /* Cards */
     --ace-landing-page-card-surface: var(--screening-surface);
     --ace-landing-page-card-title-color: var(--screening-text-primary);
@@ -1034,4 +1047,16 @@
     --ace-availability-planned-bg: #2a2540;
     --ace-availability-planned-border: #4a4068;
     --ace-availability-planned-text: #dcd7e8;
+
+    /* Descriptive buttons — surface + purple soft fills (Reports, etc.) */
+    --ace-descriptive-button-bg: var(--screening-surface);
+    --ace-descriptive-button-border: var(--ace-button-neutral-400);
+    --ace-descriptive-button-hover-bg: var(--screening-primary-soft-bg);
+    --ace-descriptive-button-hover-border: var(--screening-primary);
+    --ace-descriptive-button-active-bg: var(--screening-primary-soft-bg-hover);
+    --ace-descriptive-button-active-border: var(--screening-primary);
+    --ace-descriptive-button-disabled-bg: var(--ace-dark-mode-900);
+    --ace-descriptive-button-disabled-border: var(--ace-button-neutral-400);
+    --ace-descriptive-button-text: var(--screening-text-primary);
+    --ace-descriptive-button-disabled-text: var(--ace-button-neutral-600);
 }

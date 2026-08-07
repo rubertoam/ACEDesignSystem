@@ -1,5 +1,5 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import type { ComponentProps, ReactNode } from 'react'
+import { forwardRef, type ComponentProps, type HTMLAttributes, type ReactNode } from 'react'
 import { cn } from '../../../lib/cn'
 import {
   aceScreeningToolbarTooltipContentClass,
@@ -66,9 +66,15 @@ export function AceTooltipContent({
 export type AceTooltipIconWrapProps = {
   children: ReactNode
   className?: string
-}
+} & HTMLAttributes<HTMLSpanElement>
 
 /** Optional wrapper when the trigger is a disabled control (Review Assigned pattern). */
-export function AceTooltipIconWrap({ children, className }: AceTooltipIconWrapProps) {
-  return <span className={cn('inline-flex', className)}>{children}</span>
-}
+export const AceTooltipIconWrap = forwardRef<HTMLSpanElement, AceTooltipIconWrapProps>(
+  function AceTooltipIconWrap({ children, className, ...props }, ref) {
+    return (
+      <span ref={ref} className={cn('inline-flex', className)} {...props}>
+        {children}
+      </span>
+    )
+  },
+)
