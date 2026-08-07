@@ -44,6 +44,11 @@ export type DialogModalProps = {
    * `static` — inline panel for docs / variant galleries (no portal, trap, or overlay).
    */
   presentation?: DialogModalPresentation
+  /**
+   * When true (default), clicking the backdrop calls `onClose`.
+   * Set false for prompts that require an explicit action (e.g. Take Tour).
+   */
+  closeOnOverlayClick?: boolean
 }
 
 const focusableSelector =
@@ -75,6 +80,7 @@ export function DialogModal({
   bodyClassName,
   fitContent = false,
   presentation = 'overlay',
+  closeOnOverlayClick = true,
 }: DialogModalProps) {
   const titleId = useId()
   const descriptionId = useId()
@@ -287,6 +293,9 @@ export function DialogModal({
 
   if (isStatic) return panel
 
+  const overlayClass =
+    'absolute inset-0 bg-[var(--dialog-modal-overlay)] backdrop-blur-[1px]'
+
   const modal = (
     <div
       className={cn(
@@ -294,12 +303,16 @@ export function DialogModal({
         fitContent ? 'items-center overflow-y-auto' : 'items-end sm:items-center',
       )}
     >
-      <button
-        type="button"
-        className="absolute inset-0 bg-[var(--dialog-modal-overlay)] backdrop-blur-[1px]"
-        aria-label="Dismiss dialog"
-        onClick={onClose}
-      />
+      {closeOnOverlayClick ? (
+        <button
+          type="button"
+          className={overlayClass}
+          aria-label="Dismiss dialog"
+          onClick={onClose}
+        />
+      ) : (
+        <div className={overlayClass} aria-hidden />
+      )}
       {panel}
     </div>
   )
