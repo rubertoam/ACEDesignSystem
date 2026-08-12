@@ -50,7 +50,6 @@ function DrawerSection({ children }: { children: ReactNode }) {
   )
 }
 
-/** Sample body matching Figma Property 3=Content (Default header). */
 function InlineDrawerDemoContent() {
   const [dropdown, setDropdown] = useState('Dropdown')
   const [radio, setRadio] = useState('')
@@ -212,7 +211,7 @@ export function InlineDrawerLab() {
   return (
     <ComponentLabPage
       title="Inline Drawer"
-      description="Right-side in-flow panel that reflows sibling content - same open/close width motion as Sidebar, not an overlay. Figma Inline Drawer 1063:3635 (Default Content and NoContent frames)."
+      description="Right-side in-flow panel from Review Assigned: resizable SideDrawer shell with Review header chrome, close control, and Close / Confirm footer. Not an overlay."
       examplesToolbar={examplesToolbar}
       examples={
         <div className="flex h-[min(85vh,52rem)] min-h-[40rem] flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]">
@@ -221,17 +220,19 @@ export function InlineDrawerLab() {
             <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-[var(--screening-surface-muted)] p-6">
               <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Main content</p>
               <p className="mt-2 max-w-prose text-sm text-[var(--screening-text-muted)]">
-                Opening the drawer shrinks this region. Motion matches the sidebar panel duration and easing.
+                Opening the drawer shrinks this region. Drag the left edge to resize (320–720px). Escape or the
+                header close control dismisses it.
               </p>
             </div>
             <AceInlineDrawer
               open={open}
-              title="Title"
+              onClose={() => setOpen(false)}
+              title="Review"
               showBackButton={showBackButton}
               showToggle={showToggle}
               toggleChecked={toggleChecked}
               onToggleChange={setToggleChecked}
-              onCancel={() => setOpen(false)}
+              widthStorageKey="ace-inline-drawer-lab-width"
               onSave={() => setOpen(false)}
             >
               {contentMode === 'content' ? <InlineDrawerDemoContent /> : null}
@@ -243,8 +244,8 @@ export function InlineDrawerLab() {
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
             Place the drawer as a flex sibling after main content. Control{' '}
-            <code className="text-[var(--screening-text-primary)]">open</code> from the app header - width animates
-            in-flow so neighbors reflow.
+            <code className="text-[var(--screening-text-primary)]">open</code> from the app chrome — width animates
+            in-flow and can be resized like Review Assigned.
           </p>
           <ComponentLabCode>{`import { AceInlineDrawer } from '../components/organisms/AceInlineDrawer/AceInlineDrawer'
 
@@ -254,11 +255,11 @@ const [open, setOpen] = useState(true)
   <main className="min-w-0 flex-1">{/* page content */}</main>
   <AceInlineDrawer
     open={open}
-    title="Title"
-    onCancel={() => setOpen(false)}
+    onClose={() => setOpen(false)}
+    title="Review"
     onSave={handleSave}
   >
-    {/* optional body - omit for NoContent */}
+    {/* optional body */}
   </AceInlineDrawer>
 </div>`}</ComponentLabCode>
         </>
@@ -268,23 +269,29 @@ const [open, setOpen] = useState(true)
           <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
-              Use for contextual editing or detail forms that should stay on the page and push layout, not cover it.
-              Prefer Dialog Modal when the task is blocking or disconnected from the current view.
+              Use for contextual editing or review panels that should stay on the page and push layout, not cover it —
+              same pattern as Review Assigned. Prefer Dialog Modal when the task is blocking or disconnected from the
+              current view.
             </p>
           </section>
           <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Anatomy</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Header</strong>: title; optional back chevron
-                and view toggle.
+                <strong className="text-[var(--screening-text-primary)]">Shell</strong>:{' '}
+                <code className="text-[var(--screening-text-primary)]">AceSideDrawer</code> — resizable in-flow panel
+                (Review Assigned <code className="text-[var(--screening-text-primary)]">SideDrawer</code>).
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Body</strong>: scrollable slot for form
-                sections (Content) or empty (NoContent).
+                <strong className="text-[var(--screening-text-primary)]">Header</strong>: title, optional back / toggle,
+                and close (X).
               </li>
               <li>
-                <strong className="text-[var(--screening-text-primary)]">Footer</strong>: Cancel / Save aligned end
+                <strong className="text-[var(--screening-text-primary)]">Body</strong>: scrollable slot for form sections
+                or empty.
+              </li>
+              <li>
+                <strong className="text-[var(--screening-text-primary)]">Footer</strong>: Close / Confirm aligned end
                 (customizable via <code className="text-[var(--screening-text-primary)]">footer</code>).
               </li>
             </ul>

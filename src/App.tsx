@@ -10,6 +10,8 @@ import { AccordionLab } from './pages/AccordionLab'
 import { PaginationLab } from './pages/PaginationLab'
 import { SlidersLab } from './pages/SlidersLab'
 import { SteppersLab } from './pages/SteppersLab'
+import { TaskBarLab } from './pages/TaskBarLab'
+import { PageHeadersLab } from './pages/PageHeadersLab'
 import { OrganismsLab } from './pages/OrganismsLab'
 import { LayoutsLab } from './pages/LayoutsLab'
 import { DialogModalLab } from './pages/DialogModalLab'
@@ -68,6 +70,8 @@ export default function App() {
         <Route path="molecules/pagination" element={<PaginationLab />} />
         <Route path="molecules/sliders" element={<SlidersLab />} />
         <Route path="molecules/steppers" element={<SteppersLab />} />
+        <Route path="molecules/task-bar" element={<TaskBarLab />} />
+        <Route path="molecules/page-headers" element={<PageHeadersLab />} />
         <Route path="molecules/tabs" element={<TabsLab />} />
         <Route path="molecules/toast-messages" element={<ToastMessagesLab />} />
         <Route path="molecules/inline-messages" element={<InlineMessagesLab />} />

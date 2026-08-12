@@ -447,9 +447,9 @@ export const COLOR_COMPONENT_GROUPS: ColorComponentGroup[] = [
     tokens: solidTokens([
       { name: 'Status pill gap', cssVar: '--ace-status-pill-gap' },
       { name: 'Status pill padding Y', cssVar: '--ace-status-pill-py' },
-      { name: 'Status pill padding left', cssVar: '--ace-status-pill-pl' },
-      { name: 'Status pill padding right', cssVar: '--ace-status-pill-pr' },
+      { name: 'Status pill padding X', cssVar: '--ace-status-pill-px' },
       { name: 'Status pill dot size', cssVar: '--ace-status-pill-dot-size' },
+      { name: 'Status pill label size', cssVar: '--ace-status-pill-label-size' },
       { name: 'Tag gap', cssVar: '--ace-badge-tag-gap' },
       { name: 'Tag surface', cssVar: '--ace-badge-tag-surface' },
       { name: 'Tag border', cssVar: '--ace-badge-tag-border' },

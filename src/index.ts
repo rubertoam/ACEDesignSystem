@@ -106,6 +106,34 @@ export {
 export { AceSlider, type AceSliderProps, type AceSliderValue, type AceSliderVariant } from './components/molecules/AceSlider'
 export { AceSliderField, type AceSliderFieldProps } from './components/molecules/AceSlider/AceSliderField'
 export { AceStepper, type AceStepperProps, type AceStepperVariant } from './components/molecules/AceStepper'
+export {
+  AceTaskBar,
+  aceTaskBarActionsClass,
+  aceTaskBarLeadingClass,
+  aceTaskBarShellClass,
+  type AceTaskBarProps,
+} from './components/molecules/AceTaskBar'
+export {
+  AcePageHeader,
+  acePageHeaderLeadingClass,
+  acePageHeaderShellClass,
+  acePageHeaderTitleClass,
+  type AcePageHeaderProps,
+} from './components/molecules/AcePageHeader'
+export {
+  AceSubHeader,
+  aceSubHeaderBackClass,
+  aceSubHeaderDrilldownPaddingClass,
+  aceSubHeaderFullShellClass,
+  aceSubHeaderHeadlineClass,
+  aceSubHeaderIconButtonClass,
+  aceSubHeaderPaginationLabelClass,
+  aceSubHeaderSplitShellClass,
+  aceSubHeaderStatClass,
+  aceSubHeaderStatSeparatorClass,
+  type AceSubHeaderLayout,
+  type AceSubHeaderProps,
+} from './components/molecules/AceSubHeader'
 export { AceTable, type AceTableColumn, type AceTableProps } from './components/molecules/AceTable/AceTable'
 export { AceToast, type AceToastProps } from './components/molecules/AceToast/AceToast'
 export {
@@ -216,6 +244,10 @@ export {
   AceInlineDrawer,
   type AceInlineDrawerProps,
 } from './components/organisms/AceInlineDrawer/AceInlineDrawer'
+export {
+  AceSideDrawer,
+  type AceSideDrawerProps,
+} from './components/organisms/AceInlineDrawer/AceSideDrawer'
 export {
   EditGroupDialog,
   type EditGroupDialogItem,

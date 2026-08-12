@@ -1,206 +1,359 @@
-import { useState } from 'react'
-import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
+import { useId, useState, type CSSProperties, type ReactNode } from 'react'
+import { AceButton } from '../components/atoms/AceButton'
+import { RadioGroup, RadioItem } from '../components/atoms/Radio/RadioGroup'
+import { AcePageHeader } from '../components/molecules/AcePageHeader'
+import { AceSlider } from '../components/molecules/AceSlider'
+import { AceSubHeader } from '../components/molecules/AceSubHeader'
+import { AceTaskBar } from '../components/molecules/AceTaskBar'
+import { DialogModal } from '../components/molecules/DialogModal/DialogModal'
+import { AceInlineDrawer } from '../components/organisms/AceInlineDrawer/AceInlineDrawer'
 import { AceSidebar } from '../components/organisms/AceSidebar/AceSidebar'
-import { sidebarIconButtonClass } from '../components/organisms/AceSidebar/sidebarRowActions'
-import { LabSelect } from '../lib/labControls'
+import {
+  AceSiteHeader,
+  type AceSiteHeaderNavItem,
+} from '../components/organisms/AceSiteHeader/AceSiteHeader'
+import { LabCheckbox, labControlLegendClass } from '../lib/labControls'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-type LayoutType = 'default' | 'sidebar' | 'sidebar-drawer' | 'landing'
-
-const LAYOUT_OPTIONS: { value: LayoutType; label: string }[] = [
-  { value: 'default', label: 'Default layout' },
-  { value: 'sidebar', label: 'Header + sidebar + content' },
-  { value: 'sidebar-drawer', label: 'Header + sidebar + content + drawer' },
-  { value: 'landing', label: 'Landing (header + cards)' },
+const SITE_NAV_ITEMS: AceSiteHeaderNavItem[] = [
+  { id: 'home', label: 'Home' },
+  { id: 'reporting', label: 'Reporting' },
+  { id: 'settings', label: 'Settings' },
+  { id: 'administration', label: 'Administration' },
 ]
 
-const LAYOUT_COPY: Record<
-  LayoutType,
-  { title: string; description: string; code: string }
-> = {
-  default: {
-    title: 'Default layout',
-    description:
-      'Review Assigned app shell: header with sidebar toggle over an empty main region. Open the sidebar from the header icon.',
-    code: `const [sidebarOpen, setSidebarOpen] = useState(false)
+const COLUMN_MIN_PCT = 20
+const COLUMN_MAX_PCT = 80
+/** Discrete steps between min/max → 20, 30, …, 80. */
+const COLUMN_WIDTH_STEPS = 6
+const COLUMN_WIDTH_STEP_PCT = (COLUMN_MAX_PCT - COLUMN_MIN_PCT) / COLUMN_WIDTH_STEPS
 
-<header>
-  <button
-    type="button"
-    aria-label={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
-    aria-expanded={sidebarOpen}
-    onClick={() => setSidebarOpen((open) => !open)}
-  >
-    <MaterialSymbol name={sidebarOpen ? 'left_panel_close' : 'left_panel_open'} />
-  </button>
-  ...
-</header>
-
-<div className="flex">
-  <AceSidebar open={sidebarOpen} variant="navigation" navItems={[]} />
-  <main />
-</div>`,
-  },
-  sidebar: {
-    title: 'Header + sidebar + content',
-    description: 'App shell with collapsible sidebar navigation beside the main content area.',
-    code: `<AceSiteHeader ... />
-<div className="flex">
-  <AceSidebar ... />
-  <main>...</main>
-</div>`,
-  },
-  'sidebar-drawer': {
-    title: 'Header + sidebar + content + drawer',
-    description: 'Same app shell with an inline drawer opened beside main content for detail or forms.',
-    code: `<AceSiteHeader ... />
-<div className="flex">
-  <AceSidebar ... />
-  <main>...</main>
-  <AceInlineDrawer open>...</AceInlineDrawer>
-</div>`,
-  },
-  landing: {
-    title: 'Landing (header + cards)',
-    description: 'Marketing or hub page: site header above a grid of landing page cards.',
-    code: `<AceSiteHeader ... />
-<main>
-  <AceLandingPageCard ... />
-</main>`,
-  },
+function snapColumnWidthPct(pct: number): number {
+  const stepped =
+    COLUMN_MIN_PCT +
+    Math.round((pct - COLUMN_MIN_PCT) / COLUMN_WIDTH_STEP_PCT) * COLUMN_WIDTH_STEP_PCT
+  return Math.min(COLUMN_MAX_PCT, Math.max(COLUMN_MIN_PCT, stepped))
 }
 
-const h6Bold =
-  '[font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]'
-
-const regionClass =
-  'flex items-center justify-center rounded-[var(--radius-sm)] border border-dashed border-[var(--screening-border-strong)] text-xs font-medium text-[var(--screening-text-muted)]'
-
-/** Review Assigned header chrome — panel toggle opens/closes the sidebar. */
-function DefaultLayoutHeader({
-  open,
-  onToggleSidebar,
+/** Toolbar column — shared label + fixed-height control row so groups align. */
+function ToolbarGroup({
+  label,
+  children,
+  className,
 }: {
-  open: boolean
-  onToggleSidebar: () => void
+  label: string
+  children: ReactNode
+  className?: string
 }) {
   return (
-    <header className="flex shrink-0 items-center border-b-[0.5px] border-l-[0.5px] border-r-[0.5px] border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-8 py-3">
-      <div className="flex items-center gap-5">
-        <button
-          type="button"
-          onClick={onToggleSidebar}
-          aria-label={open ? 'Close sidebar' : 'Open sidebar'}
-          aria-expanded={open}
-          className={sidebarIconButtonClass}
-        >
-          <MaterialSymbol
-            name={open ? 'left_panel_close' : 'left_panel_open'}
-            size="md"
-            className="text-current"
-          />
-        </button>
-        <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--ace-neutral-800)]')}>Header</h1>
-      </div>
-    </header>
+    <div className={cn('flex min-w-0 flex-col gap-[var(--ace-section-label-gap)]', className)}>
+      <p className={cn(labControlLegendClass, 'm-0 flex h-5 items-center')}>{label}</p>
+      <div className="flex h-9 items-center">{children}</div>
+    </div>
   )
 }
 
-function DefaultLayoutPreview() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+type PageLayout = 'single' | 'two-column'
 
+function ContentPane({ label }: { label: string }) {
   return (
-    <div
-      className="flex h-[min(85vh,52rem)] min-h-[40rem] flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]"
-      aria-label="Default layout preview"
-    >
-      <DefaultLayoutHeader
-        open={sidebarOpen}
-        onToggleSidebar={() => setSidebarOpen((open) => !open)}
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]">
+      <div className="min-h-0 flex-1 p-4">
+        <p className="m-0 text-sm text-[var(--screening-text-muted)]">{label}</p>
+      </div>
+    </div>
+  )
+}
+
+function ColumnStack({
+  showSubHeader,
+  label,
+  style,
+}: {
+  showSubHeader: boolean
+  label: string
+  style?: CSSProperties
+}) {
+  return (
+    <div className="flex min-h-0 min-w-0 flex-col gap-4" style={style}>
+      {showSubHeader ? <AceSubHeader layout="split" /> : null}
+      <ContentPane label={label} />
+    </div>
+  )
+}
+
+function TwoColumnRegion({
+  leftSubHeader,
+  rightSubHeader,
+  leftWidthPct,
+}: {
+  leftSubHeader: boolean
+  rightSubHeader: boolean
+  leftWidthPct: number
+}) {
+  return (
+    <div className="flex min-h-0 min-w-0 flex-1 gap-4">
+      <ColumnStack
+        showSubHeader={leftSubHeader}
+        label="Left column"
+        style={{ flex: `0 0 ${leftWidthPct}%` }}
       />
-      <div className="flex min-h-0 flex-1">
-        <AceSidebar open={sidebarOpen} variant="navigation" navItems={[]} />
-        <main className="min-h-0 min-w-0 flex-1 bg-[var(--screening-surface-muted)]" />
-      </div>
+      <ColumnStack
+        showSubHeader={rightSubHeader}
+        label="Right column"
+        style={{ flex: '1 1 0%' }}
+      />
     </div>
   )
 }
 
-function SchematicPreview({ type }: { type: Exclude<LayoutType, 'default'> }) {
-  const frame = cn(
-    'flex h-[min(70vh,40rem)] min-h-[22rem] w-full flex-col overflow-hidden',
-    'rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]',
-    'bg-[var(--screening-surface-muted)]',
-  )
+function LayoutPreview({
+  pageLayout,
+  showSidebarControl,
+  showSubHeader,
+  leftSubHeader,
+  rightSubHeader,
+  leftWidthPct,
+  showTaskBar,
+}: {
+  pageLayout: PageLayout
+  showSidebarControl: boolean
+  showSubHeader: boolean
+  leftSubHeader: boolean
+  rightSubHeader: boolean
+  leftWidthPct: number
+  showTaskBar: boolean
+}) {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
-  if (type === 'landing') {
-    return (
-      <div className={frame} aria-label="Landing layout preview">
-        <div className={cn(regionClass, 'h-14 shrink-0 rounded-none border-0 border-b border-solid bg-[var(--screening-surface)]')}>
-          Header
-        </div>
-        <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 p-4 sm:grid-cols-2 lg:grid-cols-3">
-          <div className={cn(regionClass, 'min-h-28')}>Card</div>
-          <div className={cn(regionClass, 'min-h-28')}>Card</div>
-          <div className={cn(regionClass, 'min-h-28')}>Card</div>
-        </div>
-      </div>
-    )
-  }
+  const sidebarVisible = showSidebarControl && sidebarOpen
+  const isTwoColumn = pageLayout === 'two-column'
 
   return (
-    <div className={frame} aria-label={`${LAYOUT_COPY[type].title} preview`}>
-      <div className={cn(regionClass, 'h-14 shrink-0 rounded-none border-0 border-b border-solid bg-[var(--screening-surface)]')}>
-        Header
-      </div>
-      <div className="flex min-h-0 flex-1">
-        <div className={cn(regionClass, 'w-48 shrink-0 rounded-none border-0 border-r border-solid bg-[var(--screening-surface)]')}>
-          Sidebar
-        </div>
-        <div className={cn(regionClass, 'min-w-0 flex-1 rounded-none border-0')}>Content</div>
-        {type === 'sidebar-drawer' ? (
-          <div className={cn(regionClass, 'w-72 shrink-0 rounded-none border-0 border-l border-solid bg-[var(--screening-surface)]')}>
-            Drawer
+    <>
+      <div
+        className="flex h-[min(85vh,52rem)] min-h-[40rem] flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)]"
+        aria-label={isTwoColumn ? 'Two-column layout preview' : 'Single-column layout preview'}
+      >
+        <AceSiteHeader navItems={SITE_NAV_ITEMS} userName="User Name" />
+        <AcePageHeader
+          title="Headline"
+          showSidebarControl={showSidebarControl}
+          sidebarOpen={sidebarOpen}
+          onToggleSidebar={() => setSidebarOpen((open) => !open)}
+          className="border-t-0"
+        />
+        <div className="relative flex min-h-0 flex-1 overflow-hidden">
+          <AceSidebar open={sidebarVisible} variant="navigation" navItems={[]} />
+          <div className="relative z-0 flex min-h-0 min-w-0 flex-1 flex-col gap-4 bg-[var(--screening-surface-muted)] p-4">
+            {isTwoColumn ? (
+              <TwoColumnRegion
+                leftSubHeader={leftSubHeader}
+                rightSubHeader={rightSubHeader}
+                leftWidthPct={leftWidthPct}
+              />
+            ) : (
+              <>
+                {showSubHeader ? <AceSubHeader layout="full" /> : null}
+                <ContentPane label="Main content" />
+              </>
+            )}
+            {showTaskBar ? (
+              <AceTaskBar>
+                <AceButton type="button" variant="secondary" size="md" onClick={() => setModalOpen(true)}>
+                  Modal
+                </AceButton>
+                <AceButton type="button" variant="primary" size="md" onClick={() => setDrawerOpen(true)}>
+                  Inline Drawer
+                </AceButton>
+              </AceTaskBar>
+            ) : null}
           </div>
-        ) : null}
+          <AceInlineDrawer
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            title="Review"
+            widthStorageKey={
+              isTwoColumn
+                ? 'ace-layouts-lab-inline-drawer-width-two-column'
+                : 'ace-layouts-lab-inline-drawer-width'
+            }
+            onSave={() => setDrawerOpen(false)}
+          >
+            <p className="m-0 text-sm text-[var(--screening-text-muted)]">
+              Drawer content opened from the task bar
+              {isTwoColumn ? ' — docks beside both columns.' : ' — docks beside the main column.'}
+            </p>
+          </AceInlineDrawer>
+        </div>
       </div>
-    </div>
+
+      <DialogModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Modal"
+        description="Opened from the task bar."
+        secondaryAction={{ label: 'Cancel', onClick: () => setModalOpen(false) }}
+        primaryAction={{ label: 'Confirm', onClick: () => setModalOpen(false) }}
+      />
+    </>
   )
 }
 
 export function LayoutsLab() {
-  const [layout, setLayout] = useState<LayoutType>('default')
-  const copy = LAYOUT_COPY[layout]
+  const [pageLayout, setPageLayout] = useState<PageLayout>('single')
+  const [showSidebarControl, setShowSidebarControl] = useState(true)
+  const [showSubHeader, setShowSubHeader] = useState(false)
+  const [leftSubHeader, setLeftSubHeader] = useState(false)
+  const [rightSubHeader, setRightSubHeader] = useState(false)
+  const [leftWidthPct, setLeftWidthPct] = useState(50)
+  const [showTaskBar, setShowTaskBar] = useState(false)
+
+  const isTwoColumn = pageLayout === 'two-column'
+  const pageLayoutRadioId = useId()
 
   return (
     <ComponentLabPage
       title="Layouts"
       description="Page and application layouts composed from organisms, molecules, and atoms."
       examplesToolbar={
-        <LabSelect label="Layout" value={layout} onChange={setLayout} options={LAYOUT_OPTIONS} />
-      }
-      examples={
-        <div className="flex w-full flex-col gap-3">
-          <div>
-            <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">{copy.title}</p>
-            <p className="m-0 mt-1 text-sm text-[var(--screening-text-muted)]">{copy.description}</p>
-          </div>
-          {layout === 'default' ? <DefaultLayoutPreview /> : <SchematicPreview type={layout} />}
+        <div className="flex flex-wrap items-start gap-x-6 gap-y-4">
+          <ToolbarGroup label="Page layout">
+            <RadioGroup
+              value={pageLayout}
+              onValueChange={(v) => setPageLayout(v as PageLayout)}
+              className="flex flex-wrap items-center gap-x-6"
+              aria-label="Page layout"
+            >
+              <RadioItem value="single" id={`${pageLayoutRadioId}-single`} size="sm">
+                <span className="text-xs font-medium text-[var(--color-text-primary)]">Single column</span>
+              </RadioItem>
+              <RadioItem value="two-column" id={`${pageLayoutRadioId}-two-column`} size="sm">
+                <span className="text-xs font-medium text-[var(--color-text-primary)]">Two column</span>
+              </RadioItem>
+            </RadioGroup>
+          </ToolbarGroup>
+          <ToolbarGroup label="Shell">
+            <div className="flex flex-wrap items-center gap-4">
+              <LabCheckbox
+                label="Sidebar"
+                checked={showSidebarControl}
+                onCheckedChange={setShowSidebarControl}
+              />
+              <LabCheckbox label="Task Bar" checked={showTaskBar} onCheckedChange={setShowTaskBar} />
+            </div>
+          </ToolbarGroup>
+          {isTwoColumn ? (
+            <ToolbarGroup label="Sub-headers">
+              <div className="flex flex-wrap items-center gap-4">
+                <LabCheckbox
+                  label="Left column"
+                  checked={leftSubHeader}
+                  onCheckedChange={setLeftSubHeader}
+                />
+                <LabCheckbox
+                  label="Right column"
+                  checked={rightSubHeader}
+                  onCheckedChange={setRightSubHeader}
+                />
+              </div>
+            </ToolbarGroup>
+          ) : (
+            <ToolbarGroup label="Sub-header">
+              <LabCheckbox
+                label="Show"
+                checked={showSubHeader}
+                onCheckedChange={setShowSubHeader}
+              />
+            </ToolbarGroup>
+          )}
+          {isTwoColumn ? (
+            <ToolbarGroup label={`Left column width (${leftWidthPct}%)`} className="w-[14rem]">
+              <AceSlider
+                variant="discrete"
+                discreteSteps={COLUMN_WIDTH_STEPS}
+                min={COLUMN_MIN_PCT}
+                max={COLUMN_MAX_PCT}
+                value={leftWidthPct}
+                onValueChange={(v) => {
+                  const next = Array.isArray(v) ? v[0] : v
+                  setLeftWidthPct(snapColumnWidthPct(next))
+                }}
+                className="w-full"
+              />
+            </ToolbarGroup>
+          ) : null}
         </div>
       }
-      code={<ComponentLabCode>{copy.code}</ComponentLabCode>}
+      examples={
+        <div className="flex w-full flex-col gap-3 pb-16">
+          <div>
+            <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">
+              {isTwoColumn ? 'Two-column layout' : 'Single-column layout'}
+            </p>
+            <p className="m-0 mt-1 text-sm text-[var(--screening-text-muted)]">
+              FinScan site nav and page header with optional sub-header, sidebar, and task bar. In two-column mode,
+              use the width slider to resize panes and toggle each column&apos;s sub-header independently.
+            </p>
+          </div>
+          <LayoutPreview
+            pageLayout={pageLayout}
+            showSidebarControl={showSidebarControl}
+            showSubHeader={showSubHeader}
+            leftSubHeader={leftSubHeader}
+            rightSubHeader={rightSubHeader}
+            leftWidthPct={leftWidthPct}
+            showTaskBar={showTaskBar}
+          />
+        </div>
+      }
+      code={
+        <ComponentLabCode>{`const [pageLayout, setPageLayout] = useState<'single' | 'two-column'>('single')
+const [leftWidthPct, setLeftWidthPct] = useState(50)
+const [leftSubHeader, setLeftSubHeader] = useState(false)
+const [rightSubHeader, setRightSubHeader] = useState(false)
+
+{pageLayout === 'two-column' ? (
+  <div className="flex gap-4">
+    <div style={{ flex: \`0 0 \${leftWidthPct}%\` }}>
+      {leftSubHeader ? <AceSubHeader layout="split" /> : null}
+      {/* left content */}
+    </div>
+    <div style={{ flex: 1 }}>
+      {rightSubHeader ? <AceSubHeader layout="split" /> : null}
+      {/* right content */}
+    </div>
+  </div>
+) : (
+  <>
+    {showSubHeader ? <AceSubHeader layout="full" /> : null}
+    {/* main column */}
+  </>
+)}`}</ComponentLabCode>
+      }
       usage={
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-[var(--color-text-muted)]">
           <li>
-            Default layout matches the Review Assigned shell: header status row, empty main, and a left-panel
-            control to open <code className="text-[var(--color-text-primary)]">AceSidebar</code>.
+            Start with <code className="text-[var(--color-text-primary)]">AceSiteHeader</code>, then{' '}
+            <code className="text-[var(--color-text-primary)]">AcePageHeader</code> for the page title.
           </li>
           <li>
-            Prefer composing <code className="text-[var(--color-text-primary)]">AceSidebar</code> and{' '}
-            <code className="text-[var(--color-text-primary)]">AceInlineDrawer</code> rather than one-off shells.
+            Use <code className="text-[var(--color-text-primary)]">AceSubHeader</code> with{' '}
+            <code className="text-[var(--color-text-primary)]">layout=&quot;full&quot;</code> in single-column pages
+            and <code className="text-[var(--color-text-primary)]">layout=&quot;split&quot;</code> per pane in
+            two-column pages — each pane can show or hide its own sub-header.
           </li>
-          <li>Keep one primary content region; drawers should not replace the main column.</li>
+          <li>
+            Two-column layouts support a resizable split via the left-width slider. Keep the sidebar and inline
+            drawer docked to the shell so they reflow with the content region.
+          </li>
+          <li>
+            Task bar actions open a modal or{' '}
+            <code className="text-[var(--color-text-primary)]">AceInlineDrawer</code>.
+          </li>
         </ul>
       }
     />

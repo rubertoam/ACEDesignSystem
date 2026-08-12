@@ -400,16 +400,19 @@ export function AceSidebar({
       data-open={open}
       aria-hidden={!open}
       className={cn(
-        'flex h-full shrink-0 flex-col overflow-hidden border-solid bg-[var(--screening-surface)]',
+        // Keep overflow on the inner panel so `--ace-sidebar-shadow` is not clipped.
+        'relative flex h-full shrink-0 flex-col border-solid bg-[var(--screening-surface)]',
         panelMotion,
         'border-r-[0.5px] border-[var(--ace-sidebar-border)] shadow-[var(--ace-sidebar-shadow)]',
-        open ? 'w-[var(--ace-sidebar-width)]' : 'w-0 border-r-0 shadow-none',
+        open
+          ? 'z-20 w-[var(--ace-sidebar-width)]'
+          : 'z-0 w-0 border-r-0 shadow-none',
         className,
       )}
     >
       <div
         className={cn(
-          'flex min-w-[var(--ace-sidebar-width)] flex-1 flex-col transition-opacity',
+          'flex min-w-[var(--ace-sidebar-width)] flex-1 flex-col overflow-hidden transition-opacity',
           'duration-[var(--ace-sidebar-duration-panel)]',
           motionEase,
           motionReduce,

@@ -28,6 +28,8 @@ export const LAB_AVAILABILITY_BY_PATH: Record<string, LabAvailabilityStatus> = {
   '/lab/molecules/pagination': 'planned',
   '/lab/molecules/sliders': 'in-progress',
   '/lab/molecules/steppers': 'in-progress',
+  '/lab/molecules/task-bar': 'in-progress',
+  '/lab/molecules/page-headers': 'in-progress',
   '/lab/molecules/toast-messages': 'available',
   '/lab/molecules/inline-messages': 'available',
   '/lab/molecules/filtering': 'in-progress',

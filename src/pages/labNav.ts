@@ -121,6 +121,16 @@ export const labNavSections: LabNavSection[] = [
         'horizontal (−/+) and vertical (chevron) numeric steppers.',
       ),
       component(
+        'Task Bar',
+        '/lab/molecules/task-bar',
+        'bottom action bar for app shells (Review Assigned).',
+      ),
+      component(
+        'Page Headers',
+        '/lab/molecules/page-headers',
+        'Review Assigned page header and full / split sub-header with statistics, paging, more menu, drill-down.',
+      ),
+      component(
         'Tabs',
         '/lab/molecules/tabs',
         'standard underline tabs and Tab Cards for inner-feature navigation (Figma Tabs / Tab Cards).',

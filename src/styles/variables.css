@@ -118,16 +118,18 @@
   --screening-chip-inactive-border: #cfd2d9;
   --screening-chip-inactive-hover-bg: var(--ace-neutral-100);
   --screening-chip-inactive-hover-border: #949baa;
-  --screening-pill-new-border: #d6cef5;
-  --screening-pill-new-surface: #f4f1fc;
+  /* AceBadge purple / New — Figma Badge (5064:2991) */
+  --screening-pill-new-border: #523eb9;
+  --screening-pill-new-surface: #efeef9;
   --screening-pill-new-dot: #523eb9;
   --screening-pill-new-label: #523eb9;
   --screening-chip-active-text: #523eb9;
   --screening-chip-active-border: #523eb9;
-  --screening-pill-escalated-border: #ffcc80;
-  --screening-pill-escalated-surface: #fff4e8;
-  --screening-pill-escalated-dot: #ef6c00;
-  --screening-pill-escalated-label: #e65100;
+  /* AceBadge orange / Escalate — Figma Badge */
+  --screening-pill-escalated-border: #e67e23;
+  --screening-pill-escalated-surface: #fdf3ea;
+  --screening-pill-escalated-dot: #e67e23;
+  --screening-pill-escalated-label: #e67e23;
   --screening-score-high: #c62828;
   --screening-age-fresh: #2e7d32;
   --screening-age-warn: #ef6c00;
@@ -314,7 +316,7 @@
   --ace-sidebar-duration-expand: var(--ace-motion-duration-medium);
 
   /* Inline Drawer — right in-flow panel (Figma 1063:3635 / 4081:943+) */
-  --ace-inline-drawer-width: 32rem; /* 512px */
+  --ace-inline-drawer-width: 30rem; /* 480px — Review Assigned SideDrawer default */
   --ace-inline-drawer-border: var(--ace-neutral-400);
   --ace-inline-drawer-shadow: -6px 0 5px rgb(0 0 0 / 0.03);
   --ace-inline-drawer-duration-panel: var(--ace-sidebar-duration-panel);
@@ -324,6 +326,30 @@
   --ace-inline-drawer-body-py: 1rem;
   --ace-inline-drawer-section-gap: 0.625rem; /* 10px */
   --ace-inline-drawer-footer-gap: 1rem; /* 16px */
+
+  /* ACE Task Bar — Review Assigned bottom action bar */
+  --ace-task-bar-surface: var(--screening-surface);
+  --ace-task-bar-border: var(--screening-border-strong);
+  --ace-task-bar-shadow: var(--ace-drop-shadow-xs);
+  --ace-task-bar-px: 1rem; /* 16px */
+  --ace-task-bar-py: 1rem; /* 16px */
+
+  /* ACE Page Header — Review Assigned title bar under site nav */
+  --ace-page-header-bg: var(--screening-surface); /* Shades / 0 */
+  --ace-page-header-border: var(--screening-border-strong);
+  --ace-page-header-px: 2rem; /* 32px */
+  --ace-page-header-py: 0.75rem; /* 12px */
+
+  /* ACE Sub-header — Figma Headers 1049:2627 (full / split) */
+  --ace-sub-header-bg: var(--screening-surface); /* Shades / 0 */
+  --ace-sub-header-border: var(--screening-border-strong);
+  --ace-sub-header-radius: var(--radius-sm);
+  --ace-sub-header-stat-separator: var(--screening-icon-muted); /* Neutral/500 #949BAA */
+  --ace-sub-header-back: var(--ace-button-purple-500); /* FinScan Primary/500 #3D2E8A */
+  --ace-sub-header-px: 2rem; /* 32px */
+  --ace-sub-header-py: 0.75rem; /* 12px */
+  --ace-sub-header-drilldown-pl: 3rem; /* 48px */
+  --ace-sub-header-height: 3.75rem; /* 60px */
 
   /* Tabs (Figma 2045:4334) */
   --ace-tabs-gap: var(--space-3);
@@ -436,74 +462,75 @@
   --ace-tooltip-duration: var(--ace-motion-duration-fast);
   --ace-tooltip-ease: ease;
 
-  /* ACE Status pill — Review Assigned ScreeningResultsTable STATUS_PILL_STYLES */
-  --ace-status-pill-gap: 0.375rem; /* gap-1.5 */
-  --ace-status-pill-py: 0.25rem; /* py-1 */
-  --ace-status-pill-pl: 0.375rem; /* pl-1.5 */
-  --ace-status-pill-pr: 0.5rem; /* pr-2 */
-  --ace-status-pill-dot-size: 0.5rem; /* size-2 */
-  --ace-status-pill-label-size: 0.6875rem; /* 11px */
-  --ace-status-pill-label-size-sm: 0.75rem; /* 12px @ sm+ */
-  /* New */
+  /* ACE Badge / Status pill — Figma Badge (5064:2991): px 8, py 2, gap 6, Caption Regular 12 / 1.65 */
+  --ace-status-pill-gap: 0.375rem; /* 6px */
+  --ace-status-pill-py: 0.125rem; /* 2px */
+  --ace-status-pill-px: 0.5rem; /* 8px */
+  --ace-status-pill-pl: var(--ace-status-pill-px);
+  --ace-status-pill-pr: var(--ace-status-pill-px);
+  --ace-status-pill-dot-size: 0.5rem; /* 8px */
+  --ace-status-pill-label-size: 0.75rem; /* 12px */
+  --ace-status-pill-label-leading: 1.65;
+  /* Purple — FinScan Primary/50 + /400 (aliases New pill for dark-mode overrides) */
   --ace-status-pill-purple-border: var(--screening-pill-new-border);
   --ace-status-pill-purple-surface: var(--screening-pill-new-surface);
-  --ace-status-pill-purple-dot: #523eb9;
+  --ace-status-pill-purple-dot: var(--screening-pill-new-dot);
   --ace-status-pill-purple-label: var(--screening-pill-new-label);
-  /* Escalate */
-  --ace-status-pill-orange-border: #ffcc80;
-  --ace-status-pill-orange-surface: #fff4e8;
-  --ace-status-pill-orange-dot: #ef6c00;
-  --ace-status-pill-orange-label: #e65100;
-  /* Safe / Confirmed Safe */
-  --ace-status-pill-green-border: #a5d6a7;
-  --ace-status-pill-green-surface: #e8f4ea;
-  --ace-status-pill-green-dot: #2e7d32;
-  --ace-status-pill-green-label: #2d6a3e;
-  /* False Positive */
-  --ace-status-pill-gray-border: #cfd2d9;
-  --ace-status-pill-gray-surface: #f5f6f8;
-  --ace-status-pill-gray-dot: #6a7285;
+  /* Orange — Warning/50 + /500 (aliases Escalate pill for dark-mode overrides) */
+  --ace-status-pill-orange-border: var(--screening-pill-escalated-border);
+  --ace-status-pill-orange-surface: var(--screening-pill-escalated-surface);
+  --ace-status-pill-orange-dot: var(--screening-pill-escalated-dot);
+  --ace-status-pill-orange-label: var(--screening-pill-escalated-label);
+  /* Green — Success/50 + /600 */
+  --ace-status-pill-green-border: #658825;
+  --ace-status-pill-green-surface: #f8fbf1;
+  --ace-status-pill-green-dot: #658825;
+  --ace-status-pill-green-label: #658825;
+  /* Gray — Neutral/50 + border Neutral/500, label Neutral/700 */
+  --ace-status-pill-gray-border: #949baa;
+  --ace-status-pill-gray-surface: #fafafb;
+  --ace-status-pill-gray-dot: #949baa;
   --ace-status-pill-gray-label: #464c59;
-  /* Research (Internal) */
-  --ace-status-pill-blue-border: #90caf9;
-  --ace-status-pill-blue-surface: #e3f2fd;
-  --ace-status-pill-blue-dot: #1976d2;
-  --ace-status-pill-blue-label: #1565c0;
-  /* Flag for EDD */
-  --ace-status-pill-yellow-border: #ffe082;
-  --ace-status-pill-yellow-surface: #fff8e1;
-  --ace-status-pill-yellow-dot: #f9a825;
-  --ace-status-pill-yellow-label: #f57f17;
-  /* Route to Supervisor */
-  --ace-status-pill-pink-border: #ce93d8;
-  --ace-status-pill-pink-surface: #f3e5f5;
-  --ace-status-pill-pink-dot: #8e24aa;
-  --ace-status-pill-pink-label: #6a1b9a;
-  /* Research (External) */
-  --ace-status-pill-teal-border: #80cbc4;
-  --ace-status-pill-teal-surface: #e0f2f1;
-  --ace-status-pill-teal-dot: #00897b;
-  --ace-status-pill-teal-label: #00695c;
-  /* Remediate */
-  --ace-status-pill-red-border: #ef9a9a;
-  --ace-status-pill-red-surface: #fdecea;
-  --ace-status-pill-red-dot: #c62828;
-  --ace-status-pill-red-label: #b71c1c;
+  /* Blue — Innovative Blue/50 + /500 */
+  --ace-status-pill-blue-border: #0672a3;
+  --ace-status-pill-blue-surface: #eaf8fe;
+  --ace-status-pill-blue-dot: #0672a3;
+  --ace-status-pill-blue-label: #0672a3;
+  /* Yellow — Warning Secondary/50 + /500 */
+  --ace-status-pill-yellow-border: #ffbe0b;
+  --ace-status-pill-yellow-surface: #fffcf3;
+  --ace-status-pill-yellow-dot: #ffbe0b;
+  --ace-status-pill-yellow-label: #ffbe0b;
+  /* Pink — FinScan Secondary/50 + /500 */
+  --ace-status-pill-pink-border: #92278f;
+  --ace-status-pill-pink-surface: #fcf2fb;
+  --ace-status-pill-pink-dot: #92278f;
+  --ace-status-pill-pink-label: #92278f;
+  /* Teal — FinScan Teal/50 + /500 */
+  --ace-status-pill-teal-border: #22adb6;
+  --ace-status-pill-teal-surface: #f0fbfc;
+  --ace-status-pill-teal-dot: #22adb6;
+  --ace-status-pill-teal-label: #22adb6;
+  /* Red — Error/50 + /500 */
+  --ace-status-pill-red-border: #dc264b;
+  --ace-status-pill-red-surface: #fdf4f6;
+  --ace-status-pill-red-dot: #dc264b;
+  --ace-status-pill-red-label: #dc264b;
 
-  /* ACE Badge tag — Review Assigned ReviewMetaTag / client profile accordion */
-  --ace-badge-tag-gap: 0.375rem; /* gap-1.5 */
-  --ace-badge-tag-radius: var(--radius-sm);
-  --ace-badge-tag-px: 0.5rem; /* px-2 */
-  --ace-badge-tag-py: 0.125rem; /* py-0.5 */
+  /* ACE Badge tag — same padding/colors as pills; squared radius */
+  --ace-badge-tag-gap: var(--ace-status-pill-gap);
+  --ace-badge-tag-radius: 0.25rem; /* 4px */
+  --ace-badge-tag-px: var(--ace-status-pill-px);
+  --ace-badge-tag-py: var(--ace-status-pill-py);
   --ace-badge-tag-border: var(--screening-border-strong);
   --ace-badge-tag-surface: var(--screening-surface-muted);
   --ace-badge-tag-label: var(--screening-text-secondary);
-  --ace-badge-tag-warning-border: var(--screening-pill-escalated-dot);
+  --ace-badge-tag-warning-border: var(--screening-pill-escalated-border);
   --ace-badge-tag-warning-surface: var(--ace-warning-50);
   --ace-badge-tag-warning-label: var(--screening-pill-escalated-label);
   --ace-badge-tag-warning-icon-size: 0.75rem; /* size-3 */
   --ace-badge-tag-warning-icon-text-size: 0.5rem; /* 8px */
-  --ace-badge-tag-warning-icon-bg: #ef6c00;
+  --ace-badge-tag-warning-icon-bg: #e67e23;
   --ace-badge-tag-warning-icon-fg: #ffffff;
 
   /* ACE Toast — Figma Toast Messages (2783:5) */
@@ -824,9 +851,10 @@
     --screening-primary-soft-bg: #2a2540;
     --screening-primary-soft-bg-hover: #352f4d;
     --screening-primary-hover-border: #9b8ed4;
-    --screening-pill-new-border: #d6cef5;
-    --screening-pill-new-surface: #f4f1fc;
-    --screening-pill-new-dot: #523eb9;
+    --screening-pill-new-border: #4a4068;
+    --screening-pill-new-surface: #2a2540;
+    --screening-pill-new-dot: var(--screening-primary);
+    --screening-pill-new-label: var(--screening-chip-active-text);
     --screening-chip-active-text: #dcd7e8;
     --screening-chip-active-border: #7c6bc4;
     --screening-checkbox-inner-bg: var(--ace-dark-mode-800);

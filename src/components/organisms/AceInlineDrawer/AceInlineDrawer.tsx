@@ -4,19 +4,11 @@ import { Toggle } from '../../atoms/Toggle/Toggle'
 import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
-
-const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]'
-const motionReduce = 'motion-reduce:transition-none motion-reduce:duration-0'
-
-const panelMotion = cn(
-  'transition-[width,border-color,box-shadow,opacity]',
-  'duration-[var(--ace-inline-drawer-duration-panel)]',
-  motionEase,
-  motionReduce,
-)
+import { sidebarIconButtonClass } from '../AceSidebar/sidebarRowActions'
+import { AceSideDrawer } from './AceSideDrawer'
 
 const titleClass = cn(
-  'm-0 [font:var(--ace-type-heading-h5-bold)] [letter-spacing:var(--ace-type-heading-h5-bold-tracking)]',
+  'm-0 shrink-0 whitespace-nowrap font-[family-name:var(--font-ace-noto)] text-[20px] font-bold leading-[1.65]',
   'text-[var(--screening-text-primary)]',
 )
 
@@ -25,38 +17,54 @@ const toggleLabelClass = cn(
   'text-sm text-[var(--screening-primary)]',
 )
 
+const notoVar = { fontVariationSettings: "'CTGR' 0, 'wdth' 100" } as const
+
 export type AceInlineDrawerProps = {
   open?: boolean
   defaultOpen?: boolean
+  /** Called on Escape, header close, and when secondary footer has no dedicated handler. */
+  onClose?: () => void
+  /** @deprecated Prefer `onClose`. Still honored for secondary footer when `onCancel` is unset. */
   onOpenChange?: (open: boolean) => void
-  /** Drawer title — Heading/H5/Bold (Figma). */
+  /** Drawer title — Review Assigned header uses Noto Bold 20. */
   title?: ReactNode
-  /** Shows a back chevron before the title (Property 2 = Back Button). */
+  /** Shows a back chevron before the title. */
   showBackButton?: boolean
   onBack?: () => void
-  /** Header toggle (Property 1 = Toggle). */
+  /** Optional header view toggle. */
   showToggle?: boolean
   toggleChecked?: boolean
   onToggleChange?: (checked: boolean) => void
   toggleLabel?: string
-  /** Body content between header and footer. Omit for NoContent frame. */
+  /** Show the header close (X) control. Default true (Review Assigned). */
+  showCloseButton?: boolean
+  /** Body content between header and footer. Omit for an empty body. */
   children?: ReactNode
+  /** Secondary footer label. Default `Close` (Review Assigned / Figma Inline Drawer). */
   cancelLabel?: string
+  /** Primary footer label. Default `Confirm`. */
   saveLabel?: string
   onCancel?: () => void
   onSave?: () => void
-  /** Replace default Cancel / Save footer. */
+  /** Replace default Close / Confirm footer. */
   footer?: ReactNode
+  /** localStorage key for persisted width; omit to skip persistence. */
+  widthStorageKey?: string
+  defaultWidth?: number
+  minWidth?: number
+  maxWidth?: number
   className?: string
 }
 
 /**
- * Right-side in-flow drawer — same width open/close motion as AceSidebar (not an overlay).
- * Figma Inline Drawer 1063:3635.
+ * Right-side in-flow drawer from Review Assigned (`SideDrawer` + Review panel chrome).
+ * Resizable; not an overlay. Escape and the header close control dismiss it.
  */
 export function AceInlineDrawer({
   open: openProp,
   defaultOpen = true,
+  onClose,
+  onOpenChange,
   title = 'Title',
   showBackButton = false,
   onBack,
@@ -64,107 +72,119 @@ export function AceInlineDrawer({
   toggleChecked = false,
   onToggleChange,
   toggleLabel = 'Switch view toggle',
+  showCloseButton = true,
   children,
-  cancelLabel = 'Cancel',
-  saveLabel = 'Save',
+  cancelLabel = 'Close',
+  saveLabel = 'Confirm',
   onCancel,
   onSave,
   footer,
+  widthStorageKey,
+  defaultWidth = 480,
+  minWidth,
+  maxWidth,
   className,
 }: AceInlineDrawerProps) {
   const open = openProp ?? defaultOpen
   const hasBody = children != null && children !== false
 
+  const dismiss = () => {
+    onClose?.()
+    onOpenChange?.(false)
+  }
+
+  const handleCancel = () => {
+    if (onCancel) onCancel()
+    else dismiss()
+  }
+
   const defaultFooter = (
-    <div className="flex w-full shrink-0 items-start justify-end gap-[var(--ace-inline-drawer-footer-gap)]">
-      <AceButton type="button" variant="secondary" size="md" onClick={onCancel}>
+    <div className="flex w-full shrink-0 items-start justify-end gap-[var(--ace-inline-drawer-footer-gap)] p-6">
+      <AceButton type="button" variant="secondary" size="md" onClick={handleCancel}>
         {cancelLabel}
       </AceButton>
-      <AceButton type="button" variant="primary" size="md" onClick={onSave}>
+      <AceButton type="button" variant="primary" size="md" onClick={onSave ?? dismiss}>
         {saveLabel}
       </AceButton>
     </div>
   )
 
   return (
-    <aside
-      data-open={open}
-      aria-hidden={!open}
-      className={cn(
-        'flex h-full shrink-0 flex-col overflow-hidden border-solid bg-[var(--screening-surface)]',
-        panelMotion,
-        'border-l-[0.5px] border-[var(--ace-inline-drawer-border)] shadow-[var(--ace-inline-drawer-shadow)]',
-        open ? 'w-[var(--ace-inline-drawer-width)]' : 'w-0 border-l-0 shadow-none',
-        className,
-      )}
+    <AceSideDrawer
+      open={open}
+      onClose={dismiss}
+      widthStorageKey={widthStorageKey}
+      defaultWidth={defaultWidth}
+      minWidth={minWidth}
+      maxWidth={maxWidth}
+      className={cn('min-h-0 self-stretch', className)}
     >
-      <div
-        className={cn(
-          'flex min-w-[var(--ace-inline-drawer-width)] flex-1 flex-col transition-opacity',
-          'duration-[var(--ace-inline-drawer-duration-panel)]',
-          motionEase,
-          motionReduce,
-          open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
-        )}
-      >
-        <header
-          className={cn(
-            'flex shrink-0 items-center overflow-hidden bg-[var(--screening-surface)]',
-            'px-[var(--ace-inline-drawer-header-px)] py-[var(--ace-inline-drawer-header-py)]',
-            showToggle ? 'justify-between gap-4' : 'justify-start',
-          )}
-        >
-          <div className="flex min-w-0 items-center gap-4">
-            {showBackButton ? (
-              <button
-                type="button"
-                onClick={onBack}
-                aria-label="Back"
-                className={cn(
-                  'inline-flex shrink-0 items-center justify-center rounded-[var(--radius-sm)] border-0 bg-transparent p-0',
-                  'text-[var(--screening-text-primary)]',
-                  'transition-colors duration-[var(--ace-motion-duration-fast)]',
-                  motionEase,
-                  motionReduce,
-                  'hover:bg-[var(--screening-surface-hover)]',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
-                )}
-              >
-                <MaterialSymbol name="chevron_left" size="md" className={aceChevronIconClass} />
-              </button>
-            ) : null}
-            <h2 className={titleClass}>{title}</h2>
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <div className="relative w-full shrink-0 bg-[var(--screening-surface)]">
+          <div
+            className={cn(
+              'flex size-full flex-row items-center gap-3 overflow-clip px-5 py-4',
+              showToggle || showCloseButton ? 'justify-between' : 'justify-start',
+            )}
+          >
+            <div className="flex min-w-0 items-center gap-4">
+              {showBackButton ? (
+                <button
+                  type="button"
+                  onClick={onBack}
+                  aria-label="Back"
+                  className={sidebarIconButtonClass}
+                >
+                  <MaterialSymbol name="chevron_left" size="md" className={aceChevronIconClass} />
+                </button>
+              ) : null}
+              <h2 className={titleClass} style={notoVar}>
+                {title}
+              </h2>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-3">
+              {showToggle ? (
+                <label className="flex cursor-pointer items-center gap-3">
+                  <Toggle
+                    size="sm"
+                    checked={toggleChecked}
+                    onCheckedChange={onToggleChange}
+                    aria-label={toggleLabel}
+                  />
+                  <span className={toggleLabelClass}>{toggleLabel}</span>
+                </label>
+              ) : null}
+              {showCloseButton ? (
+                <button
+                  type="button"
+                  onClick={dismiss}
+                  aria-label="Close drawer"
+                  className={sidebarIconButtonClass}
+                >
+                  <MaterialSymbol name="close" size="md" className="text-current" />
+                </button>
+              ) : null}
+            </div>
           </div>
+        </div>
 
-          {showToggle ? (
-            <label className="flex shrink-0 cursor-pointer items-center gap-3">
-              <Toggle
-                size="sm"
-                checked={toggleChecked}
-                onCheckedChange={onToggleChange}
-                aria-label={toggleLabel}
-              />
-              <span className={toggleLabelClass}>{toggleLabel}</span>
-            </label>
-          ) : null}
-        </header>
-
-        <div
-          className={cn(
-            'flex min-h-0 flex-1 flex-col overflow-hidden bg-[var(--screening-surface)]',
-            hasBody
-              ? 'justify-between px-[var(--ace-inline-drawer-body-px)] py-[var(--ace-inline-drawer-body-py)]'
-              : 'items-end justify-end p-[var(--ace-inline-drawer-body-px)]',
-          )}
-        >
+        <div className="relative flex min-h-px w-full flex-1 flex-col bg-[var(--screening-surface)]">
           {hasBody ? (
-            <div className="flex min-h-0 w-full flex-1 flex-col gap-[var(--ace-inline-drawer-section-gap)] overflow-y-auto">
+            <div
+              className={cn(
+                'flex min-h-0 w-full flex-1 flex-col gap-[var(--ace-inline-drawer-section-gap)] overflow-y-auto',
+                'px-[var(--ace-inline-drawer-body-px)] py-[var(--ace-inline-drawer-body-py)]',
+              )}
+            >
               {children}
             </div>
-          ) : null}
+          ) : (
+            <div className="min-h-0 flex-1" aria-hidden />
+          )}
           {footer ?? defaultFooter}
         </div>
       </div>
-    </aside>
+    </AceSideDrawer>
   )
 }

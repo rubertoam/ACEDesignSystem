@@ -25,15 +25,15 @@ type BadgeTokens = {
   label: string
 }
 
-/** Review Assigned `statusPillShellClass` — layout only; colors via CSS vars. */
+/** Figma Badge pill shell — px 8, py 2, gap 6, rounded-full; colors via CSS vars. */
 export const aceBadgeStatusShellClass = cn(
   'inline-flex w-fit max-w-none shrink-0 items-center gap-[var(--ace-status-pill-gap)] whitespace-nowrap rounded-full',
   'border border-solid border-[var(--ace-status-pill-border)] bg-[var(--ace-status-pill-surface)]',
-  'py-[var(--ace-status-pill-py)] pl-[var(--ace-status-pill-pl)] pr-[var(--ace-status-pill-pr)]',
+  'px-[var(--ace-status-pill-px)] py-[var(--ace-status-pill-py)]',
   'transition-colors duration-200 ease-out',
 )
 
-/** Review Assigned `ReviewMetaTag` / client profile accordion tags. */
+/** Figma Badge tag shell — same padding as pill; 4px radius; no leading dot. */
 export const aceBadgeTagShellClass = cn(
   'inline-flex w-fit max-w-none shrink-0 items-center gap-[var(--ace-badge-tag-gap)] whitespace-nowrap',
   'rounded-[var(--ace-badge-tag-radius)] border border-solid',
@@ -45,17 +45,17 @@ export const aceBadgeTagShellClass = cn(
 export const aceBadgeStatusDotClass =
   'size-[var(--ace-status-pill-dot-size)] shrink-0 rounded-full bg-[var(--ace-status-pill-dot)]'
 
-/** Status pill label — Regular, 11px → 12px at sm, leading-none. */
+/** Caption Regular 12 / leading 1.65 — Figma Badge label. */
 export const aceBadgeStatusLabelClass = cn(
-  'shrink-0 whitespace-nowrap font-[family-name:var(--font-ace-noto)] font-normal leading-none',
-  'text-[length:var(--ace-status-pill-label-size)] sm:text-[length:var(--ace-status-pill-label-size-sm)]',
+  'shrink-0 whitespace-nowrap font-[family-name:var(--font-ace-noto)] font-normal',
+  'text-[length:var(--ace-status-pill-label-size)] leading-[var(--ace-status-pill-label-leading)]',
   'text-[var(--ace-status-pill-label)]',
 )
 
-/** Meta tag label — Caption Regular (not bold). */
+/** Same Caption Regular treatment as pills; color from variant tokens. */
 export const aceBadgeTagLabelClass = cn(
-  'shrink-0 whitespace-nowrap',
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  'shrink-0 whitespace-nowrap font-[family-name:var(--font-ace-noto)] font-normal',
+  'text-[length:var(--ace-status-pill-label-size)] leading-[var(--ace-status-pill-label-leading)]',
   'text-[var(--ace-badge-tag-label)]',
 )
 
