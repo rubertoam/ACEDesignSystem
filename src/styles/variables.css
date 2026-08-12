@@ -606,6 +606,15 @@
   --ace-attachments-error: var(--dialog-modal-danger);
   --ace-attachments-divider: var(--screening-border-strong);
 
+  /* ACE Scrollable List — Review Assigned CaseList shell */
+  --ace-scrollable-list-surface: var(--screening-surface);
+  --ace-scrollable-list-border: var(--screening-border-strong);
+  --ace-scrollable-list-title: var(--screening-text-primary);
+  --ace-scrollable-list-item-text: var(--ace-neutral-800);
+  --ace-scrollable-list-item-selected-bg: #e4e6ea;
+  --ace-scrollable-list-item-hover-bg: #e4e6ea;
+  --ace-scrollable-list-icon: #523eb9;
+
   /* ACE Filtering — Figma Table Headers / filters (1540:4577) */
   --ace-filter-radius: 4px;
   --ace-filter-gap: 0.5rem;
@@ -1015,6 +1024,15 @@
     --ace-attachments-label: var(--screening-text-secondary);
     --ace-attachments-muted: var(--screening-text-muted);
     --ace-attachments-divider: var(--screening-border-strong);
+
+    /* Scrollable List */
+    --ace-scrollable-list-surface: var(--screening-surface);
+    --ace-scrollable-list-border: var(--screening-border-strong);
+    --ace-scrollable-list-title: var(--screening-text-primary);
+    --ace-scrollable-list-item-text: var(--screening-text-primary);
+    --ace-scrollable-list-item-selected-bg: #333a42;
+    --ace-scrollable-list-item-hover-bg: #333a42;
+    --ace-scrollable-list-icon: var(--screening-primary);
 
     /* Cards */
     --ace-landing-page-card-surface: var(--screening-surface);

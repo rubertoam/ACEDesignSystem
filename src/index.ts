@@ -267,6 +267,32 @@ export {
   type AceAttachmentsProps,
 } from './components/organisms/AceAttachments/AceAttachments'
 export {
+  AceScrollableList,
+  DEMO_SCROLLABLE_LIST_FILTER_GROUPS,
+  DEMO_SCROLLABLE_LIST_ITEMS,
+  DEMO_SCROLLABLE_LIST_SORT_OPTIONS,
+  type AceScrollableListFilterGroup,
+  type AceScrollableListFilterOption,
+  type AceScrollableListIconKind,
+  type AceScrollableListItem,
+  type AceScrollableListProps,
+  type AceScrollableListSortOption,
+} from './components/organisms/AceScrollableList/AceScrollableList'
+export {
+  AceScrollableListBody,
+  type AceScrollableListBodyProps,
+} from './components/organisms/AceScrollableList/AceScrollableListBody'
+export {
+  AceScrollableListItemRow,
+  formatScrollableListItemSecondary,
+  type AceScrollableListItemRowProps,
+} from './components/organisms/AceScrollableList/AceScrollableListItemRow'
+export {
+  AceScrollableListItemIcon,
+  ACE_SCROLLABLE_LIST_ORGANIZATION_PATH,
+  ACE_SCROLLABLE_LIST_PERSON_PATH,
+} from './components/organisms/AceScrollableList/scrollableListIcons'
+export {
   DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS,
   ScreeningResultsTable,
   getScreeningRowsForCase,

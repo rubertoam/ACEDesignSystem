@@ -37,6 +37,12 @@ export const labNavGuidelinesItem: LabNavItem = {
   to: '/lab',
 }
 
+/** Top-level link below collapsible atomic-design sections. */
+export const labNavLayoutsItem: LabNavItem = {
+  label: 'Layouts',
+  to: '/lab/layouts',
+}
+
 export const labNavSections: LabNavSection[] = [
   {
     title: 'Atoms',
@@ -182,6 +188,11 @@ export const labNavSections: LabNavSection[] = [
         '/lab/organisms/attachments',
         'file upload dropzone and URL linking for case evidence (Figma 3313-156).',
       ),
+      component(
+        'Scrollable List',
+        '/lab/organisms/scrollable-list',
+        'filter, sort, minimize, and selectable rows (Review Assigned Case List).',
+      ),
     ],
   },
 ]
@@ -202,6 +213,7 @@ export function getLabNavFlat(): {
         availability: item.availability,
       })),
     ),
+    { ...labNavLayoutsItem, section: 'Layouts' },
   ]
 }
 

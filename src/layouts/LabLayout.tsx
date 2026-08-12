@@ -10,6 +10,7 @@ import {
   getLabNavFlat,
   getLabNavMatch,
   labNavGuidelinesItem,
+  labNavLayoutsItem,
   labNavSections,
 } from '../pages/labNav'
 
@@ -188,100 +189,86 @@ export function LabLayout() {
           </ul>
           <div className="flex flex-col gap-[20px]">
           {labNavSections.map((section) => {
-            const collapsible = COLLAPSIBLE_SECTIONS.has(section.title)
-            const isOpen = collapsible ? (openSections[section.title] ?? false) : true
+            const isOpen = openSections[section.title] ?? false
             const headingId = `lab-nav-${section.title.toLowerCase().replace(/\s+/g, '-')}`
 
             return (
               <div key={section.title}>
-                {collapsible ? (
-                  <>
-                    <button
-                      type="button"
-                      id={headingId}
-                      data-lab-nav-section={section.title}
-                      aria-expanded={isOpen}
-                      aria-controls={`${headingId}-links`}
-                      onClick={() => toggleSection(section.title)}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter' || event.key === ' ') {
-                          event.preventDefault()
-                          toggleSection(section.title)
-                          return
-                        }
-                        if (event.key === 'ArrowRight') {
-                          event.preventDefault()
-                          setSectionOpen(section.title, true)
-                          return
-                        }
-                        if (event.key === 'ArrowLeft') {
-                          event.preventDefault()
-                          setSectionOpen(section.title, false)
-                        }
-                      }}
-                      className={cn(
-                        p1,
-                        'mb-0 flex w-full items-center gap-2 rounded-[var(--radius-md)] px-2 py-1 text-left text-sm font-semibold',
-                        'text-[var(--screening-text-muted)] transition-colors hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)]',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-surface)]',
-                      )}
-                    >
-                      <MaterialSymbol
-                        name="keyboard_arrow_right"
-                        size="md"
-                        className={cn(aceChevronIconClass, 'opacity-70', chevronMotion, isOpen && 'rotate-90')}
-                      />
-                      <span>{section.title}</span>
-                    </button>
-                    <div className={cn('grid', navMotion, isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]')}>
-                      <div className="min-h-0 overflow-hidden" inert={!isOpen ? true : undefined}>
-                        <ul id={`${headingId}-links`} className="m-0 list-none p-0" aria-labelledby={headingId}>
-                          {section.items.map((item) => (
-                            <li key={item.to} className="m-0 p-0">
-                              <NavLink
-                                to={item.to}
-                                className={sectionNavLinkClass}
-                                end={
-                                  item.to === '/lab' ||
-                                  item.to === '/lab/atoms' ||
-                                  item.to === '/lab/molecules' ||
-                                  item.to === '/lab/organisms'
-                                }
-                              >
-                                {item.label}
-                              </NavLink>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <p
-                      id={headingId}
-                      className={cn(
-                        p1,
-                        'mb-0 px-2 py-1 text-sm font-semibold text-[var(--screening-text-muted)]',
-                      )}
-                    >
-                      {section.title}
-                    </p>
-                    <ul className="m-0 list-none p-0" aria-labelledby={headingId}>
+                <button
+                  type="button"
+                  id={headingId}
+                  data-lab-nav-section={section.title}
+                  aria-expanded={isOpen}
+                  aria-controls={`${headingId}-links`}
+                  onClick={() => toggleSection(section.title)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault()
+                      toggleSection(section.title)
+                      return
+                    }
+                    if (event.key === 'ArrowRight') {
+                      event.preventDefault()
+                      setSectionOpen(section.title, true)
+                      return
+                    }
+                    if (event.key === 'ArrowLeft') {
+                      event.preventDefault()
+                      setSectionOpen(section.title, false)
+                    }
+                  }}
+                  className={cn(
+                    p1,
+                    'mb-0 flex w-full items-center gap-2 rounded-[var(--radius-md)] px-2 py-1 text-left text-sm font-semibold',
+                    'text-[var(--screening-text-muted)] transition-colors hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)]',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-surface)]',
+                  )}
+                >
+                  <MaterialSymbol
+                    name="keyboard_arrow_right"
+                    size="md"
+                    className={cn(aceChevronIconClass, 'opacity-70', chevronMotion, isOpen && 'rotate-90')}
+                  />
+                  <span>{section.title}</span>
+                </button>
+                <div className={cn('grid', navMotion, isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]')}>
+                  <div className="min-h-0 overflow-hidden" inert={!isOpen ? true : undefined}>
+                    <ul id={`${headingId}-links`} className="m-0 list-none p-0" aria-labelledby={headingId}>
                       {section.items.map((item) => (
                         <li key={item.to} className="m-0 p-0">
-                          <NavLink to={item.to} className={sectionNavLinkClass} end={item.to === '/lab'}>
+                          <NavLink
+                            to={item.to}
+                            className={sectionNavLinkClass}
+                            end={
+                              item.to === '/lab' ||
+                              item.to === '/lab/atoms' ||
+                              item.to === '/lab/molecules' ||
+                              item.to === '/lab/organisms'
+                            }
+                          >
                             {item.label}
                           </NavLink>
                         </li>
                       ))}
                     </ul>
-                  </>
-                )}
+                  </div>
+                </div>
               </div>
             )
           })}
           </div>
+          <div
+            className="my-6 border-t border-solid border-[var(--screening-border-strong)]"
+            role="separator"
+            aria-hidden
+          />
+          <ul className="m-0 list-none space-y-1 p-0">
+            <li>
+              <NavLink to={labNavLayoutsItem.to} className={topNavLinkClass} end>
+                {labNavLayoutsItem.label}
+              </NavLink>
+            </li>
+          </ul>
         </nav>
       </aside>
         <main className="min-w-0 flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10">

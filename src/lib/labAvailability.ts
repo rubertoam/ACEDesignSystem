@@ -41,6 +41,7 @@ export const LAB_AVAILABILITY_BY_PATH: Record<string, LabAvailabilityStatus> = {
   '/lab/organisms/cards': 'available',
   '/lab/organisms/timeline': 'available',
   '/lab/organisms/attachments': 'available',
+  '/lab/organisms/scrollable-list': 'in-progress',
 }
 
 export function getLabAvailability(pathname: string): LabAvailabilityStatus | undefined {

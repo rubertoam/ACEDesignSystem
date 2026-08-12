@@ -11,6 +11,7 @@ import { PaginationLab } from './pages/PaginationLab'
 import { SlidersLab } from './pages/SlidersLab'
 import { SteppersLab } from './pages/SteppersLab'
 import { OrganismsLab } from './pages/OrganismsLab'
+import { LayoutsLab } from './pages/LayoutsLab'
 import { DialogModalLab } from './pages/DialogModalLab'
 import { DateAndTimePickersLab } from './pages/DateAndTimePickersLab'
 import { SidebarLab } from './pages/SidebarLab'
@@ -36,6 +37,7 @@ import { FilteringLab } from './pages/FilteringLab'
 import { DescriptiveButtonsLab } from './pages/DescriptiveButtonsLab'
 import { TimelineLab } from './pages/TimelineLab'
 import { AttachmentsLab } from './pages/AttachmentsLab'
+import { ScrollableListLab } from './pages/ScrollableListLab'
 
 export default function App() {
   return (
@@ -82,6 +84,8 @@ export default function App() {
         <Route path="organisms/cards" element={<CardsLab />} />
         <Route path="organisms/timeline" element={<TimelineLab />} />
         <Route path="organisms/attachments" element={<AttachmentsLab />} />
+        <Route path="organisms/scrollable-list" element={<ScrollableListLab />} />
+        <Route path="layouts" element={<LayoutsLab />} />
       </Route>
       <Route path="*" element={<Navigate to="/lab" replace />} />
     </Routes>
