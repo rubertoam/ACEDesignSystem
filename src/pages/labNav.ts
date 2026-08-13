@@ -128,7 +128,7 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Page Headers',
         '/lab/molecules/page-headers',
-        'Review Assigned page header and full / split sub-header with statistics, paging, more menu, drill-down.',
+        'Review Assigned page header and responsive sub-header with statistics, paging, more menu, drill-down.',
       ),
       component(
         'Tabs',

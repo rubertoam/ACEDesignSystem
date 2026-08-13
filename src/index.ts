@@ -128,10 +128,10 @@ export {
   aceSubHeaderHeadlineClass,
   aceSubHeaderIconButtonClass,
   aceSubHeaderPaginationLabelClass,
+  aceSubHeaderShellClass,
   aceSubHeaderSplitShellClass,
   aceSubHeaderStatClass,
   aceSubHeaderStatSeparatorClass,
-  type AceSubHeaderLayout,
   type AceSubHeaderProps,
 } from './components/molecules/AceSubHeader'
 export { AceTable, type AceTableColumn, type AceTableProps } from './components/molecules/AceTable/AceTable'

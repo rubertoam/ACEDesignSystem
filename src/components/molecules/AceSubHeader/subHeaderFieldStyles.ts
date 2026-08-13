@@ -1,27 +1,19 @@
 import { cn } from '../../../lib/cn'
 
-/** Shared chrome — rounded corners and border (same pattern as AceTaskBar, without shadow). */
-const aceSubHeaderChromeClass = cn(
-  'rounded-[var(--ace-sub-header-radius)] border border-solid border-[var(--ace-sub-header-border)]',
-)
-
-/** Full-page sub-header shell. */
-export const aceSubHeaderFullShellClass = cn(
+/** Responsive sub-header shell — fills its parent width. */
+export const aceSubHeaderShellClass = cn(
   'flex w-full shrink-0 items-center justify-between',
-  aceSubHeaderChromeClass,
+  'rounded-[var(--ace-sub-header-radius)] border border-solid border-[var(--ace-sub-header-border)]',
   'bg-[var(--ace-sub-header-bg)]',
-  'px-[var(--ace-sub-header-px)]',
+  'px-[var(--ace-sub-header-px)] py-[var(--ace-sub-header-py)]',
   'min-h-[var(--ace-sub-header-height)]',
 )
 
-/** Split-screen sub-header shell. */
-export const aceSubHeaderSplitShellClass = cn(
-  'flex w-full shrink-0 items-center justify-between',
-  aceSubHeaderChromeClass,
-  'bg-[var(--ace-sub-header-bg)]',
-  'px-[var(--ace-sub-header-px)] py-[var(--ace-sub-header-py)]',
-  'h-[var(--ace-sub-header-height)]',
-)
+/** @deprecated Use `aceSubHeaderShellClass`. */
+export const aceSubHeaderFullShellClass = aceSubHeaderShellClass
+
+/** @deprecated Use `aceSubHeaderShellClass`. */
+export const aceSubHeaderSplitShellClass = aceSubHeaderShellClass
 
 /** Extra start padding when drill-down back control is shown. */
 export const aceSubHeaderDrilldownPaddingClass = 'pl-[var(--ace-sub-header-drilldown-pl)]'

@@ -1,8 +1,4 @@
-export {
-  AceSubHeader,
-  type AceSubHeaderProps,
-  type AceSubHeaderLayout,
-} from './AceSubHeader'
+export { AceSubHeader, type AceSubHeaderProps } from './AceSubHeader'
 export {
   aceSubHeaderBackClass,
   aceSubHeaderDrilldownPaddingClass,
@@ -10,6 +6,7 @@ export {
   aceSubHeaderHeadlineClass,
   aceSubHeaderIconButtonClass,
   aceSubHeaderPaginationLabelClass,
+  aceSubHeaderShellClass,
   aceSubHeaderSplitShellClass,
   aceSubHeaderStatClass,
   aceSubHeaderStatSeparatorClass,

@@ -4,21 +4,16 @@ import { cn } from '../../../lib/cn'
 import {
   aceSubHeaderBackClass,
   aceSubHeaderDrilldownPaddingClass,
-  aceSubHeaderFullShellClass,
   aceSubHeaderHeadlineClass,
   aceSubHeaderIconButtonClass,
   aceSubHeaderPaginationLabelClass,
   aceSubHeaderPaginationNavClass,
-  aceSubHeaderSplitShellClass,
+  aceSubHeaderShellClass,
   aceSubHeaderStatClass,
   aceSubHeaderStatSeparatorClass,
 } from './subHeaderFieldStyles'
 
-export type AceSubHeaderLayout = 'full' | 'split'
-
 export type AceSubHeaderProps = Omit<HTMLAttributes<HTMLElement>, 'children' | 'title'> & {
-  /** Full-page or split-screen shell. */
-  layout?: AceSubHeaderLayout
   /** Left-side title. Hidden when `drillDown` is on. Default `[Headline]`. */
   headline?: ReactNode
   /** Show statistics cluster (`# Data` separators). */
@@ -100,11 +95,10 @@ function PaginationControls({
 }
 
 /**
- * FinScan sub-header — sits under the page header in full-page or split-screen layouts,
- * with optional statistics, paging, more menu, and drill-down back control.
+ * FinScan sub-header — responsive region chrome under the page header.
+ * Fills its parent width; optional statistics, paging, more menu, and drill-down.
  */
 export function AceSubHeader({
-  layout = 'full',
   headline = '[Headline]',
   statistics = false,
   stats = ['# Data', '# Data', '# Data', '# Data'],
@@ -126,16 +120,15 @@ export function AceSubHeader({
   'aria-label': ariaLabel = 'Sub-header',
   ...rest
 }: AceSubHeaderProps) {
-  const shellClass = cn(
-    layout === 'split' ? aceSubHeaderSplitShellClass : aceSubHeaderFullShellClass,
-    drillDown && aceSubHeaderDrilldownPaddingClass,
-  )
-
   const showActions = paging || moreMenu || onRefresh != null || onFavorite != null
   const showTrailing = trailing != null || statistics || showActions
 
   return (
-    <header {...rest} aria-label={ariaLabel} className={cn(shellClass, className)}>
+    <header
+      {...rest}
+      aria-label={ariaLabel}
+      className={cn(aceSubHeaderShellClass, drillDown && aceSubHeaderDrilldownPaddingClass, className)}
+    >
       {drillDown ? (
         <button type="button" className={aceSubHeaderBackClass} onClick={onBack}>
           <MaterialSymbol

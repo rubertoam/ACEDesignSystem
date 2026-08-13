@@ -16,7 +16,7 @@ function preventMenuClose(e: { preventDefault: () => void }) {
 
 export type { AceButtonPalette, AceButtonSize, AceButtonVariant }
 
-export type AceDropdownMenuPanelWidth = 'default' | 'compact' | 'wide'
+export type AceDropdownMenuPanelWidth = 'default' | 'compact' | 'wide' | 'hug'
 
 /** Entries allowed inside a submenu (no nested submenus). */
 export type AceDropdownMenuSubItem =
@@ -177,6 +177,8 @@ const panelWidthClass: Record<AceDropdownMenuPanelWidth, string> = {
   default: 'min-w-[11.5rem] p-1',
   compact: 'w-[6.75rem] py-2',
   wide: 'w-[16.5rem] py-2',
+  /** Width follows menu content (toolbars, short labels). */
+  hug: 'w-max min-w-0 p-1',
 }
 
 const itemClass = cn(

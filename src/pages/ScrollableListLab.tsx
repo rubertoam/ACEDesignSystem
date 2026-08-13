@@ -4,7 +4,7 @@ import {
   DEMO_SCROLLABLE_LIST_ITEMS,
 } from '../components/organisms/AceScrollableList/AceScrollableList'
 import { AceScrollableListItemRow } from '../components/organisms/AceScrollableList/AceScrollableListItemRow'
-import { LabCheckbox } from '../lib/labControls'
+import { LabCheckbox, labControlLegendClass } from '../lib/labControls'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
@@ -14,10 +14,18 @@ const ITEM_DEMO = DEMO_SCROLLABLE_LIST_ITEMS[0]
 
 export function ScrollableListLab() {
   const [selectedId, setSelectedId] = useState(DEMO_SCROLLABLE_LIST_ITEMS[0]?.id)
-  const [showFilter, setShowFilter] = useState(true)
-  const [showSort, setShowSort] = useState(true)
-  const [showSearch, setShowSearch] = useState(false)
 
+  // Interactive list — independent of building-block demos
+  const [interactiveFilter, setInteractiveFilter] = useState(true)
+  const [interactiveSort, setInteractiveSort] = useState(true)
+  const [interactiveSearch, setInteractiveSearch] = useState(false)
+
+  // List container building block — independent of Interactive
+  const [containerFilter, setContainerFilter] = useState(true)
+  const [containerSort, setContainerSort] = useState(true)
+  const [containerSearch, setContainerSearch] = useState(false)
+
+  // List item building block — independent of both
   const [showItemIcon, setShowItemIcon] = useState(true)
   const [showItemSubtext, setShowItemSubtext] = useState(true)
   const [showItemCount, setShowItemCount] = useState(true)
@@ -28,17 +36,26 @@ export function ScrollableListLab() {
       title="Scrollable List"
       description="A list component with optional filter, sort, and searching functions. This component can also be navigated with a keyboard and can be minimized."
       examplesCanvas={false}
-      examplesToolbar={
-        <div className="flex flex-wrap items-end gap-6">
-          <LabCheckbox label="Filter by" checked={showFilter} onCheckedChange={setShowFilter} />
-          <LabCheckbox label="Sort by" checked={showSort} onCheckedChange={setShowSort} />
-          <LabCheckbox label="Search" checked={showSearch} onCheckedChange={setShowSearch} />
-        </div>
-      }
       examples={
         <div className="space-y-10 pb-24">
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Interactive</p>
+            <div className="mb-4 flex flex-col gap-2">
+              <p className={cn(labControlLegendClass, 'm-0')}>List controls</p>
+              <div className="flex flex-wrap items-center gap-6">
+                <LabCheckbox
+                  label="Filter by"
+                  checked={interactiveFilter}
+                  onCheckedChange={setInteractiveFilter}
+                />
+                <LabCheckbox label="Sort by" checked={interactiveSort} onCheckedChange={setInteractiveSort} />
+                <LabCheckbox
+                  label="Search"
+                  checked={interactiveSearch}
+                  onCheckedChange={setInteractiveSearch}
+                />
+              </div>
+            </div>
             <div className={labComponentContainerClass}>
               <div className="flex h-[56.4rem] items-stretch gap-4 p-4">
                 <AceScrollableList
@@ -46,9 +63,9 @@ export function ScrollableListLab() {
                   items={DEMO_SCROLLABLE_LIST_ITEMS}
                   selectedId={selectedId}
                   onSelectedIdChange={setSelectedId}
-                  showFilter={showFilter}
-                  showSort={showSort}
-                  showSearch={showSearch}
+                  showFilter={interactiveFilter}
+                  showSort={interactiveSort}
+                  showSearch={interactiveSearch}
                 />
               </div>
             </div>
@@ -65,16 +82,36 @@ export function ScrollableListLab() {
                     </h4>
                     <p className="m-0 text-xs leading-relaxed text-[var(--screening-text-muted)]">
                       Shell with Filter by / Sort by / Search and the empty body container (sticky section, no rows).
-                      Toolbar toggles above apply here too.
+                      Controls below apply only to this building block.
                     </p>
+                  </div>
+                  <div className="mb-4 flex flex-col gap-2">
+                    <p className={cn(labControlLegendClass, 'm-0')}>List controls</p>
+                    <div className="flex flex-wrap items-center gap-6">
+                      <LabCheckbox
+                        label="Filter by"
+                        checked={containerFilter}
+                        onCheckedChange={setContainerFilter}
+                      />
+                      <LabCheckbox
+                        label="Sort by"
+                        checked={containerSort}
+                        onCheckedChange={setContainerSort}
+                      />
+                      <LabCheckbox
+                        label="Search"
+                        checked={containerSearch}
+                        onCheckedChange={setContainerSearch}
+                      />
+                    </div>
                   </div>
                   <div className="flex h-[48rem] items-stretch gap-4 p-4">
                     <AceScrollableList
                       title="List title"
                       items={[]}
-                      showFilter={showFilter}
-                      showSort={showSort}
-                      showSearch={showSearch}
+                      showFilter={containerFilter}
+                      showSort={containerSort}
+                      showSearch={containerSearch}
                     />
                   </div>
                 </div>
@@ -90,11 +127,18 @@ export function ScrollableListLab() {
                       ).
                     </p>
                   </div>
-                  <div className="mb-4 flex flex-wrap items-end gap-6">
-                    <LabCheckbox label="Icon" checked={showItemIcon} onCheckedChange={setShowItemIcon} />
-                    <LabCheckbox label="Subtext" checked={showItemSubtext} onCheckedChange={setShowItemSubtext} />
-                    <LabCheckbox label="Count" checked={showItemCount} onCheckedChange={setShowItemCount} />
-                    <LabCheckbox label="Selected" checked={itemSelected} onCheckedChange={setItemSelected} />
+                  <div className="mb-4 flex flex-col gap-2">
+                    <p className={cn(labControlLegendClass, 'm-0')}>Row pieces</p>
+                    <div className="flex flex-wrap items-center gap-6">
+                      <LabCheckbox label="Icon" checked={showItemIcon} onCheckedChange={setShowItemIcon} />
+                      <LabCheckbox
+                        label="Subtext"
+                        checked={showItemSubtext}
+                        onCheckedChange={setShowItemSubtext}
+                      />
+                      <LabCheckbox label="Count" checked={showItemCount} onCheckedChange={setShowItemCount} />
+                      <LabCheckbox label="Selected" checked={itemSelected} onCheckedChange={setItemSelected} />
+                    </div>
                   </div>
                   <div className="max-w-sm rounded-[var(--radius-sm)] border border-solid border-[var(--ace-scrollable-list-border)] bg-[var(--ace-scrollable-list-surface)] py-1 shadow-[var(--ace-drop-shadow-xs)]">
                     <AceScrollableListItemRow
