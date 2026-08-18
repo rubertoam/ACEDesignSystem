@@ -16,6 +16,8 @@ export type AcePaginationProps = {
   onPageSizeChange?: (pageSize: number) => void
   /** Portal target so the page-size menu inherits `data-theme` from an ancestor. */
   portalContainer?: HTMLElement | null
+  /** Rendered on the leading (left) side of the footer (e.g. review progress). */
+  beforePageControls?: ReactNode
   className?: string
 }
 
@@ -56,6 +58,7 @@ export function AcePagination({
   onPageChange,
   onPageSizeChange,
   portalContainer: portalContainerProp,
+  beforePageControls,
   className,
 }: AcePaginationProps) {
   const [portalHost, setPortalHost] = useState<HTMLDivElement | null>(null)
@@ -99,6 +102,51 @@ export function AcePagination({
     )
   }
 
+  const rangeAndPageSize = (
+    <>
+      <span className="shrink-0 whitespace-nowrap">{rangeLabel(pageSafe, pageSize, totalItems)}</span>
+      {onPageSizeChange ? (
+        <div className="flex shrink-0 items-center gap-2">
+          <span className="whitespace-nowrap">Show</span>
+          <AceDropdownMenu
+            triggerLabel={String(pageSize)}
+            triggerMode="field"
+            size="sm"
+            align="start"
+            panelWidth="wide"
+            items={pageSizeMenuItems}
+            portalContainer={portalContainer}
+            className="w-auto min-w-[4.375rem] max-w-[5.5rem] shrink-0"
+          />
+        </div>
+      ) : null}
+    </>
+  )
+
+  const pageControls = (
+    <>
+      <IconNavButton label="Previous page" disabled={!canPrev} onClick={() => onPageChange(pageSafe - 1)}>
+        <MaterialSymbol name="keyboard_arrow_left" size="md" className={aceChevronIconClass} />
+      </IconNavButton>
+      {items.map((item, i) =>
+        item === 'ellipsis' ? (
+          <span
+            key={`e-${i}`}
+            className="inline-flex min-w-[1.75rem] items-center justify-center px-1 text-base leading-6 text-[var(--screening-text-primary)]"
+            aria-hidden
+          >
+            …
+          </span>
+        ) : (
+          pageBtn(item)
+        ),
+      )}
+      <IconNavButton label="Next page" disabled={!canNext} onClick={() => onPageChange(pageSafe + 1)}>
+        <MaterialSymbol name="keyboard_arrow_right" size="md" className={aceChevronIconClass} />
+      </IconNavButton>
+    </>
+  )
+
   return (
     <div
       ref={setPortalHost}
@@ -109,44 +157,16 @@ export function AcePagination({
       )}
     >
       <div className="flex min-w-0 flex-wrap items-center gap-3">
-        <span className="shrink-0 whitespace-nowrap">{rangeLabel(pageSafe, pageSize, totalItems)}</span>
-        {onPageSizeChange ? (
-          <div className="flex shrink-0 items-center gap-2">
-            <span className="whitespace-nowrap">Show</span>
-            <AceDropdownMenu
-              triggerLabel={String(pageSize)}
-              triggerMode="field"
-              size="sm"
-              align="start"
-              panelWidth="wide"
-              items={pageSizeMenuItems}
-              portalContainer={portalContainer}
-              className="w-auto min-w-[4.375rem] max-w-[5.5rem] shrink-0"
-            />
-          </div>
-        ) : null}
+        {beforePageControls ?? rangeAndPageSize}
       </div>
 
-      <div className="flex shrink-0 flex-wrap items-center gap-[var(--screening-pagination-gap)]">
-        <IconNavButton label="Previous page" disabled={!canPrev} onClick={() => onPageChange(pageSafe - 1)}>
-          <MaterialSymbol name="keyboard_arrow_left" size="md" className={aceChevronIconClass} />
-        </IconNavButton>
-        {items.map((item, i) =>
-          item === 'ellipsis' ? (
-            <span
-              key={`e-${i}`}
-              className="inline-flex min-w-[1.75rem] items-center justify-center px-1 text-base leading-6 text-[var(--screening-text-primary)]"
-              aria-hidden
-            >
-              …
-            </span>
-          ) : (
-            pageBtn(item)
-          ),
-        )}
-        <IconNavButton label="Next page" disabled={!canNext} onClick={() => onPageChange(pageSafe + 1)}>
-          <MaterialSymbol name="keyboard_arrow_right" size="md" className={aceChevronIconClass} />
-        </IconNavButton>
+      <div className="flex shrink-0 flex-wrap items-center gap-6">
+        {beforePageControls ? (
+          <div className="flex flex-wrap items-center gap-3">{rangeAndPageSize}</div>
+        ) : null}
+        <div className="flex shrink-0 flex-wrap items-center gap-[var(--screening-pagination-gap)]">
+          {pageControls}
+        </div>
       </div>
     </div>
   )
