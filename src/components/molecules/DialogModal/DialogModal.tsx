@@ -141,19 +141,21 @@ export function DialogModal({
 
   useLayoutEffect(() => {
     if (!open || isStatic) return
+    // Only steal focus when the dialog opens — not when action props change identity
+    // (e.g. parent re-render while typing in a body field).
     const id = window.requestAnimationFrame(() => {
-      if (primaryAction != null && primaryButtonRef.current) {
+      if (primaryButtonRef.current) {
         primaryButtonRef.current.focus()
         return
       }
-      if (secondaryAction != null && secondaryButtonRef.current) {
+      if (secondaryButtonRef.current) {
         secondaryButtonRef.current.focus()
         return
       }
       closeButtonRef.current?.focus()
     })
     return () => window.cancelAnimationFrame(id)
-  }, [open, primaryAction, secondaryAction, isStatic])
+  }, [open, isStatic])
 
   if (!open) return null
 
