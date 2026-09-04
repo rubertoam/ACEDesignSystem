@@ -403,8 +403,9 @@ export function AceSidebar({
       data-open={open}
       aria-hidden={!open}
       className={cn(
-        // Keep overflow on the inner panel so `--ace-sidebar-shadow` is not clipped.
-        'relative flex h-full shrink-0 flex-col border-solid bg-[var(--screening-surface)]',
+        // Clip content as width collapses so nav does not spill over the page.
+        // Shadow is drawn on a non-clipped parent when needed; panel itself must clip.
+        'relative flex h-full shrink-0 flex-col overflow-hidden border-solid bg-[var(--screening-surface)]',
         panelMotion,
         'border-r-[0.5px] border-[var(--ace-sidebar-border)] shadow-[var(--ace-sidebar-shadow)]',
         open
