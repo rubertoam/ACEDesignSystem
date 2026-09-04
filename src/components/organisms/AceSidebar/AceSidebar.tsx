@@ -20,7 +20,7 @@ const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]
 const motionReduce = 'motion-reduce:transition-none motion-reduce:duration-0'
 
 const panelMotion = cn(
-  'transition-[width,border-color,box-shadow,opacity]',
+  'transition-[width,border-color,box-shadow]',
   'duration-[var(--ace-sidebar-duration-panel)]',
   motionEase,
   motionReduce,
@@ -104,6 +104,8 @@ export type AceSidebarProps = {
    * Shrinks the org field so both fit the sidebar width.
    */
   headerTrailing?: ReactNode
+  /** Optional content directly below the organization / groups header (e.g. search). */
+  headerBelow?: ReactNode
   className?: string
   children?: ReactNode
 }
@@ -325,6 +327,7 @@ export function AceSidebar({
   emptyGroupMessage = defaultEmptyGroupMessage,
   menuPortalContainer,
   headerTrailing,
+  headerBelow,
   className,
   children,
 }: AceSidebarProps) {
@@ -412,27 +415,30 @@ export function AceSidebar({
     >
       <div
         className={cn(
-          'flex min-w-[var(--ace-sidebar-width)] flex-1 flex-col overflow-hidden transition-opacity',
-          'duration-[var(--ace-sidebar-duration-panel)]',
-          motionEase,
-          motionReduce,
-          open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
+          'flex min-w-[var(--ace-sidebar-width)] flex-1 flex-col overflow-hidden',
+          open ? 'pointer-events-auto' : 'pointer-events-none',
         )}
       >
         {headerContent || headerTrailing ? (
-          <div
-            className={cn(
-              'flex shrink-0 items-center px-[var(--ace-sidebar-nav-px)] py-4',
-              headerTrailing ? 'gap-2' : 'justify-center',
-            )}
-          >
-            {headerContent ? (
-              <div className={cn(headerTrailing ? 'min-w-0 flex-1' : undefined)}>
-                {headerContent}
-              </div>
-            ) : null}
-            {headerTrailing ? (
-              <div className="inline-flex shrink-0 items-center leading-none">{headerTrailing}</div>
+          <div className="flex shrink-0 flex-col">
+            <div
+              className={cn(
+                'flex items-center px-[var(--ace-sidebar-nav-px)] py-4',
+                headerTrailing ? 'gap-2' : 'justify-center',
+                headerBelow ? 'pb-2' : undefined,
+              )}
+            >
+              {headerContent ? (
+                <div className={cn(headerTrailing ? 'min-w-0 flex-1' : undefined)}>
+                  {headerContent}
+                </div>
+              ) : null}
+              {headerTrailing ? (
+                <div className="inline-flex shrink-0 items-center leading-none">{headerTrailing}</div>
+              ) : null}
+            </div>
+            {headerBelow ? (
+              <div className="shrink-0 px-[var(--ace-sidebar-nav-px)] pb-3">{headerBelow}</div>
             ) : null}
           </div>
         ) : (
