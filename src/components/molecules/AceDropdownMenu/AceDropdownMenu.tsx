@@ -169,7 +169,7 @@ const fieldTriggerBase = cn(
 
 export const aceDropdownMenuPanelClass = cn(
   /* Above dialog overlay (z-200) so menus open on top of modals */
-  'z-[300] overflow-hidden rounded-[var(--radius-md)] border border-solid border-[var(--ace-dropdown-menu-border)] bg-[var(--ace-dropdown-menu-surface)]',
+  'z-[300] overflow-hidden rounded-[var(--radius-md)] border border-solid border-[var(--ace-dropdown-menu-border)] bg-[var(--ace-dropdown-menu-surface,var(--screening-surface,#ffffff))]',
   'shadow-[var(--ace-dropdown-menu-shadow)]',
 )
 
