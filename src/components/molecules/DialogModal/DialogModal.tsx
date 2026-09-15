@@ -23,7 +23,7 @@ export type DialogModalPresentation = 'overlay' | 'static'
 export type DialogModalProps = {
   open: boolean
   onClose: () => void
-  title: string
+  title: ReactNode
   description?: ReactNode
   children?: ReactNode
   /** `md` ≈ 448px, `lg` = 616px (Figma default width) */
@@ -37,7 +37,7 @@ export type DialogModalProps = {
   className?: string
   /** Extra classes on the scrollable body region */
   bodyClassName?: string
-  /** Grow modal height with content; body does not scroll (use inner regions for overflow) */
+  /** Grow modal height with content up to the viewport; body scrolls when content exceeds max height */
   fitContent?: boolean
   /**
    * `overlay` (default) — portal + backdrop.
@@ -189,12 +189,12 @@ export function DialogModal({
       }}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="flex shrink-0 items-start justify-between gap-[var(--dialog-modal-footer-btn-gap)]">
+      <div className="flex shrink-0 items-center justify-between gap-[var(--dialog-modal-footer-btn-gap)]">
         <h2
           id={titleId}
           className={cn(
             aceTypography(ACE.title),
-            'm-0 min-w-0 flex-1 text-[var(--dialog-modal-title)]',
+            'm-0 flex min-w-0 flex-1 items-center text-[var(--dialog-modal-title)]',
           )}
         >
           {title}
@@ -213,11 +213,13 @@ export function DialogModal({
       <div
         className={cn(
           'flex min-h-0 flex-col overflow-x-visible',
-          isStatic || fitContent
+          isStatic
             ? 'flex-none gap-[var(--dialog-modal-section-gap)] overflow-visible'
-            : cn(
-                'mt-[var(--dialog-modal-section-gap)] flex-1 gap-[var(--dialog-modal-section-gap)] overflow-y-auto px-[var(--dialog-modal-body-focus-gutter)] pb-[var(--dialog-modal-body-focus-gutter)]',
-              ),
+            : fitContent
+              ? 'min-h-0 flex-1 gap-[var(--dialog-modal-section-gap)] overflow-y-auto'
+              : cn(
+                  'mt-[var(--dialog-modal-section-gap)] flex-1 gap-[var(--dialog-modal-section-gap)] overflow-y-auto px-[var(--dialog-modal-body-focus-gutter)] pb-[var(--dialog-modal-body-focus-gutter)]',
+                ),
           bodyClassName,
         )}
       >
