@@ -46,7 +46,7 @@ function SiteHeaderNavButton({
   const showChevron = item.showChevron !== false
   const className = cn(
     p1,
-    'inline-flex h-full min-h-[2.5rem] items-center gap-2 rounded-[var(--radius-sm)] px-3 py-3 text-sm text-[var(--screening-text-primary)]',
+    'inline-flex h-full min-h-[2rem] items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-sm text-[var(--screening-text-primary)]',
     'transition-colors duration-[var(--ace-motion-duration-fast)]',
     motionEase,
     'hover:bg-[var(--ace-site-header-nav-hover)]',
@@ -92,7 +92,7 @@ function ToolbarIconButton({
       aria-label={label}
       onClick={onClick}
       className={cn(
-        'inline-flex size-[2.125rem] shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-[var(--screening-text-primary)]',
+        'inline-flex size-[1.5rem] shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-[var(--screening-text-primary)]',
         'transition-colors duration-[var(--ace-motion-duration-fast)]',
         motionEase,
         'hover:bg-[var(--ace-site-header-nav-hover)]',
@@ -127,9 +127,9 @@ export function AceSiteHeader({
   return (
     <header
       className={cn(
-        'flex min-h-[var(--ace-site-header-height)] w-full shrink-0 items-center justify-between',
+        'flex h-[var(--ace-site-header-height)] w-full shrink-0 items-center justify-between',
         'border-b-[0.5px] border-solid border-[var(--ace-site-header-border)] bg-[var(--ace-site-header-surface)]',
-        'px-[var(--ace-site-header-px)] py-[var(--ace-site-header-py)]',
+        'box-border px-[var(--ace-site-header-px)] py-[var(--ace-site-header-py)]',
         className,
       )}
     >
@@ -166,7 +166,12 @@ export function AceSiteHeader({
               <MaterialSymbol
                 name="notifications"
                 size="xl"
-                className="text-[var(--ace-site-header-toolbar-icon-color)] text-[length:var(--ace-site-header-icon-notifications-height)]"
+                className="text-[var(--ace-site-header-toolbar-icon-color)]"
+                style={{
+                  fontSize: 'var(--ace-site-header-icon-notifications-height)',
+                  width: 'var(--ace-site-header-icon-notifications-width)',
+                  height: 'var(--ace-site-header-icon-notifications-height)',
+                }}
               />
             </ToolbarIconButton>
           ) : null}
@@ -175,7 +180,12 @@ export function AceSiteHeader({
               <MaterialSymbol
                 name="help"
                 size="xl"
-                className="text-[var(--ace-site-header-toolbar-icon-color)] text-[length:var(--ace-site-header-icon-help-size)]"
+                className="text-[var(--ace-site-header-toolbar-icon-color)]"
+                style={{
+                  fontSize: 'var(--ace-site-header-icon-help-size)',
+                  width: 'var(--ace-site-header-icon-help-size)',
+                  height: 'var(--ace-site-header-icon-help-size)',
+                }}
               />
             </ToolbarIconButton>
           ) : null}

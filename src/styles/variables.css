@@ -181,20 +181,20 @@
 
   --ace-neutral-800: #23262c;
 
-  /* Site header / top navigation (Figma 225:1406) */
-  --ace-site-header-height: 4rem;
+  /* Site header / top navigation (Figma 225:1406) — height 75% of prior 4rem */
+  --ace-site-header-height: 3rem;
   --ace-site-header-px: 2rem;
-  --ace-site-header-py: 0.75rem;
+  --ace-site-header-py: 0.5rem;
   --ace-site-header-surface: var(--screening-surface);
   --ace-site-header-border: var(--screening-border-strong);
   --ace-site-header-logo-gap: var(--ace-finscan-icon-gap);
   --ace-site-header-nav-gap: 2rem;
   --ace-site-header-actions-gap: 1.5rem;
-  --ace-site-header-toolbar-gap: 1rem;
+  --ace-site-header-toolbar-gap: 0.75rem;
   --ace-site-header-toolbar-icon-color: var(--ace-neutral-800);
-  --ace-site-header-icon-notifications-width: 2rem;
-  --ace-site-header-icon-notifications-height: 1.96875rem;
-  --ace-site-header-icon-help-size: 2.125rem;
+  --ace-site-header-icon-notifications-width: 1.5rem;
+  --ace-site-header-icon-notifications-height: 1.5rem;
+  --ace-site-header-icon-help-size: 1.5rem;
   --ace-site-header-nav-hover: var(--screening-surface-hover);
   --ace-site-header-greeting-color: var(--screening-primary);
 
