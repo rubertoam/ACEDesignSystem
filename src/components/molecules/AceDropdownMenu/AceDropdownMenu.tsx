@@ -1,5 +1,5 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { type ComponentType } from 'react'
+import { type ComponentType, type ReactNode } from 'react'
 import { AceButton, type AceButtonPalette, type AceButtonSize, type AceButtonVariant } from '../../atoms/AceButton'
 import { Checkbox } from '../../atoms/Checkbox/Checkbox'
 import { Toggle } from '../../atoms/Toggle/Toggle'
@@ -7,6 +7,11 @@ import { AceFilterTrigger } from '../AceFiltering/AceFilterTrigger'
 import { MaterialSymbol } from '../AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
+import {
+  AceDropdownChevron,
+  aceDropdownFieldChevronClass,
+  aceDropdownFieldTriggerClass,
+} from './dropdownFieldStyles'
 import { highlightMenuLabel } from './menuEntryHighlight'
 
 /** Keeps the dropdown open while interacting with non-item controls (search, checkbox, etc.). */
@@ -93,7 +98,11 @@ export type AceDropdownMenuEntry =
 export type AceDropdownTriggerMode = 'field' | 'aceButton' | 'filter'
 
 export type AceDropdownMenuProps = {
-  triggerLabel: string
+  /**
+   * Label for built-in triggers (`field` / `aceButton` / `filter`).
+   * Optional when `trigger` is provided.
+   */
+  triggerLabel?: string
   items: AceDropdownMenuEntry[]
   /** Field = screening toolbar style; aceButton = AceButton; filter = AceFilterTrigger. */
   triggerMode?: AceDropdownTriggerMode
@@ -109,6 +118,8 @@ export type AceDropdownMenuProps = {
   portalContainer?: HTMLElement | null
   className?: string
   panelWidth?: AceDropdownMenuPanelWidth
+  /** Custom trigger element (e.g. icon button). When set, built-in trigger modes are ignored. */
+  trigger?: ReactNode
 }
 
 export type AceDropdownMenuPanelProps = {
@@ -150,21 +161,6 @@ const sectionActionClass = cn(
 const footerActionClass = cn(
   'font-normal text-[var(--screening-primary)] hover:underline',
   '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
-)
-
-const fieldSizeClass: Record<AceButtonSize, string> = {
-  sm: 'gap-[var(--ace-button-gap-sm)] px-[var(--ace-button-px-sm)] py-[var(--ace-button-py-sm)] text-xs',
-  md: 'gap-[var(--ace-button-gap-md)] px-[var(--ace-button-px-md)] py-[var(--ace-button-py-md)] text-sm',
-  lg: 'gap-[var(--ace-button-gap-lg)] px-[var(--ace-button-px-lg)] py-[var(--ace-button-py-lg)] text-base',
-}
-
-const fieldTriggerBase = cn(
-  'inline-flex w-[var(--ace-dropdown-trigger-width)] max-w-[var(--ace-dropdown-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]',
-  'font-normal [font-family:var(--font-ace-noto)] leading-[1.65] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
-  'text-[var(--screening-text-primary)] outline-none transition-colors',
-  'hover:bg-[var(--screening-surface-hover)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
-  'data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:ring-2 data-[state=open]:ring-[var(--screening-primary-ring)] data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-[var(--screening-primary-ring-offset)]',
-  'disabled:pointer-events-none disabled:opacity-50',
 )
 
 export const aceDropdownMenuPanelClass = cn(
@@ -638,7 +634,7 @@ export function AceDropdownMenuPanel({
 }
 
 export function AceDropdownMenu({
-  triggerLabel,
+  triggerLabel = '',
   items,
   triggerMode = 'field',
   variant = 'secondary',
@@ -651,11 +647,12 @@ export function AceDropdownMenu({
   portalContainer,
   className,
   panelWidth = 'default',
+  trigger,
 }: AceDropdownMenuProps) {
-  const fieldClass = cn(fieldTriggerBase, fieldSizeClass[size], className)
-
   const triggerChild =
-    triggerMode === 'aceButton' ? (
+    trigger != null ? (
+      trigger
+    ) : triggerMode === 'aceButton' ? (
       <AceButton
         type="button"
         variant={variant}
@@ -675,14 +672,14 @@ export function AceDropdownMenu({
     ) : triggerMode === 'filter' ? (
       <AceFilterTrigger label={triggerLabel} showChevron={showChevron} disabled={disabled} className={className} />
     ) : (
-      <button type="button" disabled={disabled} className={cn(fieldClass, 'justify-between')}>
+      <button
+        type="button"
+        disabled={disabled}
+        className={cn(aceDropdownFieldTriggerClass, 'justify-between', className)}
+      >
         <span className="min-w-0 flex-1 truncate text-left">{triggerLabel}</span>
         {showChevron ? (
-          <MaterialSymbol
-            name="keyboard_arrow_down"
-            size="md"
-            className={cn('ml-auto shrink-0 opacity-70', aceChevronIconClass)}
-          />
+          <AceDropdownChevron className={cn('ml-auto', aceDropdownFieldChevronClass)} />
         ) : null}
       </button>
     )
