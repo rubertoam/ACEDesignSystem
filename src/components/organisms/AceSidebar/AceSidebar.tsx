@@ -1,6 +1,8 @@
 import { type ReactNode } from 'react'
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import {
   AceDropdownMenu,
+  aceDropdownMenuPanelClass,
   type AceDropdownMenuEntry,
 } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
 import {
@@ -130,6 +132,55 @@ const sidebarIconDropdownTriggerClass = cn(
   'data-[state=open]:bg-[var(--ace-icon-button-hover-bg)]',
   'data-[state=open]:text-[var(--ace-icon-button-icon)]',
 )
+
+/** Icon-button dropdown that does not depend on AceDropdownMenu `trigger` prop. */
+function SidebarIconDropdown({
+  ariaLabel,
+  iconName,
+  items,
+  portalContainer,
+}: {
+  ariaLabel: string
+  iconName: string
+  items: AceDropdownMenuEntry[]
+  portalContainer?: HTMLElement | null
+}) {
+  return (
+    <DropdownMenu.Root modal={false}>
+      <DropdownMenu.Trigger asChild>
+        <button type="button" aria-label={ariaLabel} className={sidebarIconDropdownTriggerClass}>
+          <MaterialSymbol name={iconName} size="md" className="text-current" />
+        </button>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Portal container={portalContainer ?? undefined}>
+        <DropdownMenu.Content
+          className={cn(aceDropdownMenuPanelClass, 'w-[16.5rem] py-2')}
+          sideOffset={4}
+          align="start"
+          collisionPadding={8}
+        >
+          {items.map((entry, index) => {
+            if (entry.type !== 'item') return null
+            return (
+              <DropdownMenu.Item
+                key={entry.id ?? `${entry.label}-${index}`}
+                className={cn(
+                  'relative flex cursor-pointer select-none items-center rounded-[var(--radius-sm)] px-3 py-2 outline-none',
+                  'font-normal [font-family:var(--font-ace-noto)] text-sm leading-[1.65] text-[var(--screening-text-primary)]',
+                  'data-[highlighted]:bg-[var(--screening-surface-hover)]',
+                  entry.selected && 'bg-[var(--screening-surface-hover)]',
+                )}
+                onSelect={() => entry.onSelect?.()}
+              >
+                <span className="min-w-0 truncate">{entry.label}</span>
+              </DropdownMenu.Item>
+            )
+          })}
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
+  )
+}
 
 function rowMenuItems(onMenuAction?: (action: AceSidebarMenuAction) => void): AceDropdownMenuEntry[] {
   return [
@@ -390,20 +441,11 @@ export function AceSidebar({
         <AceTooltip>
           <AceTooltipTrigger asChild>
             <span className="inline-flex">
-              <AceDropdownMenu
+              <SidebarIconDropdown
+                ariaLabel={`Groups: ${selectedOrg.label}`}
+                iconName="groups"
                 items={orgMenuItems}
-                panelWidth="wide"
                 portalContainer={menuPortalContainer}
-                align="start"
-                trigger={
-                  <button
-                    type="button"
-                    aria-label={`Groups: ${selectedOrg.label}`}
-                    className={sidebarIconDropdownTriggerClass}
-                  >
-                    <MaterialSymbol name="groups" size="md" className="text-current" />
-                  </button>
-                }
               />
             </span>
           </AceTooltipTrigger>
@@ -415,20 +457,11 @@ export function AceSidebar({
           <AceTooltip>
             <AceTooltipTrigger asChild>
               <span className="inline-flex">
-                <AceDropdownMenu
+                <SidebarIconDropdown
+                  ariaLabel={`Application ID: ${selectedApp.label}`}
+                  iconName="assignment_globe"
                   items={appMenuItems}
-                  panelWidth="wide"
                   portalContainer={menuPortalContainer}
-                  align="start"
-                  trigger={
-                    <button
-                      type="button"
-                      aria-label={`Application ID: ${selectedApp.label}`}
-                      className={sidebarIconDropdownTriggerClass}
-                    >
-                      <MaterialSymbol name="assignment_globe" size="md" className="text-current" />
-                    </button>
-                  }
                 />
               </span>
             </AceTooltipTrigger>
