@@ -7,11 +7,6 @@ import { AceFilterTrigger } from '../AceFiltering/AceFilterTrigger'
 import { MaterialSymbol } from '../AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
-import {
-  AceDropdownChevron,
-  aceDropdownFieldChevronClass,
-  aceDropdownFieldTriggerClass,
-} from './dropdownFieldStyles'
 import { highlightMenuLabel } from './menuEntryHighlight'
 
 /** Keeps the dropdown open while interacting with non-item controls (search, checkbox, etc.). */
@@ -193,6 +188,22 @@ const paddedIndicatorItem = cn(itemClass, 'px-[var(--space-3)] py-[var(--space-2
 const assignmentCheckboxRow = cn(
   itemType,
   'flex cursor-pointer select-none items-center gap-[var(--space-2)] px-[var(--space-3)] py-1 text-[var(--screening-text-primary)]',
+)
+
+/** Screening-token field trigger — works in Workbench without unpublished dropdown CSS vars. */
+const fieldSizeClass: Record<AceButtonSize, string> = {
+  sm: 'gap-[var(--ace-button-gap-sm)] px-[var(--ace-button-px-sm)] py-[var(--ace-button-py-sm)] text-xs',
+  md: 'gap-[var(--ace-button-gap-md)] px-[var(--ace-button-px-md)] py-[var(--ace-button-py-md)] text-sm',
+  lg: 'gap-[var(--ace-button-gap-lg)] px-[var(--ace-button-px-lg)] py-[var(--ace-button-py-lg)] text-base',
+}
+
+const fieldTriggerBase = cn(
+  'inline-flex w-[var(--ace-dropdown-trigger-width)] max-w-[var(--ace-dropdown-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]',
+  'font-normal [font-family:var(--font-ace-noto)] leading-[1.65] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  'text-[var(--screening-text-primary)] outline-none transition-colors',
+  'hover:bg-[var(--screening-surface-hover)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+  'data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:ring-2 data-[state=open]:ring-[var(--screening-primary-ring)] data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-[var(--screening-primary-ring-offset)]',
+  'disabled:pointer-events-none disabled:opacity-50',
 )
 
 const shortcutClass =
@@ -675,11 +686,15 @@ export function AceDropdownMenu({
       <button
         type="button"
         disabled={disabled}
-        className={cn(aceDropdownFieldTriggerClass, 'justify-between', className)}
+        className={cn(fieldTriggerBase, fieldSizeClass[size], 'justify-between', className)}
       >
         <span className="min-w-0 flex-1 truncate text-left">{triggerLabel}</span>
         {showChevron ? (
-          <AceDropdownChevron className={cn('ml-auto', aceDropdownFieldChevronClass)} />
+          <MaterialSymbol
+            name="keyboard_arrow_down"
+            size="md"
+            className={cn('ml-auto shrink-0 opacity-70', aceChevronIconClass)}
+          />
         ) : null}
       </button>
     )
