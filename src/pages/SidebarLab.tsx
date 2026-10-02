@@ -2,6 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
 import { AceInputField } from '../components/atoms/AceInputField'
+import {
+  AceTooltip,
+  AceTooltipContent,
+  AceTooltipProvider,
+  AceTooltipTrigger,
+} from '../components/atoms/AceTooltip/AceTooltip'
 import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
 import { DialogModal } from '../components/molecules/DialogModal/DialogModal'
 import {
@@ -17,7 +23,10 @@ import {
   type AceSidebarOrganizationDisplay,
   type AceSidebarVariant,
 } from '../components/organisms/AceSidebar/AceSidebar'
-import { sidebarIconButtonClass } from '../components/organisms/AceSidebar/sidebarRowActions'
+import {
+  sidebarIconButtonBorderedClass,
+  sidebarIconButtonClass,
+} from '../components/organisms/AceSidebar/sidebarRowActions'
 import { cn } from '../lib/cn'
 import { labUsageSectionClass } from '../lib/labExampleSection'
 import { LabCheckbox, LabRadioGroup, labControlLegendClass } from '../lib/labControls'
@@ -124,8 +133,10 @@ export function SidebarLab() {
   const [variant, setVariant] = useState<AceSidebarVariant>('navigation')
   const [organizationDisplay, setOrganizationDisplay] =
     useState<AceSidebarOrganizationDisplay>('switcher')
+  const [showHeaderTrailing, setShowHeaderTrailing] = useState(true)
   const [showGroupAdd, setShowGroupAdd] = useState(false)
   const [selectedOrg, setSelectedOrg] = useState('org-1')
+  const [selectedApp, setSelectedApp] = useState('isi')
   const [selectedNav, setSelectedNav] = useState('nav-1')
   const [selectedGroupItem, setSelectedGroupItem] = useState('item-1')
   const [groups, setGroups] = useState(() => buildInitialGroups('item-1'))
@@ -376,12 +387,31 @@ export function SidebarLab() {
             options={[
               { value: 'switcher', label: 'Switcher' },
               { value: 'label', label: 'Label' },
+              { value: 'icon', label: 'Icon' },
             ]}
           />
         )}
+        <LabCheckbox
+          label="Show trailing icon"
+          checked={showHeaderTrailing}
+          onCheckedChange={setShowHeaderTrailing}
+        />
       </div>
     </div>
   )
+
+  const headerTrailing = showHeaderTrailing ? (
+    <AceTooltip>
+      <AceTooltipTrigger asChild>
+        <button type="button" aria-label="Search" className={sidebarIconButtonBorderedClass}>
+          <MaterialSymbol name="search" size="md" className="text-current" />
+        </button>
+      </AceTooltipTrigger>
+      <AceTooltipContent side="bottom" variant="screening-toolbar" hideArrow>
+        Search
+      </AceTooltipContent>
+    </AceTooltip>
+  ) : undefined
 
   return (
     <>
@@ -394,39 +424,54 @@ export function SidebarLab() {
             ref={setMenuHost}
             className="flex h-[min(85vh,52rem)] min-h-[40rem] flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]"
           >
-            <SidebarMockHeader open={open} onToggleSidebar={() => setOpen((v) => !v)} />
-            <div className="flex min-h-0 flex-1">
-              <AceSidebar
-                open={open}
-                variant={variant}
-                organizations={ORGANIZATIONS}
-                selectedOrganizationId={selectedOrg}
-                onOrganizationChange={setSelectedOrg}
-                organizationDisplay={organizationDisplay}
-                navItems={navItems}
-                addLabel="New Group"
-                onNewGroup={() => {
-                  setNewGroupName('')
-                  setNewGroupOpen(true)
-                }}
-                groups={groupsWithHandlers}
-                showGroupAdd={showGroupAdd}
-                menuPortalContainer={menuHost}
-              />
-              <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-[var(--screening-surface-muted)] p-6">
-                <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Main content</p>
-                <p className="mt-2 text-sm text-[var(--screening-text-muted)]">
-                  App shell preview based on Review Assigned header. Sidebar motion is documented on the{' '}
-                  <Link
-                    to="/lab/atoms/motion"
-                    className="text-[var(--screening-primary)] underline underline-offset-2"
-                  >
-                    Motion
-                  </Link>{' '}
-                  page.
-                </p>
+            <AceTooltipProvider>
+              <SidebarMockHeader open={open} onToggleSidebar={() => setOpen((v) => !v)} />
+              <div className="flex min-h-0 flex-1">
+                <AceSidebar
+                  open={open}
+                  variant={variant}
+                  organizations={ORGANIZATIONS}
+                  selectedOrganizationId={selectedOrg}
+                  onOrganizationChange={setSelectedOrg}
+                  organizationDisplay={organizationDisplay}
+                  applications={
+                    organizationDisplay === 'icon'
+                      ? [
+                          { id: 'isi', label: 'ISI' },
+                          { id: 'isi-focus', label: 'ISI Focus' },
+                          { id: 'watchlist-api', label: 'Watchlist API' },
+                          { id: 'edd', label: 'EDD' },
+                        ]
+                      : undefined
+                  }
+                  selectedApplicationId={selectedApp}
+                  onApplicationChange={setSelectedApp}
+                  headerTrailing={headerTrailing}
+                  navItems={navItems}
+                  addLabel="New Group"
+                  onNewGroup={() => {
+                    setNewGroupName('')
+                    setNewGroupOpen(true)
+                  }}
+                  groups={groupsWithHandlers}
+                  showGroupAdd={showGroupAdd}
+                  menuPortalContainer={menuHost}
+                />
+                <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-[var(--screening-surface-muted)] p-6">
+                  <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Main content</p>
+                  <p className="mt-2 text-sm text-[var(--screening-text-muted)]">
+                    App shell preview based on Review Assigned header. Sidebar motion is documented on the{' '}
+                    <Link
+                      to="/lab/atoms/motion"
+                      className="text-[var(--screening-primary)] underline underline-offset-2"
+                    >
+                      Motion
+                    </Link>{' '}
+                    page.
+                  </p>
+                </div>
               </div>
-            </div>
+            </AceTooltipProvider>
           </div>
         }
         code={
@@ -437,6 +482,8 @@ export function SidebarLab() {
               a clipped viewport.
             </p>
             <ComponentLabCode>{`import { AceSidebar } from '../components/organisms/AceSidebar/AceSidebar'
+import { sidebarIconButtonBorderedClass } from '../components/organisms/AceSidebar/sidebarRowActions'
+import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
 
 const [open, setOpen] = useState(true)
 
@@ -446,17 +493,27 @@ const [open, setOpen] = useState(true)
   onNewGroup={() => setNewGroupOpen(true)}
   groups={groups}
   menuPortalContainer={viewportRef.current}
+  headerTrailing={
+    <button type="button" aria-label="Search" className={sidebarIconButtonBorderedClass}>
+      <MaterialSymbol name="search" size="md" className="text-current" />
+    </button>
+  }
 />
 
 <AceSidebar
   variant="navigation"
-  organizationDisplay="label"
   organizations={[
     { id: 'org-1', label: 'Organization 1' },
     { id: 'org-2', label: 'Organization 2' },
   ]}
   selectedOrganizationId={orgId}
+  onOrganizationChange={setOrgId}
   navItems={navItems}
+  headerTrailing={
+    <button type="button" aria-label="Search" className={sidebarIconButtonBorderedClass}>
+      <MaterialSymbol name="search" size="md" className="text-current" />
+    </button>
+  }
 />`}</ComponentLabCode>
           </>
         }
@@ -474,8 +531,15 @@ const [open, setOpen] = useState(true)
                   static name (e.g. Organization 1).
                 </li>
                 <li>
+                  <strong className="text-[var(--screening-text-primary)]">Header trailing</strong>: pass{' '}
+                  <code className="text-[var(--screening-text-primary)]">headerTrailing</code> for a bordered search
+                  icon to the right of the org switcher or New Group button (Review Assigned). Use{' '}
+                  <code className="text-[var(--screening-text-primary)]">sidebarIconButtonBorderedClass</code> for
+                  Iconography border-stroke chrome.
+                </li>
+                <li>
                   <strong className="text-[var(--screening-text-primary)]">Groups</strong>: collapsible query groups,
-                  New Group, and group-header overflow menus (Edit, Copy, Delete). Query rows are select-only.
+                  New Group CTA, and group-header overflow menus (Edit, Copy, Delete). Query rows are select-only.
                 </li>
               </ul>
             </section>

@@ -3,11 +3,17 @@ import {
   AceDropdownMenu,
   type AceDropdownMenuEntry,
 } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
+import {
+  AceTooltip,
+  AceTooltipContent,
+  AceTooltipTrigger,
+} from '../../atoms/AceTooltip/AceTooltip'
 import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
 import { SidebarOverflowMenu } from './SidebarOverflowMenu'
 import {
+  sidebarIconButtonClass,
   sidebarRowActionButtonClass,
   sidebarRowActionButtonExpandedClass,
   sidebarRowActionIconClass,
@@ -43,8 +49,8 @@ const chevronMotion = cn(
 
 export type AceSidebarVariant = 'navigation' | 'groups'
 
-/** How the navigation variant shows the current organization. */
-export type AceSidebarOrganizationDisplay = 'switcher' | 'label'
+/** How the sidebar shows the current organization / group. */
+export type AceSidebarOrganizationDisplay = 'switcher' | 'label' | 'icon'
 
 export type AceSidebarMenuAction = 'edit' | 'copy' | 'delete'
 
@@ -70,6 +76,8 @@ export type AceSidebarGroup = {
   label: string
   expanded?: boolean
   items?: AceSidebarNavItem[]
+  /** Optional trailing content on the group header (e.g. summed count badge). */
+  trailing?: ReactNode
   onToggle?: () => void
   onAdd?: () => void
   onMenuAction?: (action: AceSidebarMenuAction) => void
@@ -85,10 +93,15 @@ export type AceSidebarProps = {
   selectedOrganizationId?: string
   onOrganizationChange?: (id: string) => void
   /**
-   * Navigation variant — `switcher` shows the org dropdown (default);
-   * `label` shows the selected org name as non-interactive text.
+   * `switcher` — field dropdown (default);
+   * `label` — selected org name as non-interactive text;
+   * `icon` — non-bordered icon button dropdown (optionally paired with Application ID).
    */
   organizationDisplay?: AceSidebarOrganizationDisplay
+  /** Application ID options shown as a second icon dropdown when `organizationDisplay="icon"`. */
+  applications?: AceSidebarOrganization[]
+  selectedApplicationId?: string
+  onApplicationChange?: (id: string) => void
   navItems?: AceSidebarNavItem[]
   addLabel?: string
   onNewGroup?: () => void
@@ -100,15 +113,23 @@ export type AceSidebarProps = {
   /** Portal target for row overflow menus inside scroll/clip regions */
   menuPortalContainer?: HTMLElement | null
   /**
-   * Optional control to the right of the organization switcher / groups header.
+   * Optional control to the right of the organization switcher / New Group CTA
+   * (Review Assigned — typically a bordered search icon via `sidebarIconButtonBorderedClass`).
    * Shrinks the org field so both fit the sidebar width.
    */
   headerTrailing?: ReactNode
-  /** Optional content directly below the organization / groups header (e.g. search). */
+  /** Optional content directly below the organization / groups header (e.g. search field). */
   headerBelow?: ReactNode
   className?: string
   children?: ReactNode
 }
+
+const sidebarIconDropdownTriggerClass = cn(
+  sidebarIconButtonClass,
+  'data-[state=open]:border-[var(--ace-icon-button-border)]',
+  'data-[state=open]:bg-[var(--ace-icon-button-hover-bg)]',
+  'data-[state=open]:text-[var(--ace-icon-button-icon)]',
+)
 
 function rowMenuItems(onMenuAction?: (action: AceSidebarMenuAction) => void): AceDropdownMenuEntry[] {
   return [
@@ -186,7 +207,8 @@ function NavItemRow({
         aria-label={item.label}
         className={cn(
           'min-w-0 flex-1 px-3 py-1.5',
-          nested && 'pl-4',
+          // Indent nested steps under the group header label (after chevron).
+          nested && 'pl-9',
           disabled && 'cursor-not-allowed',
         )}
       >
@@ -255,6 +277,7 @@ function SidebarGroupBlock({
           <span className={cn(p1, 'truncate text-sm')}>{group.label}</span>
         </SidebarRowButton>
         <div className="flex shrink-0 items-center gap-0.5 pr-0.5">
+          {group.trailing != null ? group.trailing : null}
           {showGroupAdd && group.onAdd ? (
             <button
               type="button"
@@ -299,7 +322,7 @@ function SidebarGroupBlock({
               {emptyGroupMessage}
             </p>
           ) : hasItems ? (
-            <div className="flex flex-col gap-1 px-2 pb-2 pt-0">
+            <div className="flex flex-col gap-1 pb-2 pl-3 pr-2 pt-0">
               {group.items!.map((item) => (
                 <NavItemRow key={item.id} item={item} nested menuPortalContainer={menuPortalContainer} />
               ))}
@@ -319,6 +342,9 @@ export function AceSidebar({
   selectedOrganizationId,
   onOrganizationChange,
   organizationDisplay = 'switcher',
+  applications = [],
+  selectedApplicationId,
+  onApplicationChange,
   navItems = [],
   addLabel = 'New Group',
   onNewGroup,
@@ -332,9 +358,13 @@ export function AceSidebar({
   children,
 }: AceSidebarProps) {
   const open = openProp ?? defaultOpen
+  const isIconHeader = organizationDisplay === 'icon'
 
   const selectedOrg =
     organizations.find((o) => o.id === selectedOrganizationId) ?? organizations[0]
+
+  const selectedApp =
+    applications.find((a) => a.id === selectedApplicationId) ?? applications[0]
 
   const orgMenuItems: AceDropdownMenuEntry[] = organizations.map((org) => ({
     type: 'item',
@@ -343,12 +373,77 @@ export function AceSidebar({
     onSelect: () => onOrganizationChange?.(org.id),
   }))
 
+  const appMenuItems: AceDropdownMenuEntry[] = applications.map((app) => ({
+    type: 'item',
+    label: app.label,
+    selected: app.id === selectedApp?.id,
+    onSelect: () => onApplicationChange?.(app.id),
+  }))
+
   const orgFieldWidthClass = headerTrailing
     ? 'min-w-0 w-full max-w-full [&_button]:!w-full [&_button]:!max-w-full'
     : '!w-[var(--ace-sidebar-control-width)] !max-w-[var(--ace-sidebar-control-width)] [&_button]:!w-full [&_button]:!max-w-full'
 
+  const organizationIconHeader =
+    selectedOrg != null ? (
+      <div className="inline-flex shrink-0 items-center gap-1">
+        <AceTooltip>
+          <AceTooltipTrigger asChild>
+            <span className="inline-flex">
+              <AceDropdownMenu
+                items={orgMenuItems}
+                panelWidth="wide"
+                portalContainer={menuPortalContainer}
+                align="start"
+                trigger={
+                  <button
+                    type="button"
+                    aria-label={`Groups: ${selectedOrg.label}`}
+                    className={sidebarIconDropdownTriggerClass}
+                  >
+                    <MaterialSymbol name="groups" size="md" className="text-current" />
+                  </button>
+                }
+              />
+            </span>
+          </AceTooltipTrigger>
+          <AceTooltipContent side="bottom" variant="screening-toolbar" hideArrow>
+            Groups
+          </AceTooltipContent>
+        </AceTooltip>
+        {selectedApp != null ? (
+          <AceTooltip>
+            <AceTooltipTrigger asChild>
+              <span className="inline-flex">
+                <AceDropdownMenu
+                  items={appMenuItems}
+                  panelWidth="wide"
+                  portalContainer={menuPortalContainer}
+                  align="start"
+                  trigger={
+                    <button
+                      type="button"
+                      aria-label={`Application ID: ${selectedApp.label}`}
+                      className={sidebarIconDropdownTriggerClass}
+                    >
+                      <MaterialSymbol name="assignment_globe" size="md" className="text-current" />
+                    </button>
+                  }
+                />
+              </span>
+            </AceTooltipTrigger>
+            <AceTooltipContent side="bottom" variant="screening-toolbar" hideArrow>
+              Application ID
+            </AceTooltipContent>
+          </AceTooltip>
+        ) : null}
+      </div>
+    ) : null
+
   const organizationHeader =
-    !selectedOrg ? null : organizationDisplay === 'label' ? (
+    !selectedOrg ? null : isIconHeader ? (
+      organizationIconHeader
+    ) : organizationDisplay === 'label' ? (
       <p
         className={cn(
           '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
@@ -379,7 +474,7 @@ export function AceSidebar({
         type="button"
         onClick={onNewGroup}
         className={cn(
-          'inline-flex items-center gap-3 rounded-[var(--radius-sm)] border border-solid',
+          'inline-flex items-center justify-center gap-3 rounded-[var(--radius-sm)] border border-solid',
           'border-[var(--ace-sidebar-heading-border)] bg-[var(--ace-sidebar-heading-bg)] px-3 py-2',
           'text-[var(--screening-text-primary)] transition-colors duration-[var(--ace-motion-duration-fast)]',
           motionEase,
@@ -389,7 +484,19 @@ export function AceSidebar({
           headerTrailing ? 'w-full min-w-0' : 'w-[var(--ace-sidebar-control-width)]',
         )}
       >
-        <MaterialSymbol name="add" size="md" className="size-4 shrink-0 text-[var(--screening-text-primary)]" />
+        <span
+          aria-hidden
+          className="inline-flex size-4 shrink-0 items-center justify-center text-[var(--screening-text-primary)]"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M8 2.5v11M2.5 8h11"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </span>
         <span className={cn(p1, 'truncate text-sm')}>{addLabel}</span>
       </button>
     ) : (
@@ -397,6 +504,7 @@ export function AceSidebar({
     )
 
   const headerContent = variant === 'groups' ? groupsHeader : organizationHeader
+  const headerContentGrows = Boolean(headerTrailing && headerContent && !isIconHeader)
 
   return (
     <aside
@@ -425,12 +533,18 @@ export function AceSidebar({
             <div
               className={cn(
                 'flex items-center px-[var(--ace-sidebar-nav-px)] py-4',
-                headerTrailing ? 'gap-2' : 'justify-center',
+                isIconHeader
+                  ? headerTrailing
+                    ? 'justify-between gap-2'
+                    : 'justify-start'
+                  : headerTrailing
+                    ? 'gap-2'
+                    : 'justify-center',
                 headerBelow ? 'pb-2' : undefined,
               )}
             >
               {headerContent ? (
-                <div className={cn(headerTrailing ? 'min-w-0 flex-1' : undefined)}>
+                <div className={cn(headerContentGrows ? 'min-w-0 flex-1' : 'shrink-0')}>
                   {headerContent}
                 </div>
               ) : null}
