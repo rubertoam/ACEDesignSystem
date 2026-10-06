@@ -4,17 +4,35 @@ const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]
 const motionReduce = 'motion-reduce:transition-none motion-reduce:duration-0'
 
 /**
- * Iconography “No border stroke” — transparent at rest; hover fills with
- * `--ace-sidebar-row-action-hover-bg` (`--screening-surface-hover` / `--ace-neutral-100`) + 1px ring.
+ * Iconography “No border stroke” (Figma Iconography).
+ * Rest: transparent + transparent border (avoids layout shift).
+ * Hover: `--ace-icon-button-hover-bg` + `--ace-icon-button-border` (color/bg/primary + color/border/default).
  */
 export const sidebarIconButtonClass = cn(
   'relative z-[1] inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
-  'text-[var(--ace-sidebar-menu-icon)]',
-  'transition-[opacity,background-color,box-shadow,color]',
+  'border border-solid border-transparent',
+  'text-[var(--ace-icon-button-icon-rest-ghost)]',
+  'transition-[opacity,background-color,border-color,color]',
   'duration-[var(--ace-motion-duration-medium)]',
   motionEase,
   motionReduce,
-  'hover:bg-[var(--ace-sidebar-row-action-hover-bg)] hover:shadow-[0_0_0_1px_var(--screening-border-strong)]',
+  'hover:border-[var(--ace-icon-button-border)] hover:bg-[var(--ace-icon-button-hover-bg)] hover:text-[var(--ace-icon-button-icon)]',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+)
+
+/**
+ * Iconography “Border stroke” (Figma Iconography).
+ * Rest: surface + soft border + icon primary.
+ * Hover: same border, `--ace-icon-button-hover-bg`.
+ */
+export const sidebarIconButtonBorderedClass = cn(
+  'relative z-[1] inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border border-solid',
+  'border-[var(--ace-icon-button-border)] bg-[var(--ace-icon-button-surface)] text-[var(--ace-icon-button-icon)]',
+  'transition-[opacity,background-color,border-color,color]',
+  'duration-[var(--ace-motion-duration-medium)]',
+  motionEase,
+  motionReduce,
+  'hover:border-[var(--ace-icon-button-border)] hover:bg-[var(--ace-icon-button-hover-bg)] hover:text-[var(--ace-icon-button-icon)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 
