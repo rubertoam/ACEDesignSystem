@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { type ReactNode, useState } from 'react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import {
   AceDropdownMenu,
@@ -83,6 +83,11 @@ export type AceSidebarGroup = {
   onToggle?: () => void
   onAdd?: () => void
   onMenuAction?: (action: AceSidebarMenuAction) => void
+  /**
+   * Static section label above workflow groups (e.g. Application ID when multiple
+   * applications are selected). Not expandable.
+   */
+  sectionHeader?: boolean
 }
 
 export type AceSidebarProps = {
@@ -102,8 +107,15 @@ export type AceSidebarProps = {
   organizationDisplay?: AceSidebarOrganizationDisplay
   /** Application ID options shown as a second icon dropdown when `organizationDisplay="icon"`. */
   applications?: AceSidebarOrganization[]
+  /** Single-select Application ID (default). Ignored when multi-select ids are provided. */
   selectedApplicationId?: string
   onApplicationChange?: (id: string) => void
+  /**
+   * Multi-select Application IDs. When both this and `onApplicationIdsChange` are set,
+   * the Application dropdown uses checkboxes and stays open while toggling.
+   */
+  selectedApplicationIds?: string[]
+  onApplicationIdsChange?: (ids: string[]) => void
   navItems?: AceSidebarNavItem[]
   addLabel?: string
   onNewGroup?: () => void
@@ -133,23 +145,61 @@ const sidebarIconDropdownTriggerClass = cn(
   'data-[state=open]:text-[var(--ace-icon-button-icon)]',
 )
 
+/**
+ * Icon + label trigger. Built from Iconography border-stroke tokens (same as
+ * `sidebarIconButtonBorderedClass`) — not `size-8` — so the hover border wraps
+ * the full control instead of the icon box.
+ */
+const sidebarIconDropdownTriggerWithLabelClass = cn(
+  'relative z-[1] inline-flex h-8 w-auto max-w-full min-w-0 shrink cursor-pointer items-center justify-start gap-1 rounded-[var(--radius-sm)] border border-solid px-1.5',
+  'border-transparent bg-transparent text-[var(--ace-icon-button-icon-rest-ghost)]',
+  'transition-[opacity,background-color,border-color,color]',
+  'duration-[var(--ace-motion-duration-medium)]',
+  motionEase,
+  motionReduce,
+  // Border-stroke hover (matches `sidebarIconButtonBorderedClass`)
+  'hover:border-[var(--ace-icon-button-border)] hover:bg-[var(--ace-icon-button-hover-bg)] hover:text-[var(--ace-icon-button-icon)]',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+  'data-[state=open]:border-[var(--ace-icon-button-border)]',
+  'data-[state=open]:bg-[var(--ace-icon-button-hover-bg)]',
+  'data-[state=open]:text-[var(--ace-icon-button-icon)]',
+)
+
+function sidebarIconDropdownTriggerClassName(hasLabel: boolean) {
+  return hasLabel ? sidebarIconDropdownTriggerWithLabelClass : sidebarIconDropdownTriggerClass
+}
+
 /** Icon-button dropdown that does not depend on AceDropdownMenu `trigger` prop. */
 function SidebarIconDropdown({
   ariaLabel,
   iconName,
   items,
+  label,
   portalContainer,
+  onOpenChange,
 }: {
   ariaLabel: string
   iconName: string
   items: AceDropdownMenuEntry[]
+  /** Selected value shown beside the icon; truncates when space is tight. */
+  label?: string
   portalContainer?: HTMLElement | null
+  onOpenChange?: (open: boolean) => void
 }) {
   return (
-    <DropdownMenu.Root modal={false}>
+    <DropdownMenu.Root modal={false} onOpenChange={onOpenChange}>
       <DropdownMenu.Trigger asChild>
-        <button type="button" aria-label={ariaLabel} className={sidebarIconDropdownTriggerClass}>
-          <MaterialSymbol name={iconName} size="md" className="text-current" />
+        <button
+          type="button"
+          aria-label={ariaLabel}
+          className={sidebarIconDropdownTriggerClassName(label != null)}
+        >
+          <MaterialSymbol name={iconName} size="md" className="shrink-0 text-current" />
+          {label != null ? (
+            <span className={cn(p1, 'min-w-0 truncate text-sm leading-[1.3125rem] text-current')}>
+              {label}
+            </span>
+          ) : null}
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal container={portalContainer ?? undefined}>
@@ -179,6 +229,30 @@ function SidebarIconDropdown({
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
+  )
+}
+
+/** Tooltip that closes while its nested dropdown menu is open. */
+function SidebarIconDropdownTooltip({
+  label,
+  triggerClassName,
+  children,
+}: {
+  label: string
+  triggerClassName?: string
+  children: (api: { onOpenChange: (open: boolean) => void }) => ReactNode
+}) {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  return (
+    <AceTooltip open={menuOpen ? false : undefined}>
+      <AceTooltipTrigger asChild>
+        <span className={triggerClassName}>{children({ onOpenChange: setMenuOpen })}</span>
+      </AceTooltipTrigger>
+      <AceTooltipContent side="bottom" variant="screening-toolbar" hideArrow>
+        {label}
+      </AceTooltipContent>
+    </AceTooltip>
   )
 }
 
@@ -292,6 +366,21 @@ function SidebarGroupBlock({
   emptyGroupMessage: string
   showGroupAdd: boolean
 }) {
+  if (group.sectionHeader) {
+    return (
+      <div data-sidebar-section-id={group.id} className="px-1.5 pt-1 first:pt-0">
+        <p
+          className={cn(
+            '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+            'm-0 truncate text-sm text-[var(--screening-text-primary)]',
+          )}
+        >
+          {group.label}
+        </p>
+      </div>
+    )
+  }
+
   const expanded = !!group.expanded
   const hasItems = (group.items?.length ?? 0) > 0
 
@@ -396,6 +485,8 @@ export function AceSidebar({
   applications = [],
   selectedApplicationId,
   onApplicationChange,
+  selectedApplicationIds,
+  onApplicationIdsChange,
   navItems = [],
   addLabel = 'New Group',
   onNewGroup,
@@ -410,12 +501,27 @@ export function AceSidebar({
 }: AceSidebarProps) {
   const open = openProp ?? defaultOpen
   const isIconHeader = organizationDisplay === 'icon'
+  const applicationMultiSelect =
+    selectedApplicationIds != null && onApplicationIdsChange != null
 
   const selectedOrg =
     organizations.find((o) => o.id === selectedOrganizationId) ?? organizations[0]
 
-  const selectedApp =
-    applications.find((a) => a.id === selectedApplicationId) ?? applications[0]
+  const selectedAppIds = applicationMultiSelect
+    ? selectedApplicationIds
+    : selectedApplicationId
+      ? [selectedApplicationId]
+      : applications[0]
+        ? [applications[0].id]
+        : []
+
+  const selectedApps = applications.filter((app) => selectedAppIds.includes(app.id))
+  const selectedAppLabel =
+    selectedApps.length === 0
+      ? applications[0]?.label
+      : selectedApps.length === 1
+        ? selectedApps[0]!.label
+        : `${selectedApps.length} selected`
 
   const orgMenuItems: AceDropdownMenuEntry[] = organizations.map((org) => ({
     type: 'item',
@@ -424,51 +530,107 @@ export function AceSidebar({
     onSelect: () => onOrganizationChange?.(org.id),
   }))
 
-  const appMenuItems: AceDropdownMenuEntry[] = applications.map((app) => ({
-    type: 'item',
-    label: app.label,
-    selected: app.id === selectedApp?.id,
-    onSelect: () => onApplicationChange?.(app.id),
-  }))
+  const appMenuItems: AceDropdownMenuEntry[] = applicationMultiSelect
+    ? applications.map((app) => {
+        const checked = selectedAppIds.includes(app.id)
+        return {
+          type: 'checkbox' as const,
+          label: app.label,
+          checked,
+          onCheckedChange: (nextChecked: boolean) => {
+            if (nextChecked) {
+              if (checked) return
+              onApplicationIdsChange([...selectedAppIds, app.id])
+              return
+            }
+            if (selectedAppIds.length <= 1) return
+            onApplicationIdsChange(selectedAppIds.filter((id) => id !== app.id))
+          },
+        }
+      })
+    : applications.map((app) => ({
+        type: 'item' as const,
+        label: app.label,
+        selected: app.id === selectedAppIds[0],
+        onSelect: () => onApplicationChange?.(app.id),
+      }))
 
   const orgFieldWidthClass = headerTrailing
     ? 'min-w-0 w-full max-w-full [&_button]:!w-full [&_button]:!max-w-full'
     : '!w-[var(--ace-sidebar-control-width)] !max-w-[var(--ace-sidebar-control-width)] [&_button]:!w-full [&_button]:!max-w-full'
 
+  const applicationDropdown =
+    applications.length > 0 && selectedAppLabel != null ? (
+      <SidebarIconDropdownTooltip
+        label="Application ID"
+        triggerClassName="flex min-w-0 max-w-full"
+      >
+        {({ onOpenChange }) =>
+          applicationMultiSelect ? (
+            <AceDropdownMenu
+              panelWidth="wide"
+              align="start"
+              portalContainer={menuPortalContainer}
+              items={appMenuItems}
+              onOpenChange={onOpenChange}
+              trigger={
+                <button
+                  type="button"
+                  aria-label={`Application ID: ${selectedAppLabel}`}
+                  className={sidebarIconDropdownTriggerClassName(true)}
+                >
+                  <MaterialSymbol
+                    name="assignment_globe"
+                    size="md"
+                    className="shrink-0 text-current"
+                  />
+                  <span
+                    className={cn(
+                      p1,
+                      'min-w-0 truncate text-sm leading-[1.3125rem] text-current',
+                    )}
+                  >
+                    {selectedAppLabel}
+                  </span>
+                </button>
+              }
+            />
+          ) : (
+            <SidebarIconDropdown
+              ariaLabel={`Application ID: ${selectedAppLabel}`}
+              iconName="assignment_globe"
+              label={selectedAppLabel}
+              items={appMenuItems}
+              portalContainer={menuPortalContainer}
+              onOpenChange={onOpenChange}
+            />
+          )
+        }
+      </SidebarIconDropdownTooltip>
+    ) : null
+
   const organizationIconHeader =
     selectedOrg != null ? (
-      <div className="inline-flex shrink-0 items-center gap-1">
-        <AceTooltip>
-          <AceTooltipTrigger asChild>
-            <span className="inline-flex">
-              <SidebarIconDropdown
-                ariaLabel={`Groups: ${selectedOrg.label}`}
-                iconName="groups"
-                items={orgMenuItems}
-                portalContainer={menuPortalContainer}
-              />
-            </span>
-          </AceTooltipTrigger>
-          <AceTooltipContent side="bottom" variant="screening-toolbar" hideArrow>
-            Groups
-          </AceTooltipContent>
-        </AceTooltip>
-        {selectedApp != null ? (
-          <AceTooltip>
-            <AceTooltipTrigger asChild>
-              <span className="inline-flex">
-                <SidebarIconDropdown
-                  ariaLabel={`Application ID: ${selectedApp.label}`}
-                  iconName="assignment_globe"
-                  items={appMenuItems}
-                  portalContainer={menuPortalContainer}
-                />
-              </span>
-            </AceTooltipTrigger>
-            <AceTooltipContent side="bottom" variant="screening-toolbar" hideArrow>
-              Application ID
-            </AceTooltipContent>
-          </AceTooltip>
+      <div className="flex min-w-0 flex-1 items-center gap-1 overflow-hidden">
+        <SidebarIconDropdownTooltip
+          label="Groups"
+          triggerClassName="min-w-0 max-w-[calc(50%-0.125rem)] shrink overflow-hidden"
+        >
+          {({ onOpenChange }) => (
+            <SidebarIconDropdown
+              ariaLabel={`Groups: ${selectedOrg.label}`}
+              iconName="groups"
+              label={selectedOrg.label}
+              items={orgMenuItems}
+              portalContainer={menuPortalContainer}
+              onOpenChange={onOpenChange}
+            />
+          )}
+        </SidebarIconDropdownTooltip>
+        {applicationDropdown != null ? (
+          <span className="min-w-0 max-w-[calc(50%-0.125rem)] shrink overflow-hidden">
+            {applicationDropdown}
+          </span>
         ) : null}
       </div>
     ) : null
@@ -537,7 +699,7 @@ export function AceSidebar({
     )
 
   const headerContent = variant === 'groups' ? groupsHeader : organizationHeader
-  const headerContentGrows = Boolean(headerTrailing && headerContent && !isIconHeader)
+  const headerContentGrows = Boolean(headerTrailing && headerContent)
 
   return (
     <aside
@@ -568,7 +730,7 @@ export function AceSidebar({
                 'flex items-center px-[var(--ace-sidebar-nav-px)] py-4',
                 isIconHeader
                   ? headerTrailing
-                    ? 'justify-between gap-2'
+                    ? 'min-w-0 justify-between gap-2'
                     : 'justify-start'
                   : headerTrailing
                     ? 'gap-2'
@@ -577,7 +739,11 @@ export function AceSidebar({
               )}
             >
               {headerContent ? (
-                <div className={cn(headerContentGrows ? 'min-w-0 flex-1' : 'shrink-0')}>
+                <div
+                  className={cn(
+                    headerContentGrows ? 'min-w-0 flex-1 overflow-hidden' : 'shrink-0',
+                  )}
+                >
                   {headerContent}
                 </div>
               ) : null}

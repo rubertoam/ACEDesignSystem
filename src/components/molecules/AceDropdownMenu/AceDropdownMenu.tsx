@@ -115,6 +115,8 @@ export type AceDropdownMenuProps = {
   panelWidth?: AceDropdownMenuPanelWidth
   /** Custom trigger element (e.g. icon button). When set, built-in trigger modes are ignored. */
   trigger?: ReactNode
+  /** Called when the menu opens or closes. */
+  onOpenChange?: (open: boolean) => void
 }
 
 export type AceDropdownMenuPanelProps = {
@@ -659,6 +661,7 @@ export function AceDropdownMenu({
   className,
   panelWidth = 'default',
   trigger,
+  onOpenChange,
 }: AceDropdownMenuProps) {
   const triggerChild =
     trigger != null ? (
@@ -700,7 +703,7 @@ export function AceDropdownMenu({
     )
 
   return (
-    <DropdownMenu.Root modal={false}>
+    <DropdownMenu.Root modal={false} onOpenChange={onOpenChange}>
       <DropdownMenu.Trigger asChild disabled={disabled}>
         {triggerChild}
       </DropdownMenu.Trigger>
