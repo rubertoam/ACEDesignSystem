@@ -12,7 +12,7 @@ import {
 } from './LabImplementationRules'
 import { labUsageSections } from './labContent'
 
-export type ComponentLabTab = 'examples' | 'code' | 'usage' | 'qa'
+export type ComponentLabTab = 'examples' | 'code' | 'usage' | 'qa' | 'changelog'
 
 const p1 =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
@@ -57,6 +57,8 @@ export type ComponentLabPageProps = {
   previewToolbar?: ReactNode
   /** @deprecated Fold into `usage` */
   variables?: ReactNode
+  /** Optional Changelog tab — component evolution history. */
+  changelog?: ReactNode
 }
 
 export function ComponentLabCode({ children }: { children: string }) {
@@ -75,6 +77,7 @@ export function ComponentLabPage({
   preview,
   previewToolbar,
   variables,
+  changelog,
 }: ComponentLabPageProps) {
   const { pathname } = useLocation()
   const availability = getLabAvailability(pathname)
@@ -83,6 +86,7 @@ export function ComponentLabPage({
   const codePanelId = `${tabListId}-code-panel`
   const usagePanelId = `${tabListId}-usage-panel`
   const qaPanelId = `${tabListId}-qa-panel`
+  const changelogPanelId = `${tabListId}-changelog-panel`
 
   const examplesContent = examples ?? preview
   const toolbarContent = examplesToolbar ?? previewToolbar
@@ -103,6 +107,7 @@ export function ComponentLabPage({
 
   const hasExamples = examplesContent != null
   const hasCode = code != null
+  const hasChangelog = changelog != null
 
   const usageTabContent = (
     <>
@@ -132,8 +137,9 @@ export function ComponentLabPage({
     if (hasCode) items.push({ id: 'code', label: 'Code' })
     items.push({ id: 'usage', label: 'Usage' })
     items.push({ id: 'qa', label: 'QA' })
+    if (hasChangelog) items.push({ id: 'changelog', label: 'Changelog' })
     return items
-  }, [hasExamples, hasCode])
+  }, [hasExamples, hasCode, hasChangelog])
 
   const [tab, setTab] = useState<ComponentLabTab>(tabItems[0]?.id ?? 'examples')
 
@@ -230,6 +236,19 @@ export function ComponentLabPage({
             >
               <div className={cn(panel, 'space-y-4', p1, 'text-[var(--screening-text-primary)]')}>
                 {qaTabContent}
+              </div>
+            </section>
+          ) : null}
+
+          {hasChangelog && tab === 'changelog' ? (
+            <section
+              id={changelogPanelId}
+              role="tabpanel"
+              aria-labelledby={aceTabButtonId(tabListId, 'changelog')}
+              className="pt-6"
+            >
+              <div className={cn(panel, 'space-y-4', p1, 'text-[var(--screening-text-primary)]')}>
+                {changelog}
               </div>
             </section>
           ) : null}

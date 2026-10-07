@@ -16,9 +16,9 @@ import {
 } from './descriptiveButtonFieldStyles'
 
 export type AceDescriptiveButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
-  /** Primary label — Caption Semi Bold (Figma). */
+  /** Primary label — Caption Bold (Figma ButtonDescriptive). */
   title: string
-  /** Supporting copy — Footer Regular (Figma). */
+  /** Supporting copy — Footer Regular (Figma ButtonDescriptive). */
   description: string
   /**
    * Material Symbols ligature from Iconography (e.g. `file_export`).
@@ -74,7 +74,7 @@ export const AceDescriptiveButton = forwardRef<HTMLButtonElement, AceDescriptive
               name={iconName}
               size="lg"
               className={cn(
-                'text-[var(--screening-primary)]',
+                'text-[var(--color-icon-brand)]',
                 isDisabled && 'text-[var(--ace-descriptive-button-disabled-text)]',
               )}
             />

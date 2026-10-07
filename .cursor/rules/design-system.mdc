@@ -17,6 +17,7 @@ alwaysApply: false
 - **Framework**: React function components + TypeScript.
 - **Styling**: Tailwind CSS, with utilities tied to **design tokens** (CSS variables), not one-off literals.
 - **Lab documentation**: Every component lab page must render **Usage** and **Variables** sections (use `ComponentLabPage` in `src/pages/`).
+- **Usage tokens (required on every component update)**: When updating Buttons, Inputs, or any other component to match Figma / token changes, **update the lab Usage tab** so it records the **correct semantic (and primitive, if relevant) tokens actually used** — e.g. `--color-action-primary`, `--color-border-focus`, `--color-action-disabled-button`. Do not leave Usage as API-only prose if tokens changed. Keep the Variables tab in sync with the same token list. Prefer Figma path names in prose (`colors/action/primary`) alongside CSS vars (`--color-action-primary`). When a Changelog tab exists, note the Usage/token doc update there too.
 - **Animations**: When adding motion to a component, register it in `src/lib/aceAnimations.ts` and document it on `/lab/atoms/animations` (see `.cursor/rules/ace-animations.mdc`).
 
 ## Figma MCP workflow (UI work)

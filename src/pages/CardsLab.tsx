@@ -1,5 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react'
-import { AceDataCard, AceLandingPageCard, LANDING_PAGE_CARD_ICONS } from '../components/organisms/AceCards'
+import { AceLandingPageCard, LANDING_PAGE_CARD_ICONS } from '../components/organisms/AceCards'
 import { LabCheckbox, LabControlField, LabTextInput } from '../lib/labControls'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
@@ -19,8 +19,92 @@ const labControlsPanelClass =
 function LabControlsPanel({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className={labControlsPanelClass}>
-      <h4 className="m-0 text-sm font-bold leading-[1.65] text-[var(--ace-neutral-800)]">{title}</h4>
+      <h4 className="m-0 text-sm font-bold leading-[1.65] text-[var(--color-text-primary)]">{title}</h4>
       {children}
+    </div>
+  )
+}
+
+function CardsChangelog() {
+  return (
+    <div className="space-y-8">
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">25 August 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Header chrome: no divider under title; optional header badge via{' '}
+            <code className="text-[var(--color-text-primary)]">showBadge</code>.
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>Removed the 1px stroke under the landing page card header.</li>
+          <li>
+            Added <code className="text-[var(--color-text-primary)]">showBadge</code> (lab: Header badge) to hide the
+            description-variant AceBadge without clearing <code className="text-[var(--color-text-primary)]">tag</code>
+            .
+          </li>
+        </ul>
+      </article>
+
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">25 August 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Cards lab shows Landing Page cards only; Data Card demo hidden from the DS reference page.
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>
+            Removed the expandable Data Card section from the Cards lab (examples, controls, usage, and code samples).{' '}
+            <code className="text-[var(--color-text-primary)]">AceDataCard</code> remains in the package for product
+            use.
+          </li>
+        </ul>
+      </article>
+
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">25 August 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Sync with ACE Design System v.3 Figma Landing Page Cards (
+            <code className="text-[var(--color-text-primary)]">4130:1977</code> / component set{' '}
+            <code className="text-[var(--color-text-primary)]">4212:1424–1427</code>) and semantic color/typography
+            tokens.
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>
+            Rewired landing page card surface, border, text, icon, link, and divider aliases to semantic{' '}
+            <code className="text-[var(--color-text-primary)]">--color-*</code> tokens (
+            <code className="text-[var(--color-text-primary)]">surface/primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">border/default</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">text/primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">icon/primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">action/primary</code>).
+          </li>
+          <li>
+            Footer no longer uses the soft purple strip — Status row is{' '}
+            <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> like the card body
+            (Figma Status frame).
+          </li>
+          <li>
+            Description tag switched from solid purple/white pill to{' '}
+            <code className="text-[var(--color-text-primary)]">AceBadge</code> purple pill (
+            <code className="text-[var(--color-text-primary)]">colors/badges/purple-fill</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">purple-border</code>).
+          </li>
+          <li>
+            Default → Hover shadow now uses ACE Drop Shadow XS → XL (
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code>) instead of a hardcoded
+            12px blur.
+          </li>
+          <li>
+            Compact header action hit targets; third stats icon uses the Figma people glyph asset.
+          </li>
+          <li>Added this Changelog tab; Usage tab lists Tokens in use with Figma paths + CSS vars.</li>
+        </ul>
+      </article>
     </div>
   )
 }
@@ -29,24 +113,11 @@ export function CardsLab() {
   const [title, setTitle] = useState('[Enter Card Title]')
   const [bodyText, setBodyText] = useState(DEFAULT_DESCRIPTION)
   const [statLabel, setStatLabel] = useState('Data Point')
-  const [showTag, setShowTag] = useState(true)
+  const [showBadge, setShowBadge] = useState(true)
   const [showHeaderActions, setShowHeaderActions] = useState(true)
   const [showFooterStats, setShowFooterStats] = useState(true)
   const [showFooterLink, setShowFooterLink] = useState(true)
   const [lastAction, setLastAction] = useState<string | null>(null)
-
-  const [dataHeading, setDataHeading] = useState('[Heading]')
-  const [dataEnterLabel, setDataEnterLabel] = useState('[Enter Data]')
-  const [dataPointLabel, setDataPointLabel] = useState('Data Point')
-  const [dataCardChecked, setDataCardChecked] = useState(false)
-  const [dataShowCheckbox, setDataShowCheckbox] = useState(true)
-  const [dataShowStatus, setDataShowStatus] = useState(true)
-  const [dataShowHeadingInfo, setDataShowHeadingInfo] = useState(true)
-  const [dataShowEnterData, setDataShowEnterData] = useState(true)
-  const [dataShowHeaderActions, setDataShowHeaderActions] = useState(true)
-  const [dataShowDataTable, setDataShowDataTable] = useState(true)
-  const [dataShowInfoBlock, setDataShowInfoBlock] = useState(true)
-  const [dataShowInlineLink, setDataShowInlineLink] = useState(true)
 
   const statItems = useMemo(
     () => [
@@ -63,26 +134,19 @@ export function CardsLab() {
         iconClassName: 'h-4 w-5',
       },
       {
-        id: 'workflow',
+        id: 'people',
         label: statLabel,
-        iconName: 'arrow_split',
+        iconSrc: LANDING_PAGE_CARD_ICONS.statWorkflow,
+        iconClassName: 'h-3 w-6',
       },
     ],
     [statLabel],
   )
 
-  const dataColumn = useMemo(
-    () => [
-      { label: dataPointLabel, value: 'Data' },
-      { label: dataPointLabel, value: 'Data' },
-      { label: dataPointLabel, value: 'Data' },
-    ],
-    [dataPointLabel],
-  )
-
   const cardProps = {
     title,
-    tag: showTag ? 'Tag' : undefined,
+    tag: 'Purple',
+    showBadge,
     showHeaderActions,
     showFooterStats,
     showFooterLink,
@@ -92,8 +156,8 @@ export function CardsLab() {
 
   const landingControls = (
     <LabControlsPanel title="Landing Page Card">
-      <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Configure both Landing Page card variants. Stat body icons from node 4212:1138.
+      <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--color-text-muted)]">
+        Configure both Landing Page card variants (Figma 4130:1977). Stats icons from node 4212:1138.
       </p>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <LabTextInput label="Card title" value={title} onChange={setTitle} className="max-w-md" />
@@ -102,7 +166,7 @@ export function CardsLab() {
       </div>
       <LabControlField label="Visibility">
         <div className="flex flex-wrap gap-x-6 gap-y-2">
-          <LabCheckbox label="Show tag" checked={showTag} onCheckedChange={setShowTag} />
+          <LabCheckbox label="Header badge" checked={showBadge} onCheckedChange={setShowBadge} />
           <LabCheckbox
             label="Header icons"
             checked={showHeaderActions}
@@ -113,136 +177,100 @@ export function CardsLab() {
         </div>
       </LabControlField>
       {lastAction ? (
-        <p className="m-0 text-xs text-[var(--screening-text-muted)]">
-          Last action: <strong className="text-[var(--screening-text-primary)]">{lastAction}</strong>
+        <p className="m-0 text-xs text-[var(--color-text-muted)]">
+          Last action: <strong className="text-[var(--color-text-primary)]">{lastAction}</strong>
         </p>
       ) : null}
-    </LabControlsPanel>
-  )
-
-  const dataCardControls = (
-    <LabControlsPanel title="Data Card">
-      <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Medium expandable data card from node 2046:5157. Expand/collapse uses the same easing as the accordion.
-      </p>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <LabTextInput label="Heading" value={dataHeading} onChange={setDataHeading} className="max-w-md" />
-        <LabTextInput
-          label="Enter data label"
-          value={dataEnterLabel}
-          onChange={setDataEnterLabel}
-          className="max-w-md"
-        />
-        <LabTextInput
-          label="Data point label"
-          value={dataPointLabel}
-          onChange={setDataPointLabel}
-          className="max-w-md"
-        />
-      </div>
-      <LabControlField label="Visibility">
-        <div className="flex flex-wrap gap-x-6 gap-y-2">
-          <LabCheckbox label="Checkbox" checked={dataShowCheckbox} onCheckedChange={setDataShowCheckbox} />
-          <LabCheckbox label="Status dots" checked={dataShowStatus} onCheckedChange={setDataShowStatus} />
-          <LabCheckbox
-            label="Heading info"
-            checked={dataShowHeadingInfo}
-            onCheckedChange={setDataShowHeadingInfo}
-          />
-          <LabCheckbox label="Enter data" checked={dataShowEnterData} onCheckedChange={setDataShowEnterData} />
-          <LabCheckbox
-            label="Header actions"
-            checked={dataShowHeaderActions}
-            onCheckedChange={setDataShowHeaderActions}
-          />
-          <LabCheckbox label="Data table" checked={dataShowDataTable} onCheckedChange={setDataShowDataTable} />
-          <LabCheckbox label="Info block" checked={dataShowInfoBlock} onCheckedChange={setDataShowInfoBlock} />
-          <LabCheckbox label="Inline link" checked={dataShowInlineLink} onCheckedChange={setDataShowInlineLink} />
-        </div>
-      </LabControlField>
     </LabControlsPanel>
   )
 
   return (
     <ComponentLabPage
       title="Cards"
-      description="Landing page and medium data cards - expandable sections, header actions, and design-token shadows."
+      description="Landing page navigation cards (stats and description) — semantic tokens, AceBadge, and ACE drop shadows. Figma 4130:1977."
       examplesCanvas={false}
       examples={
-        <div className="flex flex-col gap-10">
-          <div className={labComponentContainerClass}>
-            {landingControls}
-            <div className="flex flex-wrap gap-8">
-              <AceLandingPageCard variant="stats" statItems={statItems} {...cardProps} />
-              <AceLandingPageCard variant="description" description={bodyText} {...cardProps} />
-            </div>
-          </div>
-
-          <div className={labComponentContainerClass}>
-            {dataCardControls}
-            <div className="grid w-full min-w-0">
-              <div
-                className="col-start-1 row-start-1 invisible pointer-events-none select-none"
-                aria-hidden
-              >
-                <AceDataCard
-                  heading={dataHeading}
-                  enterData={dataEnterLabel}
-                  expanded
-                  leftColumn={dataColumn}
-                  rightColumn={dataColumn}
-                />
-              </div>
-              <div className="col-start-1 row-start-1 min-w-0">
-                <AceDataCard
-                  heading={dataHeading}
-                  enterData={dataEnterLabel}
-                  leftColumn={dataColumn}
-                  rightColumn={dataColumn}
-                  checked={dataCardChecked}
-                  onCheckedChange={setDataCardChecked}
-                  showCheckbox={dataShowCheckbox}
-                  showStatusIndicator={dataShowStatus}
-                  showHeadingInfo={dataShowHeadingInfo}
-                  showEnterData={dataShowEnterData}
-                  showHeaderActions={dataShowHeaderActions}
-                  showDataTable={dataShowDataTable}
-                  showInfoBlock={dataShowInfoBlock}
-                  showInlineLink={dataShowInlineLink}
-                />
-              </div>
-            </div>
+        <div className={labComponentContainerClass}>
+          {landingControls}
+          <div className="flex flex-wrap gap-8">
+            <AceLandingPageCard variant="stats" statItems={statItems} {...cardProps} />
+            <AceLandingPageCard variant="description" description={bodyText} {...cardProps} />
           </div>
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AceLandingPageCard, AceDataCard } from '../components/organisms/AceCards'
+        <ComponentLabCode>{`import { AceLandingPageCard } from '../components/organisms/AceCards'
 
 <AceLandingPageCard variant="stats" title="Screening" statItems={...} />
-<AceDataCard heading="[Heading]" expanded showDataTable />`}</ComponentLabCode>
+<AceLandingPageCard variant="description" title="Screening" tag="Purple" showBadge description="..." />`}</ComponentLabCode>
       }
       usage={
-        <p className="m-0 text-[var(--screening-text-muted)]">
-          Data card expand/collapse uses{' '}
-          <code className="text-[var(--screening-text-primary)]">--ace-accordion-duration</code> and{' '}
-          <code className="text-[var(--screening-text-primary)]">--ace-accordion-ease</code>. The embedded table uses the{' '}
-          <code className="text-[var(--screening-text-primary)]">AceTable</code> molecule with screening table tokens.
-        </p>
+        <div className="space-y-6 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <p className="m-0">
+            Landing page cards navigate users to tools (screening, simulators, etc.). Variants:{' '}
+            <code className="text-[var(--color-text-primary)]">stats</code> (icon row) and{' '}
+            <code className="text-[var(--color-text-primary)]">description</code> (body copy + optional purple
+            AceBadge). Hover elevates shadow XS → XL.
+          </p>
+          <div className="space-y-2">
+            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens in use</h4>
+            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Surface &amp; border</strong> —{' '}
+                <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>;{' '}
+                <code className="text-[var(--color-text-primary)]">colors/border/default</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-default</code> (thin 0.5px); radius{' '}
+                <code className="text-[var(--color-text-primary)]">radius/sm</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--radius-sm</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Type &amp; icons</strong> — title P1
+                Bold / body &amp; footer Caption Regular (
+                <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-bold</code>,{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>); text{' '}
+                <code className="text-[var(--color-text-primary)]">colors/text/primary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-primary</code>; icons{' '}
+                <code className="text-[var(--color-text-primary)]">colors/icon/primary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Link &amp; badge</strong> — link{' '}
+                <code className="text-[var(--color-text-primary)]">colors/action/primary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-action-primary</code>; badge{' '}
+                <code className="text-[var(--color-text-primary)]">colors/badges/purple-fill</code> /{' '}
+                <code className="text-[var(--color-text-primary)]">purple-border</code> via{' '}
+                <code className="text-[var(--color-text-primary)]">AceBadge</code> purple (
+                <code className="text-[var(--color-text-primary)]">--ace-status-pill-purple-*</code>).
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Shadows</strong> — Default Shadow (XS)
+                → <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code>; Hover Shadow (XL) →{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code>.
+              </li>
+            </ul>
+          </div>
+        </div>
       }
       variables={
-        <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--screening-text-muted)]">
+        <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-landing-page-card-*</code> - landing page card layout and tag.
+            Landing aliases: <code className="text-[var(--color-text-primary)]">--ace-landing-page-card-*</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-default</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-action-primary</code>; shadows{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code>.
           </li>
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-data-card-*</code> - medium data card width (692px), header, shadows.
-          </li>
-          <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-accordion-duration</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-accordion-ease</code> - expand panel motion.
+            Badge: <code className="text-[var(--color-text-primary)]">--ace-status-pill-purple-*</code> (Figma{' '}
+            <code className="text-[var(--color-text-primary)]">colors/badges/purple-*</code>).
           </li>
         </ul>
       }
+      changelog={<CardsChangelog />}
     />
   )
 }

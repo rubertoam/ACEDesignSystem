@@ -13,14 +13,9 @@ export type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Ro
   size?: AceCheckboxSize
 }
 
-/** Horizontal bar for indeterminate — Figma selected mark is a filled square, not a check. */
+/** Horizontal bar for indeterminate — Figma Active uses a white inset ring, not a checkmark. */
 function IndeterminateGlyph({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn('rounded-full bg-current', className)}
-      aria-hidden
-    />
-  )
+  return <span className={cn('rounded-full bg-current', className)} aria-hidden />
 }
 
 export const Checkbox = forwardRef<ComponentRef<typeof CheckboxPrimitive.Root>, CheckboxProps>(

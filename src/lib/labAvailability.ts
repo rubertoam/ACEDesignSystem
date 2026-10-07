@@ -21,6 +21,7 @@ export const LAB_AVAILABILITY_BY_PATH: Record<string, LabAvailabilityStatus> = {
   '/lab/atoms/toggles': 'available',
   '/lab/atoms/radios': 'available',
   '/lab/atoms/badges': 'available',
+  '/lab/atoms/progress-indicators': 'available',
   '/lab/atoms/tooltips': 'available',
   '/lab/molecules/tabs': 'available',
   '/lab/molecules/dropdowns': 'in-progress',
@@ -35,15 +36,15 @@ export const LAB_AVAILABILITY_BY_PATH: Record<string, LabAvailabilityStatus> = {
   '/lab/molecules/filtering': 'in-progress',
   '/lab/molecules/descriptive-buttons': 'in-progress',
   '/lab/organisms/dialog-modal': 'available',
-  '/lab/organisms/data-table': 'in-progress',
+  '/lab/organisms/data-table': 'available',
   '/lab/organisms/date-time-pickers': 'in-progress',
-  '/lab/organisms/sidebar': 'in-progress',
-  '/lab/organisms/inline-drawer': 'in-progress',
+  '/lab/organisms/sidebar': 'available',
+  '/lab/organisms/inline-drawer': 'available',
   '/lab/organisms/site-header': 'available',
   '/lab/organisms/cards': 'available',
   '/lab/organisms/timeline': 'available',
   '/lab/organisms/attachments': 'available',
-  '/lab/organisms/scrollable-list': 'in-progress',
+  '/lab/organisms/scrollable-list': 'available',
 }
 
 export function getLabAvailability(pathname: string): LabAvailabilityStatus | undefined {

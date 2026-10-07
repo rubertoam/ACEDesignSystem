@@ -15,17 +15,17 @@ const ITEM_DEMO = DEMO_SCROLLABLE_LIST_ITEMS[0]
 export function ScrollableListLab() {
   const [selectedId, setSelectedId] = useState(DEMO_SCROLLABLE_LIST_ITEMS[0]?.id)
 
-  // Interactive list — independent of building-block demos
+  // Interactive list - independent of building-block demos
   const [interactiveFilter, setInteractiveFilter] = useState(true)
   const [interactiveSort, setInteractiveSort] = useState(true)
   const [interactiveSearch, setInteractiveSearch] = useState(false)
 
-  // List container building block — independent of Interactive
+  // List container building block - independent of Interactive
   const [containerFilter, setContainerFilter] = useState(true)
   const [containerSort, setContainerSort] = useState(true)
   const [containerSearch, setContainerSearch] = useState(false)
 
-  // List item building block — independent of both
+  // List item building block - independent of both
   const [showItemIcon, setShowItemIcon] = useState(true)
   const [showItemSubtext, setShowItemSubtext] = useState(true)
   const [showItemCount, setShowItemCount] = useState(true)
@@ -224,7 +224,7 @@ export function ScrollableListLab() {
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tokens</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                Surfaces — <code className="text-[var(--screening-text-primary)]">--ace-scrollable-list-surface</code>,{' '}
+                Surfaces - <code className="text-[var(--screening-text-primary)]">--ace-scrollable-list-surface</code>,{' '}
                 <code className="text-[var(--screening-text-primary)]">--ace-scrollable-list-item-selected-bg</code>,{' '}
                 <code className="text-[var(--screening-text-primary)]">--ace-scrollable-list-icon</code>
               </li>

@@ -18,7 +18,7 @@ export type ToggleProps = ComponentPropsWithoutRef<typeof SwitchPrimitive.Root> 
   variant?: AceToggleVariant
 }
 
-/** Compact stroke icons — Material Symbols stay too large in the track half. */
+/** Compact stroke icons for Icon variant (Figma Toggle Icon type). */
 function ToggleCheckIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 12 12" fill="none" aria-hidden>

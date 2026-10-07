@@ -1,12 +1,15 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { AceDropdownMenu, type AceDropdownMenuEntry } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+import { aceDropdownFieldLabelClass } from '../components/molecules/AceDropdownMenu/dropdownFieldStyles'
+import { cn } from '../lib/cn'
+import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 
 const rowClass =
-  'flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 border-b border-[var(--screening-border-row)] pb-4 last:border-0 last:pb-0'
+  'flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 border-b border-[var(--color-border-default)] pb-4 last:border-0 last:pb-0'
 
-const rowLabelClass = 'm-0 text-sm font-normal text-[var(--screening-text-primary)]'
-const rowHintClass = 'm-0 text-xs text-[var(--screening-text-muted)]'
+const rowLabelClass = 'm-0 text-sm font-normal text-[var(--color-text-primary)]'
+const rowHintClass = 'm-0 text-xs text-[var(--color-text-secondary)]'
 
 function LabRow({
   label,
@@ -24,6 +27,72 @@ function LabRow({
         {hint ? <p className={rowHintClass}>{hint}</p> : null}
       </div>
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">{children}</div>
+    </div>
+  )
+}
+
+function DropdownsChangelog() {
+  return (
+    <div className="space-y-8">
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">20 August 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Sync with ACE Design System v.3 Figma Dropdowns (
+            <code className="text-[var(--color-text-primary)]">1307:3725</code> / set{' '}
+            <code className="text-[var(--color-text-primary)]">2277:136</code>) and Dropdown Menus (
+            <code className="text-[var(--color-text-primary)]">5318:1634</code> / MenuList{' '}
+            <code className="text-[var(--color-text-primary)]">1541:6165</code>) plus semantic color/typography
+            tokens. Doc canvas <code className="text-[var(--color-text-primary)]">414:2617</code>.
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>
+            Rewired Primary field trigger, Secondary / FilterChip triggers, and MenuList panel/row colors from
+            screening / Neutral hex aliases to semantic <code className="text-[var(--color-text-primary)]">--color-*</code>{' '}
+            tokens (
+            <code className="text-[var(--color-text-primary)]">surface/primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">border/default</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">border/brand</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">bg/brand-hover</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">bg/brand</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">bg/secondary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">text/*</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">icon/*</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">status/error</code>).
+          </li>
+          <li>
+            Primary open / LabelActive now uses brand border + brand-hover fill (like Inputs focus), not a Neutral
+            gray hover + focus ring only.
+          </li>
+          <li>
+            Secondary Active / FilterChip Selected use brand fill + inverse text/icons (replacing Neutral/700 chip
+            fill).
+          </li>
+          <li>
+            MenuList elevation uses Shadow (MD) (
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>). Row hover ={' '}
+            <code className="text-[var(--color-text-primary)]">bg/secondary</code>; selected ={' '}
+            <code className="text-[var(--color-text-primary)]">bg/brand-hover</code>; pipe / actions ={' '}
+            <code className="text-[var(--color-text-primary)]">text/brand</code>.
+          </li>
+          <li>
+            Trigger type Caption/Regular (
+            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>); section titles
+            Caption/Bold; Select All / Reset Footer/Regular; menu items Body/Regular (
+            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>).
+          </li>
+          <li>Added this Changelog tab documenting the Dropdowns / Menus update.</li>
+          <li>
+            Usage tab updated with Tokens in use for triggers (Primary / Secondary / FilterChip) and MenuList
+            states (default, hover, selected, destructive, search).
+          </li>
+          <li>
+            Secondary trigger demo opens the MenuList multi-select panel (sections + Select All + checkboxes), not
+            the Primary item list.
+          </li>
+        </ul>
+      </article>
     </div>
   )
 }
@@ -326,93 +395,146 @@ export function DropdownsLab() {
   return (
     <ComponentLabPage
       title="Dropdowns"
-      description="Interactive menu lists opened from field triggers. Hover, selection, checkboxes, toggles, search filtering, Select All, and Reset All behave while the menu is open. Static specs live in Figma Menu Lists."
+      description="ACE Design System v.3 dropdowns (Figma 1307:3725 / set 2277:136) and menus (5318:1634 / MenuList 1541:6165): Primary field (default / LabelActive), Secondary / FilterChip triggers, and MenuList variants (MultiSelect, Primary, Three Dot, Switchers, Checkbox, Search). Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examples={
-        <div ref={setMenuHost} className="relative flex flex-col gap-6">
-          <p className="m-0 text-sm text-[var(--screening-text-secondary)]">
+        <div ref={setMenuHost} className="relative flex flex-col gap-10">
+          <p className="m-0 text-sm text-[var(--color-text-secondary)]">
             Open each dropdown to explore a menu list variant. Last action:{' '}
-            <span className="font-medium text-[var(--screening-text-primary)]">{lastAction}</span>
+            <span className="font-medium text-[var(--color-text-primary)]">{lastAction}</span>
           </p>
 
-          <div className="flex flex-col gap-4">
-            <LabRow label="Multi-select" hint="Sections · Select All · checkboxes">
-              <AceDropdownMenu
-                triggerLabel="Multi-select"
-                triggerMode="field"
-                size="md"
-                panelWidth="wide"
-                items={multiSelectItems}
-                portalContainer={menuHost}
-              />
-            </LabRow>
+          <section className={cn(labExampleSectionClass)}>
+            <p className={labSectionLabelClass}>Triggers</p>
+            <div className="flex flex-col gap-4">
+              <LabRow label="Primary" hint="Field · open = LabelActive">
+                <div className="flex flex-col gap-2">
+                  <span className={aceDropdownFieldLabelClass}>Label</span>
+                  <AceDropdownMenu
+                    triggerLabel="Dropdown Label"
+                    triggerMode="field"
+                    size="md"
+                    panelWidth="wide"
+                    items={primaryItems}
+                    portalContainer={menuHost}
+                  />
+                </div>
+              </LabRow>
+              <LabRow label="Secondary" hint="Compact · opens MenuList (multi-select)">
+                <AceDropdownMenu
+                  triggerLabel="Dropdown No Label"
+                  triggerMode="filter"
+                  panelWidth="wide"
+                  items={multiSelectItems}
+                  portalContainer={menuHost}
+                />
+              </LabRow>
+            </div>
+          </section>
 
-            <LabRow label="Primary" hint="Purple pipe + row fill on hover">
-              <AceDropdownMenu
-                triggerLabel="Primary"
-                triggerMode="field"
-                size="md"
-                panelWidth="wide"
-                items={primaryItems}
-                portalContainer={menuHost}
-              />
-            </LabRow>
+          <section className={cn(labExampleSectionClass)}>
+            <p className={labSectionLabelClass}>Menu lists</p>
+            <div className="flex flex-col gap-4">
+              <LabRow label="Multi-select" hint="Sections · Select All · checkboxes">
+                <AceDropdownMenu
+                  triggerLabel="Multi-select"
+                  triggerMode="field"
+                  size="md"
+                  panelWidth="wide"
+                  items={multiSelectItems}
+                  portalContainer={menuHost}
+                />
+              </LabRow>
 
-            <LabRow label="Three dot" hint="Compact overflow actions">
-              <AceDropdownMenu
-                triggerLabel="Three dot"
-                triggerMode="field"
-                size="sm"
-                showChevron={false}
-                panelWidth="compact"
-                items={threeDotItems}
-                portalContainer={menuHost}
-              />
-            </LabRow>
+              <LabRow label="Primary" hint="Brand pipe + row fill on hover / selected">
+                <AceDropdownMenu
+                  triggerLabel="Primary"
+                  triggerMode="field"
+                  size="md"
+                  panelWidth="wide"
+                  items={primaryItems}
+                  portalContainer={menuHost}
+                />
+              </LabRow>
 
-            <LabRow label="Switcher" hint="Toggles · Reset turns all off">
-              <AceDropdownMenu
-                triggerLabel="Switcher"
-                triggerMode="field"
-                size="md"
-                items={switcherItems}
-                portalContainer={menuHost}
-              />
-            </LabRow>
+              <LabRow label="Three dot" hint="Compact overflow actions">
+                <AceDropdownMenu
+                  triggerLabel="Three dot"
+                  triggerMode="field"
+                  size="sm"
+                  showChevron={false}
+                  panelWidth="compact"
+                  items={threeDotItems}
+                  portalContainer={menuHost}
+                />
+              </LabRow>
 
-            <LabRow label="Checkbox" hint="User assignment · Reset All">
-              <AceDropdownMenu
-                triggerLabel="Checkbox"
-                triggerMode="field"
-                size="md"
-                items={checkboxItems}
-                portalContainer={menuHost}
-              />
-            </LabRow>
+              <LabRow label="Switcher" hint="Toggles · Reset turns all off">
+                <AceDropdownMenu
+                  triggerLabel="Switcher"
+                  triggerMode="field"
+                  size="md"
+                  items={switcherItems}
+                  portalContainer={menuHost}
+                />
+              </LabRow>
 
-            <LabRow label="Search" hint="Type to filter · match highlight">
-              <AceDropdownMenu
-                triggerLabel="Search"
-                triggerMode="field"
-                size="md"
-                items={searchItems}
-                portalContainer={menuHost}
-              />
-            </LabRow>
+              <LabRow label="Checkbox" hint="User assignment · Reset All">
+                <AceDropdownMenu
+                  triggerLabel="Checkbox"
+                  triggerMode="field"
+                  size="md"
+                  items={checkboxItems}
+                  portalContainer={menuHost}
+                />
+              </LabRow>
 
-            <LabRow label="View options" hint="Checkbox · radio · submenu flyout">
-              <AceDropdownMenu
-                triggerLabel="View options"
-                triggerMode="field"
-                size="md"
-                items={viewOptionsItems}
-                portalContainer={menuHost}
-              />
-            </LabRow>
-          </div>
+              <LabRow label="Search" hint="Type to filter · match highlight">
+                <AceDropdownMenu
+                  triggerLabel="Search"
+                  triggerMode="field"
+                  size="md"
+                  items={searchItems}
+                  portalContainer={menuHost}
+                />
+              </LabRow>
+
+              <LabRow label="View options" hint="Checkbox · radio · submenu flyout">
+                <AceDropdownMenu
+                  triggerLabel="View options"
+                  triggerMode="field"
+                  size="md"
+                  items={viewOptionsItems}
+                  portalContainer={menuHost}
+                />
+              </LabRow>
+            </div>
+          </section>
         </div>
       }
       code={
-        <ComponentLabCode>{`<AceDropdownMenu
+        <ComponentLabCode>{`import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+
+{/* Primary field trigger */}
+<AceDropdownMenu
+  triggerLabel="Dropdown Label"
+  triggerMode="field"
+  panelWidth="wide"
+  items={[
+    { type: 'item', label: 'Menu Item 1', onSelect },
+    { type: 'item', label: 'Menu Item 2', onSelect },
+  ]}
+/>
+
+{/* Secondary / FilterChip trigger — opens MenuList (sections + Select All + checkboxes) */}
+<AceDropdownMenu
+  triggerLabel="Dropdown No Label"
+  triggerMode="filter"
+  panelWidth="wide"
+  items={multiSelectItems}
+/>
+
+{/* MenuList with search + checkboxes */}
+<AceDropdownMenu
   triggerLabel="Search"
   triggerMode="field"
   items={[
@@ -424,50 +546,152 @@ export function DropdownsLab() {
 />`}</ComponentLabCode>
       }
       usage={
-        <p className="m-0 text-[var(--color-text-muted)]">
-          Use <code className="text-[var(--color-text-primary)]">AceDropdownMenu</code> with a typed{' '}
-          <code className="text-[var(--color-text-primary)]">items</code> array. Menu panels use{' '}
-          <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code>, design-system{' '}
-          <code className="text-[var(--color-text-primary)]">Checkbox</code> and <code className="text-[var(--color-text-primary)]">Toggle</code> at{' '}
-          <code className="text-[var(--color-text-primary)]">size=&quot;sm&quot;</code>, and no leading icons in list rows. Pass{' '}
-          <code className="text-[var(--color-text-primary)]">portalContainer</code> when the menu must mount inside a scroll container; theme follows the lab Theme control on <code className="text-[var(--color-text-primary)]">&lt;html&gt;</code>. Triggers: Figma · Dropdowns.
-        </p>
+        <div className={cn('max-w-3xl space-y-4', labUsageSectionClass)}>
+          <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
+            Import <code className="text-[var(--color-text-primary)]">AceDropdownMenu</code> with a typed{' '}
+            <code className="text-[var(--color-text-primary)]">items</code> array. Use{' '}
+            <code className="text-[var(--color-text-primary)]">triggerMode=&quot;field&quot;</code> for Primary
+            dropdowns (form fields), <code className="text-[var(--color-text-primary)]">filter</code> for Secondary /
+            FilterChip triggers, or <code className="text-[var(--color-text-primary)]">aceButton</code> / custom{' '}
+            <code className="text-[var(--color-text-primary)]">trigger</code> for icon overflow. Secondary triggers open
+            the <strong className="font-medium text-[var(--color-text-primary)]">MenuList</strong> pattern (section
+            headers, Select All / Deselect All, assignment checkboxes) — not the Primary item list. Pass{' '}
+            <code className="text-[var(--color-text-primary)]">portalContainer</code> when the menu must mount inside a
+            scroll container; theme follows <code className="text-[var(--color-text-primary)]">color-tokens.css</code>{' '}
+            on <code className="text-[var(--color-text-primary)]">&lt;html&gt;</code>.
+          </p>
+          <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
+            Menu panels compose design-system <code className="text-[var(--color-text-primary)]">Checkbox</code> and{' '}
+            <code className="text-[var(--color-text-primary)]">Toggle</code> at{' '}
+            <code className="text-[var(--color-text-primary)]">size=&quot;sm&quot;</code>. Primary list rows show a
+            brand pipe on hover/selected; Destructive rows use status error. Figma:{' '}
+            <code className="text-[var(--color-text-primary)]">414:2617</code> (Dropdowns + Menus).
+          </p>
+          <div className="space-y-2">
+            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens in use</h4>
+            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Primary default</strong> — surface{' '}
+                <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; border{' '}
+                <code className="text-[var(--color-text-primary)]">colors/border/default</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-default</code>; text{' '}
+                <code className="text-[var(--color-text-primary)]">colors/text/primary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-primary</code>; icon{' '}
+                <code className="text-[var(--color-text-primary)]">colors/icon/primary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Primary open (LabelActive)</strong> —
+                border <code className="text-[var(--color-text-primary)]">colors/border/brand</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-brand</code>; fill{' '}
+                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; focus ring{' '}
+                <code className="text-[var(--color-text-primary)]">colors/border/focus</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-focus</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Secondary Active / FilterChip Selected</strong>{' '}
+                — fill <code className="text-[var(--color-text-primary)]">colors/bg/brand</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-bg-brand</code>; text{' '}
+                <code className="text-[var(--color-text-primary)]">colors/text/inverse</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-inverse</code>; icon{' '}
+                <code className="text-[var(--color-text-primary)]">colors/icon/inverse</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-icon-inverse</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Menu panel</strong> — surface{' '}
+                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; border{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-default</code>; shadow Shadow (MD) →{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Menu hover</strong> — row{' '}
+                <code className="text-[var(--color-text-primary)]">colors/bg/secondary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-bg-secondary</code>; pipe{' '}
+                <code className="text-[var(--color-text-primary)]">colors/text/brand</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-brand</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Menu selected</strong> — row{' '}
+                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; item text{' '}
+                <code className="text-[var(--color-text-primary)]">colors/text/secondary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-secondary</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Destructive</strong> —{' '}
+                <code className="text-[var(--color-text-primary)]">colors/status/error</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Search</strong> — placeholder{' '}
+                <code className="text-[var(--color-text-primary)]">colors/text/placeholder</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-placeholder</code>; icons{' '}
+                <code className="text-[var(--color-text-primary)]">colors/icon/secondary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-icon-secondary</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Type</strong> — trigger Caption/Regular{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; section Caption/Bold{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-type-caption-bold</code>; Select All / Reset
+                Footer/Regular <code className="text-[var(--color-text-primary)]">--ace-type-footer-regular</code>;
+                items Body/Regular{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>.
+              </li>
+            </ul>
+          </div>
+        </div>
       }
       variables={
-        <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
+        <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Trigger width: <code className="text-[var(--color-text-primary)]">--ace-dropdown-trigger-width</code> (200px)
+            Primary trigger: <code className="text-[var(--color-text-primary)]">--ace-dropdown-trigger-*</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-default</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-brand</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-focus</code>. Width{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-dropdown-trigger-width</code> (200px).
           </li>
           <li>
-            Panel elevation: <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code> (maps to{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-shadow</code>)
+            Secondary / FilterChip: <code className="text-[var(--color-text-primary)]">--ace-filter-trigger-*</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-filter-chip-*</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-inverse</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-icon-inverse</code>.
           </li>
           <li>
-            Surface / border / text: <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-surface</code>,{' '}
+            Menu panel: <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-surface</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-border</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-text</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-text-muted</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-primary</code>
+            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-shadow</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>.
           </li>
           <li>
-            Row hover: <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-row-hover</code>, emphasized:{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-row-emphasis</code>
+            Rows: <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-row-hover</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-secondary</code>;{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-row-selected</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; pipe/actions{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-primary</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-brand</code>; danger{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-danger</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
           </li>
           <li>
-            Checkbox / toggle: <code className="text-[var(--color-text-primary)]">--screening-checkbox-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-toggle-*</code> (sm in menus)
-          </li>
-          <li>
-            Typography: <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-label-bold</code>,{' '}
+            Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-type-caption-bold</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-type-footer-regular</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>
+            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>.
           </li>
           <li>
-            Destructive row: <code className="text-[var(--color-text-primary)]">--dialog-modal-danger</code>
+            Nested controls: <code className="text-[var(--color-text-primary)]">--screening-checkbox-*</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-toggle-*</code> (sm in menus).
           </li>
         </ul>
       }
+      changelog={<DropdownsChangelog />}
     />
   )
 }

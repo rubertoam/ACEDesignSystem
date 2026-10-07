@@ -1,11 +1,11 @@
 import { cn } from './cn'
 
-/** Lab preview panels — use tokens so light/dark theme applies globally. */
+/** Lab preview panels - use tokens so light/dark theme applies globally. */
 export const labPanelClass = cn(
   'rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]',
 )
 
-/** White organism preview shell — border stroke + XS drop shadow (Cards, Timeline, Attachments, etc.). */
+/** White organism preview shell - border stroke + XS drop shadow (Cards, Timeline, Attachments, etc.). */
 export const labComponentContainerClass = cn(
   'flex w-full min-w-0 flex-col gap-[var(--ace-section-label-gap)] rounded-[var(--radius-lg)]',
   'border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]',

@@ -151,19 +151,18 @@ export function AcePagination({
     <div
       ref={setPortalHost}
       className={cn(
-        'flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between',
+        'flex flex-col gap-4 sm:flex-row sm:items-center',
+        beforePageControls ? 'sm:justify-between' : 'sm:justify-end',
         metaText,
         className,
       )}
     >
-      <div className="flex min-w-0 flex-wrap items-center gap-3">
-        {beforePageControls ?? rangeAndPageSize}
-      </div>
+      {beforePageControls ? (
+        <div className="flex min-w-0 flex-wrap items-center gap-3">{beforePageControls}</div>
+      ) : null}
 
       <div className="flex shrink-0 flex-wrap items-center gap-6">
-        {beforePageControls ? (
-          <div className="flex flex-wrap items-center gap-3">{rangeAndPageSize}</div>
-        ) : null}
+        <div className="flex flex-wrap items-center gap-3">{rangeAndPageSize}</div>
         <div className="flex shrink-0 flex-wrap items-center gap-[var(--screening-pagination-gap)]">
           {pageControls}
         </div>

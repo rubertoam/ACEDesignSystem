@@ -1,10 +1,17 @@
 import { cn } from '../../../lib/cn'
 
+/**
+ * Iconography “Border stroke” (Figma Iconography).
+ * Rest: surface + soft border + icon primary.
+ * Hover: same border, `--ace-icon-button-hover-bg` (color/bg/primary).
+ */
 export const screeningToolbarIconButtonClass = cn(
-  'inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] text-[var(--screening-text-secondary)] transition-colors duration-200 ease-out',
-  'hover:border-[var(--screening-chip-inactive-hover-border)] hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)]',
+  'inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border border-solid',
+  'border-[var(--ace-icon-button-border)] bg-[var(--ace-icon-button-surface)] text-[var(--ace-icon-button-icon)]',
+  'transition-colors duration-200 ease-out',
+  'hover:border-[var(--ace-icon-button-border)] hover:bg-[var(--ace-icon-button-hover-bg)] hover:text-[var(--ace-icon-button-icon)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
-  'disabled:cursor-not-allowed disabled:border-[var(--screening-border-strong)] disabled:bg-[var(--screening-surface-muted)] disabled:text-[var(--screening-icon-muted)] disabled:opacity-60',
+  'disabled:cursor-not-allowed disabled:border-[var(--ace-icon-button-border)] disabled:bg-[var(--screening-surface-muted)] disabled:text-[var(--screening-icon-muted)] disabled:opacity-60',
 )
 
 /** Review Assigned row actions — same chrome as toolbar icons; visible on row hover / open / focus. */
@@ -12,7 +19,7 @@ export const screeningRowActionsMenuTriggerClass = cn(
   screeningToolbarIconButtonClass,
   'opacity-0 pointer-events-none group-hover/row:pointer-events-auto group-hover/row:opacity-100',
   'data-[state=open]:pointer-events-auto data-[state=open]:opacity-100',
-  'data-[state=open]:border-[var(--screening-chip-inactive-hover-border)] data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:text-[var(--screening-text-primary)]',
+  'data-[state=open]:border-[var(--ace-icon-button-border)] data-[state=open]:bg-[var(--ace-icon-button-hover-bg)] data-[state=open]:text-[var(--ace-icon-button-icon)]',
   'focus-visible:pointer-events-auto focus-visible:opacity-100',
 )
 

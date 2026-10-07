@@ -210,7 +210,7 @@ const navItems = [
           <section className={labExampleSectionClass}>
             <h4 className={labSectionLabelClass}>Anatomy</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>Height: <code className="text-[var(--screening-text-primary)]">--ace-site-header-height</code> (64px)</li>
+              <li>Height: <code className="text-[var(--screening-text-primary)]">--ace-site-header-height</code> (48px)</li>
               <li>Horizontal padding: <code className="text-[var(--screening-text-primary)]">--ace-site-header-px</code> (32px)</li>
               <li>Nav item hover: <code className="text-[var(--screening-text-primary)]">--ace-site-header-nav-hover</code></li>
               <li>Greeting uses caption bold + primary color</li>

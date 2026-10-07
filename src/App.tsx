@@ -31,12 +31,12 @@ import { TabsLab } from './pages/TabsLab'
 import { AnimationsLab } from './pages/AnimationsLab'
 import { FinScanIconLab } from './pages/FinScanIconLab'
 import { BadgesLab } from './pages/BadgesLab'
+import { ProgressIndicatorsLab } from './pages/ProgressIndicatorsLab'
 import { TooltipLab } from './pages/TooltipLab'
 import { IconographyLab } from './pages/IconographyLab'
 import { ToastMessagesLab } from './pages/ToastMessagesLab'
 import { InlineMessagesLab } from './pages/InlineMessagesLab'
 import { FilteringLab } from './pages/FilteringLab'
-import { DescriptiveButtonsLab } from './pages/DescriptiveButtonsLab'
 import { TimelineLab } from './pages/TimelineLab'
 import { AttachmentsLab } from './pages/AttachmentsLab'
 import { ScrollableListLab } from './pages/ScrollableListLab'
@@ -60,6 +60,7 @@ export default function App() {
         <Route path="atoms/toggles" element={<TogglePlaygroundLab />} />
         <Route path="atoms/radios" element={<RadioPlaygroundLab />} />
         <Route path="atoms/badges" element={<BadgesLab />} />
+        <Route path="atoms/progress-indicators" element={<ProgressIndicatorsLab />} />
         <Route path="atoms/tooltips" element={<TooltipLab />} />
         <Route path="atoms/tabs" element={<Navigate to="/lab/molecules/tabs" replace />} />
         <Route path="atoms/finscan-logo" element={<FinScanIconLab />} />
@@ -76,7 +77,10 @@ export default function App() {
         <Route path="molecules/toast-messages" element={<ToastMessagesLab />} />
         <Route path="molecules/inline-messages" element={<InlineMessagesLab />} />
         <Route path="molecules/filtering" element={<FilteringLab />} />
-        <Route path="molecules/descriptive-buttons" element={<DescriptiveButtonsLab />} />
+        <Route
+          path="molecules/descriptive-buttons"
+          element={<Navigate to="/lab/atoms/buttons" replace />}
+        />
         <Route path="organisms" element={<OrganismsLab />} />
         <Route path="organisms/data-table" element={<DataTableLab />} />
         <Route path="organisms/screening-results-table" element={<Navigate to="/lab/organisms/data-table" replace />} />

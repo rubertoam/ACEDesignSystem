@@ -621,7 +621,6 @@ export function AceTimePicker({
                   ref={cancelRef}
                   type="button"
                   variant="secondary"
-                  palette="purple"
                   size="sm"
                   onClick={applyCancel}
                   onKeyDown={handleCancelKeyDown}
@@ -632,7 +631,6 @@ export function AceTimePicker({
                   ref={confirmRef}
                   type="button"
                   variant="primary"
-                  palette="purple"
                   size="sm"
                   onClick={applyConfirm}
                   onKeyDown={handleConfirmKeyDown}

@@ -90,7 +90,7 @@ import { AceSubHeader } from '../components/molecules/AceSubHeader'
             <p className="m-0 text-[var(--screening-text-muted)]">
               Place <code className="text-[var(--screening-text-primary)]">AcePageHeader</code> under{' '}
               <code className="text-[var(--screening-text-primary)]">AceSiteHeader</code> for the page title. Use{' '}
-              <code className="text-[var(--screening-text-primary)]">AceSubHeader</code> in content regions — it fills
+              <code className="text-[var(--screening-text-primary)]">AceSubHeader</code> in content regions - it fills
               its parent width and supports optional statistics, paging, more menu, or drill-down.
             </p>
           </section>

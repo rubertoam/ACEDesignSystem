@@ -1,5 +1,5 @@
 /**
- * ACE motion catalog — single source of truth for documented animations.
+ * ACE motion catalog - single source of truth for documented animations.
  * When adding animation to a component, register an entry here and demo it on AnimationsLab.
  */
 
@@ -22,7 +22,7 @@ export type AceAnimationEntry = {
   notes?: string
 }
 
-/** Standard deceleration curve — nav, sidebar, accordion expand */
+/** Standard deceleration curve - nav, sidebar, accordion expand */
 export const ACE_MOTION_EASE_STANDARD = 'cubic-bezier(0.33, 1, 0.68, 1)'
 
 export const ACE_ANIMATIONS: AceAnimationEntry[] = [

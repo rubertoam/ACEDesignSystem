@@ -217,17 +217,16 @@ function DatePickerFooter({
 }) {
   return (
     <div className="mt-4 flex items-center justify-between gap-2 border-t border-solid border-[var(--screening-border-soft)] pt-3">
-      <AceButton type="button" variant="tertiary" palette="purple" size="sm" onClick={onReset}>
+      <AceButton type="button" variant="tertiary" size="sm" onClick={onReset}>
         Reset
       </AceButton>
       <div className="flex gap-2">
-        <AceButton type="button" variant="secondary" palette="purple" size="sm" onClick={onCancel}>
+        <AceButton type="button" variant="secondary" size="sm" onClick={onCancel}>
           Cancel
         </AceButton>
         <AceButton
           type="button"
           variant="primary"
-          palette="purple"
           size="sm"
           disabled={!canConfirm}
           onClick={onConfirm}

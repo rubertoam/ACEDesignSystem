@@ -16,7 +16,7 @@ export function TooltipLab() {
   return (
     <ComponentLabPage
       title="Tooltips"
-      description="Short contextual labels on hover or focus. Screening toolbar tooltips use Caption Regular on a bordered surface with XS drop shadow and no arrow."
+      description="Short contextual labels on hover or focus. Screening toolbar tooltips use typography/ui/caption on a bordered surface with XS drop shadow and no arrow."
       examples={
         <div className="space-y-8">
           <div className={labExampleSectionClass}>
@@ -93,6 +93,26 @@ export function TooltipLab() {
             </p>
           </section>
           <section className={labUsageSectionClass}>
+            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tokens in use</h4>
+            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--screening-text-muted)]">
+              <li>
+                <strong className="font-medium text-[var(--screening-text-primary)]">Type</strong> —{' '}
+                <code className="text-[var(--screening-text-primary)]">typography/ui/caption</code> →{' '}
+                <code className="text-[var(--screening-text-primary)]">--typography-ui-caption</code> (
+                <code className="text-[var(--screening-text-primary)]">type/size/caption</code>, 12px) with{' '}
+                <code className="text-[var(--screening-text-primary)]">--typography-leading-relaxed</code> and Noto Sans
+                Regular.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--screening-text-primary)]">Surface</strong> —{' '}
+                <code className="text-[var(--screening-text-primary)]">--ace-tooltip-surface</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--ace-tooltip-border</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--ace-tooltip-text</code>, shadow{' '}
+                <code className="text-[var(--screening-text-primary)]">--ace-drop-shadow-xs</code>.
+              </li>
+            </ul>
+          </section>
+          <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Animation</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
@@ -129,6 +149,11 @@ export function TooltipLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
+            Type — <code className="text-[var(--color-text-primary)]">typography/ui/caption</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--typography-ui-caption</code>; leading{' '}
+            <code className="text-[var(--color-text-primary)]">--typography-leading-relaxed</code>
+          </li>
+          <li>
             Surface - <code className="text-[var(--color-text-primary)]">--ace-tooltip-surface</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-tooltip-border</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--ace-tooltip-text</code>,{' '}
@@ -145,10 +170,29 @@ export function TooltipLab() {
             (<code className="text-[var(--color-text-primary)]">animate-in</code> /{' '}
             <code className="text-[var(--color-text-primary)]">animate-out</code>, 150ms ease)
           </li>
-          <li>
-            Type - Caption Regular (<code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>)
-          </li>
         </ul>
+      }
+      changelog={
+        <div className="space-y-8">
+          <article className="space-y-3">
+            <header className="space-y-1">
+              <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">24 August 2026</h3>
+              <p className="m-0 text-sm text-[var(--color-text-muted)]">
+                Tooltip type token aligned to Figma semantic{' '}
+                <code className="text-[var(--color-text-primary)]">typography/ui/caption</code>.
+              </p>
+            </header>
+            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+              <li>
+                Replaced <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code> with{' '}
+                <code className="text-[var(--color-text-primary)]">--typography-ui-caption</code> (+{' '}
+                <code className="text-[var(--color-text-primary)]">--typography-leading-relaxed</code>, Noto Sans
+                Regular) for default and screening-toolbar tooltip content.
+              </li>
+              <li>Usage and Variables updated to document the semantic type token.</li>
+            </ul>
+          </article>
+        </div>
       }
     />
   )

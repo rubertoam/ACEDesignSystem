@@ -1,16 +1,30 @@
 import { useState } from 'react'
 import { AceTooltip, AceTooltipContent, AceTooltipTrigger } from '../components/atoms/AceTooltip/AceTooltip'
 import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
+import { AceSlider } from '../components/molecules/AceSlider'
 import { sidebarIconButtonClass } from '../components/organisms/AceSidebar/sidebarRowActions'
 import { screeningToolbarIconButtonClass } from '../components/organisms/ScreeningResultsTable/screeningTableToolbar'
 import { cn } from '../lib/cn'
-import { LabCheckbox, LabSelect } from '../lib/labControls'
+import { LabCheckbox, LabControlField, LabSelect } from '../lib/labControls'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabPage, ComponentLabCode } from './ComponentLabPage'
 import iconographyRules from './implementationRules/iconography.md?raw'
 
 const HOVER_DEMO_ICONS = ['more_horiz', 'search', 'settings', 'add', 'notifications'] as const
+
+/** Hover demo icon sizes - matches MaterialSymbol sm / md / lg / xl. */
+const ICON_PX_STEPS = [12, 16, 20, 24] as const
+const ICON_PX_MIN = ICON_PX_STEPS[0]
+const ICON_PX_MAX = ICON_PX_STEPS[ICON_PX_STEPS.length - 1]
+const ICON_PX_STEP = 4
+const ICON_PX_DEFAULT = 16
+
+function snapIconPx(value: number) {
+  return ICON_PX_STEPS.reduce((closest, step) =>
+    Math.abs(step - value) < Math.abs(closest - value) ? step : closest,
+  )
+}
 
 type HoverSurface = 'gray' | 'white'
 
@@ -25,40 +39,49 @@ const hoverSurfaceClass: Record<HoverSurface, string> = {
 }
 
 /** Sidebar - Iconography “No border stroke” (`sidebarIconButtonClass`). */
-const iconButtonGhostClass = cn(sidebarIconButtonClass, 'text-[var(--screening-text-primary)]')
-
-/** Forced hover for ghost (sidebar) - mirrors hover:bg + hover:shadow. */
-const iconButtonGhostHoverClass = cn(
-  iconButtonGhostClass,
-  'bg-[var(--ace-sidebar-row-action-hover-bg)] shadow-[0_0_0_1px_var(--screening-border-strong)]',
-)
+const iconButtonGhostClass = sidebarIconButtonClass
 
 /** Data table toolbar / row actions - always bordered; resting surface is white. */
 const iconButtonStrokeClass = screeningToolbarIconButtonClass
 
-/**
- * Forced hover for bordered icons - matches `screeningToolbarIconButtonClass` hover:
- * `--screening-surface-hover` (= `--ace-neutral-100`) on white resting fill.
- */
-const iconButtonStrokeHoverClass = cn(
-  iconButtonStrokeClass,
-  'border-[var(--screening-chip-inactive-hover-border)] bg-[var(--screening-surface-hover)] text-[var(--screening-text-primary)]',
-)
+/** Hover fill on white pads - Figma `color/bg/primary`. */
+const iconButtonHoverOnWhiteClass =
+  'border-[var(--ace-icon-button-border)] bg-[var(--ace-icon-button-hover-bg)] text-[var(--ace-icon-button-icon)]'
+
+/** Hover fill on gray pads - white so it contrasts with `--screening-surface-muted`. */
+const iconButtonHoverOnGrayClass =
+  'border-[var(--ace-icon-button-border)] bg-[var(--ace-icon-button-surface)] text-[var(--ace-icon-button-icon)]'
+
+/** Interactive `:hover` override when the demo pad is gray. */
+const iconButtonHoverOnGrayInteractiveClass =
+  'hover:border-[var(--ace-icon-button-border)] hover:bg-[var(--ace-icon-button-surface)] hover:text-[var(--ace-icon-button-icon)]'
+
+function iconPxStyle(px: number) {
+  const opsz = Math.min(48, Math.max(20, px))
+  return {
+    fontSize: px,
+    width: px,
+    height: px,
+    fontVariationSettings: `'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' ${opsz}`,
+  } as const
+}
 
 function IconHoverDemoButton({
   name,
   className,
   label,
   showTooltip,
+  iconPx,
 }: {
   name: string
   className: string
   label: string
   showTooltip: boolean
+  iconPx: number
 }) {
   const button = (
     <button type="button" aria-label={label} className={className}>
-      <MaterialSymbol name={name} size="md" className="text-current" />
+      <MaterialSymbol name={name} size="md" className="text-current" style={iconPxStyle(iconPx)} />
     </button>
   )
 
@@ -78,21 +101,28 @@ function IconHoverVariant({
   title,
   description,
   restClass,
-  hoverClass,
   surface,
   showTooltips,
+  iconPx,
 }: {
   title: string
   description: string
   restClass: string
-  hoverClass: string
   surface: HoverSurface
   showTooltips: boolean
+  iconPx: number
 }) {
   const padClass = cn(
     'flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] p-3',
     hoverSurfaceClass[surface],
   )
+  const hoverFillClass =
+    surface === 'gray' ? iconButtonHoverOnGrayClass : iconButtonHoverOnWhiteClass
+  const interactiveRestClass = cn(
+    restClass,
+    surface === 'gray' && iconButtonHoverOnGrayInteractiveClass,
+  )
+  const forcedHoverClass = cn(restClass, hoverFillClass)
 
   return (
     <div className="min-w-0 w-full space-y-3">
@@ -110,9 +140,10 @@ function IconHoverVariant({
               <IconHoverDemoButton
                 key={`rest-${name}`}
                 name={name}
-                className={restClass}
+                className={interactiveRestClass}
                 label={`${title} default ${name}`}
                 showTooltip={showTooltips}
+                iconPx={iconPx}
               />
             ))}
           </div>
@@ -126,9 +157,10 @@ function IconHoverVariant({
               <IconHoverDemoButton
                 key={`hover-${name}`}
                 name={name}
-                className={hoverClass}
+                className={forcedHoverClass}
                 label={`${title} hover ${name}`}
                 showTooltip={showTooltips}
+                iconPx={iconPx}
               />
             ))}
           </div>
@@ -141,6 +173,7 @@ function IconHoverVariant({
 function IconHoverSection() {
   const [surface, setSurface] = useState<HoverSurface>('white')
   const [showTooltips, setShowTooltips] = useState(false)
+  const [iconPx, setIconPx] = useState(ICON_PX_DEFAULT)
 
   return (
     <div className={cn(labComponentContainerClass, 'gap-8')}>
@@ -161,22 +194,39 @@ function IconHoverSection() {
           onCheckedChange={setShowTooltips}
           className="shrink-0 pb-1.5"
         />
+        <LabControlField label={`Icon size (${iconPx}px)`} className="w-[14rem] shrink-0">
+          <AceSlider
+            variant="discrete"
+            min={ICON_PX_MIN}
+            max={ICON_PX_MAX}
+            step={ICON_PX_STEP}
+            value={iconPx}
+            onValueChange={(v) => {
+              const next = Array.isArray(v) ? v[0] : v
+              setIconPx(snapIconPx(next))
+            }}
+            showTooltip
+            formatTooltip={(v) => `${snapIconPx(v)}px`}
+            aria-label="Icon size in pixels"
+            className="w-full"
+          />
+        </LabControlField>
       </div>
       <IconHoverVariant
         title="No border stroke"
-        description="Sidebar icons - no border at rest; hover uses --screening-surface-hover (--ace-neutral-100) plus a 1px ring via box-shadow."
+        description="Sidebar icons - transparent at rest; hover uses --ace-icon-button-hover-bg on white, or --ace-icon-button-surface (white) on gray."
         restClass={iconButtonGhostClass}
-        hoverClass={iconButtonGhostHoverClass}
         surface={surface}
         showTooltips={showTooltips}
+        iconPx={iconPx}
       />
       <IconHoverVariant
         title="Border stroke"
-        description="Data table toolbar and row actions - white resting fill (--screening-surface); hover uses --screening-surface-hover (--ace-neutral-100)."
+        description="Data table toolbar / row actions - soft border at rest; hover fill is muted on white backgrounds and white on gray."
         restClass={iconButtonStrokeClass}
-        hoverClass={iconButtonStrokeHoverClass}
         surface={surface}
         showTooltips={showTooltips}
+        iconPx={iconPx}
       />
     </div>
   )
@@ -640,11 +690,13 @@ export function IconographyLab() {
                   ] as const
                 ).map(({ size, label, note }) => (
                   <div key={size} className="flex flex-col items-center gap-2">
-                    <MaterialSymbol
-                      name="search"
-                      size={size}
-                      className="text-[var(--screening-text-primary)]"
-                    />
+                    <div className="flex size-12 items-center justify-center rounded-[var(--radius-md)] bg-[var(--screening-surface-muted)]">
+                      <MaterialSymbol
+                        name="search"
+                        size={size}
+                        className="text-[var(--screening-text-primary)]"
+                      />
+                    </div>
                     <p className="m-0 text-xs font-semibold text-[var(--screening-text-primary)]">{label}</p>
                     <p className="m-0 text-[11px] text-[var(--screening-text-muted)]">{note}</p>
                   </div>
@@ -796,12 +848,12 @@ export function IconographyLab() {
 <MaterialSymbol name="error" size="md" className="text-[var(--ace-toast-icon-error)]" />
 
 {/* Icon button hover - no resting border (sidebar) */}
-<button className="… hover:bg-[var(--ace-sidebar-row-action-hover-bg)] hover:shadow-[0_0_0_1px_var(--screening-border-strong)]">
+<button className="… border-transparent hover:border-[var(--ace-icon-button-border)] hover:bg-[var(--ace-icon-button-hover-bg)]">
   <MaterialSymbol name="more_horiz" size="md" className="text-current" />
 </button>
 
 {/* Icon button hover - border stroke (data table toolbar) */}
-<button className="… border border-[var(--screening-border-strong)] hover:border-[var(--screening-chip-inactive-hover-border)] hover:bg-[var(--screening-surface-hover)]">
+<button className="… border border-[var(--ace-icon-button-border)] bg-[var(--ace-icon-button-surface)] hover:bg-[var(--ace-icon-button-hover-bg)]">
   <MaterialSymbol name="search" size="md" className="text-current" />
 </button>`}</ComponentLabCode>
         </>
@@ -822,18 +874,19 @@ export function IconographyLab() {
                 <strong className="text-[var(--screening-text-primary)]">No border stroke</strong>: sidebar icons (
                 <code className="text-[var(--screening-text-primary)]">sidebarIconButtonClass</code> /{' '}
                 <code className="text-[var(--screening-text-primary)]">sidebarRowActionButtonClass</code>
-                ). No border at rest; hover fill is{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-sidebar-row-action-hover-bg</code> (
-                <code className="text-[var(--screening-text-primary)]">--screening-surface-hover</code>) plus a 1px
-                ring via box-shadow.
+                ). Transparent at rest; hover uses{' '}
+                <code className="text-[var(--screening-text-primary)]">--ace-icon-button-hover-bg</code> and{' '}
+                <code className="text-[var(--screening-text-primary)]">--ace-icon-button-border</code> (Figma{' '}
+                <code className="text-[var(--screening-text-primary)]">color/bg/primary</code> +{' '}
+                <code className="text-[var(--screening-text-primary)]">color/border/default</code>).
               </li>
               <li>
                 <strong className="text-[var(--screening-text-primary)]">Border stroke</strong>: data table toolbar
                 and row menus (
                 <code className="text-[var(--screening-text-primary)]">screeningToolbarIconButtonClass</code>). Resting
-                fill is <code className="text-[var(--screening-text-primary)]">--screening-surface</code> (white);
-                hover uses <code className="text-[var(--screening-text-primary)]">--screening-surface-hover</code> (
-                <code className="text-[var(--screening-text-primary)]">--ace-neutral-100</code>).
+                fill is <code className="text-[var(--screening-text-primary)]">--ace-icon-button-surface</code> with{' '}
+                <code className="text-[var(--screening-text-primary)]">--ace-icon-button-border</code>; hover fill is{' '}
+                <code className="text-[var(--screening-text-primary)]">--ace-icon-button-hover-bg</code>.
               </li>
             </ul>
           </section>

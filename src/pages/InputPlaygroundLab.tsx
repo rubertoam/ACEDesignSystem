@@ -6,7 +6,7 @@ import { labExampleSectionClass, labUsageSectionClass } from '../lib/labExampleS
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 const SIZES: AceInputFieldSize[] = ['sm', 'md', 'lg']
-const VISUAL_STATES: AceInputVisualState[] = ['default', 'active', 'focus', 'error', 'disabled']
+const VISUAL_STATES: AceInputVisualState[] = ['default', 'focus', 'error', 'disabled']
 
 function StateMatrix({ icon }: { icon: AceInputFieldIcon }) {
   const iconLabel = icon === 'none' ? 'No icon' : icon === 'left' ? 'Icon left' : 'Icon right'
@@ -55,6 +55,67 @@ function StateMatrix({ icon }: { icon: AceInputFieldIcon }) {
   )
 }
 
+function InputsChangelog() {
+  return (
+    <div className="space-y-8">
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">20 August 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Sync with ACE Design System v.3 Figma Inputs (
+            <code className="text-[var(--color-text-primary)]">408:1976</code>) and semantic color/typography tokens.
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>
+            Rewired input borders, fills, text, and icons from hard-coded hex / screening aliases to semantic{' '}
+            <code className="text-[var(--color-text-primary)]">--color-*</code> tokens (
+            <code className="text-[var(--color-text-primary)]">border/default</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">border/brand</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">border/focus</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">bg/brand-hover</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">bg/error</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">border/error</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">bg/disabled-subtle</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">text/*</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">icon/*</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">surface/primary</code>).
+          </li>
+          <li>
+            Corrected focus chrome: 1px inner{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-brand</code> + lavender{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code> fill + 2px outer ring{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-focus</code> (was inverted / outdated
+            neutrals).
+          </li>
+          <li>
+            Removed Figma-absent <code className="text-[var(--color-text-primary)]">active</code> visual state from{' '}
+            <code className="text-[var(--color-text-primary)]">AceInputVisualState</code>; matrix now matches Default /
+            Focus / Error / Disabled.
+          </li>
+          <li>
+            Label and error helper use{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; field value /
+            placeholder use <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>{' '}
+            (Body/Regular 14px) at all sizes — size only changes height (36 / 44 / 52px).
+          </li>
+          <li>
+            Dark theme input overrides removed; colors follow{' '}
+            <code className="text-[var(--color-text-primary)]">color-tokens.css</code> semantic dark mappings.
+          </li>
+          <li>
+            Added this Changelog tab documenting the Inputs update.
+          </li>
+          <li>
+            Usage tab updated to record the semantic color and type tokens used per state (default, focus, error,
+            disabled).
+          </li>
+        </ul>
+      </article>
+    </div>
+  )
+}
+
 export function InputPlaygroundLab() {
   const [fieldSize, setFieldSize] = useState<AceInputFieldSize>('md')
   const [icon, setIcon] = useState<AceInputFieldIcon>('none')
@@ -93,7 +154,7 @@ export function InputPlaygroundLab() {
   return (
     <ComponentLabPage
       title="Input fields"
-      description="ACE Design System v.3 text inputs: small, medium, and large heights; default, active (filled border), focus (lavender fill + ring), error (pink surface + message), and disabled. Icons optional (search). Tokens reuse screening input variables plus --ace-input-* in variables.css."
+      description="ACE Design System v.3 text inputs (Figma 408:1976): sm/md/lg heights (36/44/52px); default, focus (brand border + lavender fill + focus ring), error, and disabled. Optional search icon left or right. Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">
@@ -118,7 +179,7 @@ export function InputPlaygroundLab() {
             <div className={cn('max-w-3xl', labUsageSectionClass)}>
               <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
               <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                Rows match Figma states; columns are sizes. Each cell uses a frozen{' '}
+                Rows match Figma states (Default, Focus, Error, Disabled); columns are sizes. Each cell uses a frozen{' '}
                 <code className="text-[var(--color-text-primary)]">visualState</code> (not focusable).
               </p>
             </div>
@@ -142,40 +203,94 @@ export function InputPlaygroundLab() {
 />`}</ComponentLabCode>
       }
       usage={
-        <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
-          Use <code className="text-[var(--color-text-primary)]">AceInputField</code> for product forms. Pass{' '}
-          <code className="text-[var(--color-text-primary)]">visualState</code> only for spec screenshots or QA grids.
-        </p>
+        <div className={cn('max-w-3xl space-y-4', labUsageSectionClass)}>
+          <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
+            Use <code className="text-[var(--color-text-primary)]">AceInputField</code> for product forms. Pass{' '}
+            <code className="text-[var(--color-text-primary)]">error</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">errorMessage</code> for validation;{' '}
+            <code className="text-[var(--color-text-primary)]">icon</code> for optional search affordance. Reserve{' '}
+            <code className="text-[var(--color-text-primary)]">visualState</code> for spec screenshots or QA grids —
+            it freezes the shell and disables interaction.
+          </p>
+          <div className="space-y-2">
+            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens in use</h4>
+            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Default</strong> —{' '}
+                <code className="text-[var(--color-text-primary)]">colors/border/default</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-default</code>; fill{' '}
+                <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; value{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-primary</code>; placeholder{' '}
+                <code className="text-[var(--color-text-primary)]">colors/text/placeholder</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-placeholder</code>; icon{' '}
+                <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Focus</strong> — inner border{' '}
+                <code className="text-[var(--color-text-primary)]">colors/border/brand</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-brand</code>; fill{' '}
+                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; outer ring{' '}
+                <code className="text-[var(--color-text-primary)]">colors/border/focus</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-focus</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Error</strong> —{' '}
+                <code className="text-[var(--color-text-primary)]">--color-bg-error</code>,{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-error</code>, helper{' '}
+                <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Disabled</strong> —{' '}
+                <code className="text-[var(--color-text-primary)]">--color-bg-disabled-subtle</code>,{' '}
+                <code className="text-[var(--color-text-primary)]">--color-border-disabled-subtle</code>,{' '}
+                <code className="text-[var(--color-text-primary)]">--color-text-disabled</code>,{' '}
+                <code className="text-[var(--color-text-primary)]">--color-icon-disabled</code>.
+              </li>
+              <li>
+                <strong className="font-medium text-[var(--color-text-primary)]">Type</strong> — label / error{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; field{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code> (Body /
+                Regular). Size only changes height (36 / 44 / 52px).
+              </li>
+            </ul>
+          </div>
+        </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            <code className="text-[var(--color-text-primary)]">--screening-input-border</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-input-border-focus</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-input-bg-focus</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-input-focus-ring</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-input-placeholder</code> - outline, active/focus
-            border, focus fill, 2px ring, placeholder (shared with data table search).
+            Default: <code className="text-[var(--color-text-primary)]">--screening-input-border</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-default</code>; surface{' '}
+            <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; placeholder{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-placeholder</code>; icon{' '}
+            <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-input-height-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-input-font-*</code> - 36 / 44 / 52px heights and Inter
-            text sizes from Figma.
+            Focus: <code className="text-[var(--color-text-primary)]">--color-border-brand</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>, ring{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-focus</code>.
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-input-error-*</code> - error surface, border, and
-            helper text color (<code className="text-[var(--color-text-primary)]">#FDF4F6</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">#DC264B</code> / <code className="text-[var(--color-text-primary)]">#EF4444</code>).
+            Error: <code className="text-[var(--color-text-primary)]">--color-bg-error</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-error</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-input-disabled-*</code> - disabled field and text
-            colors from Figma.
+            Disabled: <code className="text-[var(--color-text-primary)]">--color-bg-disabled-subtle</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-disabled-subtle</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-disabled</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-icon-disabled</code>.
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--font-ace-inter</code> - input value and placeholder face.
+            Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; field{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>. Heights{' '}
+            <code className="text-[var(--color-text-primary)]">--ace-input-height-*</code> (36 / 44 / 52).
           </li>
         </ul>
       }
+      changelog={<InputsChangelog />}
     />
   )
 }

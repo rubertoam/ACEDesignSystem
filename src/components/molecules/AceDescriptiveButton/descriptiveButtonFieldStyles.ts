@@ -16,7 +16,7 @@ const shellBase = cn(
   'border border-solid p-[var(--ace-descriptive-button-padding)]',
   'font-[family-name:var(--font-ace-noto)] outline-none',
   'focus-visible:ring-2 focus-visible:ring-[var(--ace-descriptive-button-focus-ring)]',
-  'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]',
+  'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)]',
 )
 
 const interactive = cn(
@@ -72,8 +72,8 @@ export const aceDescriptiveButtonTextClass = cn(
 )
 
 export const aceDescriptiveButtonTitleClass = cn(
-  'm-0 w-full [font:var(--ace-type-caption-semi-bold)]',
-  '[letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+  'm-0 w-full [font:var(--ace-type-caption-bold)]',
+  '[letter-spacing:var(--ace-type-caption-bold-tracking)]',
 )
 
 export const aceDescriptiveButtonDescriptionClass = cn(

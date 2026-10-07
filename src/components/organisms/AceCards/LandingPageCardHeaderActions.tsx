@@ -3,14 +3,14 @@ import { LANDING_PAGE_CARD_ICONS } from './landingPageCardAssets'
 
 const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]'
 
-/** Matches site header / toolbar icon buttons: 34px target, 16px glyph, hover wash. */
+/** Compact header glyphs (~16px) with a 24px hit target — Figma Icons strip (4212:1131). */
 const iconButtonClass = cn(
-  'inline-flex size-[2.125rem] shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
-  'text-[var(--ace-landing-page-card-title-color)]',
+  'inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
+  'text-[var(--ace-landing-page-card-icon-color)]',
   'transition-colors duration-[var(--ace-motion-duration-fast)]',
   motionEase,
-  'hover:bg-[var(--ace-site-header-nav-hover)]',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+  'hover:bg-[var(--color-bg-secondary)]',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)]',
 )
 
 const ICONS = [
@@ -37,7 +37,7 @@ export function LandingPageCardHeaderActions({
   className,
 }: LandingPageCardHeaderActionsProps) {
   return (
-    <div className={cn('flex shrink-0 items-center', className)} aria-label="Card actions">
+    <div className={cn('flex shrink-0 items-center gap-0.5', className)} aria-label="Card actions">
       {ICONS.map(({ id, label, src, className: iconClass }) => (
         <button
           key={id}

@@ -1,11 +1,10 @@
 import { useCallback, useId, useMemo, useState } from 'react'
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { AceBadge } from '../../atoms/AceBadge/AceBadge'
 import { AceAccordion } from '../../molecules/AceAccordion/AceAccordion'
 import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import {
   AceDropdownMenu,
-  aceDropdownMenuPanelClass,
+  type AceDropdownMenuEntry,
 } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
 import { TablePagination } from '../../molecules/TablePagination'
 import { cn } from '../../../lib/cn'
@@ -43,11 +42,11 @@ const actionButtonClass = cn(
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 
-const menuItemClass = cn(
-  aceTypography(ACE.cell),
-  'relative flex cursor-pointer select-none items-center rounded-[var(--radius-sm)] px-3 py-1.5 text-[var(--screening-text-primary)] outline-none',
-  'data-[highlighted]:bg-[var(--screening-surface-hover)]',
-)
+const USER_ROW_ACTION_ITEMS: AceDropdownMenuEntry[] = [
+  { type: 'item', label: 'Edit' },
+  { type: 'item', label: 'View' },
+  { type: 'item', label: 'Delete', destructive: true },
+]
 
 export type UserListTableProps = {
   rows?: UserListRow[]
@@ -342,8 +341,11 @@ export function UserListTable({
                       case 'actions':
                         return (
                           <td key={column.key} className="px-[var(--space-2)] py-[var(--space-2)] text-right">
-                            <DropdownMenu.Root modal={false}>
-                              <DropdownMenu.Trigger asChild>
+                            <AceDropdownMenu
+                              items={USER_ROW_ACTION_ITEMS}
+                              align="end"
+                              panelWidth="hug"
+                              trigger={
                                 <button
                                   type="button"
                                   className={actionButtonClass}
@@ -351,23 +353,8 @@ export function UserListTable({
                                 >
                                   <MaterialSymbol name="more_horiz" size="md" weight={300} />
                                 </button>
-                              </DropdownMenu.Trigger>
-                              <DropdownMenu.Portal>
-                                <DropdownMenu.Content
-                                  align="end"
-                                  sideOffset={4}
-                                  className={cn(aceDropdownMenuPanelClass, 'min-w-[9rem] p-1')}
-                                >
-                                  <DropdownMenu.Item className={menuItemClass}>Edit</DropdownMenu.Item>
-                                  <DropdownMenu.Item className={menuItemClass}>View</DropdownMenu.Item>
-                                  <DropdownMenu.Item
-                                    className={cn(menuItemClass, 'text-[var(--ace-error-500)]')}
-                                  >
-                                    Delete
-                                  </DropdownMenu.Item>
-                                </DropdownMenu.Content>
-                              </DropdownMenu.Portal>
-                            </DropdownMenu.Root>
+                              }
+                            />
                           </td>
                         )
                       default:

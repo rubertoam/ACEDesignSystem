@@ -1,156 +1,101 @@
-import type { CSSProperties } from 'react'
+import { useState } from 'react'
+import { LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-import { cn } from '../lib/cn'
-import { labUsageSectionClass } from '../lib/labExampleSection'
-import aceTypographyDoc from '../styles/ace-typography-from-figma.json'
+import { TypographyPrimitiveTokensView } from './TypographyPrimitiveTokensView'
+import { TypographySemanticTokensView } from './TypographySemanticTokensView'
+import { TypographyStyleSheetView } from './TypographyStyleSheetView'
+import { TypographyTokensView } from './TypographyTokensView'
+import {
+  TYPE_PRIMITIVE_GROUPS,
+  TYPE_SEMANTIC_GROUPS,
+  TYPE_STYLE_SHEET_FAMILIES,
+  TYPE_TOKEN_GROUPS,
+} from './typographyLabData'
 
-type AceTypographyRow = {
-  figmaName: string
-  token: string
-  family: string
-  style: string
-  sizePx: number
-  sizeRem: string
-  weight: number
-  lineHeightCss: string
-  letterSpacingCss: string
-  figmaValue: string
-}
-
-type AceDoc = {
-  meta: {
-    source: string
-    nodeId?: string
-  }
-  typography: AceTypographyRow[]
-}
-
-const doc = aceTypographyDoc as AceDoc
-
-/** Present in typography-tokens.css but not in the Figma export JSON yet */
-const ADDITIONAL_ROWS: AceTypographyRow[] = [
-  {
-    figmaName: 'Label / Bold',
-    token: '--ace-type-label-bold',
-    family: 'Noto Sans',
-    style: 'Bold',
-    sizePx: 10,
-    sizeRem: '0.6250rem',
-    weight: 700,
-    lineHeightCss: '1.649999976158142',
-    letterSpacingCss: '0.02em',
-    figmaValue: 'See typography-tokens.css (dense UI / table headers)',
-  },
-]
-
-const SAMPLE = 'The quick brown fox 1970'
-
-function typeStyle(token: string): CSSProperties {
-  return {
-    font: `var(${token})`,
-    letterSpacing: `var(${token}-tracking)`,
-  }
-}
-
-function isDisplayToken(token: string) {
-  return token.includes('display-0')
-}
+type TypographyLabView = 'stylesheet' | 'tokens' | 'primitives' | 'semantics'
 
 export function TypographyLab() {
-  const rows = [...doc.typography, ...ADDITIONAL_ROWS]
+  const [view, setView] = useState<TypographyLabView>('stylesheet')
+
+  const toolbar = (
+    <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:max-w-2xl">
+      <LabSelect
+        label="View"
+        value={view}
+        onChange={(v) => setView(v as TypographyLabView)}
+        options={[
+          { value: 'stylesheet', label: 'Style Sheet' },
+          { value: 'tokens', label: 'Typography Tokens' },
+          { value: 'primitives', label: 'Primitive Tokens' },
+          { value: 'semantics', label: 'Semantic Tokens' },
+        ]}
+      />
+    </div>
+  )
 
   return (
     <ComponentLabPage
       title="Typography"
-      description="ACE type tokens from typography-tokens.css, documented from the Figma font variable export. Each row uses the font shorthand token plus its matching -tracking custom property."
+      description="Documents the typography style sheet along with typography, primitive, and semantic tokens from Figma."
+      examplesToolbar={toolbar}
       examples={
-        <div className="space-y-8">
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Font stacks</h4>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-                <p className="m-0 text-xs font-medium text-[var(--color-text-muted)]">--font-ace-noto</p>
-                <p className="m-0 mt-2 text-lg" style={{ fontFamily: 'var(--font-ace-noto)' }}>
-                  Noto Sans - {SAMPLE}
-                </p>
-              </div>
-              <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-                <p className="m-0 text-xs font-medium text-[var(--color-text-muted)]">--font-ace-inter</p>
-                <p className="m-0 mt-2 text-lg" style={{ fontFamily: 'var(--font-ace-inter)' }}>
-                  Inter - {SAMPLE}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)]">
-            <table className="w-full min-w-[56rem] border-collapse text-left text-sm">
-              <thead className="sticky top-0 z-[1] bg-[var(--color-background)] text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                <tr>
-                  <th className="border-b border-[var(--color-border)] px-3 py-2">Figma name</th>
-                  <th className="border-b border-[var(--color-border)] px-3 py-2">Token</th>
-                  <th className="border-b border-[var(--color-border)] px-3 py-2">Meta</th>
-                  <th className="border-b border-[var(--color-border)] px-3 py-2">Sample</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => (
-                  <tr key={row.token} className="border-b border-[var(--color-border)] last:border-b-0">
-                    <td className="max-w-[14rem] px-3 py-2 align-top text-[var(--color-text-primary)]">{row.figmaName}</td>
-                    <td className="px-3 py-2 align-top">
-                      <code className="break-all text-xs text-[var(--color-text-muted)]">{row.token}</code>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-2 align-top text-xs text-[var(--color-text-muted)]">
-                      {row.family} · {row.weight} · {row.sizeRem}
-                    </td>
-                    <td
-                      className={cn(
-                        'px-3 py-2 align-middle text-[var(--color-text-primary)]',
-                        isDisplayToken(row.token) && 'max-h-28 overflow-hidden',
-                      )}
-                      style={typeStyle(row.token)}
-                    >
-                      {SAMPLE}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        view === 'stylesheet' ? (
+          <TypographyStyleSheetView families={TYPE_STYLE_SHEET_FAMILIES} />
+        ) : view === 'tokens' ? (
+          <TypographyTokensView groups={TYPE_TOKEN_GROUPS} />
+        ) : view === 'primitives' ? (
+          <TypographyPrimitiveTokensView groups={TYPE_PRIMITIVE_GROUPS} />
+        ) : (
+          <TypographySemanticTokensView groups={TYPE_SEMANTIC_GROUPS} />
+        )
       }
       code={
-        <ComponentLabCode>
-          {[
-            'function aceTypography(token: string) {',
-            '  return `[font:var(${token})] [letter-spacing:var(${token}-tracking)]`',
-            '}',
-            '',
-            "<p className={aceTypography('--ace-type-paragraph-p1-regular')}>",
-            '  Body copy',
-            '</p>',
-          ].join('\n')}
-        </ComponentLabCode>
+        <ComponentLabCode>{`/* typography-tokens.css — Figma documentation layer */
+--type-size-subheading: 1.25rem;
+--typography-heading-heading: var(--type-size-subheading);
+
+/* Semantic aliases resolve to primitives */
+font-size: var(--typography-heading-heading);`}</ComponentLabCode>
       }
       usage={
-        <p className="m-0 text-[var(--color-text-muted)]">
-          In components, pair each <code className="text-[var(--color-text-primary)]">--ace-type-*</code> font token with its{' '}
-          <code className="text-[var(--color-text-primary)]">--ace-type-*-tracking</code> sibling (same prefix +{' '}
-          <code className="text-[var(--color-text-primary)]">-tracking</code>).
-        </p>
+        <div className="space-y-3 text-[var(--color-text-muted)]">
+          <p className="m-0 leading-relaxed">
+            <strong className="text-[var(--screening-text-primary)]">Style Sheet</strong> mirrors Figma
+            Typography (2651:5): Heading → Micro in Noto Sans (Regular, Semi Bold, Bold).
+          </p>
+          <p className="m-0 leading-relaxed">
+            <strong className="text-[var(--screening-text-primary)]">Typography Tokens</strong> mirrors
+            Figma Typography Tokens (5157:46): the product type scale with usage notes.
+          </p>
+          <p className="m-0 leading-relaxed">
+            <strong className="text-[var(--screening-text-primary)]">Primitive Tokens</strong> mirror Figma
+            Primitive Typography Tokens as{' '}
+            <code className="text-[var(--screening-text-primary)]">type/size/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">type/line-height/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">type/letter-spacing/*</code>.
+          </p>
+          <p className="m-0 leading-relaxed">
+            <strong className="text-[var(--screening-text-primary)]">Semantic Tokens</strong> mirror Figma
+            Semantic Typography Tokens: role aliases (
+            <code className="text-[var(--screening-text-primary)]">typography/heading/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">typography/body/*</code>, …) that
+            reference primitives.
+          </p>
+        </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            CSS definitions: <code className="text-[var(--color-text-primary)]">src/styles/typography-tokens.css</code>.
+            Documentation source:{' '}
+            <code className="text-[var(--screening-text-primary)]">src/styles/typography-tokens.css</code> +{' '}
+            <code className="text-[var(--screening-text-primary)]">src/pages/typographyLabData.ts</code>.
           </li>
           <li>
-            Figma alignment: <code className="text-[var(--color-text-primary)]">src/styles/ace-typography-from-figma.json</code> ({doc.meta.source}).
-          </li>
-          <li>
-            Regenerate the JSON when Figma font variables change; add any app-only tokens (like Label Bold) to{' '}
-            <code className="text-[var(--color-text-primary)]">ADDITIONAL_ROWS</code> in <code className="text-[var(--color-text-primary)]">TypographyLab.tsx</code> until
-            they appear in the export.
+            Existing composed{' '}
+            <code className="text-[var(--screening-text-primary)]">--ace-type-*</code> shorthands remain for
+            product components; new Figma paths use{' '}
+            <code className="text-[var(--screening-text-primary)]">--type-*</code> /{' '}
+            <code className="text-[var(--screening-text-primary)]">--typography-*</code>.
           </li>
         </ul>
       }

@@ -24,8 +24,8 @@ const iconButtonClass = cn(
   'inline-flex size-[2.125rem] shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
   'transition-colors duration-[var(--ace-motion-duration-fast)]',
   '[transition-timing-function:var(--ace-motion-ease-standard)]',
-  'hover:bg-[var(--ace-site-header-nav-hover)]',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
+  'hover:bg-[var(--color-bg-secondary)]',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]',
 )
 
 const DATA_TABLE_COLUMNS = [
@@ -88,8 +88,8 @@ function DataPointLine({ label, value }: AceDataCardDataPoint) {
   return (
     <p className={cn('m-0 whitespace-nowrap text-sm leading-[1.65]', p1)}>
       <span className="text-[var(--ace-data-card-row-muted)]">{label}</span>
-      <span className="text-[var(--ace-neutral-800)]"> · </span>
-      <span className="text-[var(--ace-neutral-800)]">{value}</span>
+      <span className="text-[var(--ace-data-card-text)]"> · </span>
+      <span className="text-[var(--ace-data-card-text)]">{value}</span>
     </p>
   )
 }
@@ -190,23 +190,23 @@ export function AceDataCard({
           {showStatusIndicator ? (
             <>
               <span
-                className="shrink-0 text-[1.75rem] font-bold leading-none tracking-[-0.035em] text-[var(--ace-success-500)]"
+                className="shrink-0 text-[1.75rem] font-bold leading-none tracking-[-0.035em] text-[var(--color-status-success)]"
                 aria-hidden
               >
                 ·
               </span>
-              <span className={cn('truncate text-sm leading-[1.65]', p1, 'text-[var(--ace-neutral-800)]')}>
+              <span className={cn('truncate text-sm leading-[1.65]', p1, 'text-[var(--ace-data-card-text)]')}>
                 {heading}
               </span>
               <span
-                className="shrink-0 text-[1.75rem] font-bold leading-none tracking-[-0.035em] text-[var(--ace-success-500)]"
+                className="shrink-0 text-[1.75rem] font-bold leading-none tracking-[-0.035em] text-[var(--color-status-success)]"
                 aria-hidden
               >
                 ·······
               </span>
             </>
           ) : (
-            <span className={cn('truncate text-sm leading-[1.65]', p1, 'text-[var(--ace-neutral-800)]')}>
+            <span className={cn('truncate text-sm leading-[1.65]', p1, 'text-[var(--ace-data-card-text)]')}>
               {heading}
             </span>
           )}
@@ -216,7 +216,7 @@ export function AceDataCard({
         </div>
         {showEnterData ? (
           <div className="flex shrink-0 items-center gap-1">
-            <span className={cn('whitespace-nowrap text-sm leading-[1.65]', p1, 'text-[var(--ace-neutral-800)]')}>
+            <span className={cn('whitespace-nowrap text-sm leading-[1.65]', p1, 'text-[var(--ace-data-card-text)]')}>
               {enterData}
             </span>
             {showHeaderActions ? (
@@ -250,7 +250,7 @@ export function AceDataCard({
             <div className="flex flex-col gap-3 px-8 pb-2">
               {showDataTable ? (
                 <div className="flex flex-col gap-3">
-                  <h4 className={cn('m-0 text-sm leading-[1.65]', p1Bold, 'text-[var(--ace-neutral-800)]')}>
+                  <h4 className={cn('m-0 text-sm leading-[1.65]', p1Bold, 'text-[var(--ace-data-card-text)]')}>
                     Data Table
                   </h4>
                   <AceTable
@@ -264,12 +264,12 @@ export function AceDataCard({
               {showInfoBlock ? (
                 <div className="flex flex-col gap-4 rounded-[var(--ace-data-card-radius)] border-[0.5px] border-solid border-[var(--ace-data-card-insight-border)] bg-[var(--ace-data-card-insight-bg)] p-6">
                   <div className="flex items-center gap-2.5">
-                    <MaterialSymbol name="lightbulb" size="md" className="text-[var(--screening-primary)]" />
-                    <p className={cn('m-0 text-sm leading-[1.65]', p1Bold, 'text-[var(--screening-primary)]')}>
+                    <MaterialSymbol name="lightbulb" size="md" className="text-[var(--ace-data-card-link)]" />
+                    <p className={cn('m-0 text-sm leading-[1.65]', p1Bold, 'text-[var(--ace-data-card-link)]')}>
                       {insightTitle}
                     </p>
                   </div>
-                  <p className={cn('m-0 text-xs leading-[1.65] text-[var(--screening-primary)]', caption)}>
+                  <p className={cn('m-0 text-xs leading-[1.65] text-[var(--ace-data-card-link)]', caption)}>
                     {insightBody}
                   </p>
                 </div>
@@ -279,9 +279,9 @@ export function AceDataCard({
                 <button
                   type="button"
                   className={cn(
-                    'm-0 w-fit text-left text-xs leading-[1.65] text-[var(--screening-primary)]',
+                    'm-0 w-fit text-left text-xs leading-[1.65] text-[var(--ace-data-card-link)]',
                     caption,
-                    'rounded-[var(--radius-sm)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
+                    'rounded-[var(--radius-sm)] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]',
                   )}
                 >
                   {inlineLinkLabel}
@@ -297,9 +297,9 @@ export function AceDataCard({
           type="button"
           onClick={toggleExpanded}
           className={cn(
-            'inline-flex items-center gap-2 rounded-[var(--radius-sm)] text-xs leading-[1.65] text-[var(--screening-primary)]',
+            'inline-flex items-center gap-2 rounded-[var(--radius-sm)] text-xs leading-[1.65] text-[var(--ace-data-card-link)]',
             caption,
-            'hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
+            'hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]',
           )}
         >
           {expanded ? 'Show less' : 'Show more'}

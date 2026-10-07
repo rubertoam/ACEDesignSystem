@@ -7,13 +7,14 @@ System: Google Material Symbols Outlined through `MaterialSymbol`
 | Field | Values |
 |-------|--------|
 | Ligature `name` | Underscore form (`account_circle`) |
-| `MaterialSymbolSize` | `sm` 12, `md` 16, `lg` 20, `xl` 24 px |
+| `MaterialSymbolSize` | `sm` 16, `md` 24, `lg` 28, `xl` 32 px |
 | `filled` | FILL axis 0 or 1 (default outlined) |
 | `weight` | 300, 400, 500, 600, or 700 (default 400) |
 | Catalog `fill` | `'outlined'`, `'filled'`, or `'either'` |
 | Icon button surface | No border stroke (sidebar) vs border stroke (table toolbar) |
 
-Optical size (`opsz`): sm / md / lg use 20; xl uses 24.
+Optical size (`opsz`): sm uses 20; md uses 24; lg / xl track rendered size.
+Rendered size is set with inline `font-size` / width / height so Google Fonts’ default 24px cannot override the scale.
 
 ---
 
@@ -54,8 +55,10 @@ Prefer the horizontal kebab `more_horiz` for menus.
 
 | Variant | Rest | Hover |
 |---------|------|-------|
-| No border stroke | Transparent, no border; icon `--ace-sidebar-menu-icon` | `--ace-sidebar-row-action-hover-bg` plus a 1px `--screening-border-strong` shadow |
-| Border stroke | Border `--screening-border-strong`, surface background, secondary text | Chip inactive-hover border, `--screening-surface-hover`, primary text |
+| No border stroke | Transparent + transparent border; icon `--ace-icon-button-icon-rest-ghost` | `--ace-icon-button-hover-bg` + `--ace-icon-button-border` + `--ace-icon-button-icon` |
+| Border stroke | `--ace-icon-button-surface` + `--ace-icon-button-border` + `--ace-icon-button-icon` | Same border; fill `--ace-icon-button-hover-bg` |
+
+Figma semantic aliases: `color/bg/primary` → `--ace-icon-button-hover-bg` (`--ace-neutral-50`); `color/border/default` → `--ace-icon-button-border` (`--screening-border-soft`); `color/icon/primary` → `--ace-icon-button-icon` (`--ace-neutral-900`); `color/surface/primary` → `--ace-icon-button-surface`.
 
 Sidebar row actions fade in on row or header hover / focus. An open menu keeps the hover look.
 
@@ -104,8 +107,8 @@ Look up names on fonts.google.com/icons and turn spaces into underscores.
 |------|----------------|
 | Favorite selected | `--ace-error-500` |
 | Status glyphs | `--ace-toast-icon-success/info/error/warning` |
-| Ghost hover | `--ace-sidebar-row-action-hover-bg`, `--screening-border-strong` |
-| Stroke hover | `--screening-surface` / `-hover`, `--screening-chip-inactive-hover-border` |
+| Ghost hover | `--ace-icon-button-hover-bg`, `--ace-icon-button-border`, `--ace-icon-button-icon` |
+| Stroke rest / hover | `--ace-icon-button-surface`, `--ace-icon-button-border`, `--ace-icon-button-hover-bg` |
 | Chevrons | `--screening-icon-chevron` plus `aceChevronIconClass` |
 | Size guidance | sm for accordion / dense UI, md default, lg for controls, xl for headers / toolbar |
 

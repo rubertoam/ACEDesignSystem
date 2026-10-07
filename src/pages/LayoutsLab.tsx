@@ -410,7 +410,7 @@ function LayoutPreview({
           >
             <p className="m-0 text-sm text-[var(--screening-text-muted)]">
               Drawer content opened from the task bar
-              {isTwoColumn ? ' — docks beside both columns.' : ' — docks beside the main column.'}
+              {isTwoColumn ? ' - docks beside both columns.' : ' - docks beside the main column.'}
             </p>
           </AceInlineDrawer>
         </div>
@@ -562,7 +562,7 @@ export function LayoutsLab() {
         </div>
       }
       code={
-        <ComponentLabCode>{`{/* Modular sub-header — fills its parent; separate from content modules */}
+        <ComponentLabCode>{`{/* Modular sub-header - fills its parent; separate from content modules */}
 {showSubHeader ? <AceSubHeader /> : null}
 
 {/* Cards / accordions are not wrapped in column chrome */}
@@ -590,7 +590,7 @@ export function LayoutsLab() {
           </li>
           <li>
             Treat <code className="text-[var(--color-text-primary)]">AceSubHeader</code> as its own module above
-            content — especially when composing cards or accordions.
+            content - especially when composing cards or accordions.
           </li>
           <li>
             Cards and accordions fill the content region without empty column shells. Two-column mode still supports

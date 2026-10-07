@@ -9,7 +9,12 @@ export const ACE_TOGGLE_SIZE_LABELS: Record<AceToggleSize, string> = {
   md: 'Large',
 }
 
-/** Track + interaction (Figma Toggles 117:1265; --ace-toggle-* tokens). Motion in toggle.css. */
+/**
+ * Track + interaction — Figma Toggle set 5283:2831 (doc 117:1265).
+ * Off: bg/secondary · Hover: bg/brand-hover · On: bg/brand ·
+ * Inactive off: bg/disabled-subtle · Inactive on: bg/brand-subtle.
+ * Motion in toggle.css.
+ */
 export const aceToggleTrackClass = cn(
   'ace-toggle-track group relative inline-flex shrink-0 cursor-pointer items-center rounded-full border-0 p-[var(--ace-toggle-track-padding)] outline-none',
   'disabled:cursor-not-allowed',
@@ -19,7 +24,7 @@ export const aceToggleTrackClass = cn(
   'focus-visible:ring-2 focus-visible:ring-[var(--ace-toggle-focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--ace-toggle-ring-offset)]',
 )
 
-/** Shared track dimensions (standard + icon use the same shell). */
+/** Shared track dimensions (standard + icon use the same shell). Small 36×20 / Large 44×24. */
 const aceToggleRootSize: Record<AceToggleSize, string> = {
   sm: 'h-5 w-9',
   md: 'h-6 w-11',
@@ -57,6 +62,12 @@ export const aceToggleIconXClass: Record<AceToggleSize, string> = {
   sm: 'size-[6px] shrink-0 text-[var(--ace-toggle-icon-glyph-off)]',
   md: 'size-2 shrink-0 text-[var(--ace-toggle-icon-glyph-off)]',
 }
+
+/** Label beside toggle — Caption/Regular (Figma) for Small and Large. */
+export const aceToggleLabelClass =
+  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--color-text-primary)]'
+
+export const aceToggleLabelDisabledClass = 'text-[var(--color-text-disabled)]'
 
 export function aceToggleClass(size: AceToggleSize = 'md', _variant: AceToggleVariant = 'standard'): string {
   return cn(aceToggleTrackClass, aceToggleRootSize[size])

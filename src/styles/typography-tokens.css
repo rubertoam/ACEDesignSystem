@@ -1,7 +1,55 @@
 :root {
-  /* ACE typography — generated from Figma node 2651:5 (Font variables). Pair each --ace-type-* with its *-tracking token. */
+  /*
+   * ACE typography — Figma Typography page (node 2:5).
+   * Documentation layer: --type-* primitives + --typography-* semantics (5160:2 / 5160:154).
+   * Product shorthands: --ace-type-* (legacy composed styles still used by components).
+   */
   --font-ace-noto: "Noto Sans", var(--font-sans);
   --font-ace-inter: "Inter", var(--font-sans);
+
+  /* ——— Primitive Tokens (Figma 5160:2) ——— */
+  --type-size-heading: 4.5rem; /* 72px */
+  --type-size-display-02: 3.75rem; /* 60px */
+  --type-size-h1: 3rem; /* 48px */
+  --type-size-h2: 2.4375rem; /* 39px */
+  --type-size-h1-small: 2.125rem; /* 34px */
+  --type-size-h2-small: 2.0625rem; /* 33px */
+  --type-size-h3: 1.75rem; /* 28px */
+  --type-size-h3-small: 1.4375rem; /* 23px */
+  --type-size-subheading: 1.25rem; /* 20px */
+  --type-size-h4: 1.1875rem; /* 19px */
+  --type-size-p1: 1.125rem; /* 18px */
+  --type-size-h4-small: 1rem; /* 16px */
+  --type-size-h5: 1rem; /* 16px */
+  --type-size-p2: 1rem; /* 16px */
+  --type-size-h5-small: 0.875rem; /* 14px */
+  --type-size-h6: 0.875rem; /* 14px */
+  --type-size-p3: 0.875rem; /* 14px */
+  --type-size-h6-small: 0.75rem; /* 12px */
+  --type-size-caption: 0.75rem; /* 12px */
+  --type-size-footer-01: 0.625rem; /* 10px */
+  --type-size-footer-02: 0.5rem; /* 8px */
+
+  --type-line-height-tight: 1.2; /* 120% */
+  --type-line-height-normal: 1.5; /* 150% */
+  --type-line-height-relaxed: 1.65; /* 165% */
+
+  --type-letter-spacing-tight: -0.04em; /* -4% */
+  --type-letter-spacing-normal: 0; /* 0% */
+
+  /* ——— Semantic Tokens (Figma 5160:154) ——— */
+  --typography-heading-heading: var(--type-size-subheading);
+  --typography-heading-subheading: var(--type-size-p2);
+  --typography-body-body-main: var(--type-size-p3);
+  --typography-body-body-secondary: var(--type-size-caption);
+  --typography-ui-caption: var(--type-size-caption);
+  --typography-ui-footnote: var(--type-size-footer-01);
+  --typography-ui-micro: var(--type-size-footer-02);
+  --typography-leading-relaxed: var(--type-line-height-relaxed);
+  --typography-leading-normal: var(--type-line-height-normal);
+  --typography-leading-tight: var(--type-line-height-tight);
+
+  /* ——— Composed --ace-type-* shorthands (pair each with *-tracking) ——— */
   --ace-type-display-01-regular: 400 4.5000rem/1.649999976158142 var(--font-ace-noto);
   --ace-type-display-01-regular-tracking: -0.04em;
   --ace-type-display-01-semi-bold: 600 4.5000rem/1.649999976158142 var(--font-ace-noto);

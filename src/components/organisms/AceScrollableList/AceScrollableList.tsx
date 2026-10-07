@@ -11,12 +11,12 @@ import {
   AceDropdownMenu,
   type AceDropdownMenuEntry,
 } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
+import { aceDropdownFieldLabelClass } from '../../molecules/AceDropdownMenu/dropdownFieldStyles'
 import { cn } from '../../../lib/cn'
 import { sidebarIconButtonClass } from '../AceSidebar/sidebarRowActions'
 import { AceScrollableListBody } from './AceScrollableListBody'
 import { AceScrollableListItemRow } from './AceScrollableListItemRow'
 import {
-  aceScrollableListControlLabelClass,
   aceScrollableListControlsClass,
   aceScrollableListHeaderClass,
   aceScrollableListMinimizedClass,
@@ -571,35 +571,29 @@ export function AceScrollableList({
                 {showFilterSortRow ? (
                   <div className="flex items-end gap-2">
                     {showFilter ? (
-                      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-                        <span className={aceScrollableListControlLabelClass} style={aceScrollableListNotoVar}>
-                          Filter by
-                        </span>
+                      <div className="flex min-w-0 flex-1 flex-col gap-2">
+                        <span className={aceDropdownFieldLabelClass}>Filter by</span>
                         <AceDropdownMenu
                           triggerLabel={filterTriggerLabel(filterGroups, selectedFilters)}
                           triggerMode="field"
-                          size="sm"
                           panelWidth="wide"
                           align="start"
-                          className="!w-full !max-w-full font-normal"
+                          className="!w-full !max-w-none"
                           items={filterMenuItems}
                         />
                       </div>
                     ) : null}
                     {showSort ? (
-                      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-                        <span className={aceScrollableListControlLabelClass} style={aceScrollableListNotoVar}>
-                          Sort by
-                        </span>
+                      <div className="flex min-w-0 flex-1 flex-col gap-2">
+                        <span className={aceDropdownFieldLabelClass}>Sort by</span>
                         <AceDropdownMenu
                           triggerLabel={
                             sortOptions.find((option) => option.value === sort)?.label ?? 'Sort'
                           }
                           triggerMode="field"
-                          size="sm"
                           panelWidth="wide"
                           align="start"
-                          className="!w-full !max-w-full font-normal"
+                          className="!w-full !max-w-none"
                           items={sortMenuItems}
                         />
                       </div>

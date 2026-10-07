@@ -1,22 +1,23 @@
 import { cn } from '../../../lib/cn'
 
+/** Caption/Regular — Figma Secondary / FilterChip trigger text. */
 const filterType = cn(
-  'font-normal [font-family:var(--font-ace-noto)] text-sm leading-[1.65]',
-  '[letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  'font-normal [font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
 )
 
-/** Shade 0 resting; Neutral/700 fill + light text on hover. */
+/** Default = surface; open / hover = brand fill + inverse text (Secondary Active / FilterChip Selected). */
 export const aceFilterTriggerClass = cn(
   filterType,
   'inline-flex shrink-0 cursor-pointer items-center gap-[var(--ace-filter-gap)] rounded-[var(--ace-filter-radius)] px-[var(--ace-filter-px)] py-[var(--ace-filter-py)]',
   'border border-solid border-[var(--ace-filter-trigger-border)] bg-[var(--ace-filter-trigger-bg)] text-[var(--ace-filter-trigger-text)]',
   'outline-none transition-colors duration-150 ease-out',
   'hover:border-transparent hover:bg-[var(--ace-filter-trigger-active-bg)] hover:text-[var(--ace-filter-trigger-active-text)]',
-  'focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+  'data-[state=open]:border-transparent data-[state=open]:bg-[var(--ace-filter-trigger-active-bg)] data-[state=open]:text-[var(--ace-filter-trigger-active-text)]',
+  'focus-visible:ring-2 focus-visible:ring-[var(--ace-dropdown-trigger-focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)]',
   'disabled:pointer-events-none disabled:opacity-50',
 )
 
-/** Toggle chip — same shell as filter trigger; pressed = Neutral/700 (no chevron / clear). */
+/** Toggle chip — same shell as filter trigger; pressed = brand fill (no chevron / clear). */
 export const aceFilterToggleChipClass = aceFilterTriggerClass
 
 export const aceFilterToggleChipPressedClass = cn(
@@ -24,7 +25,7 @@ export const aceFilterToggleChipPressedClass = cn(
   'hover:border-transparent hover:bg-[var(--ace-filter-trigger-active-bg)] hover:text-[var(--ace-filter-trigger-active-text)]',
 )
 
-/** Shade 0 resting; Neutral/700 fill + light text/icons on hover. */
+/** Shade 0 resting; brand fill + inverse text/icons on hover / selected (FilterChip). */
 export const aceFilterChipClass = cn(
   'group',
   filterType,
@@ -38,12 +39,12 @@ export const aceFilterChipLabelClass = 'min-w-0 truncate'
 
 export const aceFilterChipOpenButtonClass = cn(
   'inline-flex min-w-0 cursor-pointer items-center gap-[var(--ace-filter-gap)] border-0 bg-transparent p-0 text-inherit outline-none',
-  'focus-visible:rounded-[var(--radius-sm)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1',
+  'focus-visible:rounded-[var(--radius-sm)] focus-visible:ring-2 focus-visible:ring-[var(--ace-dropdown-trigger-focus-ring)] focus-visible:ring-offset-1',
 )
 
 export const aceFilterChipClearButtonClass = cn(
   'inline-flex size-2.5 shrink-0 cursor-pointer items-center justify-center border-0 bg-transparent p-0 outline-none',
-  'focus-visible:rounded-full focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1',
+  'focus-visible:rounded-full focus-visible:ring-2 focus-visible:ring-[var(--ace-dropdown-trigger-focus-ring)] focus-visible:ring-offset-1',
 )
 
 export const aceFilterChipChevronClass =

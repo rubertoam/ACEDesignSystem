@@ -104,7 +104,12 @@ export function getScreeningRowsForCase(caseIndex: number): ScreeningResultRow[]
   return rows
 }
 
-export const MOCK_ROWS: ScreeningResultRow[] = getScreeningRowsForCase(0)
+export const MOCK_ROWS: ScreeningResultRow[] = [
+  ...getScreeningRowsForCase(0),
+  ...getScreeningRowsForCase(1),
+  ...getScreeningRowsForCase(2),
+  ...getScreeningRowsForCase(3),
+]
 
 export const MATCH_KEY_ITEMS: {
   code: string

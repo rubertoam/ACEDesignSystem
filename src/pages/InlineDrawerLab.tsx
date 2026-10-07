@@ -5,9 +5,7 @@ import { Checkbox } from '../components/atoms/Checkbox/Checkbox'
 import { RadioGroup, RadioItem } from '../components/atoms/Radio/RadioGroup'
 import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
 import { AceInlineMessage } from '../components/molecules/AceInlineMessage/AceInlineMessage'
-import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
 import { AceInlineDrawer } from '../components/organisms/AceInlineDrawer/AceInlineDrawer'
-import { sidebarIconButtonClass } from '../components/organisms/AceSidebar/sidebarRowActions'
 import { cn } from '../lib/cn'
 import { LabCheckbox, LabRadioGroup, labControlLegendClass } from '../lib/labControls'
 import { labUsageSectionClass } from '../lib/labExampleSection'
@@ -156,22 +154,15 @@ function DrawerMockHeader({
   return (
     <header className="flex shrink-0 items-center justify-between border-b-[0.5px] border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-8 py-3">
       <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--ace-neutral-800)]')}>Header</h1>
-      <button
+      <AceButton
         type="button"
+        variant="primary"
+        size="md"
         onClick={onToggleDrawer}
-        aria-label={open ? 'Close drawer' : 'Open drawer'}
         aria-expanded={open}
-        className={sidebarIconButtonClass}
       >
-        <MaterialSymbol
-          name="right_panel_close"
-          size="md"
-          className={cn(
-            'text-current transition-transform duration-[var(--ace-motion-duration-medium)] [transition-timing-function:var(--ace-motion-ease-standard)] motion-reduce:transition-none',
-            !open && 'rotate-180',
-          )}
-        />
-      </button>
+        Open Drawer
+      </AceButton>
     </header>
   )
 }
@@ -220,8 +211,8 @@ export function InlineDrawerLab() {
             <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-[var(--screening-surface-muted)] p-6">
               <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Main content</p>
               <p className="mt-2 max-w-prose text-sm text-[var(--screening-text-muted)]">
-                Opening the drawer shrinks this region. Drag the left edge to resize (320–720px). Escape or the
-                header close control dismisses it.
+                Opening the drawer shrinks this region. Default open width is 25% of the viewport; drag the left
+                edge to resize. Escape or the header close control dismisses it.
               </p>
             </div>
             <AceInlineDrawer
@@ -244,7 +235,7 @@ export function InlineDrawerLab() {
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
             Place the drawer as a flex sibling after main content. Control{' '}
-            <code className="text-[var(--screening-text-primary)]">open</code> from the app chrome — width animates
+            <code className="text-[var(--screening-text-primary)]">open</code> from the app chrome - width animates
             in-flow and can be resized like Review Assigned.
           </p>
           <ComponentLabCode>{`import { AceInlineDrawer } from '../components/organisms/AceInlineDrawer/AceInlineDrawer'
@@ -269,7 +260,7 @@ const [open, setOpen] = useState(true)
           <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
-              Use for contextual editing or review panels that should stay on the page and push layout, not cover it —
+              Use for contextual editing or review panels that should stay on the page and push layout, not cover it -
               same pattern as Review Assigned. Prefer Dialog Modal when the task is blocking or disconnected from the
               current view.
             </p>
@@ -279,7 +270,7 @@ const [open, setOpen] = useState(true)
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
                 <strong className="text-[var(--screening-text-primary)]">Shell</strong>:{' '}
-                <code className="text-[var(--screening-text-primary)]">AceSideDrawer</code> — resizable in-flow panel
+                <code className="text-[var(--screening-text-primary)]">AceSideDrawer</code> - resizable in-flow panel
                 (Review Assigned <code className="text-[var(--screening-text-primary)]">SideDrawer</code>).
               </li>
               <li>

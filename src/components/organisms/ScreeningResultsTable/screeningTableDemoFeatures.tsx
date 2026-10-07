@@ -374,7 +374,7 @@ export function DropdownCell({
       <AceDropdownMenu
         triggerLabel={label}
         triggerMode="field"
-        size="md"
+        size="sm"
         align="start"
         panelWidth="wide"
         disabled={disabled}

@@ -60,7 +60,7 @@ const visibilityControls = {
 | `showRowSearch` | true | Shows the search field; turning it off clears the query |
 | `showCheckboxes` | true | Enables selection; turning it off clears selection |
 | `showExpandChevrons` | true | Shows expand controls; turning it off collapses everything |
-| `showPagination` | false | Shows footer pagination |
+| `showPagination` | true | Shows footer pagination |
 | `showDisabledRows` | true | Resolved / inactive rows look disabled; when off, those rows stay selectable |
 
 The control column shows if expand or checkboxes are on. The toolbar shows if any toolbar visibility control is on.
@@ -74,12 +74,15 @@ The control column shows if expand or checkboxes are on. The toolbar shows if an
 - **History:** Starts shown. Hiding it keeps only active rows (in the demo, `New`). The control is disabled when there is no history (`"There is no history to show."`)
 - **Status chips:** Built from the unique statuses in `rows`. Multi-select. Changing filters, history, or search resets the page to `1`
 - **Search:** Case-insensitive match across searchable fields. Clear with the clear control or the empty-state action
-- **Columns menu:** You can’t hide the last remaining column. Reorder columns by drag and drop
+- **Columns menu:** Visibility only — you can’t hide the last remaining column. Reorder columns by dragging the handle on table headers
+
 
 ### Table
 - **Sort:** First click sorts ascending. Second click on the same column sorts descending. Third click clears sort (`null`). Sort starts as `null`
+- **Column reorder:** Hover a column header to show the drag handle. Drop before/after another column.
+
 - **Selection:** Controlled only when both `selectedIds` and `onSelectedIdsChange` are passed; otherwise selection is internal. Active rows are selectable. Inactive rows are selectable only when `showDisabledRows` is false. The header checkbox selects every actionable row in the full sorted set, not just the current page. Once anything is selected (`selectionMode`), row controls stay visible on every row
-- **Expand:** Single-row and expand-all cover the full sorted set. Detail rows animate with a `0fr` / `1fr` grid. Detail content is still placeholder copy
+- **Expand:** Single-row and expand-all cover the full sorted set. Detail rows animate with a `0fr` / `1fr` grid. Expanded panels use the muted surface and indent detail with a primary purple rail (Review Assigned List Profile pattern). Detail content is still placeholder copy
 - **Empty states (priority):** no rows; history hidden with no active rows left; filters and search / filters only / search only; then a generic empty message
 
 ### Pagination
@@ -137,6 +140,7 @@ Exports include `DataTable`, `DEFAULT_DATA_TABLE_VISIBILITY_CONTROLS`, and demo 
 | Area | Tokens |
 |------|--------|
 | Surfaces | Table surface, border, chip, score, tag, shadow, and body max-height tokens |
+| Expand | `--screening-surface-expanded` (muted callout), `--screening-expand-rail` (primary @ 25%) |
 | Motion | Accordion expand duration and easing |
 | Type | Heading and paragraph tokens from `typography-tokens.css` |
 | Atoms | `Checkbox` md, `Badge` pills, `InputField` search sm, `Pagination` |
@@ -148,7 +152,8 @@ Exports include `DataTable`, `DEFAULT_DATA_TABLE_VISIBILITY_CONTROLS`, and demo 
 - Turning visibility controls off hides the UI and clears related state
 - History show / hide works, and the control disables when there’s no history
 - Status multi-filter and search behave as expected
-- Sorting cycles ascending → descending → cleared per column; you can’t hide the last column; drag reorder works
+- Sorting cycles ascending → descending → cleared per column; you can’t hide the last column; header drag reorder works for all data columns
+
 - `showDisabledRows` on and off match the selection rules
 - Expand single / all and pagination keep select-all / expand-all global
 - Controlled and uncontrolled selection both work

@@ -27,12 +27,6 @@ export const aceScrollableListTitleClass = cn(
 export const aceScrollableListControlsClass =
   'flex shrink-0 flex-col gap-2.5 bg-[var(--ace-scrollable-list-surface)] px-3 py-2.5'
 
-/** Filter / Sort field labels — Noto SemiBold 13 (prototype CaseList). */
-export const aceScrollableListControlLabelClass = cn(
-  'font-[family-name:var(--font-ace-noto)] text-[13px] font-semibold',
-  'text-[var(--ace-scrollable-list-item-text)]',
-)
-
 export const aceScrollableListScrollClass = 'flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto'
 
 export const aceScrollableListSectionHeaderClass = cn(

@@ -205,7 +205,6 @@ export function AceAttachments({
             <AceButton
               type="button"
               variant="primary"
-              palette="purple"
               size="sm"
               disabled={disabled}
               onClick={openFilePicker}
@@ -281,7 +280,6 @@ export function AceAttachments({
             <AceButton
               type="button"
               variant="primary"
-              palette="purple"
               size="sm"
               disabled={disabled || !urlDraft.trim()}
               onClick={onAddUrl}

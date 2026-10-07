@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useId, useState } from 'react'
+import { useCallback, useEffect, useId, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { AceInputField } from '../components/atoms/AceInputField'
 import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
 import { AceSiteHeader } from '../components/organisms/AceSiteHeader/AceSiteHeader'
 import { LabThemeProvider, type LabTheme } from '../contexts/LabThemeContext'
@@ -87,11 +88,34 @@ export function LabLayout() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const [theme, setTheme] = useState<LabTheme>('light')
+  const [navQuery, setNavQuery] = useState('')
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     Atoms: false,
     Molecules: false,
     Organisms: false,
   })
+
+  const navQueryNormalized = navQuery.trim().toLowerCase()
+  const isFiltering = navQueryNormalized.length > 0
+
+  const showGuidelines =
+    !isFiltering || labNavGuidelinesItem.label.toLowerCase().includes(navQueryNormalized)
+  const showLayouts =
+    !isFiltering || labNavLayoutsItem.label.toLowerCase().includes(navQueryNormalized)
+
+  const filteredSections = useMemo(() => {
+    if (!isFiltering) return labNavSections
+    return labNavSections
+      .map((section) => ({
+        ...section,
+        items: section.items.filter(
+          (item) =>
+            item.label.toLowerCase().includes(navQueryNormalized) ||
+            section.title.toLowerCase().includes(navQueryNormalized),
+        ),
+      }))
+      .filter((section) => section.items.length > 0)
+  }, [isFiltering, navQueryNormalized])
 
   const toggleSection = useCallback((title: string) => {
     setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }))
@@ -107,6 +131,22 @@ export function LabLayout() {
       setOpenSections((prev) => ({ ...prev, [match.section]: true }))
     }
   }, [pathname])
+
+  /** While filtering, keep matching sections expanded. */
+  useEffect(() => {
+    if (!isFiltering) return
+    setOpenSections((prev) => {
+      const next = { ...prev }
+      let changed = false
+      for (const section of filteredSections) {
+        if (COLLAPSIBLE_SECTIONS.has(section.title) && !next[section.title]) {
+          next[section.title] = true
+          changed = true
+        }
+      }
+      return changed ? next : prev
+    })
+  }, [filteredSections, isFiltering])
 
   /** Apply theme on <html> so portaled menus/modals inherit dark tokens everywhere. */
   useEffect(() => {
@@ -179,17 +219,31 @@ export function LabLayout() {
             ACE Design System
           </p>
         </div>
-        <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto">
-          <ul className="m-0 mb-6 list-none space-y-1 p-0">
+        <ul className="m-0 mb-3 list-none space-y-1 p-0">
+          {showGuidelines ? (
             <li>
               <NavLink to={labNavGuidelinesItem.to} className={topNavLinkClass} end>
                 {labNavGuidelinesItem.label}
               </NavLink>
             </li>
-          </ul>
+          ) : null}
+        </ul>
+        {/* Outside overflow-y nav so focus ring / active chrome is not clipped */}
+        <div className="mb-4 p-0.5">
+          <AceInputField
+            fieldSize="sm"
+            icon="left"
+            placeholder="Search"
+            value={navQuery}
+            onChange={(e) => setNavQuery(e.target.value)}
+            onClear={() => setNavQuery('')}
+            aria-label="Search lab navigation"
+          />
+        </div>
+        <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden">
           <div className="flex flex-col gap-[20px]">
-          {labNavSections.map((section) => {
-            const isOpen = openSections[section.title] ?? false
+          {filteredSections.map((section) => {
+            const isOpen = isFiltering ? true : (openSections[section.title] ?? false)
             const headingId = `lab-nav-${section.title.toLowerCase().replace(/\s+/g, '-')}`
 
             return (
@@ -257,18 +311,25 @@ export function LabLayout() {
             )
           })}
           </div>
-          <div
-            className="my-6 border-t border-solid border-[var(--screening-border-strong)]"
-            role="separator"
-            aria-hidden
-          />
-          <ul className="m-0 list-none space-y-1 p-0">
-            <li>
-              <NavLink to={labNavLayoutsItem.to} className={topNavLinkClass} end>
-                {labNavLayoutsItem.label}
-              </NavLink>
-            </li>
-          </ul>
+          {showLayouts ? (
+            <>
+              <div
+                className="my-6 border-t border-solid border-[var(--screening-border-strong)]"
+                role="separator"
+                aria-hidden
+              />
+              <ul className="m-0 list-none space-y-1 p-0">
+                <li>
+                  <NavLink to={labNavLayoutsItem.to} className={topNavLinkClass} end>
+                    {labNavLayoutsItem.label}
+                  </NavLink>
+                </li>
+              </ul>
+            </>
+          ) : null}
+          {isFiltering && !showGuidelines && filteredSections.length === 0 && !showLayouts ? (
+            <p className="m-0 px-2 text-sm text-[var(--screening-text-muted)]">No matches</p>
+          ) : null}
         </nav>
       </aside>
         <main className="min-w-0 flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10">

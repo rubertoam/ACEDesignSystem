@@ -57,7 +57,7 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Typography',
         '/lab/atoms/typography',
-        'ACE type tokens and samples from the Figma export JSON.',
+        'style sheet, typography tokens, and primitive/semantic tokens from Figma.',
       ),
       component(
         'Iconography',
@@ -70,7 +70,11 @@ export const labNavSections: LabNavSection[] = [
         'motion catalog, easing/duration tokens, and live demos for developers.',
       ),
       component('Drop shadows', '/lab/atoms/drop-shadows', 'elevation tokens (Figma Drop Shadows 71-71).'),
-      component('Buttons', '/lab/atoms/buttons', 'ACE button variants, sizes, and states (Figma Buttons frame).'),
+      component(
+        'Buttons',
+        '/lab/atoms/buttons',
+        'ACE button variants, sizes, states, and descriptive tiles (Figma Buttons 2067:191, ButtonDescriptive 4118:682).',
+      ),
       component(
         'Inputs',
         '/lab/atoms/inputs',
@@ -88,6 +92,11 @@ export const labNavSections: LabNavSection[] = [
         'sizes, states, field wrapper (Figma Radio Buttons 331-1755).',
       ),
       component('Badges', '/lab/atoms/badges', 'pills and tags - shared color variants (Review Assigned).'),
+      component(
+        'Progress Indicators',
+        '/lab/atoms/progress-indicators',
+        'table review bar + processing spinner cards (Figma Progress Indicators 414:4109).',
+      ),
       component('Tooltips', '/lab/atoms/tooltips', 'contextual labels for icon controls - screening toolbar pattern.'),
     ],
   },
@@ -98,7 +107,7 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Dropdowns',
         '/lab/molecules/dropdowns',
-        'menu trigger and list (Radix), screening + ACE tokens.',
+        'Primary / Secondary triggers + MenuList variants (Figma 1307:3725 / 5318:1634), semantic --color-* tokens.',
       ),
       component(
         'Accordions',
@@ -133,7 +142,7 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Tabs',
         '/lab/molecules/tabs',
-        'standard underline tabs and Tab Cards for inner-feature navigation (Figma Tabs / Tab Cards).',
+        'horizontal, vertical, and Tab Cards (Figma Tabs 5196:82).',
       ),
       component(
         'Toast messages',
@@ -149,11 +158,6 @@ export const labNavSections: LabNavSection[] = [
         'Filtering',
         '/lab/molecules/filtering',
         'Filters dropdown and applied filter chips (Figma Table Headers 1540:4577).',
-      ),
-      component(
-        'Descriptive buttons',
-        '/lab/molecules/descriptive-buttons',
-        'contextual title + description action tiles (Figma ButtonDescriptive 4118:682).',
       ),
     ],
   },
@@ -186,7 +190,7 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Cards',
         '/lab/organisms/cards',
-        'landing page navigation cards (stats and description variants).',
+        'landing page cards (Figma Landing Page Cards 4130:1977).',
       ),
       component(
         'Timeline',

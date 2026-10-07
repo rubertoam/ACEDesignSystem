@@ -35,8 +35,8 @@ export {
 } from './components/atoms/AceAvailabilityTag/AceAvailabilityTag'
 export {
   AceButton,
+  type AceButtonActionTone,
   type AceButtonIcon,
-  type AceButtonPalette,
   type AceButtonPreviewState,
   type AceButtonProps,
   type AceButtonSize,
@@ -53,6 +53,7 @@ export {
   AceTabs,
   aceTabButtonId,
   type AceTabItem,
+  type AceTabsOrientation,
   type AceTabsProps,
 } from './components/atoms/AceTabs/AceTabs'
 export {
@@ -76,6 +77,22 @@ export {
 } from './components/atoms/FinScanIcon/FinScanWordmark'
 export { RadioGroup, RadioItem, type RadioItemProps } from './components/atoms/Radio/RadioGroup'
 export { Toggle, type ToggleProps } from './components/atoms/Toggle/Toggle'
+export {
+  AceProgressIndicator,
+  AceProgressSpinner,
+  aceProgressIndicatorContentClass,
+  aceProgressIndicatorLabelClass,
+  aceProgressIndicatorLabelToneClass,
+  aceProgressIndicatorShellClass,
+  aceProgressIndicatorShellToneClass,
+  aceProgressIndicatorShellTypeClass,
+  aceProgressSpinnerClass,
+  aceProgressSpinnerToneClass,
+  type AceProgressIndicatorProps,
+  type AceProgressIndicatorTone,
+  type AceProgressIndicatorType,
+  type AceProgressSpinnerProps,
+} from './components/atoms/AceProgressIndicator'
 
 export {
   AceAccordion,
@@ -241,11 +258,19 @@ export {
   type AceSidebarVariant,
 } from './components/organisms/AceSidebar/AceSidebar'
 export {
+  sidebarIconButtonClass,
+  sidebarIconButtonBorderedClass,
+  sidebarRowActionButtonClass,
+  sidebarRowActionButtonExpandedClass,
+  sidebarRowActionIconClass,
+} from './components/organisms/AceSidebar/sidebarRowActions'
+export {
   AceInlineDrawer,
   type AceInlineDrawerProps,
 } from './components/organisms/AceInlineDrawer/AceInlineDrawer'
 export {
   AceSideDrawer,
+  ACE_SIDE_DRAWER_VIEWPORT_WIDTH_RATIO,
   type AceSideDrawerProps,
 } from './components/organisms/AceInlineDrawer/AceSideDrawer'
 export {

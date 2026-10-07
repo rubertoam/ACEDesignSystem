@@ -9,7 +9,7 @@ import {
 export type AceTaskBarProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
   /**
    * Optional leading content (e.g. selection count, deselect control).
-   * Renders on the start side; actions stay end-aligned.
+   * Renders immediately before the action cluster; both stay end-aligned.
    */
   leading?: ReactNode
   /** Trailing action cluster (typically `AceButton`s). */

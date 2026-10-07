@@ -1,4 +1,5 @@
 import { cn } from '../../../lib/cn'
+import { AceBadge } from '../../atoms/AceBadge/AceBadge'
 import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
 import {
   LandingPageCardHeaderActions,
@@ -32,8 +33,10 @@ export type AceLandingPageCardFooterStat = {
 export type AceLandingPageCardProps = {
   variant?: AceLandingPageCardVariant
   title: string
-  /** Shown beside the title on the description variant (Purple 500 pill). */
+  /** Shown beside the title on the description variant (AceBadge purple pill). */
   tag?: string
+  /** When false, hides the header badge even if `tag` is set. Default true. */
+  showBadge?: boolean
   description?: string
   statItems?: AceLandingPageCardStatItem[]
   footerStats?: AceLandingPageCardFooterStat[]
@@ -44,7 +47,7 @@ export type AceLandingPageCardProps = {
   showHeaderActions?: boolean
   showFooterStats?: boolean
   showFooterLink?: boolean
-  /** Applies elevated shadow on hover (Figma Hover state). Default true. */
+  /** Applies elevated shadow on hover (Figma Hover / Shadow XL). Default true. */
   elevateOnHover?: boolean
   className?: string
 }
@@ -63,9 +66,10 @@ const DEFAULT_STAT_ITEMS: AceLandingPageCardStatItem[] = [
     iconClassName: 'h-4 w-5',
   },
   {
-    id: 'workflow',
+    id: 'people',
     label: 'Data Point',
-    iconName: 'arrow_split',
+    iconSrc: LANDING_PAGE_CARD_ICONS.statWorkflow,
+    iconClassName: 'h-3 w-6',
   },
 ]
 
@@ -95,6 +99,7 @@ export function AceLandingPageCard({
   variant = 'stats',
   title,
   tag,
+  showBadge = true,
   description = '[Description option for this card which can provide some contextual information to users about what this is.]',
   statItems = DEFAULT_STAT_ITEMS,
   footerStats = DEFAULT_FOOTER_STATS,
@@ -115,7 +120,7 @@ export function AceLandingPageCard({
     'text-[0.625rem] tracking-[0.0125rem] text-[var(--ace-landing-page-card-link-color)]',
     'rounded-[var(--radius-sm)] transition-colors duration-[var(--ace-motion-duration-fast)]',
     '[transition-timing-function:var(--ace-motion-ease-standard)]',
-    'hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
+    'hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]',
   )
 
   const footerLink =
@@ -141,44 +146,37 @@ export function AceLandingPageCard({
         className,
       )}
     >
-      <header className="shrink-0 border-x-[0.5px] border-t-[0.5px] border-solid border-[var(--ace-landing-page-card-border)] bg-[var(--ace-landing-page-card-surface)]">
+      <header
+        className={cn(
+          'flex min-h-[2.125rem] shrink-0 items-center justify-between gap-3',
+          'bg-[var(--ace-landing-page-card-surface)]',
+          'px-[var(--ace-landing-page-card-header-px)] py-[var(--ace-landing-page-card-header-py)]',
+        )}
+      >
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <h3
+            className={cn(
+              'm-0 truncate text-sm leading-[1.65]',
+              p1Bold,
+              'text-[var(--ace-landing-page-card-title-color)]',
+            )}
+          >
+            {title}
+          </h3>
+          {isDescription && showBadge && tag ? (
+            <AceBadge appearance="pill" variant="purple">
+              {tag}
+            </AceBadge>
+          ) : null}
+        </div>
         <div
           className={cn(
-            'flex min-h-[2.125rem] items-center justify-between gap-3',
-            'px-[var(--ace-landing-page-card-header-px)] py-[var(--ace-landing-page-card-header-py)]',
+            'flex shrink-0 items-center',
+            !showHeaderActions && 'pointer-events-none invisible',
           )}
+          aria-hidden={!showHeaderActions}
         >
-          <div className="flex min-w-0 flex-1 items-center gap-3">
-            <h3
-              className={cn(
-                'm-0 truncate text-sm leading-[1.65]',
-                p1Bold,
-                'text-[var(--ace-landing-page-card-title-color)]',
-              )}
-            >
-              {title}
-            </h3>
-            {isDescription && tag ? (
-              <span
-                className={cn(
-                  'inline-flex shrink-0 items-center rounded-full px-3 py-0.5',
-                  caption,
-                  'bg-[var(--ace-landing-page-card-tag-bg)] text-[0.625rem] tracking-[0.0125rem] text-[var(--ace-landing-page-card-tag-text)]',
-                )}
-              >
-                {tag}
-              </span>
-            ) : null}
-          </div>
-          <div
-            className={cn(
-              'flex shrink-0 items-center',
-              !showHeaderActions && 'pointer-events-none invisible',
-            )}
-            aria-hidden={!showHeaderActions}
-          >
-            <LandingPageCardHeaderActions onActionClick={onHeaderActionClick} />
-          </div>
+          <LandingPageCardHeaderActions onActionClick={onHeaderActionClick} />
         </div>
       </header>
 
@@ -186,8 +184,8 @@ export function AceLandingPageCard({
         className={cn(
           'flex min-h-0 flex-1 flex-col',
           isDescription
-            ? 'gap-1 px-[var(--ace-landing-page-card-body-px)] py-[var(--ace-landing-page-card-body-py-desc)]'
-            : 'justify-center px-[var(--ace-landing-page-card-body-px)] pb-[var(--ace-landing-page-card-body-px)] pt-[var(--ace-landing-page-card-body-py-stats)]',
+            ? 'gap-1 p-[var(--ace-landing-page-card-body-py-desc)]'
+            : 'justify-center px-[var(--ace-landing-page-card-body-px)] pb-[var(--ace-landing-page-card-body-py-stats-bottom)] pt-[var(--ace-landing-page-card-body-py-stats)]',
         )}
       >
         {isDescription ? (
@@ -226,7 +224,6 @@ export function AceLandingPageCard({
         className={cn(
           'flex shrink-0 items-center',
           showFooterStats && showFooterLink ? 'justify-between' : showFooterLink ? 'justify-end' : 'justify-start',
-          'border-x-[0.5px] border-b-[0.5px] border-solid border-[var(--ace-landing-page-card-border)]',
           'rounded-b-[var(--ace-landing-page-card-radius)] bg-[var(--ace-landing-page-card-footer-bg)]',
           'px-[var(--ace-landing-page-card-footer-px)] py-[var(--ace-landing-page-card-footer-py)]',
         )}

@@ -50,6 +50,7 @@ export type AceInlineDrawerProps = {
   footer?: ReactNode
   /** localStorage key for persisted width; omit to skip persistence. */
   widthStorageKey?: string
+  /** Pixel width when first opened. Defaults to 25% of the viewport. */
   defaultWidth?: number
   minWidth?: number
   maxWidth?: number
@@ -80,7 +81,7 @@ export function AceInlineDrawer({
   onSave,
   footer,
   widthStorageKey,
-  defaultWidth = 480,
+  defaultWidth,
   minWidth,
   maxWidth,
   className,
@@ -135,7 +136,7 @@ export function AceInlineDrawer({
                   aria-label="Back"
                   className={sidebarIconButtonClass}
                 >
-                  <MaterialSymbol name="chevron_left" size="md" className={aceChevronIconClass} />
+                  <MaterialSymbol name="chevron_left" size="lg" className={aceChevronIconClass} />
                 </button>
               ) : null}
               <h2 className={titleClass} style={notoVar}>
@@ -162,7 +163,7 @@ export function AceInlineDrawer({
                   aria-label="Close drawer"
                   className={sidebarIconButtonClass}
                 >
-                  <MaterialSymbol name="close" size="md" className="text-current" />
+                  <MaterialSymbol name="close" size="lg" className="text-current" />
                 </button>
               ) : null}
             </div>

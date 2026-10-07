@@ -14,7 +14,7 @@ export function TaskBarLab() {
   return (
     <ComponentLabPage
       title="Task Bar"
-      description="Bottom action bar for app shells — Review Assigned chrome with optional leading context and end-aligned actions."
+      description="Bottom action bar for app shells - Review Assigned chrome with optional leading context and end-aligned actions."
       examplesToolbar={
         <div className="flex flex-wrap items-end gap-6">
           <LabCheckbox
@@ -103,7 +103,7 @@ import { AceTaskBar } from '../components/molecules/AceTaskBar'
             <p className="m-0 text-[var(--screening-text-muted)]">
               Use under the main content column in app shells (e.g. Layouts / Review Assigned) for primary page
               actions. Keep selection context in <code className="text-[var(--screening-text-primary)]">leading</code>{' '}
-              and primary / secondary actions as children.
+              (end-aligned, before the action buttons) and primary / secondary actions as children.
             </p>
           </section>
           <section className={labUsageSectionClass}>

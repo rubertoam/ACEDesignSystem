@@ -78,7 +78,12 @@ function PaginationControls({
         onClick={onPrevPage}
         className={aceSubHeaderPaginationNavClass}
       >
-        <MaterialSymbol name="chevron_left" size="md" className="block size-[11px] !text-[11px] leading-none" />
+        <MaterialSymbol
+          name="chevron_left"
+          size="sm"
+          className="block"
+          style={{ fontSize: 11, width: 11, height: 11 }}
+        />
       </button>
       <p className={aceSubHeaderPaginationLabelClass}>{label}</p>
       <button
@@ -88,7 +93,12 @@ function PaginationControls({
         onClick={onNextPage}
         className={aceSubHeaderPaginationNavClass}
       >
-        <MaterialSymbol name="chevron_right" size="md" className="block size-[11px] !text-[11px] leading-none" />
+        <MaterialSymbol
+          name="chevron_right"
+          size="sm"
+          className="block"
+          style={{ fontSize: 11, width: 11, height: 11 }}
+        />
       </button>
     </div>
   )
@@ -133,8 +143,9 @@ export function AceSubHeader({
         <button type="button" className={aceSubHeaderBackClass} onClick={onBack}>
           <MaterialSymbol
             name="chevron_left"
-            size="md"
-            className="block size-[11px] !text-[11px] leading-none text-current"
+            size="sm"
+            className="block text-current"
+            style={{ fontSize: 11, width: 11, height: 11 }}
           />
           <span>{backLabel}</span>
         </button>
@@ -170,17 +181,17 @@ export function AceSubHeader({
               ) : null}
               {onRefresh != null ? (
                 <HeaderIconButton label="Refresh" onClick={onRefresh} className="h-[20px] w-4">
-                  <MaterialSymbol name="autorenew" size="md" className="block size-4 !text-base leading-none" />
+                  <MaterialSymbol name="autorenew" size="md" className="block" />
                 </HeaderIconButton>
               ) : null}
               {onFavorite != null ? (
                 <HeaderIconButton label="Favorite" onClick={onFavorite} className="h-[22px] w-6">
-                  <MaterialSymbol name="star" size="lg" className="block size-6 !text-2xl leading-none" />
+                  <MaterialSymbol name="star" size="xl" className="block" />
                 </HeaderIconButton>
               ) : null}
               {moreMenu ? (
                 <HeaderIconButton label="More actions" onClick={onMore} className="h-5 w-1">
-                  <MaterialSymbol name="more_vert" size="lg" className="block !text-xl leading-none" />
+                  <MaterialSymbol name="more_vert" size="lg" className="block" />
                 </HeaderIconButton>
               ) : null}
             </div>

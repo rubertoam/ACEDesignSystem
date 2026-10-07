@@ -1,9 +1,24 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react'
 import { cn } from '../../../lib/cn'
 
-const DEFAULT_WIDTH = 480
+/** Default open width as a fraction of the viewport. */
+export const ACE_SIDE_DRAWER_VIEWPORT_WIDTH_RATIO = 0.25
+
 const DEFAULT_MIN_WIDTH = 320
-const DEFAULT_MAX_WIDTH = 720
+
+function viewportWidth(ratio: number, fallback: number) {
+  if (typeof window === 'undefined') return fallback
+  return Math.round(window.innerWidth * ratio)
+}
+
+function defaultDrawerWidth() {
+  return viewportWidth(ACE_SIDE_DRAWER_VIEWPORT_WIDTH_RATIO, 480)
+}
+
+function defaultMaxWidth() {
+  // Allow at least 25vw (and up to 50vw) so the default open size is not clamped on wide screens.
+  return Math.max(720, viewportWidth(0.5, 720))
+}
 
 export type AceSideDrawerProps = {
   open: boolean
@@ -11,6 +26,7 @@ export type AceSideDrawerProps = {
   children: ReactNode
   /** localStorage key for persisted width; omit to skip persistence */
   widthStorageKey?: string
+  /** Pixel width when first opened. Defaults to 25% of the viewport. */
   defaultWidth?: number
   minWidth?: number
   maxWidth?: number
@@ -26,24 +42,27 @@ export function AceSideDrawer({
   onClose,
   children,
   widthStorageKey,
-  defaultWidth = DEFAULT_WIDTH,
+  defaultWidth,
   minWidth = DEFAULT_MIN_WIDTH,
-  maxWidth = DEFAULT_MAX_WIDTH,
+  maxWidth,
   className,
 }: AceSideDrawerProps) {
+  const resolvedDefaultWidth = defaultWidth ?? defaultDrawerWidth()
+  const resolvedMaxWidth = maxWidth ?? defaultMaxWidth()
+
   const clampWidth = useCallback(
-    (w: number) => Math.min(maxWidth, Math.max(minWidth, w)),
-    [minWidth, maxWidth],
+    (w: number) => Math.min(resolvedMaxWidth, Math.max(minWidth, w)),
+    [minWidth, resolvedMaxWidth],
   )
 
   const [width, setWidth] = useState(() => {
-    if (typeof window === 'undefined' || !widthStorageKey) return defaultWidth
+    if (typeof window === 'undefined' || !widthStorageKey) return resolvedDefaultWidth
     const stored = localStorage.getItem(widthStorageKey)
     if (stored) {
       const n = Number.parseInt(stored, 10)
       if (!Number.isNaN(n)) return clampWidth(n)
     }
-    return defaultWidth
+    return clampWidth(resolvedDefaultWidth)
   })
 
   const [isResizing, setIsResizing] = useState(false)

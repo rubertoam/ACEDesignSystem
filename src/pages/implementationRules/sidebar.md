@@ -22,12 +22,12 @@ Selected org resolves to `organizations.find(id === selectedOrganizationId) ?? o
 ```
 <aside data-open aria-hidden={!open}>
   header
-    navigation → org switcher OR static label
-    groups → “New Group” CTA
+    navigation → org switcher OR static label (+ optional headerTrailing)
+    groups → “New Group” CTA (+ optional headerTrailing)
   <nav>
     navigation → NavItemRow[]
     groups → SidebarGroupBlock[] (chevron, label, optional +, overflow, nested items)
-  children
+    children
 </aside>
 ```
 
@@ -47,6 +47,8 @@ Nearby pieces include `SidebarOverflowMenu`, `GroupFormDialog`, and the lab’s 
 | `showGroupAdd` | `false` | Shows + when `group.onAdd` is also set |
 | `emptyGroupMessage` | Long default copy | Shortens when `showGroupAdd` is off |
 | `menuPortalContainer` | n/a | Portal menus out of clipped shells |
+| `headerTrailing` | n/a | Optional control to the right of the org switcher / New Group CTA (typically bordered search). Shrinks the org field to fit |
+| `headerBelow` | n/a | Optional content under the header row (e.g. search field) |
 
 ---
 
@@ -63,6 +65,7 @@ Nearby pieces include `SidebarOverflowMenu`, `GroupFormDialog`, and the lab’s 
 ### Organization
 - Switcher: choosing an option fires `onOrganizationChange(id)`
 - Label: display only
+- When `headerTrailing` is set, the org control uses flexible width so the trailing icon sits beside it (gap-2)
 
 ### Groups
 - Header click calls `onToggle` (expand state stays with the host)
@@ -110,7 +113,7 @@ SidebarProps = {
   organizations?, selectedOrganizationId?, onOrganizationChange?, organizationDisplay?
   navItems?
   groups?, showGroupAdd?, onNewGroup?, addLabel?, emptyGroupMessage?
-  menuPortalContainer?, className?, children?
+  menuPortalContainer?, headerTrailing?, headerBelow?, className?, children?
 }
 ```
 

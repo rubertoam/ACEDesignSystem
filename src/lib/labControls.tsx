@@ -27,7 +27,7 @@ export function LabControlField({
 }) {
   return (
     <fieldset className={cn('min-w-0 border-0 p-0', className)}>
-      {/* Legend margin is unreliable in fieldsets — space the control group instead. */}
+      {/* Legend margin is unreliable in fieldsets - space the control group instead. */}
       <legend className={cn(labControlLegendClass, 'p-0')}>{label}</legend>
       <div className="mt-[var(--ace-section-label-gap)]">{children}</div>
     </fieldset>

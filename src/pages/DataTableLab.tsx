@@ -39,7 +39,7 @@ const VISIBILITY_CONTROL_OPTIONS: {
   { key: 'showCheckboxes', label: 'Checkboxes', hint: 'Row and header selection' },
   { key: 'showExpandChevrons', label: 'Expand chevrons', hint: 'Header expand-all and per-row expansion' },
   { key: 'showRowSearch', label: 'Search field', hint: 'Toolbar search input' },
-  { key: 'showColumnMenu', label: 'Columns menu', hint: 'Show or hide table columns' },
+  { key: 'showColumnMenu', label: 'Columns menu', hint: 'Show or hide table columns (reorder via header drag handles)' },
   { key: 'showHistoryToggle', label: 'History toggle', hint: 'Show or hide reviewed (Escalated) rows' },
   {
     key: 'showQuickFilters',
@@ -226,7 +226,7 @@ export function DataTableLab() {
   return (
     <ComponentLabPage
       title="Data Table"
-      description="Dense results grid with filters, sortable columns, row expansion, bulk selection (New rows only), and review progress. Built from table regions, filter controls, and the Checkbox atom."
+      description="Dense results grid with filters, sortable columns, row expansion, bulk selection (New rows only), review progress, and pagination."
       examplesCanvas={false}
       examples={
         <div className="space-y-10">
@@ -376,7 +376,9 @@ import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDrop
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
             Table surfaces and controls use <code className="text-[var(--color-text-primary)]">--screening-*</code>{' '}
-            tokens in <code className="text-[var(--color-text-primary)]">src/styles/variables.css</code>.
+            tokens in <code className="text-[var(--color-text-primary)]">src/styles/variables.css</code>. Expanded
+            rows use <code className="text-[var(--color-text-primary)]">--screening-surface-expanded</code> and{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-expand-rail</code> (Review Assigned).
           </li>
           <li>
             Typography uses ACE tokens from{' '}

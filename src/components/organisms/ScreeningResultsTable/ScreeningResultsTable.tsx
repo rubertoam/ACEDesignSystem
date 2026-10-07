@@ -31,6 +31,11 @@ import {
   SCREENING_COLUMN_DEFINITIONS,
   type ScreeningColumnKey,
 } from './screeningTableColumns'
+import {
+  SCREENING_COLUMN_DRAG_MIME,
+  type ColumnDropIndicator,
+  reorderScreeningColumnKeys,
+} from './screeningTableColumnMenu'
 import { ScreeningColumnsMenu } from './ScreeningColumnsMenu'
 import { ScreeningRowActionsMenu } from './ScreeningRowActionsMenu'
 import {
@@ -147,7 +152,7 @@ export const DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS: ScreeningResultsTableV
   showRowSearch: true,
   showCheckboxes: true,
   showExpandChevrons: true,
-  showPagination: false,
+  showPagination: true,
   showDisabledRows: true,
   showEditableCells: false,
   showDraggableRows: false,
@@ -191,6 +196,8 @@ export function ScreeningResultsTable({
   const [columnOrder, setColumnOrder] = useState<ScreeningColumnKey[]>(
     () => [...DEFAULT_SCREENING_COLUMN_ORDER],
   )
+  const [draggedColumnKey, setDraggedColumnKey] = useState<ScreeningColumnKey | null>(null)
+  const [columnDropIndicator, setColumnDropIndicator] = useState<ColumnDropIndicator>(null)
   const [sortKey, setSortKey] = useState<SortKey | null>(null)
   const [sortDir, setSortDir] = useState<SortDir>('asc')
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
@@ -437,6 +444,18 @@ export function ScreeningResultsTable({
     setSortDir('asc')
   }
 
+  const clearColumnDrag = useCallback(() => {
+    setDraggedColumnKey(null)
+    setColumnDropIndicator(null)
+  }, [])
+
+  const reorderColumns = useCallback(
+    (fromKey: ScreeningColumnKey, toKey: ScreeningColumnKey, position: 'before' | 'after') => {
+      setColumnOrder((prev) => reorderScreeningColumnKeys(prev, fromKey, toKey, position))
+    },
+    [],
+  )
+
   const toggleExpanded = useCallback(
     (id: string) => {
       if (!visibilityControls.showExpandChevrons) return
@@ -541,7 +560,6 @@ export function ScreeningResultsTable({
                     visibleColumns={visibleColumns}
                     onVisibleColumnsChange={setVisibleColumns}
                     columnOrder={columnOrder}
-                    onColumnOrderChange={setColumnOrder}
                   />
                 ) : null}
                 {visibilityControls.showHistoryToggle ? (
@@ -689,7 +707,14 @@ export function ScreeningResultsTable({
                         </span>
                       </th>
                     ) : null}
-                    {visibleColumnsInOrder.map((column) => (
+                    {visibleColumnsInOrder.map((column) => {
+                      const isDragging = draggedColumnKey === column.key
+                      const dropHere =
+                        columnDropIndicator?.targetKey === column.key
+                          ? columnDropIndicator.position
+                          : null
+
+                      return (
                       <th
                         key={column.key}
                         scope="col"
@@ -699,41 +724,111 @@ export function ScreeningResultsTable({
                           'group/th relative',
                           columnResizing && 'select-none',
                           columnResizeActiveClass(activeColumnKey === column.key),
+                          isDragging && 'opacity-55',
+                          dropHere === 'before' &&
+                            'shadow-[inset_2px_0_0_0_var(--screening-pill-new-border)]',
+                          dropHere === 'after' &&
+                            'shadow-[inset_-2px_0_0_0_var(--screening-pill-new-border)]',
                         )}
                         style={columnWidthStyle(columnWidths[column.key])}
                         aria-sort={sortKey === column.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'}
+                        onDragOver={(event) => {
+                          event.preventDefault()
+                          event.dataTransfer.dropEffect = 'move'
+                          if (draggedColumnKey === column.key) return
+                          const rect = event.currentTarget.getBoundingClientRect()
+                          const position =
+                            event.clientX < rect.left + rect.width / 2 ? 'before' : 'after'
+                          setColumnDropIndicator({ targetKey: column.key, position })
+                        }}
+                        onDrop={(event) => {
+                          event.preventDefault()
+                          const fromKey = event.dataTransfer.getData(
+                            SCREENING_COLUMN_DRAG_MIME,
+                          ) as ScreeningColumnKey
+                          if (
+                            fromKey &&
+                            columnDropIndicator &&
+                            fromKey !== columnDropIndicator.targetKey
+                          ) {
+                            reorderColumns(
+                              fromKey,
+                              columnDropIndicator.targetKey,
+                              columnDropIndicator.position,
+                            )
+                          }
+                          clearColumnDrag()
+                        }}
+                        onDragLeave={(event) => {
+                          if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                            setColumnDropIndicator((prev) =>
+                              prev?.targetKey === column.key ? null : prev,
+                            )
+                          }
+                        }}
                       >
-                        <button
-                          type="button"
-                          onClick={() => toggleSort(column.key)}
-                          className={screeningTableHeaderSortButtonClass}
-                        >
-                          <span className={screeningTableHeaderLabelClass}>{column.label}</span>
-                          {sortKey === column.key ? (
-                            sortDir === 'asc' ? (
-                              <MaterialSymbol
-                                name="arrow_upward"
-                                size="sm"
-                                weight={400}
-                                className={screeningTableHeaderSortIconActiveClass}
-                              />
+                        <div className="flex min-w-0 items-center gap-1">
+                          <button
+                            type="button"
+                            draggable
+                            aria-label={`Reorder ${column.label} column`}
+                            className={cn(
+                              'inline-flex size-5 shrink-0 cursor-grab items-center justify-center rounded text-[var(--screening-icon-muted)]',
+                              'opacity-0 transition-opacity active:cursor-grabbing',
+                              'group-hover/th:opacity-100 focus-visible:opacity-100',
+                              isDragging && 'opacity-100',
+                              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
+                            )}
+                            onDragStart={(event) => {
+                              event.dataTransfer.setData(SCREENING_COLUMN_DRAG_MIME, column.key)
+                              event.dataTransfer.effectAllowed = 'move'
+                              setDraggedColumnKey(column.key)
+                            }}
+                            onDragEnd={clearColumnDrag}
+                            onClick={(event) => {
+                              event.preventDefault()
+                              event.stopPropagation()
+                            }}
+                          >
+                            <MaterialSymbol
+                              name="drag_indicator"
+                              size="sm"
+                              weight={300}
+                              className="leading-none"
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => toggleSort(column.key)}
+                            className={cn(screeningTableHeaderSortButtonClass, 'min-w-0')}
+                          >
+                            <span className={screeningTableHeaderLabelClass}>{column.label}</span>
+                            {sortKey === column.key ? (
+                              sortDir === 'asc' ? (
+                                <MaterialSymbol
+                                  name="arrow_upward"
+                                  size="sm"
+                                  weight={400}
+                                  className={screeningTableHeaderSortIconActiveClass}
+                                />
+                              ) : (
+                                <MaterialSymbol
+                                  name="arrow_downward"
+                                  size="sm"
+                                  weight={400}
+                                  className={screeningTableHeaderSortIconActiveClass}
+                                />
+                              )
                             ) : (
                               <MaterialSymbol
-                                name="arrow_downward"
+                                name="swap_vert"
                                 size="sm"
                                 weight={400}
-                                className={screeningTableHeaderSortIconActiveClass}
+                                className={screeningTableHeaderSortIconIdleClass}
                               />
-                            )
-                          ) : (
-                            <MaterialSymbol
-                              name="swap_vert"
-                              size="sm"
-                              weight={400}
-                              className={screeningTableHeaderSortIconIdleClass}
-                            />
-                          )}
-                        </button>
+                            )}
+                          </button>
+                        </div>
                         <ColumnResizeHandle
                           columnKey={column.key}
                           label={column.label}
@@ -744,7 +839,8 @@ export function ScreeningResultsTable({
                           onGuideHide={hideGuideIfIdle}
                         />
                       </th>
-                    ))}
+                      )
+                    })}
                     <DemoFeatureHeaderCells
                       showEditableCells={visibilityControls.showEditableCells}
                       showDropdownColumn={visibilityControls.showDropdownColumn}
@@ -1099,23 +1195,25 @@ export function ScreeningResultsTable({
                             >
                               <div className="min-h-0 overflow-hidden">
                                 <div className="bg-[var(--screening-surface-expanded)] px-[var(--space-4)] py-[var(--space-3)]">
-                                  <p
-                                    className={cn(
-                                      aceTypography(ACE.detail),
-                                      'm-0 text-[var(--screening-text-secondary)] not-italic',
-                                    )}
-                                  >
-                                    Expanded match detail for{' '}
-                                    <span
+                                  <div className="ml-10 border-l-2 border-[var(--screening-expand-rail)] pl-6">
+                                    <p
                                       className={cn(
-                                        aceTypography(ACE.cellEmphasis),
-                                        'text-[var(--screening-text-primary)]',
+                                        aceTypography(ACE.detail),
+                                        'm-0 text-[var(--screening-text-secondary)] not-italic',
                                       )}
                                     >
-                                      {row.name}
-                                    </span>{' '}
-                                    (prototype placeholder).
-                                  </p>
+                                      Expanded match detail for{' '}
+                                      <span
+                                        className={cn(
+                                          aceTypography(ACE.cellEmphasis),
+                                          'text-[var(--screening-text-primary)]',
+                                        )}
+                                      >
+                                        {row.name}
+                                      </span>{' '}
+                                      (prototype placeholder).
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             </div>

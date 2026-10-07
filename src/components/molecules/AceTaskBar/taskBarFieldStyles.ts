@@ -8,6 +8,6 @@ export const aceTaskBarShellClass = cn(
   'shadow-[var(--ace-task-bar-shadow)]',
 )
 
-export const aceTaskBarLeadingClass = 'me-auto flex min-w-0 items-center gap-3'
+export const aceTaskBarLeadingClass = 'flex min-w-0 items-center justify-end gap-3'
 
 export const aceTaskBarActionsClass = 'flex shrink-0 items-center gap-3'

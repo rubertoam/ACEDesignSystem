@@ -5,7 +5,7 @@ import { cn } from './cn'
 export const labSectionLabelClass =
   'm-0 text-sm font-semibold text-[var(--screening-text-primary)]'
 
-/** 12px between label and content — uses --ace-section-label-gap. */
+/** 12px between label and content - uses --ace-section-label-gap. */
 export const labExampleSectionClass = 'flex flex-col gap-[var(--ace-section-label-gap)]'
 
 /** Same gap for Usage-tab sections (When to use, Animation, Accessibility, …). */
