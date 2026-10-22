@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { AceTabCards } from '../components/atoms/AceTabs/AceTabCards'
-import { AceTabs } from '../components/atoms/AceTabs/AceTabs'
+import { TabCards } from '../components/atoms/Tabs/TabCards'
+import { Tabs } from '../components/atoms/Tabs/Tabs'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
@@ -62,7 +62,7 @@ export function TabsLab() {
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Horizontal</p>
             <div className={labComponentContainerClass}>
-              <AceTabs
+              <Tabs
                 items={DEMO_TABS}
                 value={horizontalActive}
                 onValueChange={setHorizontalActive}
@@ -75,7 +75,7 @@ export function TabsLab() {
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Vertical</p>
             <div className={labComponentContainerClass}>
-              <AceTabs
+              <Tabs
                 items={DEMO_VERTICAL_TABS}
                 value={verticalActive}
                 onValueChange={setVerticalActive}
@@ -88,7 +88,7 @@ export function TabsLab() {
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Tab cards</p>
             <div className={labComponentContainerClass}>
-              <AceTabCards
+              <TabCards
                 items={[...DEMO_TAB_CARDS]}
                 value={activeCard}
                 onValueChange={setActiveCard}
@@ -105,26 +105,26 @@ export function TabsLab() {
             <code className="text-[var(--screening-text-primary)]">value</code>, and{' '}
             <code className="text-[var(--screening-text-primary)]">onValueChange</code>. Use{' '}
             <code className="text-[var(--screening-text-primary)]">orientation</code> for underline vs leading-bar
-            layouts, or <code className="text-[var(--screening-text-primary)]">AceTabCards</code> for richer options.
+            layouts, or <code className="text-[var(--screening-text-primary)]">TabCards</code> for richer options.
           </p>
-          <ComponentLabCode>{`import { AceTabs } from '../components/atoms/AceTabs/AceTabs'
-import { AceTabCards } from '../components/atoms/AceTabs/AceTabCards'
+          <ComponentLabCode>{`import { Tabs } from '../components/atoms/Tabs/Tabs'
+import { TabCards } from '../components/atoms/Tabs/TabCards'
 
-<AceTabs
+<Tabs
   items={[{ id: 'one', label: 'Enter Text' }]}
   value={tab}
   onValueChange={setTab}
   orientation="horizontal"
 />
 
-<AceTabs
+<Tabs
   items={[{ id: 'one', label: 'Enter Text' }]}
   value={tab}
   onValueChange={setTab}
   orientation="vertical"
 />
 
-<AceTabCards
+<TabCards
   items={[
     {
       id: 'section-a',
@@ -166,8 +166,12 @@ import { AceTabCards } from '../components/atoms/AceTabs/AceTabCards'
               <li>Subtitle - Caption Regular (12, optional)</li>
               <li>Description - Caption Regular (12)</li>
               <li>
-                States - default (white + neutral border), hover (Primary 50 fill + XL drop shadow), selected (Primary
-                50 fill + brand border)
+                States — default (<code className="text-[var(--screening-text-primary)]">colors/surface/primary</code>{' '}
+                + <code className="text-[var(--screening-text-primary)]">colors/border/default</code>), hover (
+                <code className="text-[var(--screening-text-primary)]">colors/bg/brand-hover</code> →{' '}
+                <code className="text-[var(--screening-text-primary)]">--color-bg-brand-hover</code> + XL drop shadow),
+                selected (brand-hover fill + <code className="text-[var(--screening-text-primary)]">colors/border/brand</code>{' '}
+                → <code className="text-[var(--screening-text-primary)]">--color-border-brand</code>)
               </li>
             </ul>
           </section>
@@ -187,15 +191,17 @@ import { AceTabCards } from '../components/atoms/AceTabs/AceTabCards'
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--screening-text-muted)]">
           <li>
-            Standard - <code className="text-[var(--screening-text-primary)]">--ace-tabs-text-*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-tabs-indicator-*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-tabs-vertical-*</code>
+            Standard - <code className="text-[var(--screening-text-primary)]">--tabs-text-*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">--tabs-indicator-*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">--tabs-vertical-*</code>
           </li>
           <li>
-            Tab Card - <code className="text-[var(--screening-text-primary)]">--ace-tab-card-surface-*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-tab-card-border-*</code>, hover elevation{' '}
+            Tab Card - <code className="text-[var(--screening-text-primary)]">--tab-card-surface-*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">--tab-card-border-*</code>, hover elevation{' '}
             <code className="text-[var(--screening-text-primary)]">--ace-drop-shadow-xl</code>, emphasis fill{' '}
-            <code className="text-[var(--screening-text-primary)]">--screening-primary-soft-bg</code> (Primary 50)
+            <code className="text-[var(--screening-text-primary)]">--screening-primary-soft-bg</code> →{' '}
+            <code className="text-[var(--screening-text-primary)]">colors/bg/brand-hover</code> →{' '}
+            <code className="text-[var(--screening-text-primary)]">--color-bg-brand-hover</code>
           </li>
         </ul>
       }

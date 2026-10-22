@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  AceDropdownMenu,
-  type AceDropdownMenuEntry,
-} from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+  DropdownMenu,
+  type DropdownMenuEntry,
+} from '../components/molecules/DropdownMenu/DropdownMenu'
 import {
-  AceSiteHeader,
-  type AceSiteHeaderNavItem,
-} from '../components/organisms/AceSiteHeader/AceSiteHeader'
+  SiteHeader,
+  type SiteHeaderNavItem,
+} from '../components/organisms/SiteHeader/SiteHeader'
 import {
   FINSCAN_PROFILE_AVATARS,
   getFinScanProfileAvatar,
@@ -52,7 +52,7 @@ export function SiteHeaderLab() {
 
   const selectedProfile = getFinScanProfileAvatar(profileId)
 
-  const navItems: AceSiteHeaderNavItem[] = useMemo(
+  const navItems: SiteHeaderNavItem[] = useMemo(
     () =>
       ALL_NAV_ITEMS.filter((item) => navEnabled[item.id]).map((item) => ({
         id: item.id,
@@ -62,11 +62,11 @@ export function SiteHeaderLab() {
     [navEnabled],
   )
 
-  const menuDropdownItems: AceDropdownMenuEntry[] = useMemo(
+  const menuDropdownItems: DropdownMenuEntry[] = useMemo(
     () => [
       { type: 'menuHeader', label: 'Menu options' },
       ...ALL_NAV_ITEMS.map(
-        (item): AceDropdownMenuEntry => ({
+        (item): DropdownMenuEntry => ({
           type: 'checkbox',
           id: item.id,
           label: item.label,
@@ -79,11 +79,11 @@ export function SiteHeaderLab() {
     [navEnabled],
   )
 
-  const toolbarDropdownItems: AceDropdownMenuEntry[] = useMemo(
+  const toolbarDropdownItems: DropdownMenuEntry[] = useMemo(
     () => [
       { type: 'menuHeader', label: 'Toolbar actions' },
       ...TOOLBAR_OPTIONS.map(
-        (item): AceDropdownMenuEntry => ({
+        (item): DropdownMenuEntry => ({
           type: 'checkbox',
           id: item.id,
           label: item.label,
@@ -96,7 +96,7 @@ export function SiteHeaderLab() {
     [toolbarEnabled],
   )
 
-  const profileDropdownItems: AceDropdownMenuEntry[] = useMemo(
+  const profileDropdownItems: DropdownMenuEntry[] = useMemo(
     () => [
       { type: 'menuHeader', label: 'Profile image' },
       {
@@ -123,19 +123,19 @@ export function SiteHeaderLab() {
         images are mutually exclusive (one at a time). Figma Actions layer.
       </p>
       <div className="flex flex-wrap items-end gap-3">
-        <AceDropdownMenu
+        <DropdownMenu
           triggerLabel={`Menu options (${navEnabledCount}/${ALL_NAV_ITEMS.length})`}
           items={menuDropdownItems}
           panelWidth="wide"
           align="start"
         />
-        <AceDropdownMenu
+        <DropdownMenu
           triggerLabel={`Toolbar (${toolbarEnabledCount}/${TOOLBAR_OPTIONS.length})`}
           items={toolbarDropdownItems}
           panelWidth="wide"
           align="start"
         />
-        <AceDropdownMenu
+        <DropdownMenu
           triggerLabel={`Profile: ${selectedProfile.label}`}
           items={profileDropdownItems}
           panelWidth="wide"
@@ -157,7 +157,7 @@ export function SiteHeaderLab() {
       examplesToolbar={examplesToolbar}
       examples={
         <div className="overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]">
-          <AceSiteHeader
+          <SiteHeader
             navItems={navItems}
             userName={selectedProfile.greetingName}
             showNotifications={toolbarEnabled.notifications}
@@ -180,14 +180,14 @@ export function SiteHeaderLab() {
             Pass only the nav entries you want visible; toolbar regions are controlled with boolean props. Profile
             photos live in <code className="text-[var(--screening-text-primary)]">public/brand/profiles/</code>.
           </p>
-          <ComponentLabCode>{`import { AceSiteHeader } from '../components/organisms/AceSiteHeader/AceSiteHeader'
+          <ComponentLabCode>{`import { SiteHeader } from '../components/organisms/SiteHeader/SiteHeader'
 
 const navItems = [
   { id: 'home', label: 'Home', onSelect: () => {} },
   { id: 'settings', label: 'Settings', onSelect: () => {} },
 ]
 
-<AceSiteHeader
+<SiteHeader
   navItems={navItems}
   userName="User Name"
   showNotifications
@@ -210,9 +210,9 @@ const navItems = [
           <section className={labExampleSectionClass}>
             <h4 className={labSectionLabelClass}>Anatomy</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>Height: <code className="text-[var(--screening-text-primary)]">--ace-site-header-height</code> (48px)</li>
-              <li>Horizontal padding: <code className="text-[var(--screening-text-primary)]">--ace-site-header-px</code> (32px)</li>
-              <li>Nav item hover: <code className="text-[var(--screening-text-primary)]">--ace-site-header-nav-hover</code></li>
+              <li>Height: <code className="text-[var(--screening-text-primary)]">--site-header-height</code> (48px)</li>
+              <li>Horizontal padding: <code className="text-[var(--screening-text-primary)]">--site-header-px</code> (32px)</li>
+              <li>Nav item hover: <code className="text-[var(--screening-text-primary)]">--site-header-nav-hover</code></li>
               <li>Greeting uses caption bold + primary color</li>
               <li>
                 Brand lockup: <code className="text-[var(--screening-text-primary)]">FinScanIcon</code> (

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { AcePageHeader } from '../components/molecules/AcePageHeader'
-import { AceSubHeader } from '../components/molecules/AceSubHeader'
+import { PageHeader } from '../components/molecules/PageHeader'
+import { SubHeader } from '../components/molecules/SubHeader'
 import { LabCheckbox, labControlLegendClass } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
@@ -42,7 +42,7 @@ export function PageHeadersLab() {
         <div className="space-y-10 pb-16">
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Header</p>
-            <AcePageHeader
+            <PageHeader
               showSidebarControl={showSidebarControl}
               sidebarOpen={sidebarOpen}
               onToggleSidebar={() => setSidebarOpen((open) => !open)}
@@ -51,7 +51,7 @@ export function PageHeadersLab() {
 
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Sub-header</p>
-            <AceSubHeader
+            <SubHeader
               statistics={statistics}
               paging={paging}
               moreMenu={moreMenu}
@@ -66,17 +66,17 @@ export function PageHeadersLab() {
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AcePageHeader } from '../components/molecules/AcePageHeader'
-import { AceSubHeader } from '../components/molecules/AceSubHeader'
+        <ComponentLabCode>{`import { PageHeader } from '../components/molecules/PageHeader'
+import { SubHeader } from '../components/molecules/SubHeader'
 
-<AcePageHeader
+<PageHeader
   title="Headline"
   showSidebarControl
   sidebarOpen={sidebarOpen}
   onToggleSidebar={toggleSidebar}
 />
 
-<AceSubHeader
+<SubHeader
   statistics={${statistics}}
   paging={${paging}}
   moreMenu={${moreMenu}}
@@ -88,9 +88,9 @@ import { AceSubHeader } from '../components/molecules/AceSubHeader'
           <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
-              Place <code className="text-[var(--screening-text-primary)]">AcePageHeader</code> under{' '}
-              <code className="text-[var(--screening-text-primary)]">AceSiteHeader</code> for the page title. Use{' '}
-              <code className="text-[var(--screening-text-primary)]">AceSubHeader</code> in content regions - it fills
+              Place <code className="text-[var(--screening-text-primary)]">PageHeader</code> under{' '}
+              <code className="text-[var(--screening-text-primary)]">SiteHeader</code> for the page title. Use{' '}
+              <code className="text-[var(--screening-text-primary)]">SubHeader</code> in content regions - it fills
               its parent width and supports optional statistics, paging, more menu, or drill-down.
             </p>
           </section>
@@ -99,14 +99,14 @@ import { AceSubHeader } from '../components/molecules/AceSubHeader'
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
                 Header:{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-page-header-bg</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-page-header-border</code>
+                <code className="text-[var(--screening-text-primary)]">--page-header-bg</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--page-header-border</code>
               </li>
               <li>
                 Sub-header:{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-sub-header-bg</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-sub-header-border</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-sub-header-radius</code>
+                <code className="text-[var(--screening-text-primary)]">--sub-header-bg</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--sub-header-border</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--sub-header-radius</code>
               </li>
             </ul>
           </section>

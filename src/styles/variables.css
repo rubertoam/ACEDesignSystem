@@ -21,18 +21,7 @@
   --text-15: 0.9375rem;
   --text-base: 1rem;
 
-  /* Spacing scale (4px base) */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-
-  /* Radius & elevation */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
+  /* Spacing (--space-*) + radius (--radius-*) primitives live in color-tokens.css (Figma export). */
   --radius-checkbox: 0.1875rem;
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
 
@@ -48,179 +37,177 @@
   --ace-drop-shadow-xl: 0 12px 24px rgb(0 0 0 / 0.1);
 
   /* Dialog modal — ACE Dialog Modals (Figma node 3047:2036) */
-  --dialog-modal-surface: #ffffff;
-  --dialog-modal-border: #eff0f2;
-  --dialog-modal-radius: 0.5rem;
+  --dialog-modal-surface: var(--color-surface-primary);
+  --dialog-modal-border: var(--color-neutral-100);
+  --dialog-modal-radius: var(--radius-component-modal);
   --dialog-modal-padding: 1.5rem;
   --dialog-modal-body-focus-gutter: 0.25rem; /* room for input focus ring inside scroll body */
   --dialog-modal-section-gap: 1.5rem;
   --dialog-modal-shadow: var(--ace-drop-shadow-xl);
   --dialog-modal-overlay: rgb(0 0 0 / 0.45);
-  --dialog-modal-title: #23262c;
-  --dialog-modal-body: #23262c;
-  --dialog-modal-muted: #464c59;
+  --dialog-modal-title: var(--color-text-primary);
+  --dialog-modal-body: var(--color-text-primary);
+  --dialog-modal-muted: var(--color-text-secondary);
   /* FinScan Primary/500, Error tokens from ACE */
-  --dialog-modal-primary: #3d2e8a;
-  --dialog-modal-primary-hover: #322475;
-  --dialog-modal-on-primary: #ffffff;
-  --dialog-modal-outline-border: #3d2e8a;
-  --dialog-modal-outline-text: #3d2e8a;
-  --dialog-modal-outline-hover-bg: #f8f7fc;
-  --dialog-modal-danger: #dc264b;
-  --dialog-modal-danger-hover: #c41e42;
+  --dialog-modal-primary: var(--color-action-primary);
+  --dialog-modal-primary-hover: var(--color-action-primary-hover);
+  --dialog-modal-on-primary: var(--color-text-inverse);
+  --dialog-modal-outline-border: var(--color-border-brand);
+  --dialog-modal-outline-text: var(--color-text-brand);
+  --dialog-modal-outline-hover-bg: var(--color-bg-brand-hover);
+  --dialog-modal-danger: var(--color-status-error);
+  --dialog-modal-danger-hover: var(--color-error-600);
   --dialog-modal-close-hover: var(--ace-neutral-100);
-  --dialog-modal-btn-radius: 0.25rem;
+  --dialog-modal-btn-radius: var(--radius-component-button);
   --dialog-modal-footer-btn-gap: 0.75rem;
   --dialog-modal-content-max-h: min(85vh, 32rem);
   --dialog-modal-max-width-md: 28rem;
   --dialog-modal-max-width-lg: 38.5rem;
   --dialog-modal-inline-error-bg: var(--ace-error-50);
-  --dialog-modal-inline-error-border: #dc264b;
+  --dialog-modal-inline-error-border: var(--color-border-error);
 
-  /* ACE neutrals (Figma) — define before screening aliases */
-  --ace-neutral-100: #f5f6f8;
-  --ace-neutral-50: #fafafb;
-  --ace-neutral-200: #e8eaed;
+  /* ACE neutrals — alias Figma primitive neutrals */
+  --ace-neutral-50: var(--color-neutral-50);
+  --ace-neutral-100: var(--color-neutral-100);
+  --ace-neutral-200: var(--color-neutral-200);
+  --ace-neutral-800: var(--color-neutral-800);
+  --ace-neutral-900: var(--color-neutral-900);
 
-  /* ——— Data table (screening) organism ——— */
-  --screening-surface: #ffffff;
-  --screening-surface-muted: #fafafb;
-  --screening-surface-hover: var(--ace-neutral-100);
-  --screening-surface-row-muted: #f3f4f6;
+  /* ——— Data table (screening) organism — mapped to Semantic color tokens ——— */
+  --screening-surface: var(--color-surface-primary);
+  --screening-surface-muted: var(--color-bg-primary);
+  --screening-surface-hover: var(--color-bg-secondary);
+  --screening-surface-row-muted: var(--color-bg-secondary);
   /* Review Assigned expanded detail — muted callout (not row white). */
   --screening-surface-expanded: var(--screening-surface-muted);
-  --screening-surface-selected: rgb(244 241 252 / 0.6);
+  --screening-surface-selected: color-mix(in srgb, var(--color-bg-brand-hover) 60%, transparent);
   /* Expanded-row indent rail (Review Assigned List Profile: primary @ 25%). */
-  --screening-expand-rail: rgb(82 62 185 / 0.25);
-  /* Keep strong / soft / row distinct. Hex literals so borders stay correct even if
-     color-tokens.css load order changes; aliases remain for semantic consumers. */
-  --screening-border: #cfd2d9;
-  --screening-border-strong: #cfd2d9;
-  --screening-border-row: #eff0f2;
-  --screening-border-soft: #e4e6ea;
-  --screening-text-primary: #23262c;
-  --screening-text-secondary: #464c59;
-  --screening-text-muted: #6a7285;
-  --screening-text-on-primary: #ffffff;
-  --screening-primary: #523eb9;
-  --screening-primary-200: #a296dc; /* Primary / 200 */
-  --screening-primary-hover-border: #4334a3;
-  --screening-primary-soft-bg: #efeef9;
-  --screening-primary-soft-bg-hover: #e4dff3;
-  --screening-primary-ring: rgb(82 62 185 / 0.35);
-  --screening-primary-ring-offset: #ffffff;
+  --screening-expand-rail: color-mix(in srgb, var(--color-action-primary) 25%, transparent);
+  --screening-border: var(--color-border-default);
+  --screening-border-strong: var(--color-border-default);
+  --screening-border-row: var(--color-neutral-100);
+  --screening-border-soft: var(--color-border-subtle);
+  --screening-text-primary: var(--color-text-primary);
+  --screening-text-secondary: var(--color-text-secondary);
+  --screening-text-muted: var(--color-text-disabled);
+  --screening-text-on-primary: var(--color-text-inverse);
+  --screening-primary: var(--color-action-primary);
+  --screening-primary-200: var(--color-primary-200);
+  --screening-primary-hover-border: var(--color-action-primary-hover);
+  --screening-primary-soft-bg: var(--color-bg-brand-hover);
+  --screening-primary-soft-bg-hover: var(--color-action-primary-hover-subtle);
+  --screening-primary-ring: color-mix(in srgb, var(--color-action-primary) 35%, transparent);
+  --screening-primary-ring-offset: var(--color-surface-primary);
   /* Lab / docs chrome — screening aliases; Figma --color-text-primary stays from color-tokens.css */
-  --color-background: var(--screening-surface-muted);
-  --color-surface: var(--screening-surface);
-  --color-text-muted: var(--screening-text-muted);
+  --color-background: var(--color-bg-primary);
+  --color-surface: var(--color-surface-primary);
+  --color-text-muted: var(--color-text-disabled);
   --color-border: var(--color-border-default);
-  --color-accent: var(--screening-primary);
-  --screening-icon-muted: #949baa;
-  --screening-progress-track: #eff0f2;
-  --screening-progress-fill: #523eb9;
-  --screening-chip-inactive-bg: #ffffff;
-  --screening-chip-inactive-border: #cfd2d9;
-  --screening-chip-inactive-hover-bg: var(--ace-neutral-100);
-  --screening-chip-inactive-hover-border: #949baa;
-  /* AceBadge purple / New — Figma Badge (5064:2991) */
-  --screening-pill-new-border: #523eb9;
-  --screening-pill-new-surface: #efeef9;
-  --screening-pill-new-dot: #523eb9;
-  --screening-pill-new-label: #523eb9;
-  --screening-chip-active-text: #523eb9;
-  --screening-chip-active-border: #523eb9;
-  /* AceBadge orange / Escalate — Figma Badge */
-  --screening-pill-escalated-border: #e67e23;
-  --screening-pill-escalated-surface: #fdf3ea;
-  --screening-pill-escalated-dot: #e67e23;
-  --screening-pill-escalated-label: #e67e23;
-  --screening-score-high: #c62828;
-  --screening-age-fresh: #2e7d32;
-  --screening-age-warn: #ef6c00;
-  --screening-age-stale: #c62828;
+  --color-accent: var(--color-action-primary);
+  --screening-icon-muted: var(--color-icon-secondary);
+  --screening-progress-track: var(--color-neutral-100);
+  --screening-progress-fill: var(--color-action-primary);
+  --screening-chip-inactive-bg: var(--color-surface-primary);
+  --screening-chip-inactive-border: var(--color-border-default);
+  --screening-chip-inactive-hover-bg: var(--color-bg-secondary);
+  --screening-chip-inactive-hover-border: var(--color-neutral-500);
+  /* AceBadge purple / New — Semantic colors/badges/* */
+  --screening-pill-new-border: var(--color-badges-purple-border);
+  --screening-pill-new-surface: var(--color-badges-purple-fill);
+  --screening-pill-new-dot: var(--color-badges-purple-border);
+  --screening-pill-new-label: var(--color-badges-purple-border);
+  --screening-chip-active-text: var(--color-text-brand);
+  --screening-chip-active-border: var(--color-border-brand);
+  /* AceBadge orange / Escalate — Semantic colors/badges/* */
+  --screening-pill-escalated-border: var(--color-badges-orange-border);
+  --screening-pill-escalated-surface: var(--color-badges-orange-fill);
+  --screening-pill-escalated-dot: var(--color-badges-orange-border);
+  --screening-pill-escalated-label: var(--color-badges-orange-border);
+  --screening-score-high: var(--color-status-error);
+  --screening-age-fresh: var(--color-status-success);
+  --screening-age-warn: var(--color-status-warning);
+  --screening-age-stale: var(--color-status-error);
   /* Match-string tiles — same surface/label/border as AceBadge status pills */
-  --screening-tile-e-bg: var(--ace-status-pill-red-surface);
-  --screening-tile-e-fg: var(--ace-status-pill-red-label);
-  --screening-tile-e-border: var(--ace-status-pill-red-border);
-  --screening-tile-n-bg: var(--ace-status-pill-green-surface);
-  --screening-tile-n-fg: var(--ace-status-pill-green-label);
-  --screening-tile-n-border: var(--ace-status-pill-green-border);
-  --screening-tile-c1-bg: var(--ace-status-pill-orange-surface);
-  --screening-tile-c1-fg: var(--ace-status-pill-orange-label);
-  --screening-tile-c1-border: var(--ace-status-pill-orange-border);
-  --screening-tile-c2-bg: var(--ace-status-pill-yellow-surface);
-  --screening-tile-c2-fg: var(--ace-status-pill-yellow-label);
-  --screening-tile-c2-border: var(--ace-status-pill-yellow-border);
-  --screening-tile-b-bg: var(--ace-status-pill-gray-surface);
-  --screening-tile-b-fg: var(--ace-status-pill-gray-label);
-  --screening-tile-b-border: var(--ace-status-pill-gray-border);
+  --screening-tile-e-bg: var(--badge-red-surface);
+  --screening-tile-e-fg: var(--badge-red-label);
+  --screening-tile-e-border: var(--badge-red-border);
+  --screening-tile-n-bg: var(--badge-green-surface);
+  --screening-tile-n-fg: var(--badge-green-label);
+  --screening-tile-n-border: var(--badge-green-border);
+  --screening-tile-c1-bg: var(--badge-orange-surface);
+  --screening-tile-c1-fg: var(--badge-orange-label);
+  --screening-tile-c1-border: var(--badge-orange-border);
+  --screening-tile-c2-bg: var(--badge-yellow-surface);
+  --screening-tile-c2-fg: var(--badge-yellow-label);
+  --screening-tile-c2-border: var(--badge-yellow-border);
+  --screening-tile-b-bg: var(--badge-gray-surface);
+  --screening-tile-b-fg: var(--badge-gray-label);
+  --screening-tile-b-border: var(--badge-gray-border);
   /* Dropdown trigger + MenuList (Figma Dropdowns 1307:3725 / Menus 5318:1634; sets 2277:136, 1541:6165) */
-  --ace-dropdown-trigger-width: 12.5rem; /* 200px — Primary field */
-  --ace-dropdown-trigger-radius: var(--radius-sm); /* 4px */
-  --ace-dropdown-trigger-px: 0.75rem; /* 12px */
-  --ace-dropdown-trigger-py: 0.5rem; /* 8px — Primary */
-  --ace-dropdown-trigger-border: #cfd2d9;
-  --ace-dropdown-trigger-bg: var(--color-surface-primary);
-  --ace-dropdown-trigger-text: var(--color-text-primary);
-  --ace-dropdown-trigger-icon: var(--color-icon-primary);
-  --ace-dropdown-trigger-active-border: var(--color-border-brand);
-  --ace-dropdown-trigger-active-bg: var(--color-bg-brand-hover);
-  --ace-dropdown-trigger-focus-ring: var(--color-border-focus);
-  --ace-dropdown-trigger-label: var(--color-text-primary);
-  --ace-dropdown-secondary-px: 0.5rem; /* 8px */
-  --ace-dropdown-secondary-py: 0.25rem; /* 4px — Secondary / FilterChip */
-  --ace-dropdown-secondary-active-bg: var(--color-bg-brand);
-  --ace-dropdown-secondary-active-text: var(--color-text-inverse);
-  --ace-dropdown-secondary-active-icon: var(--color-icon-inverse);
-  --ace-dropdown-menu-shadow: var(--ace-drop-shadow-md); /* Figma Shadow (MD) */
-  --ace-dropdown-menu-surface: var(--color-surface-primary);
-  --ace-dropdown-menu-border: #cfd2d9;
-  --ace-dropdown-menu-text: var(--color-text-primary);
-  --ace-dropdown-menu-text-secondary: var(--color-text-secondary);
-  --ace-dropdown-menu-text-muted: var(--color-text-secondary);
-  --ace-dropdown-menu-primary: var(--color-text-brand); /* pipe + Select All / Reset */
-  --ace-dropdown-menu-row-hover: var(--color-bg-secondary);
-  --ace-dropdown-menu-row-selected: var(--color-bg-brand-hover);
-  --ace-dropdown-menu-row-emphasis: var(--color-bg-brand-hover);
-  --ace-dropdown-menu-danger: var(--color-status-error);
-  --ace-dropdown-menu-search-placeholder: var(--color-text-placeholder);
-  --ace-dropdown-menu-icon: var(--color-icon-secondary);
+  --dropdown-menu-trigger-width: 12.5rem; /* 200px — Primary field */
+  --dropdown-menu-trigger-radius: var(--radius-component-input);
+  --dropdown-menu-trigger-px: 0.75rem; /* 12px */
+  --dropdown-menu-trigger-py: 0.5rem; /* 8px — Primary */
+  --dropdown-menu-trigger-border: var(--color-border-default);
+  --dropdown-menu-trigger-bg: var(--color-surface-primary);
+  --dropdown-menu-trigger-text: var(--color-text-primary);
+  --dropdown-menu-trigger-icon: var(--color-icon-primary);
+  --dropdown-menu-trigger-active-border: var(--color-border-brand);
+  --dropdown-menu-trigger-active-bg: var(--color-bg-brand-hover);
+  --dropdown-menu-trigger-focus-ring: var(--color-border-focus);
+  --dropdown-menu-trigger-label: var(--color-text-primary);
+  --dropdown-menu-secondary-px: 0.5rem; /* 8px */
+  --dropdown-menu-secondary-py: 0.25rem; /* 4px — Secondary / FilterChip */
+  --dropdown-menu-secondary-active-bg: var(--color-bg-brand);
+  --dropdown-menu-secondary-active-text: var(--color-text-inverse);
+  --dropdown-menu-secondary-active-icon: var(--color-icon-inverse);
+  --dropdown-menu-shadow: var(--ace-drop-shadow-md); /* Figma Shadow (MD) */
+  --dropdown-menu-surface: var(--color-surface-primary);
+  --dropdown-menu-border: var(--color-border-default);
+  --dropdown-menu-text: var(--color-text-primary);
+  --dropdown-menu-text-secondary: var(--color-text-secondary);
+  --dropdown-menu-text-muted: var(--color-text-secondary);
+  --dropdown-menu-primary: var(--color-text-brand); /* pipe + Select All / Reset */
+  --dropdown-menu-row-hover: var(--color-bg-secondary);
+  --dropdown-menu-row-selected: var(--color-bg-brand-hover);
+  --dropdown-menu-row-emphasis: var(--color-bg-brand-hover);
+  --dropdown-menu-danger: var(--color-status-error);
+  --dropdown-menu-search-placeholder: var(--color-text-placeholder);
+  --dropdown-menu-icon: var(--color-icon-secondary);
 
   /* Time picker (Figma 419:3011) */
-  --ace-time-picker-trigger-width: 15rem; /* 240px */
-  --ace-time-picker-panel-width: 15rem;
+  --time-picker-trigger-width: 15rem; /* 240px */
+  --time-picker-panel-width: 15rem;
 
   /* Date picker (Figma 419:3010) */
-  --ace-date-picker-trigger-width: 15rem; /* 240px */
-  --ace-date-picker-panel-width: 29.25rem; /* 468px — range (dual month) */
-  --ace-date-picker-panel-width-single: 15.5rem; /* single month */
-  --ace-date-picker-month-title: var(--ace-neutral-800);
-  --ace-date-picker-weekday: var(--screening-text-secondary);
-  --ace-date-picker-day: var(--screening-text-secondary);
-  --ace-date-picker-day-muted: var(--screening-text-muted);
-  --ace-date-picker-day-on-primary: #ffffff;
-  --ace-date-picker-range-fill: var(--screening-primary-soft-bg); /* Primary/50 #EFEEF9 */
-  --ace-date-picker-day-size: 1.75rem; /* 28px — circle fits inside cell gap */
-  --ace-date-picker-day-gap: 0.125rem; /* 2px between day cells */
-
-  --ace-neutral-800: #23262c;
+  --date-picker-trigger-width: 15rem; /* 240px */
+  --date-picker-panel-width: 29.25rem; /* 468px — range (dual month) */
+  --date-picker-panel-width-single: 15.5rem; /* single month */
+  --date-picker-month-title: var(--ace-neutral-800);
+  --date-picker-weekday: var(--screening-text-secondary);
+  --date-picker-day: var(--screening-text-secondary);
+  --date-picker-day-muted: var(--screening-text-muted);
+  --date-picker-day-on-primary: var(--color-text-inverse);
+  --date-picker-range-fill: var(--screening-primary-soft-bg); /* Primary/50 #EFEEF9 */
+  --date-picker-day-size: 1.75rem; /* 28px — circle fits inside cell gap */
+  --date-picker-day-gap: 0.125rem; /* 2px between day cells */
 
   /* Site header / top navigation (Figma 225:1406) — height 75% of prior 4rem */
-  --ace-site-header-height: 3rem;
-  --ace-site-header-px: 2rem;
-  --ace-site-header-py: 0.5rem;
-  --ace-site-header-surface: var(--screening-surface);
-  --ace-site-header-border: var(--screening-border-strong);
-  --ace-site-header-logo-gap: var(--ace-finscan-icon-gap);
-  --ace-site-header-nav-gap: 2rem;
-  --ace-site-header-actions-gap: 1.5rem;
-  --ace-site-header-toolbar-gap: 0.75rem;
-  --ace-site-header-toolbar-icon-color: var(--ace-neutral-800);
-  --ace-site-header-icon-notifications-width: 1.5rem;
-  --ace-site-header-icon-notifications-height: 1.5rem;
-  --ace-site-header-icon-help-size: 1.5rem;
-  --ace-site-header-nav-hover: var(--screening-surface-hover);
-  --ace-site-header-greeting-color: var(--screening-primary);
+  --site-header-height: 3rem;
+  --site-header-px: 2rem;
+  --site-header-py: 0.5rem;
+  --site-header-surface: var(--screening-surface);
+  --site-header-border: var(--screening-border-strong);
+  --site-header-logo-gap: var(--ace-finscan-icon-gap);
+  --site-header-nav-gap: 2rem;
+  --site-header-actions-gap: 1.5rem;
+  --site-header-toolbar-gap: 0.75rem;
+  --site-header-toolbar-icon-color: var(--ace-neutral-800);
+  --site-header-icon-notifications-width: 1.5rem;
+  --site-header-icon-notifications-height: 1.5rem;
+  --site-header-icon-help-size: 1.5rem;
+  --site-header-nav-hover: var(--screening-surface-hover);
+  --site-header-greeting-color: var(--screening-primary);
 
   /* Lab segmented toggle — soft track, elevated indicator pill */
   --ace-lab-segmented-track-bg: var(--screening-surface-muted);
@@ -231,106 +218,108 @@
 
   /* FinScan icon / brand (Figma Icon / FinScan 2782:29) */
   --ace-finscan-icon-gap: 0.75rem;
-  --ace-finscan-mark-green: #99ca3c;
-  --ace-finscan-mark-blue: #0672a3;
-  --ace-finscan-mark-magenta: #92278f;
+  --ace-finscan-mark-green: var(--color-success-400);
+  --ace-finscan-mark-blue: var(--color-blue-500);
+  --ace-finscan-mark-magenta: var(--color-secondary-500);
 
   /* Secondary — Enlighten Violet (Figma 2794:97) */
-  --ace-secondary-enlighten-violet-50: #fcf2fb;
-  --ace-secondary-enlighten-violet-100: #f1ccf0;
-  --ace-secondary-enlighten-violet-200: #e7a5e5;
-  --ace-secondary-enlighten-violet-300: #dd7fda;
-  --ace-secondary-enlighten-violet-400: #d258cf;
+  --ace-secondary-enlighten-violet-50: var(--color-secondary-50);
+  --ace-secondary-enlighten-violet-100: var(--color-secondary-100);
+  --ace-secondary-enlighten-violet-200: var(--color-secondary-200);
+  --ace-secondary-enlighten-violet-300: var(--color-secondary-300);
+  --ace-secondary-enlighten-violet-400: var(--color-secondary-400);
   --ace-secondary-enlighten-violet-500: var(--ace-finscan-mark-magenta);
-  --ace-secondary-enlighten-violet-600: #6d1d6b;
-  --ace-secondary-enlighten-violet-700: #491447;
-  --ace-secondary-enlighten-violet-800: #250a24;
-  --ace-secondary-enlighten-violet-900: #120512;
+  --ace-secondary-enlighten-violet-600: var(--color-secondary-600);
+  --ace-secondary-enlighten-violet-700: var(--color-secondary-700);
+  --ace-secondary-enlighten-violet-800: var(--color-secondary-800);
+  --ace-secondary-enlighten-violet-900: var(--color-secondary-900);
 
   /* Secondary — FinScan Teal (Figma 2794:187) */
-  --ace-secondary-teal-50: #f0fbfc;
-  --ace-secondary-teal-100: #c1f0f3;
-  --ace-secondary-teal-200: #93e5eb;
-  --ace-secondary-teal-300: #64dae2;
-  --ace-secondary-teal-400: #28cad5;
-  --ace-secondary-teal-500: #22adb6;
-  --ace-secondary-teal-600: #198289;
-  --ace-secondary-teal-700: #11565b;
-  --ace-secondary-teal-800: #092b2e;
-  --ace-secondary-teal-900: #041617;
+  --ace-secondary-teal-50: var(--color-teal-50);
+  --ace-secondary-teal-100: var(--color-teal-100);
+  --ace-secondary-teal-200: var(--color-teal-200);
+  --ace-secondary-teal-300: var(--color-teal-300);
+  --ace-secondary-teal-400: var(--color-teal-400);
+  --ace-secondary-teal-500: var(--color-teal-500);
+  --ace-secondary-teal-600: var(--color-teal-600);
+  --ace-secondary-teal-700: var(--color-teal-700);
+  --ace-secondary-teal-800: var(--color-teal-800);
+  --ace-secondary-teal-900: var(--color-teal-900);
 
-  /* Dark mode neutral scale (Figma 2794:412) — reference + dark theme surfaces */
-  --ace-dark-mode-50: #3a3c43;
-  --ace-dark-mode-100: #373a41;
-  --ace-dark-mode-200: #35373e;
-  --ace-dark-mode-300: #30333a;
-  --ace-dark-mode-400: #2e3138;
-  --ace-dark-mode-500: #292c33;
-  --ace-dark-mode-600: #272a31;
-  --ace-dark-mode-700: #24272f;
-  --ace-dark-mode-800: #20232a;
-  --ace-dark-mode-900: #14171f;
-  --ace-finscan-mark-primary: #3d2e8a;
-  --ace-finscan-wordmark-fill: #3d2e8a;
-  --ace-guidelines-principle-title: #454cbc;
+  /* Dark mode scale — Figma color/dark/* primitives (updated export) */
+  --ace-dark-mode-50: var(--color-dark-50);
+  --ace-dark-mode-100: var(--color-dark-100);
+  --ace-dark-mode-200: var(--color-dark-200);
+  --ace-dark-mode-300: var(--color-dark-300);
+  --ace-dark-mode-400: var(--color-dark-400);
+  --ace-dark-mode-500: var(--color-dark-500);
+  --ace-dark-mode-600: var(--color-dark-600);
+  --ace-dark-mode-700: var(--color-dark-700);
+  --ace-dark-mode-750: var(--color-dark-750);
+  --ace-dark-mode-800: var(--color-dark-800);
+  --ace-dark-mode-900: var(--color-dark-900);
+  --ace-dark-mode-950: var(--color-dark-950);
+  --ace-finscan-mark-primary: var(--color-primary-500);
+  --ace-finscan-wordmark-fill: var(--color-primary-500);
+  --ace-guidelines-principle-title: var(--color-primary-400);
 
   /* Sidebar (Figma 4491:2509) */
-  --ace-sidebar-width: 18.125rem; /* 290px */
-  --ace-sidebar-menu-icon: var(--ace-neutral-800);
+  --sidebar-width: 18.125rem; /* 290px */
+  --sidebar-menu-icon: var(--color-icon-primary);
   /**
    * Iconography icon buttons (Figma Iconography · Icon button hover).
    * Border uses color/border/default via --color-border-default.
    */
-  --ace-icon-button-icon: var(--ace-neutral-900);
-  --ace-icon-button-icon-rest-ghost: var(--screening-text-primary);
-  --ace-icon-button-surface: var(--screening-surface);
-  --ace-icon-button-hover-bg: var(--ace-neutral-50);
-  --ace-icon-button-border: #cfd2d9;
-  /* Success / Error (Figma) */
-  --ace-success-50: #f8fbf1;
-  --ace-success-500: #87b531;
-  --ace-warning-50: #fdf3ea;
-  --ace-warning-100: #f9e0cb;
-  --ace-warning-200: #f4c8a1;
-  --ace-warning-300: #f0af77;
-  --ace-warning-400: #eb974d;
-  --ace-warning-500: #e67e23;
-  --ace-warning-600: #c16616;
-  --ace-warning-700: #934e11;
-  --ace-warning-800: #66360c;
-  --ace-warning-900: #391e06;
-  --ace-notice-50: #fffcf3;
-  --ace-notice-100: #fff2ce;
-  --ace-notice-200: #ffe8aa;
-  --ace-notice-300: #ffdf85;
-  --ace-notice-400: #ffd560;
-  --ace-notice-500: #ffbe0b;
-  --ace-notice-600: #c89200;
-  --ace-notice-700: #c89200;
-  --ace-notice-800: #856200;
-  --ace-notice-900: #423100;
-  --ace-error-50: #fdf4f6;
-  --ace-error-500: #dc264b;
+  --icon-button-icon: var(--color-icon-primary);
+  --icon-button-icon-rest-ghost: var(--color-text-primary);
+  --icon-button-surface: var(--color-surface-primary);
+  --icon-button-hover-bg: var(--color-icon-hover);
+  --icon-button-border: var(--color-border-default);
+  /* Success / Warning / Notice / Error — Figma primitives */
+  --ace-success-50: var(--color-success-50);
+  --ace-success-500: var(--color-success-500);
+  --ace-warning-50: var(--color-warning-50);
+  --ace-warning-100: var(--color-warning-100);
+  --ace-warning-200: var(--color-warning-200);
+  --ace-warning-300: var(--color-warning-300);
+  --ace-warning-400: var(--color-warning-400);
+  --ace-warning-500: var(--color-warning-500);
+  --ace-warning-600: var(--color-warning-600);
+  --ace-warning-700: var(--color-warning-700);
+  --ace-warning-800: var(--color-warning-800);
+  --ace-warning-900: var(--color-warning-900);
+  --ace-notice-50: var(--color-warning-2-50);
+  --ace-notice-100: var(--color-warning-2-100);
+  --ace-notice-200: var(--color-warning-2-200);
+  --ace-notice-300: var(--color-warning-2-300);
+  --ace-notice-400: var(--color-warning-2-400);
+  --ace-notice-500: var(--color-warning-2-500);
+  --ace-notice-600: var(--color-warning-2-600);
+  --ace-notice-700: var(--color-warning-2-700);
+  --ace-notice-800: var(--color-warning-2-800);
+  --ace-notice-900: var(--color-warning-2-900);
+  --ace-error-50: var(--color-error-50);
+  --ace-error-500: var(--color-error-500);
   --ace-header-status-success: var(--ace-success-500);
-  --ace-sidebar-shadow: 6px 0 5px rgb(0 0 0 / 0.03);
-  --ace-sidebar-border: var(--screening-border-strong);
-  --ace-sidebar-border-accent: #7868cd;
-  --ace-sidebar-heading-bg: var(--screening-surface-muted);
-  --ace-sidebar-heading-border: var(--screening-border-strong);
-  --ace-sidebar-item-radius: var(--radius-md);
-  --ace-sidebar-item-selected-bg: var(--screening-primary-soft-bg);
-  --ace-sidebar-item-selected-text: var(--dialog-modal-primary);
-  --ace-sidebar-item-hover-bg: var(--ace-neutral-100);
+  --sidebar-shadow: 6px 0 5px rgb(0 0 0 / 0.03);
+  --sidebar-border: var(--screening-border-strong);
+  --sidebar-border-accent: var(--color-primary-300);
+  --sidebar-heading-bg: var(--screening-surface-muted);
+  --sidebar-heading-border: var(--screening-border-strong);
+  --sidebar-item-radius: var(--radius-md);
+  --sidebar-item-selected-bg: var(--screening-primary-soft-bg);
+  --sidebar-item-selected-text: var(--dialog-modal-primary);
+  --sidebar-item-hover-bg: var(--ace-neutral-100);
   /** Neutral 400 — expanded group container stroke (Figma). */
-  --ace-sidebar-group-expanded-border: var(--ace-button-neutral-400);
-  --ace-sidebar-group-hover-bg: var(--ace-neutral-100);
+  --sidebar-group-expanded-border: var(--button-neutral-400);
+  --sidebar-group-hover-bg: var(--ace-neutral-100);
   /** No-border icon hover fill — icon button hover token */
-  --ace-sidebar-row-action-hover-bg: var(--ace-icon-button-hover-bg);
-  --ace-sidebar-group-gap: var(--space-3);
-  --ace-sidebar-nav-px: var(--space-3);
-  --ace-sidebar-nav-py: 0.375rem;
+  --sidebar-row-action-hover-bg: var(--icon-button-hover-bg);
+  --sidebar-group-gap: var(--space-3);
+  --sidebar-nav-px: var(--space-3);
+  --sidebar-nav-py: 0.375rem;
   /* Full-width controls in header align with group row hover area (nav column) */
-  --ace-sidebar-control-width: calc(var(--ace-sidebar-width) - 2 * var(--ace-sidebar-nav-px));
+  --sidebar-control-width: calc(var(--sidebar-width) - 2 * var(--sidebar-nav-px));
   /* Edit group dialog — items list scrolls after 5 rows */
   --ace-edit-group-restore-bg: var(--ace-success-500);
   --ace-edit-group-restore-hover-bg: var(--ace-success-50);
@@ -345,117 +334,117 @@
   --ace-motion-duration-fast: 150ms;
   --ace-motion-duration-medium: 300ms;
   --ace-motion-duration-slow: 420ms;
-  --ace-sidebar-duration-panel: var(--ace-motion-duration-medium);
-  --ace-sidebar-duration-expand: var(--ace-motion-duration-medium);
+  --sidebar-duration-panel: var(--ace-motion-duration-medium);
+  --sidebar-duration-expand: var(--ace-motion-duration-medium);
 
   /* Inline Drawer — right in-flow panel (Figma 1063:3635 / 4081:943+) */
-  --ace-inline-drawer-width: 30rem; /* 480px — Review Assigned SideDrawer default */
-  --ace-inline-drawer-border: #cfd2d9;
-  --ace-inline-drawer-shadow: -6px 0 5px rgb(0 0 0 / 0.03);
-  --ace-inline-drawer-duration-panel: var(--ace-sidebar-duration-panel);
-  --ace-inline-drawer-header-px: 1.5rem; /* 24px */
-  --ace-inline-drawer-header-py: 1rem; /* 16px */
-  --ace-inline-drawer-body-px: 1.5rem;
-  --ace-inline-drawer-body-py: 1rem;
-  --ace-inline-drawer-section-gap: 0.625rem; /* 10px */
-  --ace-inline-drawer-footer-gap: 1rem; /* 16px */
+  --inline-drawer-width: 30rem; /* 480px — Review Assigned SideDrawer default */
+  --inline-drawer-border: var(--color-border-default);
+  --inline-drawer-shadow: -6px 0 5px rgb(0 0 0 / 0.03);
+  --inline-drawer-duration-panel: var(--sidebar-duration-panel);
+  --inline-drawer-header-px: 1.5rem; /* 24px */
+  --inline-drawer-header-py: 1rem; /* 16px */
+  --inline-drawer-body-px: 1.5rem;
+  --inline-drawer-body-py: 1rem;
+  --inline-drawer-section-gap: 0.625rem; /* 10px */
+  --inline-drawer-footer-gap: 1rem; /* 16px */
 
   /* ACE Task Bar — Review Assigned bottom action bar */
-  --ace-task-bar-surface: var(--screening-surface);
-  --ace-task-bar-border: var(--screening-border-strong);
-  --ace-task-bar-shadow: var(--ace-drop-shadow-xs);
-  --ace-task-bar-px: 1rem; /* 16px */
-  --ace-task-bar-py: 1rem; /* 16px */
+  --task-bar-surface: var(--screening-surface);
+  --task-bar-border: var(--screening-border-strong);
+  --task-bar-shadow: var(--ace-drop-shadow-xs);
+  --task-bar-px: 1rem; /* 16px */
+  --task-bar-py: 1rem; /* 16px */
 
   /* ACE Page Header — Review Assigned title bar under site nav */
-  --ace-page-header-bg: var(--screening-surface); /* Shades / 0 */
-  --ace-page-header-border: var(--screening-border-strong);
-  --ace-page-header-px: 2rem; /* 32px */
-  --ace-page-header-py: 0.75rem; /* 12px */
+  --page-header-bg: var(--screening-surface); /* Shades / 0 */
+  --page-header-border: var(--screening-border-strong);
+  --page-header-px: 2rem; /* 32px */
+  --page-header-py: 0.75rem; /* 12px */
 
   /* ACE Sub-header — Figma Headers 1049:2627 (full / split) */
-  --ace-sub-header-bg: var(--screening-surface); /* Shades / 0 */
-  --ace-sub-header-border: var(--screening-border-strong);
-  --ace-sub-header-radius: var(--radius-sm);
-  --ace-sub-header-stat-separator: var(--screening-icon-muted); /* Neutral/500 #949BAA */
-  --ace-sub-header-back: var(--ace-button-purple-500); /* FinScan Primary/500 #3D2E8A */
-  --ace-sub-header-px: 2rem; /* 32px */
-  --ace-sub-header-py: 0.75rem; /* 12px */
-  --ace-sub-header-drilldown-pl: 3rem; /* 48px */
-  --ace-sub-header-height: 3.75rem; /* 60px */
+  --sub-header-bg: var(--screening-surface); /* Shades / 0 */
+  --sub-header-border: var(--screening-border-strong);
+  --sub-header-radius: var(--radius-sm);
+  --sub-header-stat-separator: var(--screening-icon-muted); /* Neutral/500 #949BAA */
+  --sub-header-back: var(--color-action-primary);
+  --sub-header-px: 2rem; /* 32px */
+  --sub-header-py: 0.75rem; /* 12px */
+  --sub-header-drilldown-pl: 3rem; /* 48px */
+  --sub-header-height: 3.75rem; /* 60px */
 
   /* Tabs (Figma 2045:4334) */
-  --ace-tabs-gap: var(--space-3);
-  --ace-tabs-text-active: var(--screening-primary);
-  --ace-tabs-text-inactive: var(--screening-icon-muted);
-  --ace-tabs-indicator-bg: var(--screening-primary);
-  --ace-tabs-indicator-height: 0.09375rem;
-  --ace-tabs-indicator-radius: var(--radius-sm);
-  --ace-tabs-vertical-gap: 0.25rem;
-  --ace-tabs-vertical-inactive-px: 0.375rem;
-  --ace-tabs-vertical-indicator-width: 0.125rem;
-  --ace-tabs-vertical-indicator-height: 1.5rem;
+  --tabs-gap: var(--space-3);
+  --tabs-text-active: var(--screening-primary);
+  --tabs-text-inactive: var(--screening-icon-muted);
+  --tabs-indicator-bg: var(--screening-primary);
+  --tabs-indicator-height: 0.09375rem;
+  --tabs-indicator-radius: var(--radius-sm);
+  --tabs-vertical-gap: 0.25rem;
+  --tabs-vertical-inactive-px: 0.375rem;
+  --tabs-vertical-indicator-width: 0.125rem;
+  --tabs-vertical-indicator-height: 1.5rem;
 
   /* Tab cards — Figma Cards / Tab (4130:4356) */
-  --ace-tab-card-gap: var(--space-4);
-  --ace-tab-card-radius: 6px;
-  --ace-tab-card-padding: 0.875rem;
-  --ace-tab-card-max-width: 23.3125rem;
-  --ace-tab-card-surface-default: var(--screening-surface);
-  --ace-tab-card-border-default: #cfd2d9;
-  --ace-tab-card-surface-emphasis: var(--screening-primary-soft-bg);
-  --ace-tab-card-border-active: var(--screening-primary);
-  --ace-tab-card-title-color: var(--ace-neutral-800);
-  --ace-tab-card-subtitle-color: var(--screening-text-secondary);
-  --ace-tab-card-description-color: var(--ace-neutral-800);
-  --ace-tab-card-icon-primary: var(--screening-primary);
+  --tab-card-gap: var(--space-4);
+  --tab-card-radius: 6px;
+  --tab-card-padding: 0.875rem;
+  --tab-card-max-width: 23.3125rem;
+  --tab-card-surface-default: var(--screening-surface);
+  --tab-card-border-default: var(--color-border-default);
+  --tab-card-surface-emphasis: var(--screening-primary-soft-bg);
+  --tab-card-border-active: var(--screening-primary);
+  --tab-card-title-color: var(--ace-neutral-800);
+  --tab-card-subtitle-color: var(--screening-text-secondary);
+  --tab-card-description-color: var(--ace-neutral-800);
+  --tab-card-icon-primary: var(--screening-primary);
 
   /* Data table outer card — ACE Drop Shadows XS at rest (Figma 71:71); hover uses SM */
   --screening-shadow-card: var(--ace-drop-shadow-xs);
   --screening-shadow-card-hover: var(--ace-drop-shadow-sm);
 
   /* Landing page card — Figma Cards (4130:1977 / sets 4212:1424–1427) */
-  --ace-landing-page-card-width: 25rem; /* 400px */
-  --ace-landing-page-card-min-height: 12.5rem; /* 200px */
-  --ace-landing-page-card-radius: var(--radius-sm); /* radius/sm 4px */
-  --ace-landing-page-card-border: var(--screening-border-row);
-  --ace-landing-page-card-surface: var(--color-surface-primary); /* colors/surface/primary */
-  --ace-landing-page-card-footer-bg: var(--color-surface-primary);
-  --ace-landing-page-card-divider: var(--color-border-default);
-  --ace-landing-page-card-shadow: var(--ace-drop-shadow-xs); /* Shadow (XS) */
-  --ace-landing-page-card-shadow-hover: var(--ace-drop-shadow-xl); /* Shadow (XL) */
-  --ace-landing-page-card-title-color: var(--color-text-primary); /* colors/text/primary */
-  --ace-landing-page-card-body-color: var(--color-text-primary);
-  --ace-landing-page-card-footer-stat-color: var(--color-text-primary);
-  --ace-landing-page-card-link-color: var(--color-action-primary); /* colors/action/primary */
-  --ace-landing-page-card-icon-color: var(--color-icon-primary); /* colors/icon/primary */
+  --landing-page-card-width: 25rem; /* 400px */
+  --landing-page-card-min-height: 12.5rem; /* 200px */
+  --landing-page-card-radius: var(--radius-component-card);
+  --landing-page-card-border: var(--screening-border-row);
+  --landing-page-card-surface: var(--color-surface-primary); /* colors/surface/primary */
+  --landing-page-card-footer-bg: var(--color-surface-primary);
+  --landing-page-card-divider: var(--color-border-default);
+  --landing-page-card-shadow: var(--ace-drop-shadow-xs); /* Shadow (XS) */
+  --landing-page-card-shadow-hover: var(--ace-drop-shadow-xl); /* Shadow (XL) */
+  --landing-page-card-title-color: var(--color-text-primary); /* colors/text/primary */
+  --landing-page-card-body-color: var(--color-text-primary);
+  --landing-page-card-footer-stat-color: var(--color-text-primary);
+  --landing-page-card-link-color: var(--color-action-primary); /* colors/action/primary */
+  --landing-page-card-icon-color: var(--color-icon-primary); /* colors/icon/primary */
   /* Description tag → AceBadge purple (Figma colors/badges/purple-fill|border) */
-  --ace-landing-page-card-tag-bg: var(--ace-status-pill-purple-surface);
-  --ace-landing-page-card-tag-text: var(--ace-status-pill-purple-label);
-  --ace-landing-page-card-tag-border: var(--ace-status-pill-purple-border);
-  --ace-landing-page-card-header-px: 1.5rem; /* spacing/24 */
-  --ace-landing-page-card-header-py: 0.75rem; /* spacing/12 */
-  --ace-landing-page-card-body-px: 1.5rem;
-  --ace-landing-page-card-body-py-stats: 0.75rem; /* pt 12 */
-  --ace-landing-page-card-body-py-stats-bottom: 1.5rem; /* pb 24 */
-  --ace-landing-page-card-body-py-desc: 1.5rem; /* p 24 */
-  --ace-landing-page-card-footer-px: 1.5rem;
-  --ace-landing-page-card-footer-py: 0.75rem;
+  --landing-page-card-tag-bg: var(--badge-purple-surface);
+  --landing-page-card-tag-text: var(--badge-purple-label);
+  --landing-page-card-tag-border: var(--badge-purple-border);
+  --landing-page-card-header-px: 1.5rem; /* spacing/24 */
+  --landing-page-card-header-py: 0.75rem; /* spacing/12 */
+  --landing-page-card-body-px: 1.5rem;
+  --landing-page-card-body-py-stats: 0.75rem; /* pt 12 */
+  --landing-page-card-body-py-stats-bottom: 1.5rem; /* pb 24 */
+  --landing-page-card-body-py-desc: 1.5rem; /* p 24 */
+  --landing-page-card-footer-px: 1.5rem;
+  --landing-page-card-footer-py: 0.75rem;
 
   /* Data card (medium) — Figma Cards / Data (2046:5157); aliases → semantic colors */
-  --ace-data-card-width: 43.25rem;
-  --ace-data-card-radius: var(--radius-sm);
-  --ace-data-card-border: var(--screening-border-row);
-  --ace-data-card-surface: var(--color-surface-primary);
-  --ace-data-card-header-bg: var(--color-bg-primary); /* Neutral/50 #fafafb */
-  --ace-data-card-header-height: 2.625rem;
-  --ace-data-card-shadow: var(--ace-drop-shadow-sm);
-  --ace-data-card-shadow-hover: var(--ace-drop-shadow-xl);
-  --ace-data-card-row-muted: var(--color-text-muted);
-  --ace-data-card-insight-bg: var(--color-bg-brand-hover); /* Primary/50 #efeef9 */
-  --ace-data-card-insight-border: var(--color-action-primary);
-  --ace-data-card-text: var(--color-text-primary);
-  --ace-data-card-link: var(--color-action-primary);
+  --data-card-width: 43.25rem;
+  --data-card-radius: var(--radius-component-card);
+  --data-card-border: var(--screening-border-row);
+  --data-card-surface: var(--color-surface-primary);
+  --data-card-header-bg: var(--color-bg-primary); /* Neutral/50 #fafafb */
+  --data-card-header-height: 2.625rem;
+  --data-card-shadow: var(--ace-drop-shadow-sm);
+  --data-card-shadow-hover: var(--ace-drop-shadow-xl);
+  --data-card-row-muted: var(--color-text-muted);
+  --data-card-insight-bg: var(--color-bg-brand-hover); /* Primary/50 #efeef9 */
+  --data-card-insight-border: var(--color-action-primary);
+  --data-card-text: var(--color-text-primary);
+  --data-card-link: var(--color-action-primary);
   --screening-shadow-row-accent: inset 2px 0 0 0 rgb(82 62 185 / 0.2);
   --screening-shadow-thead: 0 1px 0 rgb(207 210 217 / 0.6);
   --screening-table-header-font-size: 0.75rem;
@@ -479,318 +468,310 @@
   --screening-checkbox-disabled-checked-bg: var(--color-bg-disabled);
 
   /* ACE Toggle — Figma Toggles (117:1265) / set 5283:2831 */
-  --ace-toggle-duration: var(--ace-motion-duration-medium);
-  --ace-toggle-ease: var(--ace-motion-ease-standard);
-  --ace-toggle-thumb: var(--color-surface-primary);
-  --ace-toggle-thumb-disabled: var(--color-surface-primary);
-  --ace-toggle-track-off: var(--color-bg-secondary);
-  --ace-toggle-track-on: var(--color-bg-brand);
-  --ace-toggle-track-off-hover: var(--color-bg-brand-hover);
-  --ace-toggle-track-on-hover: var(--color-action-primary-hover);
-  --ace-toggle-track-disabled-off: var(--color-bg-disabled-subtle);
-  --ace-toggle-track-disabled-on: var(--color-bg-brand-subtle);
-  --ace-toggle-focus-ring: var(--color-border-focus);
-  --ace-toggle-ring-offset: var(--color-surface-primary);
-  --ace-toggle-track-padding: 0.25rem;
-  --ace-toggle-icon-glyph-off: var(--color-icon-primary);
-  --ace-toggle-icon-glyph-on: var(--color-icon-inverse);
+  --toggle-duration: var(--ace-motion-duration-medium);
+  --toggle-ease: var(--ace-motion-ease-standard);
+  --toggle-thumb: var(--color-surface-primary);
+  --toggle-thumb-disabled: var(--color-surface-primary);
+  --toggle-track-off: var(--color-bg-secondary);
+  --toggle-track-on: var(--color-bg-brand);
+  --toggle-track-off-hover: var(--color-bg-brand-hover);
+  --toggle-track-on-hover: var(--color-action-primary-hover);
+  --toggle-track-disabled-off: var(--color-bg-disabled-subtle);
+  --toggle-track-disabled-on: var(--color-bg-brand-subtle);
+  --toggle-focus-ring: var(--color-border-focus);
+  --toggle-ring-offset: var(--color-surface-primary);
+  --toggle-track-padding: 0.25rem;
+  --toggle-icon-glyph-off: var(--color-icon-primary);
+  --toggle-icon-glyph-on: var(--color-icon-inverse);
 
   /* ACE Tooltip — Review Assigned screening toolbar pattern */
-  --ace-tooltip-radius: var(--radius-sm);
-  --ace-tooltip-px: var(--space-3);
-  --ace-tooltip-py: var(--space-2);
-  --ace-tooltip-surface: var(--screening-surface);
-  --ace-tooltip-border: var(--screening-border-strong);
-  --ace-tooltip-text: var(--screening-text-primary);
-  --ace-tooltip-shadow: var(--ace-drop-shadow-xs);
-  --ace-tooltip-duration: var(--ace-motion-duration-fast);
-  --ace-tooltip-ease: ease;
+  --tooltip-radius: var(--radius-component-tooltip);
+  --tooltip-px: var(--space-3);
+  --tooltip-py: var(--space-2);
+  --tooltip-surface: var(--screening-surface);
+  --tooltip-border: var(--screening-border-strong);
+  --tooltip-text: var(--screening-text-primary);
+  --tooltip-shadow: var(--ace-drop-shadow-xs);
+  --tooltip-duration: var(--ace-motion-duration-fast);
+  --tooltip-ease: ease;
 
   /* ACE Badge / Status pill — Figma Badge (5064:2991): px 8, py 2, gap 6, Caption Regular 12 / 1.65 */
-  --ace-status-pill-gap: 0.375rem; /* 6px */
-  --ace-status-pill-py: 0.125rem; /* 2px */
-  --ace-status-pill-px: 0.5rem; /* 8px */
-  --ace-status-pill-pl: var(--ace-status-pill-px);
-  --ace-status-pill-pr: var(--ace-status-pill-px);
-  --ace-status-pill-dot-size: 0.5rem; /* 8px */
-  --ace-status-pill-label-size: 0.75rem; /* 12px */
-  --ace-status-pill-label-leading: 1.65;
-  /* Purple — FinScan Primary/50 + /400 (aliases New pill for dark-mode overrides) */
-  --ace-status-pill-purple-border: var(--screening-pill-new-border);
-  --ace-status-pill-purple-surface: var(--screening-pill-new-surface);
-  --ace-status-pill-purple-dot: var(--screening-pill-new-dot);
-  --ace-status-pill-purple-label: var(--screening-pill-new-label);
-  /* Orange — Warning/50 + /500 (aliases Escalate pill for dark-mode overrides) */
-  --ace-status-pill-orange-border: var(--screening-pill-escalated-border);
-  --ace-status-pill-orange-surface: var(--screening-pill-escalated-surface);
-  --ace-status-pill-orange-dot: var(--screening-pill-escalated-dot);
-  --ace-status-pill-orange-label: var(--screening-pill-escalated-label);
-  /* Green — Success/50 + /600 */
-  --ace-status-pill-green-border: #658825;
-  --ace-status-pill-green-surface: #f8fbf1;
-  --ace-status-pill-green-dot: #658825;
-  --ace-status-pill-green-label: #658825;
-  /* Gray — Neutral/50 + border Neutral/500, label Neutral/700 */
-  --ace-status-pill-gray-border: #949baa;
-  --ace-status-pill-gray-surface: #fafafb;
-  --ace-status-pill-gray-dot: #949baa;
-  --ace-status-pill-gray-label: #464c59;
-  /* Blue — Innovative Blue/50 + /500 */
-  --ace-status-pill-blue-border: #0672a3;
-  --ace-status-pill-blue-surface: #eaf8fe;
-  --ace-status-pill-blue-dot: #0672a3;
-  --ace-status-pill-blue-label: #0672a3;
-  /* Yellow — Warning Secondary/50 + /500 */
-  --ace-status-pill-yellow-border: #ffbe0b;
-  --ace-status-pill-yellow-surface: #fffcf3;
-  --ace-status-pill-yellow-dot: #ffbe0b;
-  --ace-status-pill-yellow-label: #ffbe0b;
-  /* Pink — FinScan Secondary/50 + /500 */
-  --ace-status-pill-pink-border: #92278f;
-  --ace-status-pill-pink-surface: #fcf2fb;
-  --ace-status-pill-pink-dot: #92278f;
-  --ace-status-pill-pink-label: #92278f;
-  /* Teal — FinScan Teal/50 + /500 */
-  --ace-status-pill-teal-border: #22adb6;
-  --ace-status-pill-teal-surface: #f0fbfc;
-  --ace-status-pill-teal-dot: #22adb6;
-  --ace-status-pill-teal-label: #22adb6;
-  /* Red — Error/50 + /500 */
-  --ace-status-pill-red-border: #dc264b;
-  --ace-status-pill-red-surface: #fdf4f6;
-  --ace-status-pill-red-dot: #dc264b;
-  --ace-status-pill-red-label: #dc264b;
+  --badge-radius: var(--radius-component-badge);
+  --badge-gap: var(--spacing-component-padding-gap-xs);
+  /* Figma badge py is 2px; closest component padding step is xs (4). Keep optical 2px. */
+  --badge-py: 0.125rem;
+  --badge-px: var(--spacing-component-padding-padding-sm);
+  --badge-pl: var(--badge-px);
+  --badge-pr: var(--badge-px);
+  --badge-dot-size: 0.5rem; /* 8px */
+  --badge-label-size: var(--typography-ui-caption);
+  --badge-label-leading: 1.65;
+  /* Status pills — Semantic colors/badges/* (fill + border); label/dot use border */
+  --badge-purple-border: var(--color-badges-purple-border);
+  --badge-purple-surface: var(--color-badges-purple-fill);
+  --badge-purple-dot: var(--color-badges-purple-border);
+  --badge-purple-label: var(--color-badges-purple-border);
+  --badge-orange-border: var(--color-badges-orange-border);
+  --badge-orange-surface: var(--color-badges-orange-fill);
+  --badge-orange-dot: var(--color-badges-orange-border);
+  --badge-orange-label: var(--color-badges-orange-border);
+  --badge-green-border: var(--color-badges-green-border);
+  --badge-green-surface: var(--color-badges-green-fill);
+  --badge-green-dot: var(--color-badges-green-border);
+  --badge-green-label: var(--color-badges-green-border);
+  --badge-gray-border: var(--color-badges-gray-border);
+  --badge-gray-surface: var(--color-badges-gray-fill);
+  --badge-gray-dot: var(--color-badges-gray-border);
+  --badge-gray-label: var(--color-badges-gray-border);
+  --badge-blue-border: var(--color-badges-blue-border);
+  --badge-blue-surface: var(--color-badges-blue-fill);
+  --badge-blue-dot: var(--color-badges-blue-border);
+  --badge-blue-label: var(--color-badges-blue-border);
+  --badge-yellow-border: var(--color-badges-yellow-border);
+  --badge-yellow-surface: var(--color-badges-yellow-fill);
+  --badge-yellow-dot: var(--color-badges-yellow-border);
+  --badge-yellow-label: var(--color-badges-yellow-border);
+  --badge-pink-border: var(--color-badges-pink-border);
+  --badge-pink-surface: var(--color-badges-pink-fill);
+  --badge-pink-dot: var(--color-badges-pink-border);
+  --badge-pink-label: var(--color-badges-pink-border);
+  --badge-teal-border: var(--color-badges-teal-border);
+  --badge-teal-surface: var(--color-badges-teal-fill);
+  --badge-teal-dot: var(--color-badges-teal-border);
+  --badge-teal-label: var(--color-badges-teal-border);
+  --badge-red-border: var(--color-badges-red-border);
+  --badge-red-surface: var(--color-badges-red-fill);
+  --badge-red-dot: var(--color-badges-red-border);
+  --badge-red-label: var(--color-badges-red-border);
 
   /* ACE Badge tag — same padding/colors as pills; squared radius */
-  --ace-badge-tag-gap: var(--ace-status-pill-gap);
-  --ace-badge-tag-radius: 0.25rem; /* 4px */
-  --ace-badge-tag-px: var(--ace-status-pill-px);
-  --ace-badge-tag-py: var(--ace-status-pill-py);
-  --ace-badge-tag-border: var(--screening-border-strong);
-  --ace-badge-tag-surface: var(--screening-surface-muted);
-  --ace-badge-tag-label: var(--screening-text-secondary);
-  --ace-badge-tag-warning-border: var(--screening-pill-escalated-border);
-  --ace-badge-tag-warning-surface: var(--ace-warning-50);
-  --ace-badge-tag-warning-label: var(--screening-pill-escalated-label);
-  --ace-badge-tag-warning-icon-size: 0.75rem; /* size-3 */
-  --ace-badge-tag-warning-icon-text-size: 0.5rem; /* 8px */
-  --ace-badge-tag-warning-icon-bg: #e67e23;
-  --ace-badge-tag-warning-icon-fg: #ffffff;
+  --badge-tag-gap: var(--badge-gap);
+  --badge-tag-radius: var(--radius-sm); /* tags stay squared; pills use --radius-component-badge */
+  --badge-tag-px: var(--badge-px);
+  --badge-tag-py: var(--badge-py);
+  --badge-tag-border: var(--color-border-default);
+  --badge-tag-surface: var(--color-bg-primary);
+  --badge-tag-label: var(--color-text-secondary);
+  --badge-tag-warning-border: var(--color-badges-orange-border);
+  --badge-tag-warning-surface: var(--color-badges-orange-fill);
+  --badge-tag-warning-label: var(--color-badges-orange-border);
+  --badge-tag-warning-icon-size: 0.75rem; /* size-3 */
+  --badge-tag-warning-icon-text-size: 0.5rem; /* 8px */
+  --badge-tag-warning-icon-bg: var(--color-badges-orange-border);
+  --badge-tag-warning-icon-fg: var(--color-text-inverse);
 
   /* ACE Toast — Figma Toast Messages (2783:5) */
-  --ace-toast-width: 25rem;
-  --ace-toast-radius: 4px;
-  --ace-toast-px: 1rem;
-  --ace-toast-py: 0.75rem;
-  --ace-toast-gap: 0.5rem;
-  --ace-toast-body-indent: 2rem;
-  --ace-toast-action-gap: 1rem;
-  --ace-toast-bg: #ffffff;
-  --ace-toast-border: #cfd2d9;
-  --ace-toast-shadow: var(--ace-drop-shadow-md);
-  --ace-toast-text: var(--screening-text-secondary);
-  --ace-toast-action-text: var(--ace-button-purple-500);
-  --ace-toast-action-text-hover: var(--screening-primary);
-  --ace-toast-confirm-bg: var(--ace-button-purple-500);
-  --ace-toast-confirm-bg-hover: var(--screening-primary-hover-border);
-  --ace-toast-confirm-text: #ffffff;
-  --ace-toast-confirm-radius: 4px;
-  --ace-toast-confirm-px: 0.5rem;
-  --ace-toast-confirm-py: 0.25rem;
-  --ace-toast-dismiss-icon: #64748b;
-  --ace-toast-dismiss-icon-hover: var(--screening-text-primary);
-  --ace-toast-icon-glyph: #ffffff;
-  --ace-toast-icon-success: var(--ace-success-500);
-  --ace-toast-icon-info: var(--ace-button-purple-500);
-  --ace-toast-icon-warning: var(--ace-warning-500);
-  --ace-toast-icon-error: var(--dialog-modal-danger);
-  --ace-toast-progress-height: 0.25rem;
-  --ace-toast-progress-track: var(--ace-success-50);
-  --ace-toast-progress-fill: var(--ace-success-500);
+  --toast-message-width: 25rem;
+  --toast-message-radius: var(--radius-component-tooltip);
+  --toast-message-px: 1rem;
+  --toast-message-py: 0.75rem;
+  --toast-message-gap: 0.5rem;
+  --toast-message-body-indent: 2rem;
+  --toast-message-action-gap: 1rem;
+  --toast-message-bg: var(--color-surface-primary);
+  --toast-message-border: var(--color-border-default);
+  --toast-message-shadow: var(--ace-drop-shadow-md);
+  --toast-message-text: var(--screening-text-secondary);
+  --toast-message-action-text: var(--color-action-primary);
+  --toast-message-action-text-hover: var(--color-action-primary-hover);
+  --toast-message-confirm-bg: var(--color-action-primary);
+  --toast-message-confirm-bg-hover: var(--color-action-primary-hover);
+  --toast-message-confirm-text: var(--color-text-inverse);
+  --toast-message-confirm-radius: var(--radius-component-button);
+  --toast-message-confirm-px: var(--spacing-component-padding-padding-sm);
+  --toast-message-confirm-py: var(--spacing-component-padding-padding-xs);
+  --toast-message-dismiss-icon: var(--color-icon-secondary);
+  --toast-message-dismiss-icon-hover: var(--screening-text-primary);
+  --toast-message-icon-glyph: var(--color-text-inverse);
+  --toast-message-icon-success: var(--color-status-success);
+  --toast-message-icon-info: var(--color-action-primary);
+  --toast-message-icon-warning: var(--color-status-warning);
+  --toast-message-icon-error: var(--color-status-error);
+  --toast-message-progress-height: 0.25rem;
+  --toast-message-progress-track: var(--color-status-success-subtle);
+  --toast-message-progress-fill: var(--color-status-success);
 
   /* ACE Inline Messages — Figma Inline Messages 4481:275 (banner / in-page alerts) */
-  --ace-inline-message-radius: 4px;
-  --ace-inline-message-px: 1rem;
-  --ace-inline-message-py: 0.5rem;
-  --ace-inline-message-gap: 0.75rem;
-  --ace-inline-message-text: var(--ace-neutral-800);
-  --ace-inline-message-error-bg: var(--ace-error-50);
-  --ace-inline-message-error-border: var(--ace-error-500);
-  --ace-inline-message-error-icon: var(--ace-error-500);
-  --ace-inline-message-success-bg: var(--ace-success-50);
-  --ace-inline-message-success-border: var(--ace-success-500);
-  --ace-inline-message-success-icon: var(--ace-success-500);
-  --ace-inline-message-info-bg: var(--ace-button-blue-50);
-  --ace-inline-message-info-border: var(--ace-button-blue-500);
-  --ace-inline-message-info-icon: var(--ace-button-blue-500);
-  --ace-inline-message-warning-bg: var(--ace-warning-50);
-  --ace-inline-message-warning-border: var(--ace-warning-500);
-  --ace-inline-message-warning-icon: var(--ace-warning-500);
+  --inline-message-radius: var(--radius-component-inline-message);
+  --inline-message-px: var(--spacing-component-padding-padding-lg);
+  --inline-message-py: var(--spacing-component-padding-padding-sm);
+  --inline-message-gap: var(--spacing-component-padding-gap-md);
+  --inline-message-text: var(--color-text-primary);
+  --inline-message-error-bg: var(--color-bg-error);
+  --inline-message-error-border: var(--color-border-error);
+  --inline-message-error-icon: var(--color-status-error);
+  --inline-message-success-bg: var(--color-bg-success);
+  --inline-message-success-border: var(--color-border-success);
+  --inline-message-success-icon: var(--color-status-success);
+  --inline-message-info-bg: var(--color-status-info-subtle);
+  --inline-message-info-border: var(--color-status-info);
+  --inline-message-info-icon: var(--color-status-info);
+  --inline-message-warning-bg: var(--color-bg-warning);
+  --inline-message-warning-border: var(--color-border-warning);
+  --inline-message-warning-icon: var(--color-status-warning);
 
   /* ACE Timeline — Figma Timeline (4622:1645) */
-  --ace-timeline-radius: 4px;
-  --ace-timeline-padding: 1rem;
-  --ace-timeline-section-gap: 1.5rem;
-  --ace-timeline-item-gap: 1rem;
-  --ace-timeline-item-padding: 0.75rem;
-  --ace-timeline-sort-width: 12.5rem;
-  --ace-timeline-icon-size: 2rem;
-  --ace-timeline-icon-size-hover: 2.2rem;
-  --ace-timeline-icon-glyph-size: 1rem;
-  --ace-timeline-icon-glyph-size-hover: 1.1rem;
-  --ace-timeline-surface: var(--screening-surface);
-  --ace-timeline-border: var(--color-border-default);
-  --ace-timeline-sort-bg: #ffffff;
-  --ace-timeline-title: var(--ace-neutral-800);
-  --ace-timeline-subtitle: var(--ace-neutral-800);
-  --ace-timeline-separator: var(--color-border-default);
-  --ace-timeline-link: var(--screening-primary);
-  --ace-timeline-link-hover: var(--screening-primary-hover-border);
-  --ace-timeline-expanded-bg: #fafafb;
-  --ace-timeline-body-bg: #ffffff;
-  --ace-timeline-icon-glyph: #ffffff;
-  --ace-timeline-icon-system: var(--screening-primary);
-  --ace-timeline-icon-escalation: var(--ace-warning-500);
-  --ace-timeline-icon-pending: var(--ace-notice-500);
-  --ace-timeline-icon-blocked: var(--dialog-modal-danger);
-  --ace-timeline-icon-safe: var(--ace-success-500);
-  --ace-timeline-highlight-system: var(--screening-primary-soft-bg);
-  --ace-timeline-highlight-escalation: var(--ace-warning-50);
-  --ace-timeline-highlight-pending: var(--ace-notice-50);
-  --ace-timeline-highlight-blocked: var(--ace-error-50);
-  --ace-timeline-highlight-safe: var(--ace-success-50);
+  --timeline-radius: var(--radius-component-card);
+  --timeline-padding: var(--spacing-component-padding-padding-lg);
+  --timeline-section-gap: var(--spacing-layout-stack-gap);
+  --timeline-item-gap: var(--spacing-component-padding-gap-lg);
+  --timeline-item-padding: var(--spacing-component-padding-padding-md);
+  --timeline-sort-width: 12.5rem;
+  /* Icon well is larger than the glyph; glyph uses icon/size tokens. */
+  --timeline-icon-size: var(--spacing-32);
+  --timeline-icon-size-hover: calc(var(--spacing-32) + var(--spacing-4));
+  --timeline-icon-glyph-size: var(--icon-size-md);
+  --timeline-icon-glyph-size-hover: var(--icon-size-lg);
+  --timeline-border: var(--color-border-default);
+  --timeline-sort-bg: var(--color-surface-primary);
+  --timeline-title: var(--ace-neutral-800);
+  --timeline-subtitle: var(--ace-neutral-800);
+  --timeline-separator: var(--color-border-default);
+  --timeline-link: var(--screening-primary);
+  --timeline-link-hover: var(--screening-primary-hover-border);
+  --timeline-expanded-bg: var(--color-bg-primary);
+  --timeline-body-bg: var(--color-surface-primary);
+  --timeline-icon-glyph: var(--color-text-inverse);
+  --timeline-icon-system: var(--screening-primary);
+  --timeline-icon-escalation: var(--ace-warning-500);
+  --timeline-icon-pending: var(--ace-notice-500);
+  --timeline-icon-blocked: var(--dialog-modal-danger);
+  --timeline-icon-safe: var(--ace-success-500);
+  --timeline-highlight-system: var(--screening-primary-soft-bg);
+  --timeline-highlight-escalation: var(--ace-warning-50);
+  --timeline-highlight-pending: var(--ace-notice-50);
+  --timeline-highlight-blocked: var(--ace-error-50);
+  --timeline-highlight-safe: var(--ace-success-50);
 
   /* ACE Attachments — Figma Attachments (3313:156) */
-  --ace-attachments-radius: 4px;
-  --ace-attachments-padding: 0.75rem;
-  --ace-attachments-gap: 0.75rem;
-  --ace-attachments-border: var(--screening-border-strong);
-  --ace-attachments-surface: var(--screening-surface);
-  --ace-attachments-dropzone-bg: var(--screening-surface-muted);
-  --ace-attachments-dropzone-border: var(--screening-primary);
-  --ace-attachments-panel-bg: var(--screening-surface-muted);
-  --ace-attachments-title: var(--screening-primary);
-  --ace-attachments-label: var(--screening-text-secondary);
-  --ace-attachments-link: var(--screening-primary);
-  --ace-attachments-muted: var(--screening-text-muted);
-  --ace-attachments-status: var(--screening-primary);
-  --ace-attachments-error: var(--dialog-modal-danger);
-  --ace-attachments-divider: var(--screening-border-strong);
+  --attachments-radius: 4px;
+  --attachments-padding: 0.75rem;
+  --attachments-gap: 0.75rem;
+  --attachments-border: var(--screening-border-strong);
+  --attachments-surface: var(--screening-surface);
+  --attachments-dropzone-border: var(--screening-primary);
+  --attachments-title: var(--screening-primary);
+  --attachments-label: var(--screening-text-secondary);
+  --attachments-link: var(--screening-primary);
+  --attachments-muted: var(--screening-text-muted);
+  --attachments-status: var(--screening-primary);
+  --attachments-error: var(--dialog-modal-danger);
+  --attachments-divider: var(--screening-border-strong);
 
   /* ACE Scrollable List — Review Assigned CaseList shell */
-  --ace-scrollable-list-surface: var(--screening-surface);
-  --ace-scrollable-list-border: var(--screening-border-strong);
-  --ace-scrollable-list-title: var(--screening-text-primary);
-  --ace-scrollable-list-item-text: var(--ace-neutral-800);
-  --ace-scrollable-list-item-selected-bg: #e4e6ea;
-  --ace-scrollable-list-item-hover-bg: #e4e6ea;
-  --ace-scrollable-list-icon: #523eb9;
+  --scrollable-list-surface: var(--screening-surface);
+  --scrollable-list-border: var(--screening-border-strong);
+  --scrollable-list-title: var(--screening-text-primary);
+  --scrollable-list-item-text: var(--ace-neutral-800);
+  --scrollable-list-item-selected-bg: var(--color-bg-tertiary);
+  --scrollable-list-item-hover-bg: var(--color-bg-tertiary);
+  --scrollable-list-icon: var(--color-icon-brand);
 
   /* ACE Filtering — Secondary / FilterChip (Figma Dropdowns 2277:136; Table Headers 1540:4577) */
-  --ace-filter-radius: var(--radius-sm); /* 4px */
-  --ace-filter-gap: 0.5rem;
-  --ace-filter-px: var(--ace-dropdown-secondary-px);
-  --ace-filter-py: var(--ace-dropdown-secondary-py);
-  --ace-filter-trigger-border: #cfd2d9;
-  --ace-filter-trigger-bg: var(--color-surface-primary);
-  --ace-filter-trigger-text: var(--color-text-primary);
-  --ace-filter-trigger-active-bg: var(--ace-dropdown-secondary-active-bg);
-  --ace-filter-trigger-active-text: var(--ace-dropdown-secondary-active-text);
-  --ace-filter-chip-border: #cfd2d9;
-  --ace-filter-chip-bg: var(--color-surface-primary);
-  --ace-filter-chip-text: var(--color-text-primary);
-  --ace-filter-chip-icon: var(--color-icon-primary);
-  --ace-filter-chip-clear: var(--color-icon-secondary);
-  --ace-filter-chip-selected-bg: var(--ace-dropdown-secondary-active-bg);
-  --ace-filter-chip-selected-text: var(--ace-dropdown-secondary-active-text);
-  --ace-filter-chip-selected-icon: var(--ace-dropdown-secondary-active-icon);
-  --ace-filter-header-title: var(--color-text-secondary);
-  --ace-filter-header-gap: 0.75rem;
-  --ace-filter-search-width: 12.5rem;
+  --filter-radius: var(--radius-component-input);
+  --filter-gap: 0.5rem;
+  --filter-px: var(--dropdown-menu-secondary-px);
+  --filter-py: var(--dropdown-menu-secondary-py);
+  --filter-trigger-border: var(--color-border-default);
+  --filter-trigger-bg: var(--color-surface-primary);
+  --filter-trigger-text: var(--color-text-primary);
+  --filter-trigger-active-bg: var(--dropdown-menu-secondary-active-bg);
+  --filter-trigger-active-text: var(--dropdown-menu-secondary-active-text);
+  --filter-chip-border: var(--color-border-default);
+  --filter-chip-bg: var(--color-surface-primary);
+  --filter-chip-text: var(--color-text-primary);
+  --filter-chip-icon: var(--color-icon-primary);
+  --filter-chip-clear: var(--color-icon-secondary);
+  --filter-chip-selected-bg: var(--dropdown-menu-secondary-active-bg);
+  --filter-chip-selected-text: var(--dropdown-menu-secondary-active-text);
+  --filter-chip-selected-icon: var(--dropdown-menu-secondary-active-icon);
+  --filter-header-title: var(--color-text-secondary);
+  --filter-header-gap: 0.75rem;
+  --filter-search-width: 12.5rem;
 
   /* ACE Slider — Figma Sliders (2505:47) */
-  --ace-slider-track-height: 0.625rem;
-  --ace-slider-radius: 4px;
-  --ace-slider-handle-height: 2.25rem;
-  --ace-slider-handle-width: 4px;
-  --ace-slider-handle-width-hover: 8px;
-  --ace-slider-tick-inset: 4px;
-  --ace-slider-tooltip-size: 1.75rem;
-  --ace-slider-track-inactive: #efeef9;
-  --ace-slider-track-border: #523eb9;
-  --ace-slider-range: #523eb9;
-  --ace-slider-handle: #523eb9;
-  --ace-slider-tick-on-range: #efeef9;
-  --ace-slider-tick-on-track: #523eb9;
-  --ace-slider-tooltip-bg: #23262c;
-  --ace-slider-tooltip-text: #fafafb;
-  --ace-slider-track-inactive-disabled: #eff0f2;
-  --ace-slider-track-border-disabled: #cfd2d9;
-  --ace-slider-range-disabled: #cbc5ec;
-  --ace-slider-handle-disabled: #949baa;
-  --ace-slider-focus-ring: var(--screening-primary-ring);
-  --ace-slider-ring-offset: var(--screening-primary-ring-offset);
+  --slider-track-height: 0.625rem;
+  --slider-radius: 4px;
+  --slider-handle-height: 2.25rem;
+  --slider-handle-width: 4px;
+  --slider-handle-width-hover: 8px;
+  --slider-tick-inset: 4px;
+  --slider-tooltip-size: 1.75rem;
+  --slider-track-inactive: var(--color-bg-brand-hover);
+  --slider-track-border: var(--color-action-primary);
+  --slider-range: var(--color-action-primary);
+  --slider-handle: var(--color-action-primary);
+  --slider-tick-on-range: var(--color-bg-brand-hover);
+  --slider-tick-on-track: var(--color-action-primary);
+  --slider-tooltip-bg: var(--color-text-primary);
+  --slider-tooltip-text: var(--color-bg-primary);
+  --slider-track-inactive-disabled: var(--color-neutral-100);
+  --slider-track-border-disabled: var(--color-border-default);
+  --slider-range-disabled: var(--color-primary-100);
+  --slider-handle-disabled: var(--color-neutral-500);
+  --slider-focus-ring: var(--screening-primary-ring);
+  --slider-ring-offset: var(--screening-primary-ring-offset);
 
   /* ACE Radio — Figma Radio Buttons (331:1755) */
-  --ace-radio-bg-inner: #ffffff;
-  --ace-radio-border-default: #23262c;
-  --ace-radio-border-hover: #23262c;
-  --ace-radio-surface-hover: var(--ace-neutral-100);
-  --ace-radio-border-selected: #523eb9;
-  --ace-radio-indicator-selected: #523eb9;
-  --ace-radio-border-disabled: #949baa;
-  --ace-radio-indicator-disabled: #d4d6db;
-  --ace-radio-label-disabled: #949baa;
-  --ace-radio-focus-ring: var(--screening-primary-ring);
-  --ace-radio-focus-offset: var(--screening-primary-ring-offset);
-  --ace-radio-field-border: var(--color-border-default);
-  --ace-radio-field-bg: #ffffff;
-  --ace-radio-field-bg-hover: #efeef9;
-  --ace-radio-field-bg-active: #efeef9;
-  --ace-radio-field-border-active: #523eb9;
-  --ace-radio-field-bg-disabled: #eff0f2;
+  --radio-bg-inner: var(--color-surface-primary);
+  --radio-border-default: var(--color-icon-primary);
+  --radio-border-hover: var(--color-icon-primary);
+  --radio-surface-hover: var(--ace-neutral-100);
+  --radio-border-selected: var(--color-action-primary);
+  --radio-indicator-selected: var(--color-action-primary);
+  --radio-border-disabled: var(--color-icon-disabled);
+  --radio-indicator-disabled: var(--color-neutral-300);
+  --radio-label-disabled: var(--color-icon-disabled);
+  --radio-focus-ring: var(--screening-primary-ring);
+  --radio-focus-offset: var(--screening-primary-ring-offset);
+  --radio-field-border: var(--color-border-default);
+  --radio-field-bg: var(--color-surface-primary);
+  --radio-field-bg-hover: var(--color-bg-brand-hover);
+  --radio-field-bg-active: var(--color-bg-brand-hover);
+  --radio-field-border-active: var(--color-action-primary);
+  --radio-field-bg-disabled: var(--color-neutral-100);
 
   --screening-icon-chevron: 1rem; /* 16px */
   --screening-duration-accordion: 420ms;
   --screening-ease-accordion: cubic-bezier(0.33, 1, 0.68, 1);
 
   /* ACE Accordion — Figma Accordions (332:1500) */
-  --ace-accordion-surface: #ffffff;
-  --ace-accordion-surface-muted: #fafafb;
-  --ace-accordion-border: #cfd2d9;
-  --ace-accordion-radius: 0.25rem;
-  --ace-accordion-px: 1rem;
-  --ace-accordion-py: 0.75rem;
-  --ace-accordion-gap: 1rem;
-  --ace-accordion-title: #23262c;
-  --ace-accordion-tag-bg: #e4e6ea;
-  --ace-accordion-tag-text: #23262c;
-  --ace-accordion-icon: #23262c;
-  --ace-accordion-content-bg: #ffffff;
-  --ace-accordion-duration: 420ms;
-  --ace-accordion-ease: cubic-bezier(0.33, 1, 0.68, 1);
+  --accordion-surface: var(--color-surface-primary);
+  --accordion-surface-muted: var(--color-bg-primary);
+  --accordion-border: var(--color-border-default);
+  --accordion-radius: var(--radius-component-input);
+  --accordion-px: 1rem;
+  --accordion-py: 0.75rem;
+  --accordion-gap: 1rem;
+  --accordion-title: var(--color-text-primary);
+  --accordion-tag-bg: var(--color-bg-tertiary);
+  --accordion-tag-text: var(--color-text-primary);
+  --accordion-icon: var(--color-icon-primary);
+  --accordion-content-bg: var(--color-surface-primary);
+  --accordion-duration: 420ms;
+  --accordion-ease: cubic-bezier(0.33, 1, 0.68, 1);
   /* Lab availability tags — product usage status on component pages */
-  --ace-availability-available-bg: #e8f4ea;
-  --ace-availability-available-border: rgb(46 125 50 / 0.2);
-  --ace-availability-available-text: #2e7d32;
-  --ace-availability-in-progress-bg: var(--ace-notice-100);
-  --ace-availability-in-progress-border: var(--ace-notice-200);
-  --ace-availability-in-progress-text: var(--ace-warning-600);
-  --ace-availability-planned-bg: #f4f1fc;
-  --ace-availability-planned-border: #d6cef5;
-  --ace-availability-planned-text: #523eb9;
+  --availability-tag-available-bg: var(--color-status-success-subtle);
+  --availability-tag-available-border: color-mix(in srgb, var(--color-status-success) 20%, transparent);
+  --availability-tag-available-text: var(--color-status-success);
+  --availability-tag-in-progress-bg: var(--ace-notice-100);
+  --availability-tag-in-progress-border: var(--ace-notice-200);
+  --availability-tag-in-progress-text: var(--ace-warning-600);
+  --availability-tag-planned-bg: var(--color-bg-brand-hover);
+  --availability-tag-planned-border: var(--color-primary-100);
+  --availability-tag-planned-text: var(--color-action-primary);
 
   /* Table pagination — Review Assigned (Figma 102:5124) */
   --screening-pagination-btn-size: 2rem;
   --screening-pagination-btn-radius: 0.1875rem;
   --screening-pagination-gap: 0.25rem;
-  --screening-pagination-page-size-border: #949baa;
+  --screening-pagination-page-size-border: var(--color-neutral-500);
   /* Input — ACE Design System v.3 Figma Input (408:1976); shared with data table search */
   --screening-input-height-sm: 2.25rem; /* 36px */
-  --screening-input-radius: 0.25rem; /* 4px */
+  --screening-input-radius: var(--radius-component-input);
   --screening-input-px: 0.75rem; /* 12px */
   --screening-input-gap: 0.75rem; /* 12px */
-  --screening-input-border: #bcbcca;
+  --screening-input-border: var(--color-border-default);
   /* Focus: 1px inner brand border + 2px outer focus ring (Figma colors/border/brand + border/focus) */
   --screening-input-border-focus: var(--color-border-brand);
   --screening-input-bg-focus: var(--color-bg-brand-hover);
@@ -798,91 +779,587 @@
   --screening-input-placeholder: var(--color-text-placeholder);
 
   /* ACE Input atom — Figma Input (408:1976); semantic aliases for component + lab docs */
-  --ace-input-height-sm: var(--screening-input-height-sm);
-  --ace-input-height-md: 2.75rem; /* 44px */
-  --ace-input-height-lg: 3.25rem; /* 52px */
-  --ace-input-label-gap: 0.375rem; /* 6px — organism stack gap */
-  --ace-input-error-bg: var(--color-bg-error);
-  --ace-input-error-border: var(--color-border-error);
-  --ace-input-error-message: var(--color-status-error);
-  --ace-input-disabled-bg: var(--color-bg-disabled-subtle);
-  --ace-input-disabled-border: var(--color-border-disabled-subtle);
-  --ace-input-disabled-text: var(--color-text-disabled);
-  --ace-input-icon: var(--color-icon-primary);
-  --ace-input-icon-disabled: var(--color-icon-disabled);
+  --input-height-sm: var(--screening-input-height-sm);
+  --input-height-md: 2.75rem; /* 44px */
+  --input-height-lg: 3.25rem; /* 52px */
+  --input-label-gap: 0.375rem; /* 6px — organism stack gap */
+  --input-error-bg: var(--color-bg-error);
+  --input-error-border: var(--color-border-error);
+  --input-error-message: var(--color-status-error);
+  --input-disabled-bg: var(--color-bg-disabled-subtle);
+  --input-disabled-border: var(--color-border-disabled-subtle);
+  --input-disabled-text: var(--color-text-disabled);
+  --input-icon: var(--color-icon-primary);
+  --input-icon-disabled: var(--color-icon-disabled);
 
   /* ACE Progress Indicators — Figma Progress Indicators 414:4109 */
-  --ace-progress-indicator-width: 23.5rem; /* 376px */
-  --ace-progress-indicator-min-height: 9.625rem; /* 154px */
-  --ace-progress-indicator-radius: 0.375rem; /* 6px */
-  --ace-progress-indicator-gap: 1rem;
-  --ace-progress-indicator-action-gap: 1.5rem;
-  --ace-progress-indicator-padding: 1rem;
-  --ace-progress-indicator-bg-brand: var(--ace-button-purple-500);
-  --ace-progress-indicator-bg-surface: var(--screening-surface);
-  --ace-progress-indicator-border: var(--ace-button-purple-500);
-  --ace-progress-indicator-text-on-brand: #fafafb; /* Neutral/50 */
-  --ace-progress-indicator-text-on-surface: var(--ace-button-purple-400);
-  --ace-progress-indicator-spinner-on-brand: #fafafb;
-  --ace-progress-indicator-spinner-on-surface: var(--ace-button-purple-500);
-  --ace-progress-spinner-width: 3.1875rem; /* 51px */
-  --ace-progress-spinner-height: 3.4375rem; /* 55px */
-  --ace-progress-spinner-duration: 2.5s;
+  --progress-indicator-width: 23.5rem; /* 376px */
+  --progress-indicator-min-height: 9.625rem; /* 154px */
+  --progress-indicator-radius: 0.375rem; /* 6px */
+  --progress-indicator-gap: 1rem;
+  --progress-indicator-action-gap: 1.5rem;
+  --progress-indicator-padding: var(--spacing-component-padding-padding-lg);
+  --progress-indicator-bg-brand: var(--color-action-primary);
+  --progress-indicator-bg-surface: var(--screening-surface);
+  --progress-indicator-border: var(--color-action-primary);
+  --progress-indicator-text-on-brand: var(--color-text-inverse);
+  --progress-indicator-text-on-surface: var(--color-text-brand);
+  --progress-indicator-spinner-on-brand: var(--color-text-inverse);
+  --progress-indicator-spinner-on-surface: var(--color-action-primary);
+  --progress-spinner-width: 3.1875rem; /* 51px */
+  --progress-spinner-height: 3.4375rem; /* 55px */
+  --progress-spinner-duration: 2.5s;
 
   /* ACE Buttons — action token fills (Figma Buttons, node 2067:191) */
-  --ace-button-radius: var(--dialog-modal-btn-radius);
-  --ace-button-on-solid: var(--color-text-inverse);
+  --button-radius: var(--radius-component-button);
+  --button-on-solid: var(--color-text-inverse);
   /* Brand / info scale aliases (shared chrome) → color primitives */
-  --ace-button-purple-500: var(--color-primary-500);
-  --ace-button-purple-700: var(--color-primary-700);
-  --ace-button-purple-400: var(--color-primary-400);
-  --ace-button-blue-500: var(--color-blue-500);
-  --ace-button-blue-700: var(--color-blue-700);
-  --ace-button-blue-400: var(--color-blue-400);
-  --ace-button-blue-50: var(--color-blue-50);
-  --ace-button-blue-200: var(--color-blue-200);
-  --ace-button-neutral-400: var(--color-neutral-400);
-  --ace-button-neutral-500: var(--color-neutral-500);
-  --ace-button-neutral-600: var(--color-neutral-600);
+  --button-purple-500: var(--color-primary-500);
+  --button-purple-700: var(--color-primary-700);
+  --button-purple-400: var(--color-primary-400);
+  --button-blue-500: var(--color-blue-500);
+  --button-blue-700: var(--color-blue-700);
+  --button-blue-400: var(--color-blue-400);
+  --button-blue-50: var(--color-blue-50);
+  --button-blue-200: var(--color-blue-200);
+  --button-neutral-400: var(--color-neutral-400);
+  --button-neutral-500: var(--color-neutral-500);
+  --button-neutral-600: var(--color-neutral-600);
   /*
    * Default button fills → colors/action/primary* (AceButton actionTone swaps these).
    * Disabled primary fill always uses colors/action/disabled-button.
    */
-  --ace-button-fill: var(--color-action-primary);
-  --ace-button-fill-hover: var(--color-action-primary-hover);
-  --ace-button-fill-pressed: var(--color-action-primary-pressed);
-  --ace-button-disabled-primary-bg: var(--color-action-disabled-button);
-  --ace-button-disabled-primary-text: var(--color-text-secondary);
-  --ace-button-focus-ring: color-mix(in srgb, var(--color-primary-300) 45%, transparent);
-  --ace-button-px-sm: 0.75rem;
-  --ace-button-py-sm: 0.25rem;
-  --ace-button-gap-sm: 0.5rem;
-  --ace-button-px-md: 1rem;
-  --ace-button-py-md: 0.5rem;
-  --ace-button-gap-md: 0.5rem;
-  --ace-button-px-lg: 1.125rem;
-  --ace-button-py-lg: 0.75rem;
-  --ace-button-gap-lg: 0.75rem;
+  --button-fill: var(--color-action-primary);
+  --button-fill-hover: var(--color-action-primary-hover);
+  --button-fill-pressed: var(--color-action-primary-pressed);
+  --button-disabled-primary-bg: var(--color-action-disabled-button);
+  --button-disabled-primary-text: var(--color-text-secondary);
+  --button-focus-ring: color-mix(in srgb, var(--color-primary-300) 45%, transparent);
+  --button-px-sm: var(--spacing-component-padding-padding-md);
+  --button-py-sm: var(--spacing-component-padding-padding-xs);
+  --button-gap-sm: var(--spacing-component-padding-gap-sm);
+  --button-px-md: var(--spacing-component-padding-padding-lg);
+  --button-py-md: var(--spacing-component-padding-padding-sm);
+  --button-gap-md: var(--spacing-component-padding-gap-sm);
+  --button-px-lg: var(--spacing-component-padding-padding-lg);
+  --button-py-lg: var(--spacing-component-padding-padding-md);
+  --button-gap-lg: var(--spacing-component-padding-gap-md);
 
   /* ACE Descriptive Buttons — Figma ButtonDescriptive 4118:682 */
-  --ace-descriptive-button-width: 16.5rem;
-  --ace-descriptive-button-radius: 0.25rem;
-  --ace-descriptive-button-padding: 0.75rem;
-  --ace-descriptive-button-gap: 0.75rem;
-  --ace-descriptive-button-text-gap: 0.25rem;
-  --ace-descriptive-button-icon-w: 1.25rem;
-  --ace-descriptive-button-icon-h: 1.6875rem;
-  --ace-descriptive-button-bg: var(--color-surface-primary);
-  --ace-descriptive-button-border: var(--color-neutral-400);
-  --ace-descriptive-button-hover-bg: var(--color-primary-100);
-  --ace-descriptive-button-hover-border: var(--color-primary-400);
-  --ace-descriptive-button-active-bg: var(--color-primary-300);
-  --ace-descriptive-button-active-border: transparent;
-  --ace-descriptive-button-disabled-bg: var(--color-neutral-100);
-  --ace-descriptive-button-disabled-border: var(--color-neutral-600);
-  --ace-descriptive-button-text: var(--color-text-primary);
-  --ace-descriptive-button-disabled-text: var(--color-neutral-600);
-  --ace-descriptive-button-focus-ring: var(--ace-button-focus-ring);
+  --button-descriptive-width: 16.5rem;
+  --button-descriptive-radius: var(--radius-component-button);
+  --button-descriptive-padding: var(--spacing-component-padding-padding-md);
+  --button-descriptive-gap: var(--spacing-component-padding-gap-md);
+  --button-descriptive-text-gap: 0.25rem;
+  --button-descriptive-icon-w: 1.25rem;
+  --button-descriptive-icon-h: 1.6875rem;
+  --button-descriptive-bg: var(--color-surface-primary);
+  --button-descriptive-border: var(--color-neutral-400);
+  --button-descriptive-hover-bg: var(--color-primary-100);
+  --button-descriptive-hover-border: var(--color-primary-400);
+  --button-descriptive-active-bg: var(--color-primary-300);
+  --button-descriptive-active-border: transparent;
+  --button-descriptive-disabled-bg: var(--color-neutral-100);
+  --button-descriptive-disabled-border: var(--color-neutral-600);
+  --button-descriptive-text: var(--color-text-primary);
+  --button-descriptive-disabled-text: var(--color-neutral-600);
+  --button-descriptive-focus-ring: var(--button-focus-ring);
+
+
+  /* ace→figma CSS compat aliases (generated) */
+  --ace-accordion-border: var(--accordion-border);
+  --ace-accordion-content-bg: var(--accordion-content-bg);
+  --ace-accordion-duration: var(--accordion-duration);
+  --ace-accordion-ease: var(--accordion-ease);
+  --ace-accordion-gap: var(--accordion-gap);
+  --ace-accordion-icon: var(--accordion-icon);
+  --ace-accordion-px: var(--accordion-px);
+  --ace-accordion-py: var(--accordion-py);
+  --ace-accordion-radius: var(--accordion-radius);
+  --ace-accordion-surface: var(--accordion-surface);
+  --ace-accordion-surface-muted: var(--accordion-surface-muted);
+  --ace-accordion-tag-bg: var(--accordion-tag-bg);
+  --ace-accordion-tag-text: var(--accordion-tag-text);
+  --ace-accordion-title: var(--accordion-title);
+  --ace-attachments-border: var(--attachments-border);
+  --ace-attachments-divider: var(--attachments-divider);
+  --ace-attachments-dropzone-border: var(--attachments-dropzone-border);
+  --ace-attachments-error: var(--attachments-error);
+  --ace-attachments-gap: var(--attachments-gap);
+  --ace-attachments-label: var(--attachments-label);
+  --ace-attachments-link: var(--attachments-link);
+  --ace-attachments-muted: var(--attachments-muted);
+  --ace-attachments-padding: var(--attachments-padding);
+  --ace-attachments-radius: var(--attachments-radius);
+  --ace-attachments-status: var(--attachments-status);
+  --ace-attachments-surface: var(--attachments-surface);
+  --ace-attachments-title: var(--attachments-title);
+  --ace-availability-available-bg: var(--availability-tag-available-bg);
+  --ace-availability-available-border: var(--availability-tag-available-border);
+  --ace-availability-available-text: var(--availability-tag-available-text);
+  --ace-availability-in-progress-bg: var(--availability-tag-in-progress-bg);
+  --ace-availability-in-progress-border: var(--availability-tag-in-progress-border);
+  --ace-availability-in-progress-text: var(--availability-tag-in-progress-text);
+  --ace-availability-planned-bg: var(--availability-tag-planned-bg);
+  --ace-availability-planned-border: var(--availability-tag-planned-border);
+  --ace-availability-planned-text: var(--availability-tag-planned-text);
+  --ace-badge-tag-border: var(--badge-tag-border);
+  --ace-badge-tag-gap: var(--badge-tag-gap);
+  --ace-badge-tag-label: var(--badge-tag-label);
+  --ace-badge-tag-px: var(--badge-tag-px);
+  --ace-badge-tag-py: var(--badge-tag-py);
+  --ace-badge-tag-radius: var(--badge-tag-radius);
+  --ace-badge-tag-surface: var(--badge-tag-surface);
+  --ace-badge-tag-warning-border: var(--badge-tag-warning-border);
+  --ace-badge-tag-warning-icon-bg: var(--badge-tag-warning-icon-bg);
+  --ace-badge-tag-warning-icon-fg: var(--badge-tag-warning-icon-fg);
+  --ace-badge-tag-warning-icon-size: var(--badge-tag-warning-icon-size);
+  --ace-badge-tag-warning-icon-text-size: var(--badge-tag-warning-icon-text-size);
+  --ace-badge-tag-warning-label: var(--badge-tag-warning-label);
+  --ace-badge-tag-warning-surface: var(--badge-tag-warning-surface);
+  --ace-button-blue-200: var(--button-blue-200);
+  --ace-button-blue-400: var(--button-blue-400);
+  --ace-button-blue-50: var(--button-blue-50);
+  --ace-button-blue-500: var(--button-blue-500);
+  --ace-button-blue-700: var(--button-blue-700);
+  --ace-button-disabled-primary-bg: var(--button-disabled-primary-bg);
+  --ace-button-disabled-primary-text: var(--button-disabled-primary-text);
+  --ace-button-fill: var(--button-fill);
+  --ace-button-fill-hover: var(--button-fill-hover);
+  --ace-button-fill-pressed: var(--button-fill-pressed);
+  --ace-button-focus-ring: var(--button-focus-ring);
+  --ace-button-gap-lg: var(--button-gap-lg);
+  --ace-button-gap-md: var(--button-gap-md);
+  --ace-button-gap-sm: var(--button-gap-sm);
+  --ace-button-neutral-400: var(--button-neutral-400);
+  --ace-button-neutral-500: var(--button-neutral-500);
+  --ace-button-neutral-600: var(--button-neutral-600);
+  --ace-button-on-solid: var(--button-on-solid);
+  --ace-button-purple-400: var(--button-purple-400);
+  --ace-button-purple-500: var(--button-purple-500);
+  --ace-button-purple-700: var(--button-purple-700);
+  --ace-button-px-lg: var(--button-px-lg);
+  --ace-button-px-md: var(--button-px-md);
+  --ace-button-px-sm: var(--button-px-sm);
+  --ace-button-py-lg: var(--button-py-lg);
+  --ace-button-py-md: var(--button-py-md);
+  --ace-button-py-sm: var(--button-py-sm);
+  --ace-button-radius: var(--button-radius);
+  --ace-date-picker-day: var(--date-picker-day);
+  --ace-date-picker-day-gap: var(--date-picker-day-gap);
+  --ace-date-picker-day-muted: var(--date-picker-day-muted);
+  --ace-date-picker-day-on-primary: var(--date-picker-day-on-primary);
+  --ace-date-picker-day-size: var(--date-picker-day-size);
+  --ace-date-picker-month-title: var(--date-picker-month-title);
+  --ace-date-picker-panel-width: var(--date-picker-panel-width);
+  --ace-date-picker-panel-width-single: var(--date-picker-panel-width-single);
+  --ace-date-picker-range-fill: var(--date-picker-range-fill);
+  --ace-date-picker-trigger-width: var(--date-picker-trigger-width);
+  --ace-date-picker-weekday: var(--date-picker-weekday);
+  --ace-descriptive-button-active-bg: var(--button-descriptive-active-bg);
+  --ace-descriptive-button-active-border: var(--button-descriptive-active-border);
+  --ace-descriptive-button-bg: var(--button-descriptive-bg);
+  --ace-descriptive-button-border: var(--button-descriptive-border);
+  --ace-descriptive-button-disabled-bg: var(--button-descriptive-disabled-bg);
+  --ace-descriptive-button-disabled-border: var(--button-descriptive-disabled-border);
+  --ace-descriptive-button-disabled-text: var(--button-descriptive-disabled-text);
+  --ace-descriptive-button-focus-ring: var(--button-descriptive-focus-ring);
+  --ace-descriptive-button-gap: var(--button-descriptive-gap);
+  --ace-descriptive-button-hover-bg: var(--button-descriptive-hover-bg);
+  --ace-descriptive-button-hover-border: var(--button-descriptive-hover-border);
+  --ace-descriptive-button-icon-h: var(--button-descriptive-icon-h);
+  --ace-descriptive-button-icon-w: var(--button-descriptive-icon-w);
+  --ace-descriptive-button-padding: var(--button-descriptive-padding);
+  --ace-descriptive-button-radius: var(--button-descriptive-radius);
+  --ace-descriptive-button-text: var(--button-descriptive-text);
+  --ace-descriptive-button-text-gap: var(--button-descriptive-text-gap);
+  --ace-descriptive-button-width: var(--button-descriptive-width);
+  --ace-dropdown-border: var(--dropdown-menu-border);
+  --ace-dropdown-danger: var(--dropdown-menu-danger);
+  --ace-dropdown-icon: var(--dropdown-menu-icon);
+  --ace-dropdown-primary: var(--dropdown-menu-primary);
+  --ace-dropdown-row-emphasis: var(--dropdown-menu-row-emphasis);
+  --ace-dropdown-row-hover: var(--dropdown-menu-row-hover);
+  --ace-dropdown-row-selected: var(--dropdown-menu-row-selected);
+  --ace-dropdown-search-placeholder: var(--dropdown-menu-search-placeholder);
+  --ace-dropdown-secondary-active-bg: var(--dropdown-menu-secondary-active-bg);
+  --ace-dropdown-secondary-active-icon: var(--dropdown-menu-secondary-active-icon);
+  --ace-dropdown-secondary-active-text: var(--dropdown-menu-secondary-active-text);
+  --ace-dropdown-secondary-px: var(--dropdown-menu-secondary-px);
+  --ace-dropdown-secondary-py: var(--dropdown-menu-secondary-py);
+  --ace-dropdown-shadow: var(--dropdown-menu-shadow);
+  --ace-dropdown-surface: var(--dropdown-menu-surface);
+  --ace-dropdown-text: var(--dropdown-menu-text);
+  --ace-dropdown-text-muted: var(--dropdown-menu-text-muted);
+  --ace-dropdown-text-secondary: var(--dropdown-menu-text-secondary);
+  --ace-dropdown-trigger-active-bg: var(--dropdown-menu-trigger-active-bg);
+  --ace-dropdown-trigger-active-border: var(--dropdown-menu-trigger-active-border);
+  --ace-dropdown-trigger-bg: var(--dropdown-menu-trigger-bg);
+  --ace-dropdown-trigger-border: var(--dropdown-menu-trigger-border);
+  --ace-dropdown-trigger-focus-ring: var(--dropdown-menu-trigger-focus-ring);
+  --ace-dropdown-trigger-icon: var(--dropdown-menu-trigger-icon);
+  --ace-dropdown-trigger-label: var(--dropdown-menu-trigger-label);
+  --ace-dropdown-trigger-px: var(--dropdown-menu-trigger-px);
+  --ace-dropdown-trigger-py: var(--dropdown-menu-trigger-py);
+  --ace-dropdown-trigger-radius: var(--dropdown-menu-trigger-radius);
+  --ace-dropdown-trigger-text: var(--dropdown-menu-trigger-text);
+  --ace-dropdown-trigger-width: var(--dropdown-menu-trigger-width);
+  --ace-filter-chip-bg: var(--filter-chip-bg);
+  --ace-filter-chip-border: var(--filter-chip-border);
+  --ace-filter-chip-clear: var(--filter-chip-clear);
+  --ace-filter-chip-icon: var(--filter-chip-icon);
+  --ace-filter-chip-selected-bg: var(--filter-chip-selected-bg);
+  --ace-filter-chip-selected-icon: var(--filter-chip-selected-icon);
+  --ace-filter-chip-selected-text: var(--filter-chip-selected-text);
+  --ace-filter-chip-text: var(--filter-chip-text);
+  --ace-filter-gap: var(--filter-gap);
+  --ace-filter-header-gap: var(--filter-header-gap);
+  --ace-filter-header-title: var(--filter-header-title);
+  --ace-filter-px: var(--filter-px);
+  --ace-filter-py: var(--filter-py);
+  --ace-filter-radius: var(--filter-radius);
+  --ace-filter-search-width: var(--filter-search-width);
+  --ace-filter-trigger-active-bg: var(--filter-trigger-active-bg);
+  --ace-filter-trigger-active-text: var(--filter-trigger-active-text);
+  --ace-filter-trigger-bg: var(--filter-trigger-bg);
+  --ace-filter-trigger-border: var(--filter-trigger-border);
+  --ace-filter-trigger-text: var(--filter-trigger-text);
+  --ace-icon-button-border: var(--icon-button-border);
+  --ace-icon-button-hover-bg: var(--icon-button-hover-bg);
+  --ace-icon-button-icon: var(--icon-button-icon);
+  --ace-icon-button-icon-rest-ghost: var(--icon-button-icon-rest-ghost);
+  --ace-icon-button-surface: var(--icon-button-surface);
+  --ace-inline-drawer-body-px: var(--inline-drawer-body-px);
+  --ace-inline-drawer-body-py: var(--inline-drawer-body-py);
+  --ace-inline-drawer-border: var(--inline-drawer-border);
+  --ace-inline-drawer-duration-panel: var(--inline-drawer-duration-panel);
+  --ace-inline-drawer-footer-gap: var(--inline-drawer-footer-gap);
+  --ace-inline-drawer-header-px: var(--inline-drawer-header-px);
+  --ace-inline-drawer-header-py: var(--inline-drawer-header-py);
+  --ace-inline-drawer-section-gap: var(--inline-drawer-section-gap);
+  --ace-inline-drawer-shadow: var(--inline-drawer-shadow);
+  --ace-inline-drawer-width: var(--inline-drawer-width);
+  --ace-inline-message-error-bg: var(--inline-message-error-bg);
+  --ace-inline-message-error-border: var(--inline-message-error-border);
+  --ace-inline-message-error-icon: var(--inline-message-error-icon);
+  --ace-inline-message-gap: var(--inline-message-gap);
+  --ace-inline-message-info-bg: var(--inline-message-info-bg);
+  --ace-inline-message-info-border: var(--inline-message-info-border);
+  --ace-inline-message-info-icon: var(--inline-message-info-icon);
+  --ace-inline-message-px: var(--inline-message-px);
+  --ace-inline-message-py: var(--inline-message-py);
+  --ace-inline-message-radius: var(--inline-message-radius);
+  --ace-inline-message-success-bg: var(--inline-message-success-bg);
+  --ace-inline-message-success-border: var(--inline-message-success-border);
+  --ace-inline-message-success-icon: var(--inline-message-success-icon);
+  --ace-inline-message-text: var(--inline-message-text);
+  --ace-inline-message-warning-bg: var(--inline-message-warning-bg);
+  --ace-inline-message-warning-border: var(--inline-message-warning-border);
+  --ace-inline-message-warning-icon: var(--inline-message-warning-icon);
+  --ace-input-disabled-bg: var(--input-disabled-bg);
+  --ace-input-disabled-border: var(--input-disabled-border);
+  --ace-input-disabled-text: var(--input-disabled-text);
+  --ace-input-error-bg: var(--input-error-bg);
+  --ace-input-error-border: var(--input-error-border);
+  --ace-input-error-message: var(--input-error-message);
+  --ace-input-height-lg: var(--input-height-lg);
+  --ace-input-height-md: var(--input-height-md);
+  --ace-input-height-sm: var(--input-height-sm);
+  --ace-input-icon: var(--input-icon);
+  --ace-input-icon-disabled: var(--input-icon-disabled);
+  --ace-input-label-gap: var(--input-label-gap);
+  --ace-landing-page-card-body-color: var(--landing-page-card-body-color);
+  --ace-landing-page-card-body-px: var(--landing-page-card-body-px);
+  --ace-landing-page-card-body-py-desc: var(--landing-page-card-body-py-desc);
+  --ace-landing-page-card-body-py-stats: var(--landing-page-card-body-py-stats);
+  --ace-landing-page-card-body-py-stats-bottom: var(--landing-page-card-body-py-stats-bottom);
+  --ace-landing-page-card-border: var(--landing-page-card-border);
+  --ace-landing-page-card-divider: var(--landing-page-card-divider);
+  --ace-landing-page-card-footer-bg: var(--landing-page-card-footer-bg);
+  --ace-landing-page-card-footer-px: var(--landing-page-card-footer-px);
+  --ace-landing-page-card-footer-py: var(--landing-page-card-footer-py);
+  --ace-landing-page-card-footer-stat-color: var(--landing-page-card-footer-stat-color);
+  --ace-landing-page-card-header-px: var(--landing-page-card-header-px);
+  --ace-landing-page-card-header-py: var(--landing-page-card-header-py);
+  --ace-landing-page-card-icon-color: var(--landing-page-card-icon-color);
+  --ace-landing-page-card-link-color: var(--landing-page-card-link-color);
+  --ace-landing-page-card-min-height: var(--landing-page-card-min-height);
+  --ace-landing-page-card-radius: var(--landing-page-card-radius);
+  --ace-landing-page-card-shadow: var(--landing-page-card-shadow);
+  --ace-landing-page-card-shadow-hover: var(--landing-page-card-shadow-hover);
+  --ace-landing-page-card-surface: var(--landing-page-card-surface);
+  --ace-landing-page-card-tag-bg: var(--landing-page-card-tag-bg);
+  --ace-landing-page-card-tag-border: var(--landing-page-card-tag-border);
+  --ace-landing-page-card-tag-text: var(--landing-page-card-tag-text);
+  --ace-landing-page-card-title-color: var(--landing-page-card-title-color);
+  --ace-landing-page-card-width: var(--landing-page-card-width);
+  --ace-page-header-bg: var(--page-header-bg);
+  --ace-page-header-border: var(--page-header-border);
+  --ace-page-header-px: var(--page-header-px);
+  --ace-page-header-py: var(--page-header-py);
+  --ace-progress-indicator-action-gap: var(--progress-indicator-action-gap);
+  --ace-progress-indicator-bg-brand: var(--progress-indicator-bg-brand);
+  --ace-progress-indicator-bg-surface: var(--progress-indicator-bg-surface);
+  --ace-progress-indicator-border: var(--progress-indicator-border);
+  --ace-progress-indicator-gap: var(--progress-indicator-gap);
+  --ace-progress-indicator-min-height: var(--progress-indicator-min-height);
+  --ace-progress-indicator-padding: var(--progress-indicator-padding);
+  --ace-progress-indicator-radius: var(--progress-indicator-radius);
+  --ace-progress-indicator-spinner-on-brand: var(--progress-indicator-spinner-on-brand);
+  --ace-progress-indicator-spinner-on-surface: var(--progress-indicator-spinner-on-surface);
+  --ace-progress-indicator-text-on-brand: var(--progress-indicator-text-on-brand);
+  --ace-progress-indicator-text-on-surface: var(--progress-indicator-text-on-surface);
+  --ace-progress-indicator-width: var(--progress-indicator-width);
+  --ace-progress-spinner-duration: var(--progress-spinner-duration);
+  --ace-progress-spinner-height: var(--progress-spinner-height);
+  --ace-progress-spinner-width: var(--progress-spinner-width);
+  --ace-radio-bg-inner: var(--radio-bg-inner);
+  --ace-radio-border-default: var(--radio-border-default);
+  --ace-radio-border-disabled: var(--radio-border-disabled);
+  --ace-radio-border-hover: var(--radio-border-hover);
+  --ace-radio-border-selected: var(--radio-border-selected);
+  --ace-radio-field-bg: var(--radio-field-bg);
+  --ace-radio-field-bg-active: var(--radio-field-bg-active);
+  --ace-radio-field-bg-disabled: var(--radio-field-bg-disabled);
+  --ace-radio-field-bg-hover: var(--radio-field-bg-hover);
+  --ace-radio-field-border: var(--radio-field-border);
+  --ace-radio-field-border-active: var(--radio-field-border-active);
+  --ace-radio-focus-offset: var(--radio-focus-offset);
+  --ace-radio-focus-ring: var(--radio-focus-ring);
+  --ace-radio-indicator-disabled: var(--radio-indicator-disabled);
+  --ace-radio-indicator-selected: var(--radio-indicator-selected);
+  --ace-radio-label-disabled: var(--radio-label-disabled);
+  --ace-radio-surface-hover: var(--radio-surface-hover);
+  --ace-scrollable-list-border: var(--scrollable-list-border);
+  --ace-scrollable-list-icon: var(--scrollable-list-icon);
+  --ace-scrollable-list-item-hover-bg: var(--scrollable-list-item-hover-bg);
+  --ace-scrollable-list-item-selected-bg: var(--scrollable-list-item-selected-bg);
+  --ace-scrollable-list-item-text: var(--scrollable-list-item-text);
+  --ace-scrollable-list-surface: var(--scrollable-list-surface);
+  --ace-scrollable-list-title: var(--scrollable-list-title);
+  --ace-sidebar-border: var(--sidebar-border);
+  --ace-sidebar-border-accent: var(--sidebar-border-accent);
+  --ace-sidebar-control-width: var(--sidebar-control-width);
+  --ace-sidebar-duration-expand: var(--sidebar-duration-expand);
+  --ace-sidebar-duration-panel: var(--sidebar-duration-panel);
+  --ace-sidebar-group-expanded-border: var(--sidebar-group-expanded-border);
+  --ace-sidebar-group-gap: var(--sidebar-group-gap);
+  --ace-sidebar-group-hover-bg: var(--sidebar-group-hover-bg);
+  --ace-sidebar-heading-bg: var(--sidebar-heading-bg);
+  --ace-sidebar-heading-border: var(--sidebar-heading-border);
+  --ace-sidebar-item-hover-bg: var(--sidebar-item-hover-bg);
+  --ace-sidebar-item-radius: var(--sidebar-item-radius);
+  --ace-sidebar-item-selected-bg: var(--sidebar-item-selected-bg);
+  --ace-sidebar-item-selected-text: var(--sidebar-item-selected-text);
+  --ace-sidebar-menu-icon: var(--sidebar-menu-icon);
+  --ace-sidebar-nav-px: var(--sidebar-nav-px);
+  --ace-sidebar-nav-py: var(--sidebar-nav-py);
+  --ace-sidebar-row-action-hover-bg: var(--sidebar-row-action-hover-bg);
+  --ace-sidebar-shadow: var(--sidebar-shadow);
+  --ace-sidebar-width: var(--sidebar-width);
+  --ace-site-header-actions-gap: var(--site-header-actions-gap);
+  --ace-site-header-border: var(--site-header-border);
+  --ace-site-header-greeting-color: var(--site-header-greeting-color);
+  --ace-site-header-height: var(--site-header-height);
+  --ace-site-header-icon-help-size: var(--site-header-icon-help-size);
+  --ace-site-header-icon-notifications-height: var(--site-header-icon-notifications-height);
+  --ace-site-header-icon-notifications-width: var(--site-header-icon-notifications-width);
+  --ace-site-header-logo-gap: var(--site-header-logo-gap);
+  --ace-site-header-nav-gap: var(--site-header-nav-gap);
+  --ace-site-header-nav-hover: var(--site-header-nav-hover);
+  --ace-site-header-px: var(--site-header-px);
+  --ace-site-header-py: var(--site-header-py);
+  --ace-site-header-surface: var(--site-header-surface);
+  --ace-site-header-toolbar-gap: var(--site-header-toolbar-gap);
+  --ace-site-header-toolbar-icon-color: var(--site-header-toolbar-icon-color);
+  --ace-slider-focus-ring: var(--slider-focus-ring);
+  --ace-slider-handle: var(--slider-handle);
+  --ace-slider-handle-disabled: var(--slider-handle-disabled);
+  --ace-slider-handle-height: var(--slider-handle-height);
+  --ace-slider-handle-width: var(--slider-handle-width);
+  --ace-slider-handle-width-hover: var(--slider-handle-width-hover);
+  --ace-slider-radius: var(--slider-radius);
+  --ace-slider-range: var(--slider-range);
+  --ace-slider-range-disabled: var(--slider-range-disabled);
+  --ace-slider-ring-offset: var(--slider-ring-offset);
+  --ace-slider-tick-inset: var(--slider-tick-inset);
+  --ace-slider-tick-on-range: var(--slider-tick-on-range);
+  --ace-slider-tick-on-track: var(--slider-tick-on-track);
+  --ace-slider-tooltip-bg: var(--slider-tooltip-bg);
+  --ace-slider-tooltip-size: var(--slider-tooltip-size);
+  --ace-slider-tooltip-text: var(--slider-tooltip-text);
+  --ace-slider-track-border: var(--slider-track-border);
+  --ace-slider-track-border-disabled: var(--slider-track-border-disabled);
+  --ace-slider-track-height: var(--slider-track-height);
+  --ace-slider-track-inactive: var(--slider-track-inactive);
+  --ace-slider-track-inactive-disabled: var(--slider-track-inactive-disabled);
+  --ace-status-pill-blue-border: var(--badge-blue-border);
+  --ace-status-pill-blue-dot: var(--badge-blue-dot);
+  --ace-status-pill-blue-label: var(--badge-blue-label);
+  --ace-status-pill-blue-surface: var(--badge-blue-surface);
+  --ace-status-pill-dot-size: var(--badge-dot-size);
+  --ace-status-pill-gap: var(--badge-gap);
+  --ace-status-pill-gray-border: var(--badge-gray-border);
+  --ace-status-pill-gray-dot: var(--badge-gray-dot);
+  --ace-status-pill-gray-label: var(--badge-gray-label);
+  --ace-status-pill-gray-surface: var(--badge-gray-surface);
+  --ace-status-pill-green-border: var(--badge-green-border);
+  --ace-status-pill-green-dot: var(--badge-green-dot);
+  --ace-status-pill-green-label: var(--badge-green-label);
+  --ace-status-pill-green-surface: var(--badge-green-surface);
+  --ace-status-pill-label-leading: var(--badge-label-leading);
+  --ace-status-pill-label-size: var(--badge-label-size);
+  --ace-status-pill-orange-border: var(--badge-orange-border);
+  --ace-status-pill-orange-dot: var(--badge-orange-dot);
+  --ace-status-pill-orange-label: var(--badge-orange-label);
+  --ace-status-pill-orange-surface: var(--badge-orange-surface);
+  --ace-status-pill-pink-border: var(--badge-pink-border);
+  --ace-status-pill-pink-dot: var(--badge-pink-dot);
+  --ace-status-pill-pink-label: var(--badge-pink-label);
+  --ace-status-pill-pink-surface: var(--badge-pink-surface);
+  --ace-status-pill-pl: var(--badge-pl);
+  --ace-status-pill-pr: var(--badge-pr);
+  --ace-status-pill-purple-border: var(--badge-purple-border);
+  --ace-status-pill-purple-dot: var(--badge-purple-dot);
+  --ace-status-pill-purple-label: var(--badge-purple-label);
+  --ace-status-pill-purple-surface: var(--badge-purple-surface);
+  --ace-status-pill-px: var(--badge-px);
+  --ace-status-pill-py: var(--badge-py);
+  --ace-status-pill-radius: var(--badge-radius);
+  --ace-status-pill-red-border: var(--badge-red-border);
+  --ace-status-pill-red-dot: var(--badge-red-dot);
+  --ace-status-pill-red-label: var(--badge-red-label);
+  --ace-status-pill-red-surface: var(--badge-red-surface);
+  --ace-status-pill-teal-border: var(--badge-teal-border);
+  --ace-status-pill-teal-dot: var(--badge-teal-dot);
+  --ace-status-pill-teal-label: var(--badge-teal-label);
+  --ace-status-pill-teal-surface: var(--badge-teal-surface);
+  --ace-status-pill-yellow-border: var(--badge-yellow-border);
+  --ace-status-pill-yellow-dot: var(--badge-yellow-dot);
+  --ace-status-pill-yellow-label: var(--badge-yellow-label);
+  --ace-status-pill-yellow-surface: var(--badge-yellow-surface);
+  --ace-sub-header-back: var(--sub-header-back);
+  --ace-sub-header-bg: var(--sub-header-bg);
+  --ace-sub-header-border: var(--sub-header-border);
+  --ace-sub-header-drilldown-pl: var(--sub-header-drilldown-pl);
+  --ace-sub-header-height: var(--sub-header-height);
+  --ace-sub-header-px: var(--sub-header-px);
+  --ace-sub-header-py: var(--sub-header-py);
+  --ace-sub-header-radius: var(--sub-header-radius);
+  --ace-sub-header-stat-separator: var(--sub-header-stat-separator);
+  --ace-tab-card-border-active: var(--tab-card-border-active);
+  --ace-tab-card-border-default: var(--tab-card-border-default);
+  --ace-tab-card-description-color: var(--tab-card-description-color);
+  --ace-tab-card-gap: var(--tab-card-gap);
+  --ace-tab-card-icon-primary: var(--tab-card-icon-primary);
+  --ace-tab-card-max-width: var(--tab-card-max-width);
+  --ace-tab-card-padding: var(--tab-card-padding);
+  --ace-tab-card-radius: var(--tab-card-radius);
+  --ace-tab-card-subtitle-color: var(--tab-card-subtitle-color);
+  --ace-tab-card-surface-default: var(--tab-card-surface-default);
+  --ace-tab-card-surface-emphasis: var(--tab-card-surface-emphasis);
+  --ace-tab-card-title-color: var(--tab-card-title-color);
+  --ace-tabs-gap: var(--tabs-gap);
+  --ace-tabs-indicator-bg: var(--tabs-indicator-bg);
+  --ace-tabs-indicator-height: var(--tabs-indicator-height);
+  --ace-tabs-indicator-radius: var(--tabs-indicator-radius);
+  --ace-tabs-text-active: var(--tabs-text-active);
+  --ace-tabs-text-inactive: var(--tabs-text-inactive);
+  --ace-tabs-vertical-gap: var(--tabs-vertical-gap);
+  --ace-tabs-vertical-inactive-px: var(--tabs-vertical-inactive-px);
+  --ace-tabs-vertical-indicator-height: var(--tabs-vertical-indicator-height);
+  --ace-tabs-vertical-indicator-width: var(--tabs-vertical-indicator-width);
+  --ace-task-bar-border: var(--task-bar-border);
+  --ace-task-bar-px: var(--task-bar-px);
+  --ace-task-bar-py: var(--task-bar-py);
+  --ace-task-bar-shadow: var(--task-bar-shadow);
+  --ace-task-bar-surface: var(--task-bar-surface);
+  --ace-time-picker-panel-width: var(--time-picker-panel-width);
+  --ace-time-picker-trigger-width: var(--time-picker-trigger-width);
+  --ace-timeline-body-bg: var(--timeline-body-bg);
+  --ace-timeline-border: var(--timeline-border);
+  --ace-timeline-expanded-bg: var(--timeline-expanded-bg);
+  --ace-timeline-highlight-blocked: var(--timeline-highlight-blocked);
+  --ace-timeline-highlight-escalation: var(--timeline-highlight-escalation);
+  --ace-timeline-highlight-pending: var(--timeline-highlight-pending);
+  --ace-timeline-highlight-safe: var(--timeline-highlight-safe);
+  --ace-timeline-highlight-system: var(--timeline-highlight-system);
+  --ace-timeline-icon-blocked: var(--timeline-icon-blocked);
+  --ace-timeline-icon-escalation: var(--timeline-icon-escalation);
+  --ace-timeline-icon-glyph: var(--timeline-icon-glyph);
+  --ace-timeline-icon-glyph-size: var(--timeline-icon-glyph-size);
+  --ace-timeline-icon-glyph-size-hover: var(--timeline-icon-glyph-size-hover);
+  --ace-timeline-icon-pending: var(--timeline-icon-pending);
+  --ace-timeline-icon-safe: var(--timeline-icon-safe);
+  --ace-timeline-icon-size: var(--timeline-icon-size);
+  --ace-timeline-icon-size-hover: var(--timeline-icon-size-hover);
+  --ace-timeline-icon-system: var(--timeline-icon-system);
+  --ace-timeline-item-gap: var(--timeline-item-gap);
+  --ace-timeline-item-padding: var(--timeline-item-padding);
+  --ace-timeline-link: var(--timeline-link);
+  --ace-timeline-link-hover: var(--timeline-link-hover);
+  --ace-timeline-padding: var(--timeline-padding);
+  --ace-timeline-radius: var(--timeline-radius);
+  --ace-timeline-section-gap: var(--timeline-section-gap);
+  --ace-timeline-separator: var(--timeline-separator);
+  --ace-timeline-sort-bg: var(--timeline-sort-bg);
+  --ace-timeline-sort-width: var(--timeline-sort-width);
+  --ace-timeline-subtitle: var(--timeline-subtitle);
+  --ace-timeline-title: var(--timeline-title);
+  --ace-toast-action-gap: var(--toast-message-action-gap);
+  --ace-toast-action-text: var(--toast-message-action-text);
+  --ace-toast-action-text-hover: var(--toast-message-action-text-hover);
+  --ace-toast-bg: var(--toast-message-bg);
+  --ace-toast-body-indent: var(--toast-message-body-indent);
+  --ace-toast-border: var(--toast-message-border);
+  --ace-toast-confirm-bg: var(--toast-message-confirm-bg);
+  --ace-toast-confirm-bg-hover: var(--toast-message-confirm-bg-hover);
+  --ace-toast-confirm-px: var(--toast-message-confirm-px);
+  --ace-toast-confirm-py: var(--toast-message-confirm-py);
+  --ace-toast-confirm-radius: var(--toast-message-confirm-radius);
+  --ace-toast-confirm-text: var(--toast-message-confirm-text);
+  --ace-toast-dismiss-icon: var(--toast-message-dismiss-icon);
+  --ace-toast-dismiss-icon-hover: var(--toast-message-dismiss-icon-hover);
+  --ace-toast-gap: var(--toast-message-gap);
+  --ace-toast-icon-error: var(--toast-message-icon-error);
+  --ace-toast-icon-glyph: var(--toast-message-icon-glyph);
+  --ace-toast-icon-info: var(--toast-message-icon-info);
+  --ace-toast-icon-success: var(--toast-message-icon-success);
+  --ace-toast-icon-warning: var(--toast-message-icon-warning);
+  --ace-toast-progress-fill: var(--toast-message-progress-fill);
+  --ace-toast-progress-height: var(--toast-message-progress-height);
+  --ace-toast-progress-track: var(--toast-message-progress-track);
+  --ace-toast-px: var(--toast-message-px);
+  --ace-toast-py: var(--toast-message-py);
+  --ace-toast-radius: var(--toast-message-radius);
+  --ace-toast-shadow: var(--toast-message-shadow);
+  --ace-toast-text: var(--toast-message-text);
+  --ace-toast-width: var(--toast-message-width);
+  --ace-toggle-duration: var(--toggle-duration);
+  --ace-toggle-ease: var(--toggle-ease);
+  --ace-toggle-focus-ring: var(--toggle-focus-ring);
+  --ace-toggle-icon-glyph-off: var(--toggle-icon-glyph-off);
+  --ace-toggle-icon-glyph-on: var(--toggle-icon-glyph-on);
+  --ace-toggle-ring-offset: var(--toggle-ring-offset);
+  --ace-toggle-thumb: var(--toggle-thumb);
+  --ace-toggle-thumb-disabled: var(--toggle-thumb-disabled);
+  --ace-toggle-track-disabled-off: var(--toggle-track-disabled-off);
+  --ace-toggle-track-disabled-on: var(--toggle-track-disabled-on);
+  --ace-toggle-track-off: var(--toggle-track-off);
+  --ace-toggle-track-off-hover: var(--toggle-track-off-hover);
+  --ace-toggle-track-on: var(--toggle-track-on);
+  --ace-toggle-track-on-hover: var(--toggle-track-on-hover);
+  --ace-toggle-track-padding: var(--toggle-track-padding);
+  --ace-tooltip-border: var(--tooltip-border);
+  --ace-tooltip-duration: var(--tooltip-duration);
+  --ace-tooltip-ease: var(--tooltip-ease);
+  --ace-tooltip-px: var(--tooltip-px);
+  --ace-tooltip-py: var(--tooltip-py);
+  --ace-tooltip-radius: var(--tooltip-radius);
+  --ace-tooltip-shadow: var(--tooltip-shadow);
+  --ace-tooltip-surface: var(--tooltip-surface);
+  --ace-tooltip-text: var(--tooltip-text);
+
 }
 
 [data-theme='dark'] {
@@ -892,260 +1369,208 @@
   --color-text-muted: var(--screening-text-muted);
   --color-border: var(--color-border-default);
   --color-accent: var(--screening-primary);
-  --ace-sidebar-item-selected-text: var(--screening-chip-active-text);
-  --ace-sidebar-border-accent: var(--screening-primary-hover-border);
-    --screening-surface: var(--ace-dark-mode-800);
-    --screening-surface-muted: var(--ace-dark-mode-900);
-    --screening-surface-hover: var(--ace-dark-mode-200);
-    --screening-surface-row-muted: var(--ace-dark-mode-700);
-    --screening-surface-expanded: var(--ace-dark-mode-900);
-    --screening-surface-selected: rgb(56 65 74 / 0.45);
-    --screening-expand-rail: rgb(155 142 212 / 0.35);
-    --screening-border: var(--screening-border-strong);
-    --screening-border-strong: var(--ace-button-neutral-400);
-    --screening-border-row: var(--ace-dark-mode-500);
-    --screening-border-soft: var(--ace-button-neutral-400);
-    --screening-text-primary: #b6c2cf;
-    --screening-text-secondary: #9fadbc;
-    --screening-text-muted: #8696a7;
-    --screening-primary-ring-offset: var(--ace-dark-mode-800);
-    --screening-icon-muted: #8696a7;
-    --screening-progress-track: var(--ace-dark-mode-700);
-    --screening-chip-inactive-bg: var(--ace-dark-mode-800);
+  --sidebar-item-selected-text: var(--screening-chip-active-text);
+  --sidebar-border-accent: var(--color-primary-300);
+    /* Screening surfaces follow Semantic dark (--color-surface-* / --color-bg-*) */
+    --screening-surface: var(--color-surface-primary);
+    --screening-surface-muted: var(--color-bg-primary);
+    --screening-surface-hover: var(--color-bg-secondary);
+    --screening-surface-row-muted: var(--color-bg-tertiary);
+    --screening-surface-expanded: var(--color-bg-primary);
+    --screening-surface-selected: color-mix(in srgb, var(--color-bg-brand-hover) 45%, transparent);
+    --screening-expand-rail: color-mix(in srgb, var(--color-action-primary) 35%, transparent);
+    --screening-border: var(--color-border-default);
+    --screening-border-strong: var(--color-border-default);
+    --screening-border-row: var(--color-border-subtle);
+    --screening-border-soft: var(--color-border-subtle);
+    --screening-text-primary: var(--color-text-primary);
+    --screening-text-secondary: var(--color-text-secondary);
+    --screening-text-muted: var(--color-text-disabled);
+    --screening-primary-ring-offset: var(--color-surface-primary);
+    --screening-icon-muted: var(--color-icon-secondary);
+    --screening-progress-track: var(--color-bg-tertiary);
+    --screening-chip-inactive-bg: var(--color-surface-primary);
     --screening-chip-inactive-border: var(--color-border-default);
-    --screening-chip-inactive-hover-bg: #2c333a;
-    --screening-chip-inactive-hover-border: #5c6773;
-    --screening-primary-soft-bg: #2a2540;
-    --screening-primary-soft-bg-hover: #352f4d;
-    --screening-primary-hover-border: #9b8ed4;
-    --screening-pill-new-border: #4a4068;
-    --screening-pill-new-surface: #2a2540;
-    --screening-pill-new-dot: var(--screening-primary);
-    --screening-pill-new-label: var(--screening-chip-active-text);
-    --screening-chip-active-text: #dcd7e8;
-    --screening-chip-active-border: #7c6bc4;
+    --screening-chip-inactive-hover-bg: var(--color-bg-secondary);
+    --screening-chip-inactive-hover-border: var(--color-neutral-500);
+    --screening-primary-soft-bg: var(--color-bg-brand-hover);
+    --screening-primary-soft-bg-hover: var(--color-action-primary-hover-subtle);
+    --screening-primary-hover-border: var(--color-action-primary-hover);
+    --screening-pill-new-border: var(--color-badges-purple-border);
+    --screening-pill-new-surface: var(--color-badges-purple-fill);
+    --screening-pill-new-dot: var(--color-badges-purple-border);
+    --screening-pill-new-label: var(--color-badges-purple-border);
+    --screening-chip-active-text: var(--color-text-brand);
+    --screening-chip-active-border: var(--color-border-brand);
     /* Checkbox / Toggle colors follow color-tokens.css semantic dark mappings via light aliases above. */
-    --ace-toast-bg: var(--ace-dark-mode-800);
-    --ace-toast-border: var(--color-border-default);
-    --ace-toast-shadow: var(--ace-drop-shadow-md);
-    --ace-toast-dismiss-icon: var(--ace-neutral-400);
-    --ace-timeline-surface: var(--ace-dark-mode-800);
-    --ace-timeline-sort-bg: var(--ace-dark-mode-800);
-    --ace-timeline-expanded-bg: var(--ace-dark-mode-700);
-    --ace-timeline-body-bg: var(--ace-dark-mode-800);
-    --ace-timeline-border: var(--color-border-default);
-    --ace-slider-track-inactive: #2a2540;
-    --ace-slider-track-border: #7c6bc4;
-    --ace-slider-range: #7c6bc4;
-    --ace-slider-handle: #7c6bc4;
-    --ace-slider-tick-on-range: #efeef9;
-    --ace-slider-tick-on-track: #9b8ed4;
-    --ace-slider-tooltip-bg: var(--ace-dark-mode-800);
-    --ace-slider-tooltip-text: #fafafb;
-    --ace-slider-track-inactive-disabled: var(--ace-dark-mode-700);
-    --ace-slider-track-border-disabled: #454c59;
-    --ace-slider-range-disabled: #3d3658;
-    --ace-slider-handle-disabled: #5c6773;
-    --ace-radio-bg-inner: var(--ace-dark-mode-800);
-    --ace-radio-border-default: #b6c2cf;
-    --ace-radio-border-hover: #b6c2cf;
-    --ace-radio-surface-hover: var(--ace-neutral-100);
-    --ace-radio-border-selected: #7c6bc4;
-    --ace-radio-indicator-selected: #9b8ed4;
-    --ace-radio-border-disabled: #5c6773;
-    --ace-radio-indicator-disabled: #454c59;
-    --ace-radio-label-disabled: #8696a7;
-    --ace-radio-field-border: var(--color-border-default);
-    --ace-radio-field-bg: var(--ace-dark-mode-800);
-    --ace-radio-field-bg-hover: #2a2540;
-    --ace-radio-field-bg-active: #2a2540;
-    --ace-radio-field-border-active: #7c6bc4;
-    --ace-radio-field-bg-disabled: var(--ace-dark-mode-900);
-    --screening-primary: #9b8ed4;
-    --screening-primary-hover-border: #b5aae0;
-    --screening-primary-ring: rgb(155 142 212 / 0.45);
-    --screening-text-on-primary: #ffffff;
-    /* Input colors resolve via --color-* semantic tokens (color-tokens.css dark theme) */
-    --ace-success-50: #1a2210;
-    --ace-error-50: #3d2529;
-    --ace-warning-50: #3a2a1c;
-    /* Notice yellow — keep soft amber fills readable with dark text tokens */
-    --ace-notice-50: #342e14;
-    --ace-notice-100: #4a4018;
-    --ace-notice-200: #5c4f1e;
-    --ace-button-blue-50: var(--color-blue-900);
+    --toast-message-bg: var(--color-surface-primary);
+    --toast-message-border: var(--color-border-default);
+    --toast-message-dismiss-icon: var(--color-icon-secondary);
+    --timeline-surface: var(--ace-dark-mode-800);
+    --timeline-sort-bg: var(--color-surface-primary);
+    --timeline-expanded-bg: var(--color-bg-primary);
+    --timeline-body-bg: var(--color-surface-primary);
+    --timeline-border: var(--color-border-default);
+    --slider-track-inactive: var(--color-bg-brand-hover);
+    --slider-track-border: var(--color-action-primary);
+    --slider-range: var(--color-action-primary);
+    --slider-handle: var(--color-action-primary);
+    --slider-tick-on-range: var(--color-bg-brand-hover);
+    --slider-tick-on-track: var(--color-action-primary);
+    --slider-tooltip-bg: var(--color-text-primary);
+    --slider-tooltip-text: var(--color-bg-primary);
+    --slider-track-inactive-disabled: var(--color-neutral-100);
+    --slider-track-border-disabled: var(--color-border-default);
+    --slider-range-disabled: var(--color-primary-100);
+    --slider-handle-disabled: var(--color-neutral-500);
+    --radio-bg-inner: var(--color-surface-primary);
+    --radio-border-default: var(--color-icon-primary);
+    --radio-border-hover: var(--color-icon-primary);
+    --radio-border-selected: var(--color-action-primary);
+    --radio-indicator-selected: var(--color-action-primary);
+    --radio-border-disabled: var(--color-icon-disabled);
+    --radio-indicator-disabled: var(--color-neutral-700);
+    --radio-label-disabled: var(--color-icon-disabled);
+    --radio-field-border: var(--color-border-default);
+    --radio-field-bg: var(--color-surface-primary);
+    --radio-field-bg-hover: var(--color-bg-brand-hover);
+    --radio-field-bg-active: var(--color-bg-brand-hover);
+    --radio-field-border-active: var(--color-action-primary);
+    --radio-field-bg-disabled: var(--color-neutral-100);
+    --screening-primary: var(--color-action-primary);
+    --screening-primary-hover-border: var(--color-action-primary-hover);
+    --screening-primary-ring: color-mix(in srgb, var(--color-action-primary) 45%, transparent);
+    --screening-text-on-primary: var(--color-text-inverse);
+    /* Status soft fills — Semantic dark bg / status-subtle */
+    --button-blue-50: var(--color-blue-900);
     /* Ace input state colors resolve via --color-* semantic tokens */
-    --ace-button-purple-500: var(--color-primary-300);
-    --ace-button-purple-700: var(--color-primary-200);
-    --ace-button-purple-400: var(--color-primary-100);
-    --ace-button-blue-500: var(--color-blue-400);
-    --ace-button-blue-700: var(--color-blue-300);
-    --ace-button-blue-400: var(--color-blue-200);
-    --ace-button-neutral-400: var(--color-neutral-600);
-    --ace-button-neutral-500: var(--color-neutral-500);
-    --ace-button-neutral-600: var(--color-neutral-500);
-    --ace-button-fill: var(--color-action-primary);
-    --ace-button-fill-hover: var(--color-action-primary-hover);
-    --ace-button-fill-pressed: var(--color-action-primary-pressed);
-    --ace-button-disabled-primary-bg: var(--color-action-disabled-button);
-    --ace-button-disabled-primary-text: var(--color-text-secondary);
-    --ace-button-focus-ring: color-mix(in srgb, var(--color-primary-300) 50%, transparent);
+    --button-purple-500: var(--color-primary-300);
+    --button-purple-700: var(--color-primary-200);
+    --button-purple-400: var(--color-primary-100);
+    --button-blue-500: var(--color-blue-400);
+    --button-blue-700: var(--color-blue-300);
+    --button-blue-400: var(--color-blue-200);
+    --button-neutral-400: var(--color-neutral-600);
+    --button-neutral-500: var(--color-neutral-500);
+    --button-neutral-600: var(--color-neutral-500);
+    --button-fill: var(--color-action-primary);
+    --button-fill-hover: var(--color-action-primary-hover);
+    --button-fill-pressed: var(--color-action-primary-pressed);
+    --button-disabled-primary-bg: var(--color-action-disabled-button);
+    --button-disabled-primary-text: var(--color-text-secondary);
+    --button-focus-ring: color-mix(in srgb, var(--color-primary-300) 50%, transparent);
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.35);
-    --ace-accordion-surface: var(--ace-dark-mode-800);
-    --ace-accordion-surface-muted: var(--ace-dark-mode-900);
-    --ace-accordion-border: var(--color-border-default);
-    --ace-accordion-title: #b6c2cf;
-    --ace-accordion-tag-bg: var(--ace-dark-mode-600);
-    --ace-accordion-tag-text: #b6c2cf;
-    --ace-accordion-icon: #b6c2cf;
-    --ace-accordion-content-bg: var(--ace-dark-mode-800);
+    --accordion-surface: var(--color-surface-primary);
+    --accordion-surface-muted: var(--color-bg-primary);
+    --accordion-border: var(--color-border-default);
+    --accordion-title: var(--color-text-primary);
+    --accordion-tag-bg: var(--color-bg-tertiary);
+    --accordion-tag-text: var(--color-text-primary);
+    --accordion-icon: var(--color-icon-primary);
+    --accordion-content-bg: var(--color-surface-primary);
     --ace-drop-shadow-xs: 0 4px 8px rgb(0 0 0 / 0.4);
     --ace-drop-shadow-sm: 0 6px 12px rgb(0 0 0 / 0.4);
     --ace-drop-shadow-md: 0 8px 16px rgb(0 0 0 / 0.45);
     --ace-drop-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.45);
     --ace-drop-shadow-xl: 0 12px 24px rgb(0 0 0 / 0.5);
-    --dialog-modal-surface: var(--ace-dark-mode-900);
-    --dialog-modal-border: var(--color-border-default);
-    --dialog-modal-title: #b6c2cf;
-    --dialog-modal-body: #b6c2cf;
-    --dialog-modal-muted: #9fadbc;
+    --dialog-modal-surface: var(--color-surface-primary);
+    --dialog-modal-border: var(--color-neutral-100);
+    --dialog-modal-title: var(--color-text-primary);
+    --dialog-modal-body: var(--color-text-primary);
+    --dialog-modal-muted: var(--color-text-secondary);
     --dialog-modal-close-hover: var(--ace-neutral-100);
-    --dialog-modal-outline-hover-bg: #2a2540;
+    --dialog-modal-outline-hover-bg: var(--color-bg-brand-hover);
     --ace-neutral-100: var(--ace-dark-mode-200);
     --ace-neutral-200: var(--ace-dark-mode-600);
-    --ace-neutral-800: #b6c2cf;
-    --ace-site-header-toolbar-icon-color: var(--screening-text-primary);
-    --ace-lab-segmented-track-border: var(--color-border-default);
     --ace-lab-segmented-indicator-bg: var(--ace-dark-mode-500);
     --ace-lab-segmented-indicator-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 2px 8px rgb(0 0 0 / 0.22);
-    --ace-sidebar-menu-icon: var(--screening-icon-muted);
-    --ace-sidebar-item-hover-bg: var(--ace-neutral-100);
-    --ace-sidebar-group-hover-bg: var(--ace-neutral-100);
-    --ace-sidebar-row-action-hover-bg: var(--screening-surface-hover);
-    --ace-guidelines-principle-title: #9b8ed4;
+    --sidebar-menu-icon: var(--screening-icon-muted);
 
-    /* Dialog actions */
-    --dialog-modal-primary: var(--ace-button-purple-500);
-    --dialog-modal-primary-hover: var(--ace-button-purple-700);
-    --dialog-modal-outline-border: var(--screening-primary);
-    --dialog-modal-outline-text: var(--screening-primary);
-    --dialog-modal-danger: #f07178;
-    --dialog-modal-danger-hover: #f48a8a;
+    /* Dialog actions — follow Semantic dark action / status */
+    --dialog-modal-primary: var(--color-action-primary);
+    --dialog-modal-primary-hover: var(--color-action-primary-hover);
+    --dialog-modal-outline-border: var(--color-border-brand);
+    --dialog-modal-outline-text: var(--color-text-brand);
+    --dialog-modal-danger: var(--color-status-error);
+    --dialog-modal-danger-hover: var(--color-action-error-hover);
     --dialog-modal-overlay: rgb(0 0 0 / 0.65);
-    --dialog-modal-inline-error-border: #f48a8a;
+    --dialog-modal-inline-error-border: var(--color-border-error);
 
-    /* Progress, pills, age, tiles */
+    /* Progress, pills, age — badges already set above from --color-badges-* */
     --screening-progress-fill: var(--screening-primary);
-    --screening-pill-new-border: #4a4068;
-    --screening-pill-new-surface: #2a2540;
-    --screening-pill-new-dot: var(--screening-primary);
-    --screening-pill-new-label: var(--screening-chip-active-text);
-    --screening-pill-escalated-border: #7a5020;
-    --screening-pill-escalated-surface: #3d2a14;
-    --screening-pill-escalated-dot: #ffb74d;
-    --screening-pill-escalated-label: #ffcc80;
+    --screening-pill-new-dot: var(--color-badges-purple-border);
+    --screening-pill-new-label: var(--color-badges-purple-border);
 
-    /* Status / badge pills — match purple dark treatment (tinted surface + light label) */
-    --ace-status-pill-purple-dot: var(--screening-pill-new-dot);
-    --ace-status-pill-orange-border: #8a5a24;
-    --ace-status-pill-orange-surface: #4a3218;
-    --ace-status-pill-orange-dot: #ffb74d;
-    --ace-status-pill-orange-label: #ffcc80;
-    --ace-status-pill-green-border: #3a6b3e;
-    --ace-status-pill-green-surface: #243d2a;
-    --ace-status-pill-green-dot: #81c784;
-    --ace-status-pill-green-label: #a5d6a7;
-    --ace-status-pill-gray-border: #5c6773;
-    --ace-status-pill-gray-surface: #2c333a;
-    --ace-status-pill-gray-dot: #9fadbc;
-    --ace-status-pill-gray-label: #b6c2cf;
-    --ace-status-pill-blue-border: #2a6a8a;
-    --ace-status-pill-blue-surface: #153a4d;
-    --ace-status-pill-blue-dot: #64b5f6;
-    --ace-status-pill-blue-label: #90caf9;
-    --ace-status-pill-yellow-border: #8a7020;
-    --ace-status-pill-yellow-surface: #4a4018;
-    --ace-status-pill-yellow-dot: #ffd54f;
-    --ace-status-pill-yellow-label: #ffe082;
-    --ace-status-pill-pink-border: #7a4a80;
-    --ace-status-pill-pink-surface: #4a2848;
-    --ace-status-pill-pink-dot: #ce93d8;
-    --ace-status-pill-pink-label: #e1bee7;
-    --ace-status-pill-teal-border: #2a6a60;
-    --ace-status-pill-teal-surface: #1a3d38;
-    --ace-status-pill-teal-dot: #4db6ac;
-    --ace-status-pill-teal-label: #80cbc4;
-    --ace-status-pill-red-border: #8a4548;
-    --ace-status-pill-red-surface: #4a2a2e;
-    --ace-status-pill-red-dot: #f48a8a;
-    --ace-status-pill-red-label: #ef9a9a;
-    --screening-age-fresh: #81c784;
-    --screening-age-warn: #ffb74d;
-    --screening-age-stale: #f48a8a;
+    /* Status / badge pills inherit Semantic dark --color-badges-* from color-tokens.css */
+    --screening-age-fresh: var(--color-status-success);
+    --screening-age-warn: var(--color-status-warning);
+    --screening-age-stale: var(--color-status-error);
     /* Match-string tiles inherit AceBadge dark status-pill tokens via light aliases */
 
     /* Attachments — muted panels track dark surfaces (not light #fafafb) */
-    --ace-attachments-border: var(--screening-border-strong);
-    --ace-attachments-surface: var(--screening-surface);
-    --ace-attachments-dropzone-bg: var(--ace-dark-mode-700);
-    --ace-attachments-panel-bg: var(--ace-dark-mode-700);
-    --ace-attachments-label: var(--screening-text-secondary);
-    --ace-attachments-muted: var(--screening-text-muted);
-    --ace-attachments-divider: var(--screening-border-strong);
+    --attachments-border: var(--screening-border-strong);
+    --attachments-surface: var(--screening-surface);
+    --attachments-dropzone-bg: var(--ace-dark-mode-700);
+    --attachments-panel-bg: var(--ace-dark-mode-700);
+    --attachments-label: var(--screening-text-secondary);
+    --attachments-muted: var(--screening-text-muted);
+    --attachments-divider: var(--screening-border-strong);
 
     /* Scrollable List */
-    --ace-scrollable-list-surface: var(--screening-surface);
-    --ace-scrollable-list-border: var(--screening-border-strong);
-    --ace-scrollable-list-title: var(--screening-text-primary);
-    --ace-scrollable-list-item-text: var(--screening-text-primary);
-    --ace-scrollable-list-item-selected-bg: #333a42;
-    --ace-scrollable-list-item-hover-bg: #333a42;
-    --ace-scrollable-list-icon: var(--screening-primary);
+    --scrollable-list-surface: var(--screening-surface);
+    --scrollable-list-border: var(--screening-border-strong);
+    --scrollable-list-title: var(--screening-text-primary);
+    --scrollable-list-item-selected-bg: var(--color-bg-tertiary);
+    --scrollable-list-item-hover-bg: var(--color-bg-tertiary);
+    --scrollable-list-icon: var(--color-icon-brand);
 
     /* Cards — follow semantic dark mappings from color-tokens.css */
-    --ace-landing-page-card-surface: var(--color-surface-primary);
-    --ace-landing-page-card-footer-bg: var(--color-surface-primary);
-    --ace-landing-page-card-title-color: var(--color-text-primary);
-    --ace-landing-page-card-body-color: var(--color-text-primary);
-    --ace-landing-page-card-footer-stat-color: var(--color-text-primary);
-    --ace-landing-page-card-shadow-hover: var(--ace-drop-shadow-xl);
-    --ace-data-card-surface: var(--color-surface-primary);
-    --ace-data-card-header-bg: var(--color-bg-primary);
-    --ace-data-card-text: var(--color-text-primary);
-    --ace-data-card-link: var(--color-action-primary);
+    --landing-page-card-surface: var(--color-surface-primary);
+    --landing-page-card-footer-bg: var(--color-surface-primary);
+    --landing-page-card-title-color: var(--color-text-primary);
+    --landing-page-card-body-color: var(--color-text-primary);
+    --landing-page-card-footer-stat-color: var(--color-text-primary);
+    --data-card-surface: var(--color-surface-primary);
+    --data-card-header-bg: var(--color-bg-primary);
+    --data-card-text: var(--color-text-primary);
+    --data-card-link: var(--color-action-primary);
 
-    /* Date picker */
-    --ace-date-picker-month-title: var(--screening-text-primary);
-    --ace-date-picker-weekday: var(--screening-text-secondary);
-    --ace-date-picker-day: var(--screening-text-secondary);
+    /* Date picker */
+    --date-picker-weekday: var(--screening-text-secondary);
+    --date-picker-day: var(--screening-text-secondary);
 
     /* Sidebar, brand, pagination */
-    --ace-sidebar-shadow: 6px 0 12px rgb(0 0 0 / 0.35);
-    --ace-sidebar-border-accent: var(--screening-primary-hover-border);
-    --ace-finscan-wordmark-fill: #b5aae0;
-    --ace-finscan-mark-primary: #b5aae0;
-    --ace-success-500: #9bc94e;
-    --screening-shadow-row-accent: inset 2px 0 0 0 rgb(155 142 212 / 0.35);
-    --screening-pagination-page-size-border: #5c6773;
-    --ace-availability-available-bg: #1e3324;
-    --ace-availability-available-border: rgb(129 199 132 / 0.3);
-    --ace-availability-available-text: #81c784;
-    --ace-availability-in-progress-bg: #3d2a14;
-    --ace-availability-in-progress-border: #7a5020;
-    --ace-availability-in-progress-text: #ffb74d;
-    --ace-availability-planned-bg: #2a2540;
-    --ace-availability-planned-border: #4a4068;
-    --ace-availability-planned-text: #dcd7e8;
+    --sidebar-shadow: 6px 0 12px rgb(0 0 0 / 0.35);
+    --sidebar-border-accent: var(--color-primary-300);
+    --screening-shadow-row-accent: inset 2px 0 0 0 color-mix(in srgb, var(--color-action-primary) 35%, transparent);
+    --screening-pagination-page-size-border: var(--color-border-default);
+    --availability-tag-available-bg: var(--color-status-success-subtle);
+    --availability-tag-available-border: color-mix(in srgb, var(--color-status-success) 30%, transparent);
+    --availability-tag-available-text: var(--color-status-success);
+    --availability-tag-planned-bg: var(--color-bg-brand-hover);
+    --availability-tag-planned-border: var(--color-badges-purple-border);
+    --availability-tag-planned-text: var(--color-action-primary);
+    --ace-finscan-mark-primary: var(--color-primary-200);
+    --ace-finscan-wordmark-fill: var(--color-primary-200);
+    --ace-guidelines-principle-title: var(--color-primary-200);
+    --ace-success-500: var(--color-status-success);
+    --ace-error-50: var(--color-bg-error);
+    --ace-warning-50: var(--color-bg-warning);
+    --ace-notice-50: var(--color-warning-2-900);
+    --ace-notice-100: var(--color-warning-2-800);
+    --ace-notice-200: var(--color-warning-2-700);
+
+
 
     /* Descriptive buttons — surface + purple soft fills (Reports, etc.) */
-    --ace-descriptive-button-bg: var(--color-surface-primary);
-    --ace-descriptive-button-border: var(--color-border-default);
-    --ace-descriptive-button-hover-bg: var(--color-primary-800);
-    --ace-descriptive-button-hover-border: var(--color-primary-400);
-    --ace-descriptive-button-active-bg: var(--color-primary-700);
-    --ace-descriptive-button-active-border: transparent;
-    --ace-descriptive-button-disabled-bg: var(--color-bg-secondary);
-    --ace-descriptive-button-disabled-border: var(--color-neutral-600);
-    --ace-descriptive-button-text: var(--color-text-primary);
-    --ace-descriptive-button-disabled-text: var(--color-text-disabled);
+    --button-descriptive-bg: var(--color-surface-primary);
+    --button-descriptive-border: var(--color-border-default);
+    --button-descriptive-hover-bg: var(--color-primary-800);
+    --button-descriptive-hover-border: var(--color-primary-400);
+    --button-descriptive-active-bg: var(--color-primary-700);
+    --button-descriptive-active-border: transparent;
+    --button-descriptive-disabled-bg: var(--color-bg-secondary);
+    --button-descriptive-disabled-border: var(--color-neutral-600);
+    --button-descriptive-text: var(--color-text-primary);
+    --button-descriptive-disabled-text: var(--color-text-disabled);
 }

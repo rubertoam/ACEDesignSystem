@@ -1,13 +1,13 @@
-import { AceButton } from '../components/atoms/AceButton'
+import { Button } from '../components/atoms/Button'
 import {
-  AceTooltip,
-  AceTooltipContent,
-  AceTooltipTrigger,
-} from '../components/atoms/AceTooltip/AceTooltip'
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../components/atoms/Tooltip/Tooltip'
 import {
   aceScreeningToolbarTooltipContentClass,
-  aceTooltipContentClass,
-} from '../components/atoms/AceTooltip/tooltipFieldStyles'
+  tooltipContentClass,
+} from '../components/atoms/Tooltip/tooltipFieldStyles'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
@@ -22,7 +22,7 @@ export function TooltipLab() {
           <div className={labExampleSectionClass}>
             <p className={labSectionLabelClass}>Default</p>
             <div
-              className={cn(aceTooltipContentClass, 'static')}
+              className={cn(tooltipContentClass, 'static')}
               role="presentation"
               aria-hidden
             >
@@ -44,16 +44,16 @@ export function TooltipLab() {
           <div className={labExampleSectionClass}>
             <p className={labSectionLabelClass}>Interactive</p>
             <div className="w-fit">
-              <AceTooltip>
-                <AceTooltipTrigger asChild>
-                  <AceButton type="button" variant="secondary" size="sm">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button type="button" variant="secondary" size="sm">
                     Show tooltip
-                  </AceButton>
-                </AceTooltipTrigger>
-                <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top" hideArrow variant="screening-toolbar">
                   Show
-                </AceTooltipContent>
-              </AceTooltip>
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
         </div>
@@ -64,23 +64,23 @@ export function TooltipLab() {
             Use <code className="text-[var(--screening-text-primary)]">variant="screening-toolbar"</code> and{' '}
             <code className="text-[var(--screening-text-primary)]">hideArrow</code> for screening toolbar icon
             tooltips. Wrap disabled icon buttons in{' '}
-            <code className="text-[var(--screening-text-primary)]">AceTooltipIconWrap</code> so the tooltip can receive
+            <code className="text-[var(--screening-text-primary)]">TooltipIconWrap</code> so the tooltip can receive
             pointer events.
           </p>
           <ComponentLabCode>{`import {
-  AceTooltip,
-  AceTooltipContent,
-  AceTooltipTrigger,
-} from '../components/atoms/AceTooltip/AceTooltip'
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../components/atoms/Tooltip/Tooltip'
 
-<AceTooltip>
-  <AceTooltipTrigger asChild>
+<Tooltip>
+  <TooltipTrigger asChild>
     <button type="button" aria-label="Show review history">…</button>
-  </AceTooltipTrigger>
-  <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
+  </TooltipTrigger>
+  <TooltipContent side="top" hideArrow variant="screening-toolbar">
     Show
-  </AceTooltipContent>
-</AceTooltip>`}</ComponentLabCode>
+  </TooltipContent>
+</Tooltip>`}</ComponentLabCode>
         </>
       }
       usage={
@@ -91,26 +91,6 @@ export function TooltipLab() {
               Use tooltips for icon-only controls where the visible label would clutter the toolbar. Keep copy to one or
               two words when possible (Show / Hide, Columns).
             </p>
-          </section>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tokens in use</h4>
-            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--screening-text-muted)]">
-              <li>
-                <strong className="font-medium text-[var(--screening-text-primary)]">Type</strong> —{' '}
-                <code className="text-[var(--screening-text-primary)]">typography/ui/caption</code> →{' '}
-                <code className="text-[var(--screening-text-primary)]">--typography-ui-caption</code> (
-                <code className="text-[var(--screening-text-primary)]">type/size/caption</code>, 12px) with{' '}
-                <code className="text-[var(--screening-text-primary)]">--typography-leading-relaxed</code> and Noto Sans
-                Regular.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--screening-text-primary)]">Surface</strong> —{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-tooltip-surface</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-tooltip-border</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-tooltip-text</code>, shadow{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-drop-shadow-xs</code>.
-              </li>
-            </ul>
           </section>
           <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Animation</h4>
@@ -140,7 +120,7 @@ export function TooltipLab() {
             <p className="m-0 text-[var(--screening-text-muted)]">
               The trigger still needs an <code className="text-[var(--screening-text-primary)]">aria-label</code> when it
               is icon-only. Use the button itself as the tooltip trigger when enabled; wrap disabled icon buttons in{' '}
-              <code className="text-[var(--screening-text-primary)]">AceTooltipIconWrap</code> so the tooltip can receive
+              <code className="text-[var(--screening-text-primary)]">TooltipIconWrap</code> so the tooltip can receive
               pointer events.
             </p>
           </section>
@@ -154,16 +134,16 @@ export function TooltipLab() {
             <code className="text-[var(--color-text-primary)]">--typography-leading-relaxed</code>
           </li>
           <li>
-            Surface - <code className="text-[var(--color-text-primary)]">--ace-tooltip-surface</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-tooltip-border</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-tooltip-text</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-tooltip-shadow</code> (aliases{' '}
+            Surface - <code className="text-[var(--color-text-primary)]">--tooltip-surface</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--tooltip-border</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--tooltip-text</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--tooltip-shadow</code> (aliases{' '}
             <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code>)
           </li>
           <li>
-            Layout - <code className="text-[var(--color-text-primary)]">--ace-tooltip-radius</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-tooltip-px</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-tooltip-py</code>
+            Layout - <code className="text-[var(--color-text-primary)]">--tooltip-radius</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--tooltip-px</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--tooltip-py</code>
           </li>
           <li>
             Motion - Review Assigned pattern via <code className="text-[var(--color-text-primary)]">tw-animate-css</code>{' '}

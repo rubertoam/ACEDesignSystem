@@ -1,13 +1,13 @@
 import { useCallback, useMemo, useState } from 'react'
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { Toggle } from '../../atoms/Toggle/Toggle'
 import {
-  AceTooltip,
-  AceTooltipContent,
-  AceTooltipTrigger,
-} from '../../atoms/AceTooltip/AceTooltip'
-import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
-import { aceDropdownMenuPanelClass } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../atoms/Tooltip/Tooltip'
+import { MaterialSymbol } from '../../molecules/Accordion/MaterialSymbol'
+import { dropdownMenuPanelClass } from '../../molecules/DropdownMenu/DropdownMenu'
 import { cn } from '../../../lib/cn'
 import {
   DEFAULT_SCREENING_COLUMN_ORDER,
@@ -78,10 +78,10 @@ export function ScreeningColumnsMenu({
   )
 
   return (
-    <DropdownMenu.Root modal={false}>
-      <AceTooltip>
-        <AceTooltipTrigger asChild>
-          <DropdownMenu.Trigger asChild>
+    <DropdownMenuPrimitive.Root modal={false}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuPrimitive.Trigger asChild>
             <button
               type="button"
               aria-label="Edit Columns"
@@ -89,25 +89,25 @@ export function ScreeningColumnsMenu({
             >
               <MaterialSymbol name="view_list" size="md" weight={300} />
             </button>
-          </DropdownMenu.Trigger>
-        </AceTooltipTrigger>
-        <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
+          </DropdownMenuPrimitive.Trigger>
+        </TooltipTrigger>
+        <TooltipContent side="top" hideArrow variant="screening-toolbar">
           Edit Columns
-        </AceTooltipContent>
-      </AceTooltip>
-      <DropdownMenu.Portal>
-        <DropdownMenu.Content
+        </TooltipContent>
+      </Tooltip>
+      <DropdownMenuPrimitive.Portal>
+        <DropdownMenuPrimitive.Content
           align="end"
           sideOffset={4}
           collisionPadding={8}
-          className={cn(aceDropdownMenuPanelClass, 'min-w-[15rem] p-1')}
+          className={cn(dropdownMenuPanelClass, 'min-w-[15rem] p-1')}
         >
-          <DropdownMenu.Label className={screeningColumnMenuLabelClass}>Columns</DropdownMenu.Label>
+          <DropdownMenuPrimitive.Label className={screeningColumnMenuLabelClass}>Columns</DropdownMenuPrimitive.Label>
           {columnMenuOptions.map((column) => {
             const checked = visibleColumns.has(column.key)
             const disabled = checked && visibleColumns.size <= 1
             return (
-              <DropdownMenu.Item
+              <DropdownMenuPrimitive.Item
                 key={column.key}
                 disabled={disabled}
                 aria-label={column.label}
@@ -126,11 +126,11 @@ export function ScreeningColumnsMenu({
                   aria-hidden
                 />
                 <span className="min-w-0 flex-1 truncate self-center text-left">{column.label}</span>
-              </DropdownMenu.Item>
+              </DropdownMenuPrimitive.Item>
             )
           })}
-        </DropdownMenu.Content>
-      </DropdownMenu.Portal>
-    </DropdownMenu.Root>
+        </DropdownMenuPrimitive.Content>
+      </DropdownMenuPrimitive.Portal>
+    </DropdownMenuPrimitive.Root>
   )
 }

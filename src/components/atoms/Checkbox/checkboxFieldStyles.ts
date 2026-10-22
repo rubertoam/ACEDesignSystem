@@ -1,6 +1,6 @@
 import { cn } from '../../../lib/cn'
 
-export type AceCheckboxSize = 'sm' | 'md' | 'lg'
+export type CheckboxSize = 'sm' | 'md' | 'lg'
 
 /**
  * ACE Checkbox surface — Figma Checkbox set 322:1747 (doc page 317:1492).
@@ -36,21 +36,21 @@ export const aceCheckboxSurfaceClass = cn(
 )
 
 /** Box sizes — Figma Small 16 / Medium 20 / Large 24; Large uses 1.5px stroke + 4px radius. */
-export const aceCheckboxSizeClass: Record<AceCheckboxSize, string> = {
+export const checkboxSizeClass: Record<CheckboxSize, string> = {
   sm: 'size-4 shrink-0 rounded-[var(--radius-checkbox)] border',
   md: 'size-5 shrink-0 rounded-[var(--radius-checkbox)] border',
   lg: 'size-6 shrink-0 rounded-[var(--radius-sm)] border-[1.5px]',
 }
 
 /** Indeterminate bar only — selected state uses the filled square + inset, not a glyph. */
-export const aceCheckboxIconSizeClass: Record<AceCheckboxSize, string> = {
+export const aceCheckboxIconSizeClass: Record<CheckboxSize, string> = {
   sm: 'h-0.5 w-2',
   md: 'h-0.5 w-2.5',
   lg: 'h-[3px] w-3',
 }
 
 /** Label next to checkbox — Caption 12 (sm) / Body 14 (md, lg). */
-export const aceCheckboxLabelClass: Record<AceCheckboxSize, string> = {
+export const aceCheckboxLabelClass: Record<CheckboxSize, string> = {
   sm: '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--color-text-primary)]',
   md: '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--color-text-primary)]',
   lg: '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--color-text-primary)]',
@@ -58,6 +58,6 @@ export const aceCheckboxLabelClass: Record<AceCheckboxSize, string> = {
 
 export const aceCheckboxLabelDisabledClass = 'text-[var(--color-text-disabled)]'
 
-export function aceCheckboxClass(size: AceCheckboxSize = 'sm'): string {
-  return cn(aceCheckboxSurfaceClass, aceCheckboxSizeClass[size])
+export function aceCheckboxClass(size: CheckboxSize = 'sm'): string {
+  return cn(aceCheckboxSurfaceClass, checkboxSizeClass[size])
 }

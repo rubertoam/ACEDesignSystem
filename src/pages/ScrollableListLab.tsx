@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import {
-  AceScrollableList,
+  ScrollableList,
   DEMO_SCROLLABLE_LIST_ITEMS,
-} from '../components/organisms/AceScrollableList/AceScrollableList'
-import { AceScrollableListItemRow } from '../components/organisms/AceScrollableList/AceScrollableListItemRow'
+} from '../components/organisms/ScrollableList/ScrollableList'
+import { ScrollableListItemRow } from '../components/organisms/ScrollableList/ScrollableListItemRow'
 import { LabCheckbox, labControlLegendClass } from '../lib/labControls'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
@@ -58,7 +58,7 @@ export function ScrollableListLab() {
             </div>
             <div className={labComponentContainerClass}>
               <div className="flex h-[56.4rem] items-stretch gap-4 p-4">
-                <AceScrollableList
+                <ScrollableList
                   title="List title"
                   items={DEMO_SCROLLABLE_LIST_ITEMS}
                   selectedId={selectedId}
@@ -106,7 +106,7 @@ export function ScrollableListLab() {
                     </div>
                   </div>
                   <div className="flex h-[48rem] items-stretch gap-4 p-4">
-                    <AceScrollableList
+                    <ScrollableList
                       title="List title"
                       items={[]}
                       showFilter={containerFilter}
@@ -123,7 +123,7 @@ export function ScrollableListLab() {
                     </h4>
                     <p className="m-0 text-xs leading-relaxed text-[var(--screening-text-muted)]">
                       Modular row pieces: title (always on), icon, subtext, and count (
-                      <code className="text-[var(--screening-text-primary)]">AceScrollableListItemRow</code>
+                      <code className="text-[var(--screening-text-primary)]">ScrollableListItemRow</code>
                       ).
                     </p>
                   </div>
@@ -140,8 +140,8 @@ export function ScrollableListLab() {
                       <LabCheckbox label="Selected" checked={itemSelected} onCheckedChange={setItemSelected} />
                     </div>
                   </div>
-                  <div className="max-w-sm rounded-[var(--radius-sm)] border border-solid border-[var(--ace-scrollable-list-border)] bg-[var(--ace-scrollable-list-surface)] py-1 shadow-[var(--ace-drop-shadow-xs)]">
-                    <AceScrollableListItemRow
+                  <div className="max-w-sm rounded-[var(--radius-sm)] border border-solid border-[var(--scrollable-list-border)] bg-[var(--scrollable-list-surface)] py-1 shadow-[var(--ace-drop-shadow-xs)]">
+                    <ScrollableListItemRow
                       title={ITEM_DEMO?.label ?? 'List Item'}
                       icon={ITEM_DEMO?.icon}
                       subtext={ITEM_DEMO?.subtext}
@@ -164,19 +164,19 @@ export function ScrollableListLab() {
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
-            Compose with <code className="text-[var(--screening-text-primary)]">AceScrollableList</code> for the full
+            Compose with <code className="text-[var(--screening-text-primary)]">ScrollableList</code> for the full
             container, or use{' '}
-            <code className="text-[var(--screening-text-primary)]">AceScrollableListBody</code> and{' '}
-            <code className="text-[var(--screening-text-primary)]">AceScrollableListItemRow</code> for the body and
+            <code className="text-[var(--screening-text-primary)]">ScrollableListBody</code> and{' '}
+            <code className="text-[var(--screening-text-primary)]">ScrollableListItemRow</code> for the body and
             modular rows (title, icon, subtext, count).
           </p>
           <ComponentLabCode>{`import {
-  AceScrollableList,
-  AceScrollableListItemRow,
+  ScrollableList,
+  ScrollableListItemRow,
   DEMO_SCROLLABLE_LIST_ITEMS,
 } from '@ace/design-system'
 
-<AceScrollableList
+<ScrollableList
   title="List title"
   items={DEMO_SCROLLABLE_LIST_ITEMS}
   showFilter
@@ -184,7 +184,7 @@ export function ScrollableListLab() {
   showSearch
 />
 
-<AceScrollableListItemRow
+<ScrollableListItemRow
   title="List Item 1"
   icon="person"
   subtext="ID-1001"
@@ -224,9 +224,9 @@ export function ScrollableListLab() {
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tokens</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                Surfaces - <code className="text-[var(--screening-text-primary)]">--ace-scrollable-list-surface</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-scrollable-list-item-selected-bg</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-scrollable-list-icon</code>
+                Surfaces - <code className="text-[var(--screening-text-primary)]">--scrollable-list-surface</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--scrollable-list-item-selected-bg</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--scrollable-list-icon</code>
               </li>
             </ul>
           </section>

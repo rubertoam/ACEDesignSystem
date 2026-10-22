@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { AceDropdownMenu, type AceDropdownMenuEntry } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
-import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
+import { DropdownMenu, type DropdownMenuEntry } from '../../molecules/DropdownMenu/DropdownMenu'
+import { MaterialSymbol } from '../../molecules/Accordion/MaterialSymbol'
 import {
   screeningRowActionsMenuIconClass,
   screeningRowActionsMenuTriggerClass,
@@ -15,7 +15,7 @@ export function ScreeningRowActionsMenu({
   rowName: string
   portalContainer?: HTMLElement | null
 }) {
-  const items = useMemo<AceDropdownMenuEntry[]>(
+  const items = useMemo<DropdownMenuEntry[]>(
     () =>
       ROW_ACTION_LABELS.map((label) => ({
         type: 'item' as const,
@@ -25,7 +25,7 @@ export function ScreeningRowActionsMenu({
   )
 
   return (
-    <AceDropdownMenu
+    <DropdownMenu
       items={items}
       align="end"
       panelWidth="hug"

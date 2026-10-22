@@ -8,29 +8,29 @@ import {
   type MouseEvent as ReactMouseEvent,
   type ReactNode,
 } from 'react'
-import { AceButton } from '../components/atoms/AceButton'
-import { AceAccordion } from '../components/molecules/AceAccordion/AceAccordion'
+import { Button } from '../components/atoms/Button'
+import { Accordion } from '../components/molecules/Accordion/Accordion'
 import {
-  AceDropdownMenu,
-  type AceDropdownMenuEntry,
-} from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
-import { AcePageHeader } from '../components/molecules/AcePageHeader'
-import { AceSlider } from '../components/molecules/AceSlider'
-import { AceSubHeader } from '../components/molecules/AceSubHeader'
-import { AceTaskBar } from '../components/molecules/AceTaskBar'
+  DropdownMenu,
+  type DropdownMenuEntry,
+} from '../components/molecules/DropdownMenu/DropdownMenu'
+import { PageHeader } from '../components/molecules/PageHeader'
+import { Slider } from '../components/molecules/Slider'
+import { SubHeader } from '../components/molecules/SubHeader'
+import { TaskBar } from '../components/molecules/TaskBar'
 import { DialogModal } from '../components/molecules/DialogModal/DialogModal'
-import { AceLandingPageCard } from '../components/organisms/AceCards'
-import { AceInlineDrawer } from '../components/organisms/AceInlineDrawer/AceInlineDrawer'
-import { AceSidebar } from '../components/organisms/AceSidebar/AceSidebar'
+import { LandingPageCard } from '../components/organisms/Cards'
+import { InlineDrawer } from '../components/organisms/InlineDrawer/InlineDrawer'
+import { Sidebar } from '../components/organisms/Sidebar/Sidebar'
 import {
-  AceSiteHeader,
-  type AceSiteHeaderNavItem,
-} from '../components/organisms/AceSiteHeader/AceSiteHeader'
+  SiteHeader,
+  type SiteHeaderNavItem,
+} from '../components/organisms/SiteHeader/SiteHeader'
 import { labControlLegendClass } from '../lib/labControls'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const SITE_NAV_ITEMS: AceSiteHeaderNavItem[] = [
+const SITE_NAV_ITEMS: SiteHeaderNavItem[] = [
   { id: 'home', label: 'Home' },
   { id: 'reporting', label: 'Reporting' },
   { id: 'settings', label: 'Settings' },
@@ -86,7 +86,7 @@ function ToolbarSelect<T extends string>({
   className?: string
 }) {
   const selectedLabel = options.find((o) => o.value === value)?.label ?? 'Select'
-  const items = useMemo<AceDropdownMenuEntry[]>(
+  const items = useMemo<DropdownMenuEntry[]>(
     () => [
       {
         type: 'radioGroup',
@@ -99,7 +99,7 @@ function ToolbarSelect<T extends string>({
   )
 
   return (
-    <AceDropdownMenu
+    <DropdownMenu
       triggerLabel={selectedLabel}
       triggerMode="field"
       size="sm"
@@ -115,7 +115,7 @@ function ToolbarSelect<T extends string>({
 function ModularCards() {
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      <AceLandingPageCard
+      <LandingPageCard
         variant="description"
         title="Screening"
         tag="Active"
@@ -125,7 +125,7 @@ function ModularCards() {
         showFooterLink
         className="w-full max-w-none"
       />
-      <AceLandingPageCard
+      <LandingPageCard
         variant="stats"
         title="Reporting"
         showHeaderActions={false}
@@ -133,7 +133,7 @@ function ModularCards() {
         showFooterLink={false}
         className="w-full max-w-none"
       />
-      <AceLandingPageCard
+      <LandingPageCard
         variant="description"
         title="Workflow"
         tag="New"
@@ -150,16 +150,16 @@ function ModularCards() {
 function ModularAccordions() {
   return (
     <div className="flex flex-col gap-3">
-      <AceAccordion title="Client details" surface="white" showTag tagLabel="Open" showMoreIcon>
+      <Accordion title="Client details" surface="white" showTag tagLabel="Open" showMoreIcon>
         <p className="m-0 text-sm text-[var(--screening-text-muted)]">
           Accordion body content for the layout preview.
         </p>
-      </AceAccordion>
-      <AceAccordion title="Match history" surface="white" showTag={false} showEditIcon showMoreIcon>
+      </Accordion>
+      <Accordion title="Match history" surface="white" showTag={false} showEditIcon showMoreIcon>
         <p className="m-0 text-sm text-[var(--screening-text-muted)]">
           Second accordion module in the content stack.
         </p>
-      </AceAccordion>
+      </Accordion>
     </div>
   )
 }
@@ -184,7 +184,7 @@ function EmptyPane({
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]">
       {showSubHeader ? (
-        <AceSubHeader className="rounded-none border-0 border-b border-solid border-[var(--screening-border-strong)] shadow-none" />
+        <SubHeader className="rounded-none border-0 border-b border-solid border-[var(--screening-border-strong)] shadow-none" />
       ) : null}
       <div className="min-h-0 flex-1 p-4">
         <p className="m-0 text-sm text-[var(--screening-text-muted)]">{label}</p>
@@ -217,7 +217,7 @@ function ContentRegion({
 
   return (
     <div className={cn('flex min-h-0 min-w-0 flex-col gap-4', className)} style={style}>
-      {showSubHeader ? <AceSubHeader /> : null}
+      {showSubHeader ? <SubHeader /> : null}
       <ModularContent content={content} />
     </div>
   )
@@ -359,8 +359,8 @@ function LayoutPreview({
         )}
         aria-label={isTwoColumn ? 'Two-column layout preview' : 'Single-column layout preview'}
       >
-        <AceSiteHeader navItems={SITE_NAV_ITEMS} userName="User Name" />
-        <AcePageHeader
+        <SiteHeader navItems={SITE_NAV_ITEMS} userName="User Name" />
+        <PageHeader
           title="Headline"
           showSidebarControl={showSidebarControl}
           sidebarOpen={sidebarOpen}
@@ -368,7 +368,7 @@ function LayoutPreview({
           className="border-t-0"
         />
         <div className="relative flex min-h-0 flex-1 overflow-hidden">
-          <AceSidebar open={sidebarVisible} variant="navigation" navItems={[]} />
+          <Sidebar open={sidebarVisible} variant="navigation" navItems={[]} />
           <div className="relative z-0 flex min-h-0 min-w-0 flex-1 flex-col gap-4 bg-[var(--screening-surface-muted)] p-4">
             {isTwoColumn ? (
               <TwoColumnRegion
@@ -387,17 +387,17 @@ function LayoutPreview({
               />
             )}
             {showTaskBar ? (
-              <AceTaskBar>
-                <AceButton type="button" variant="secondary" size="md" onClick={() => setModalOpen(true)}>
+              <TaskBar>
+                <Button type="button" variant="secondary" size="md" onClick={() => setModalOpen(true)}>
                   Modal
-                </AceButton>
-                <AceButton type="button" variant="primary" size="md" onClick={() => setDrawerOpen(true)}>
+                </Button>
+                <Button type="button" variant="primary" size="md" onClick={() => setDrawerOpen(true)}>
                   Inline Drawer
-                </AceButton>
-              </AceTaskBar>
+                </Button>
+              </TaskBar>
             ) : null}
           </div>
-          <AceInlineDrawer
+          <InlineDrawer
             open={drawerOpen}
             onClose={() => setDrawerOpen(false)}
             title="Review"
@@ -412,7 +412,7 @@ function LayoutPreview({
               Drawer content opened from the task bar
               {isTwoColumn ? ' - docks beside both columns.' : ' - docks beside the main column.'}
             </p>
-          </AceInlineDrawer>
+          </InlineDrawer>
         </div>
       </div>
 
@@ -521,7 +521,7 @@ export function LayoutsLab() {
           </ToolbarGroup>
           {isTwoColumn ? (
             <ToolbarGroup label={`Left column width (${leftWidthPct}%)`} className="w-[14rem]">
-              <AceSlider
+              <Slider
                 variant="discrete"
                 discreteSteps={COLUMN_WIDTH_STEPS}
                 min={COLUMN_MIN_PCT}
@@ -563,21 +563,21 @@ export function LayoutsLab() {
       }
       code={
         <ComponentLabCode>{`{/* Modular sub-header - fills its parent; separate from content modules */}
-{showSubHeader ? <AceSubHeader /> : null}
+{showSubHeader ? <SubHeader /> : null}
 
 {/* Cards / accordions are not wrapped in column chrome */}
-<AceLandingPageCard title="Screening" variant="description" />
-<AceAccordion title="Client details">…</AceAccordion>
+<LandingPageCard title="Screening" variant="description" />
+<Accordion title="Client details">…</Accordion>
 
 {/* Two-column regions keep the drag handle; each side can host modules */}
 <div className="flex">
   <div style={{ flex: \`0 0 \${leftWidthPct}%\` }}>
-    {leftSubHeader ? <AceSubHeader /> : null}
+    {leftSubHeader ? <SubHeader /> : null}
     {/* modules */}
   </div>
   {/* resize handle */}
   <div style={{ flex: 1 }}>
-    {rightSubHeader ? <AceSubHeader /> : null}
+    {rightSubHeader ? <SubHeader /> : null}
     {/* modules */}
   </div>
 </div>`}</ComponentLabCode>
@@ -585,11 +585,11 @@ export function LayoutsLab() {
       usage={
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-[var(--color-text-muted)]">
           <li>
-            Start with <code className="text-[var(--color-text-primary)]">AceSiteHeader</code>, then{' '}
-            <code className="text-[var(--color-text-primary)]">AcePageHeader</code> for the page title.
+            Start with <code className="text-[var(--color-text-primary)]">SiteHeader</code>, then{' '}
+            <code className="text-[var(--color-text-primary)]">PageHeader</code> for the page title.
           </li>
           <li>
-            Treat <code className="text-[var(--color-text-primary)]">AceSubHeader</code> as its own module above
+            Treat <code className="text-[var(--color-text-primary)]">SubHeader</code> as its own module above
             content - especially when composing cards or accordions.
           </li>
           <li>
@@ -598,7 +598,7 @@ export function LayoutsLab() {
           </li>
           <li>
             Shell dropdown controls sidebar affordance and{' '}
-            <code className="text-[var(--color-text-primary)]">AceTaskBar</code> / inline drawer actions.
+            <code className="text-[var(--color-text-primary)]">TaskBar</code> / inline drawer actions.
           </li>
         </ul>
       }

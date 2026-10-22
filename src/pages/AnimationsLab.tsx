@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { AceAccordion } from '../components/molecules/AceAccordion/AceAccordion'
-import { AceSidebar, type AceSidebarGroup } from '../components/organisms/AceSidebar/AceSidebar'
+import { Accordion } from '../components/molecules/Accordion/Accordion'
+import { Sidebar, type SidebarGroup } from '../components/organisms/Sidebar/Sidebar'
 import { ACE_ANIMATIONS, ACE_MOTION_EASE_STANDARD } from '../lib/aceAnimations'
 import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
@@ -55,7 +55,7 @@ function AnimationCatalogTable() {
 
 function SidebarMotionDemo() {
   const [open, setOpen] = useState(true)
-  const [groups, setGroups] = useState<AceSidebarGroup[]>([
+  const [groups, setGroups] = useState<SidebarGroup[]>([
     {
       id: 'g1',
       label: 'High Risk',
@@ -88,7 +88,7 @@ function SidebarMotionDemo() {
         {open ? 'Close sidebar' : 'Open sidebar'}
       </button>
       <div className="flex h-[min(70vh,36rem)] min-h-[28rem] overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]">
-        <AceSidebar open={open} variant="groups" addLabel="New Group" groups={groupsWithHandlers} />
+        <Sidebar open={open} variant="groups" addLabel="New Group" groups={groupsWithHandlers} />
         <div className="flex min-w-0 flex-1 items-center justify-center bg-[var(--screening-surface-muted)] p-6 text-sm text-[var(--screening-text-muted)]">
           App viewport
         </div>
@@ -99,13 +99,13 @@ function SidebarMotionDemo() {
 
 function AccordionMotionDemo() {
   return (
-    <AceAccordion title="Accordion expand" defaultOpen={false}>
+    <Accordion title="Accordion expand" defaultOpen={false}>
       <p className="m-0 text-sm text-[var(--screening-text-muted)]">
         Body uses <code className="text-[var(--screening-text-primary)]">grid-template-rows</code> with{' '}
-        <code className="text-[var(--screening-text-primary)]">--ace-accordion-duration</code> and{' '}
-        <code className="text-[var(--screening-text-primary)]">--ace-accordion-ease</code>.
+        <code className="text-[var(--screening-text-primary)]">--accordion-duration</code> and{' '}
+        <code className="text-[var(--screening-text-primary)]">--accordion-ease</code>.
       </p>
-    </AceAccordion>
+    </Accordion>
   )
 }
 
@@ -196,8 +196,8 @@ className={cn(
             <p className="m-0 text-[var(--screening-text-muted)]">
               Use a grid wrapper with <code className="text-[var(--screening-text-primary)]">grid-rows-[0fr]</code> →{' '}
               <code className="text-[var(--screening-text-primary)]">grid-rows-[1fr]</code> and an inner{' '}
-              <code className="text-[var(--screening-text-primary)]">min-h-0 overflow-hidden</code> child. AceSidebar
-              groups, AceAccordion, and LabLayout nav sections all follow this pattern.
+              <code className="text-[var(--screening-text-primary)]">min-h-0 overflow-hidden</code> child. Sidebar
+              groups, Accordion, and LabLayout nav sections all follow this pattern.
             </p>
           </section>
         </>

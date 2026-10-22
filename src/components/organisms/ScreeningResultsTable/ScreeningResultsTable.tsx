@@ -10,18 +10,18 @@ import {
   type SetStateAction,
 } from 'react'
 import { Checkbox } from '../../atoms/Checkbox/Checkbox'
-import { AceBadge } from '../../atoms/AceBadge/AceBadge'
-import { AceInputField } from '../../atoms/AceInputField'
+import { Badge } from '../../atoms/Badge/Badge'
+import { Input } from '../../atoms/Input'
 import {
-  AceTooltip,
-  AceTooltipContent,
-  AceTooltipIconWrap,
-  AceTooltipTrigger,
-} from '../../atoms/AceTooltip/AceTooltip'
-import { AceFilterToggleChip } from '../../molecules/AceFiltering'
-import { AceAccordion } from '../../molecules/AceAccordion/AceAccordion'
-import { AceAccordionReviewProgress } from '../../molecules/AceAccordion/AceAccordionReviewProgress'
-import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
+  Tooltip,
+  TooltipContent,
+  TooltipIconWrap,
+  TooltipTrigger,
+} from '../../atoms/Tooltip/Tooltip'
+import { FilterToggleChip } from '../../molecules/Filtering'
+import { Accordion } from '../../molecules/Accordion/Accordion'
+import { AccordionReviewProgress } from '../../molecules/Accordion/AccordionReviewProgress'
+import { MaterialSymbol } from '../../molecules/Accordion/MaterialSymbol'
 import { TablePagination } from '../../molecules/TablePagination'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
@@ -530,7 +530,7 @@ export function ScreeningResultsTable({
                   {statusChips.map((st) => {
                     const active = statusFilters.has(st)
                     return (
-                      <AceFilterToggleChip
+                      <FilterToggleChip
                         key={st}
                         label={st}
                         pressed={active}
@@ -563,10 +563,10 @@ export function ScreeningResultsTable({
                   />
                 ) : null}
                 {visibilityControls.showHistoryToggle ? (
-                  <AceTooltip>
+                  <Tooltip>
                     {historyToggleDisabled ? (
-                      <AceTooltipTrigger asChild>
-                        <AceTooltipIconWrap>
+                      <TooltipTrigger asChild>
+                        <TooltipIconWrap>
                           <button
                             type="button"
                             disabled
@@ -579,10 +579,10 @@ export function ScreeningResultsTable({
                           >
                             <MaterialSymbol name="visibility" size="md" weight={300} />
                           </button>
-                        </AceTooltipIconWrap>
-                      </AceTooltipTrigger>
+                        </TooltipIconWrap>
+                      </TooltipTrigger>
                     ) : (
-                      <AceTooltipTrigger asChild>
+                      <TooltipTrigger asChild>
                         <button
                           type="button"
                           aria-expanded={showReviewHistory}
@@ -596,16 +596,16 @@ export function ScreeningResultsTable({
                             <MaterialSymbol name="visibility" size="md" weight={300} />
                           )}
                         </button>
-                      </AceTooltipTrigger>
+                      </TooltipTrigger>
                     )}
-                    <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
+                    <TooltipContent side="top" hideArrow variant="screening-toolbar">
                       {historyToggleDisabled ? 'There is no history to show.' : historyTooltipLabel}
-                    </AceTooltipContent>
-                  </AceTooltip>
+                    </TooltipContent>
+                  </Tooltip>
                 ) : null}
                 {visibilityControls.showRowSearch ? (
                   <div className="w-[12rem] min-w-[min(100%,12.5rem)] max-w-[16rem] shrink-0">
-                    <AceInputField
+                    <Input
                       fieldSize="sm"
                       icon="left"
                       type="search"
@@ -1007,13 +1007,13 @@ export function ScreeningResultsTable({
                                     style={columnWidthStyle(columnWidths[column.key])}
                                   >
                                     {statusLabel === 'New' ? (
-                                      <AceBadge appearance="pill" variant="purple">
+                                      <Badge appearance="pill" variant="purple">
                                         New
-                                      </AceBadge>
+                                      </Badge>
                                     ) : (
-                                      <AceBadge appearance="pill" variant="orange">
+                                      <Badge appearance="pill" variant="orange">
                                         Escalate
-                                      </AceBadge>
+                                      </Badge>
                                     )}
                                   </td>
                                 )
@@ -1247,7 +1247,7 @@ export function ScreeningResultsTable({
   )
 
   const tableHeaderTrailing = (
-    <AceAccordionReviewProgress reviewed={reviewedCount} total={totalCount} />
+    <AccordionReviewProgress reviewed={reviewedCount} total={totalCount} />
   )
 
   const flatShellClass = cn(
@@ -1257,7 +1257,7 @@ export function ScreeningResultsTable({
 
   if (visibilityControls.showAccordionHeader) {
     return (
-      <AceAccordion
+      <Accordion
         className={cn(
           'border-[var(--screening-border-strong)] transition-shadow duration-200 ease-out hover:shadow-[var(--screening-shadow-card-hover)]',
           className,
@@ -1280,7 +1280,7 @@ export function ScreeningResultsTable({
         contentPadding={false}
       >
         {mainPanel}
-      </AceAccordion>
+      </Accordion>
     )
   }
 

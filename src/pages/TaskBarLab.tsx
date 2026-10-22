@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { AceButton } from '../components/atoms/AceButton'
-import { AceTaskBar } from '../components/molecules/AceTaskBar'
+import { Button } from '../components/atoms/Button'
+import { TaskBar } from '../components/molecules/TaskBar'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { LabCheckbox } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
@@ -40,7 +40,7 @@ export function TaskBarLab() {
                     </>
                   ) : null}
                 </p>
-                <AceTaskBar
+                <TaskBar
                   leading={
                     showLeading ? (
                       <>
@@ -58,33 +58,33 @@ export function TaskBarLab() {
                     ) : undefined
                   }
                 >
-                  <AceButton
+                  <Button
                     type="button"
                     variant="secondary"
                     size="md"
                     onClick={() => setLastAction('Modal')}
                   >
                     Modal
-                  </AceButton>
-                  <AceButton
+                  </Button>
+                  <Button
                     type="button"
                     variant="primary"
                     size="md"
                     onClick={() => setLastAction('Inline Drawer')}
                   >
                     Inline Drawer
-                  </AceButton>
-                </AceTaskBar>
+                  </Button>
+                </TaskBar>
               </div>
             </div>
           </div>
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AceButton } from '../components/atoms/AceButton'
-import { AceTaskBar } from '../components/molecules/AceTaskBar'
+        <ComponentLabCode>{`import { Button } from '../components/atoms/Button'
+import { TaskBar } from '../components/molecules/TaskBar'
 
-<AceTaskBar
+<TaskBar
   leading={
     <>
       <span>3 selected</span>
@@ -92,9 +92,9 @@ import { AceTaskBar } from '../components/molecules/AceTaskBar'
     </>
   }
 >
-  <AceButton variant="secondary" onClick={openModal}>Modal</AceButton>
-  <AceButton variant="primary" onClick={openDrawer}>Inline Drawer</AceButton>
-</AceTaskBar>`}</ComponentLabCode>
+  <Button variant="secondary" onClick={openModal}>Modal</Button>
+  <Button variant="primary" onClick={openDrawer}>Inline Drawer</Button>
+</TaskBar>`}</ComponentLabCode>
       }
       usage={
         <>
@@ -110,9 +110,9 @@ import { AceTaskBar } from '../components/molecules/AceTaskBar'
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tokens</h4>
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
-                <code className="text-[var(--screening-text-primary)]">--ace-task-bar-surface</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-task-bar-border</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-task-bar-shadow</code>
+                <code className="text-[var(--screening-text-primary)]">--task-bar-surface</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--task-bar-border</code>,{' '}
+                <code className="text-[var(--screening-text-primary)]">--task-bar-shadow</code>
               </li>
             </ul>
           </section>

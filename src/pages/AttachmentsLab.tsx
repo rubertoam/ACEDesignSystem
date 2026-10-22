@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react'
 import {
-  AceAttachments,
+  Attachments,
   DEMO_ATTACHMENT_FILES,
   DEMO_ATTACHMENT_LINKS,
-  type AceAttachmentFile,
-  type AceAttachmentLink,
-} from '../components/organisms/AceAttachments/AceAttachments'
+  type AttachmentFile,
+  type AttachmentLink,
+} from '../components/organisms/Attachments/Attachments'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
@@ -16,8 +16,8 @@ function createId(prefix: string) {
 }
 
 export function AttachmentsLab() {
-  const [files, setFiles] = useState<AceAttachmentFile[]>([])
-  const [links, setLinks] = useState<AceAttachmentLink[]>([])
+  const [files, setFiles] = useState<AttachmentFile[]>([])
+  const [links, setLinks] = useState<AttachmentLink[]>([])
   const [urlDraft, setUrlDraft] = useState('')
 
   const interactiveProps = useMemo(
@@ -50,14 +50,14 @@ export function AttachmentsLab() {
   return (
     <ComponentLabPage
       title="Attachments"
-      description="File upload dropzone and URL linking pattern for case workflows (Figma Attachments 3313:156). Built from AceButton, AceInputField, and ACE typography tokens."
+      description="File upload dropzone and URL linking pattern for case workflows (Figma Attachments 3313:156). Built from Button, Input, and ACE typography tokens."
       examplesCanvas={false}
       examples={
         <div className="space-y-10">
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Interactive</p>
             <div className={cn(labComponentContainerClass, 'w-1/2 min-w-0 max-w-full')}>
-              <AceAttachments {...interactiveProps} />
+              <Attachments {...interactiveProps} />
             </div>
           </div>
 
@@ -67,12 +67,12 @@ export function AttachmentsLab() {
               <div className="grid w-full min-w-0 gap-8 lg:grid-cols-2 lg:items-start">
                 <div className={labStaticExampleGroupClass}>
                   <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Empty</p>
-                  <AceAttachments />
+                  <Attachments />
                 </div>
 
                 <div className={labStaticExampleGroupClass}>
                   <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Active</p>
-                  <AceAttachments
+                  <Attachments
                     files={DEMO_ATTACHMENT_FILES}
                     links={DEMO_ATTACHMENT_LINKS}
                     urlDraft=""
@@ -90,12 +90,12 @@ export function AttachmentsLab() {
             layout and status presentation only.
           </p>
           <ComponentLabCode>{`import {
-  AceAttachments,
+  Attachments,
   DEMO_ATTACHMENT_FILES,
   DEMO_ATTACHMENT_LINKS,
-} from '../components/organisms/AceAttachments/AceAttachments'
+} from '../components/organisms/Attachments/Attachments'
 
-<AceAttachments
+<Attachments
   files={files}
   links={links}
   urlDraft={urlDraft}
@@ -106,7 +106,7 @@ export function AttachmentsLab() {
   onRemoveLink={removeLink}
 />
 
-<AceAttachments
+<Attachments
   files={DEMO_ATTACHMENT_FILES}
   links={DEMO_ATTACHMENT_LINKS}
 />`}</ComponentLabCode>
@@ -143,19 +143,19 @@ export function AttachmentsLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Shell - <code className="text-[var(--color-text-primary)]">--ace-attachments-border</code>, padding, gap
+            Shell - <code className="text-[var(--color-text-primary)]">--attachments-border</code>, padding, gap
           </li>
           <li>
             Typography - H6 Small Bold title, footer labels, caption file names
           </li>
           <li>
             Dropzone - dashed primary border on{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-attachments-dropzone-bg</code>
+            <code className="text-[var(--color-text-primary)]">--attachments-dropzone-bg</code>
           </li>
           <li>
             Status - link and progress text use{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-attachments-status</code>; errors use{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-attachments-error</code>
+            <code className="text-[var(--color-text-primary)]">--attachments-status</code>; errors use{' '}
+            <code className="text-[var(--color-text-primary)]">--attachments-error</code>
           </li>
         </ul>
       }

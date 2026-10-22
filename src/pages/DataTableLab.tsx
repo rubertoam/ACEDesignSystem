@@ -1,18 +1,18 @@
 import { useCallback, useMemo, useState } from 'react'
-import { AceButton } from '../components/atoms/AceButton'
+import { Button } from '../components/atoms/Button'
 import {
-  AceFilterChip,
-  AceFilterToggleChip,
-  AceTableFilterHeader,
+  FilterChip,
+  FilterToggleChip,
+  TableFilterHeader,
   FILTER_VIEW_MODE_PANEL_WIDTH,
   filterViewModeLabel,
   filterViewModeMenuItems,
   type FilterViewMode,
-} from '../components/molecules/AceFiltering'
+} from '../components/molecules/Filtering'
 import {
-  AceDropdownMenu,
-  type AceDropdownMenuEntry,
-} from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+  DropdownMenu,
+  type DropdownMenuEntry,
+} from '../components/molecules/DropdownMenu/DropdownMenu'
 import {
   DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS,
   ScreeningResultsTable,
@@ -163,7 +163,7 @@ export function DataTableLab() {
     })
   }
 
-  const filterMenuItems: AceDropdownMenuEntry[] = useMemo(
+  const filterMenuItems: DropdownMenuEntry[] = useMemo(
     () =>
       FILTER_OPTIONS.map((option) => ({
         type: 'checkbox' as const,
@@ -184,7 +184,7 @@ export function DataTableLab() {
   const activeChips = FILTER_OPTIONS.filter((option) => activeFilters.has(option.id))
 
   const viewModeMenu = (
-    <AceDropdownMenu
+    <DropdownMenu
       triggerLabel={filterViewModeLabel(viewMode)}
       triggerMode="filter"
       panelWidth={FILTER_VIEW_MODE_PANEL_WIDTH}
@@ -196,13 +196,13 @@ export function DataTableLab() {
     filterType === 'triggers' ? (
       <>
         {viewModeMenu}
-        <AceDropdownMenu triggerLabel="Filters" triggerMode="filter" items={filterMenuItems} />
+        <DropdownMenu triggerLabel="Filters" triggerMode="filter" items={filterMenuItems} />
       </>
     ) : (
       <>
         {viewModeMenu}
         {FILTER_OPTIONS.map((option) => (
-          <AceFilterToggleChip
+          <FilterToggleChip
             key={option.id}
             label={option.menuLabel}
             pressed={toggledChips.has(option.id)}
@@ -215,7 +215,7 @@ export function DataTableLab() {
   const headerChips =
     filterType === 'triggers' && activeChips.length > 0
       ? activeChips.map((option) => (
-          <AceFilterChip
+          <FilterChip
             key={option.id}
             label={option.chipLabel}
             onClear={() => clearFilter(option.id)}
@@ -242,7 +242,7 @@ export function DataTableLab() {
                   size="sm"
                 />
               </div>
-              <AceTableFilterHeader
+              <TableFilterHeader
                 title="Table Header"
                 actions={headerActions}
                 trailing={<ScreeningColumnsMenu />}
@@ -260,9 +260,9 @@ export function DataTableLab() {
             <div className="flex flex-col gap-3">
               <div className={examplesToolbarPanel}>
                 <div className="flex w-full flex-wrap items-center gap-4">
-                  <AceButton type="button" variant="secondary" size="sm" onClick={openPreviewOptions}>
+                  <Button type="button" variant="secondary" size="sm" onClick={openPreviewOptions}>
                     Table View Options
-                  </AceButton>
+                  </Button>
                   <LabCheckbox
                     label="Column Resizing"
                     checked={columnResizing}
@@ -331,34 +331,34 @@ export function DataTableLab() {
 } from '../components/organisms/ScreeningResultsTable/ScreeningResultsTable'
 import { ScreeningColumnsMenu } from '../components/organisms/ScreeningResultsTable/ScreeningColumnsMenu'
 import {
-  AceFilterChip,
-  AceFilterToggleChip,
-  AceTableFilterHeader,
+  FilterChip,
+  FilterToggleChip,
+  TableFilterHeader,
   filterViewModeLabel,
   filterViewModeMenuItems,
-} from '../components/molecules/AceFiltering'
-import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+} from '../components/molecules/Filtering'
+import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
 
-<AceTableFilterHeader
+<TableFilterHeader
   title="Table Header"
   actions={
     <>
-      <AceDropdownMenu
+      <DropdownMenu
         triggerLabel={filterViewModeLabel(viewMode)}
         triggerMode="filter"
         panelWidth="wide"
         items={filterViewModeMenuItems(viewMode, setViewMode)}
       />
-      <AceDropdownMenu triggerLabel="Filters" triggerMode="filter" items={...} />
+      <DropdownMenu triggerLabel="Filters" triggerMode="filter" items={...} />
     </>
   }
   trailing={<ScreeningColumnsMenu />}
   searchPlaceholder="Search"
-  chips={active.map((f) => <AceFilterChip key={f.id} label={f.label} onClear={...} />)}
+  chips={active.map((f) => <FilterChip key={f.id} label={f.label} onClear={...} />)}
 />
 
 {/* Filter Chips mode */}
-<AceFilterToggleChip label="Locked" pressed={on} onClick={toggle} />
+<FilterToggleChip label="Locked" pressed={on} onClick={toggle} />
 
 <ScreeningResultsTable rows={MOCK_ROWS} title="Watchlist Screening" />`}</ComponentLabCode>
       }

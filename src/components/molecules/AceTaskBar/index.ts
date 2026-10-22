@@ -1,6 +1,2 @@
-export { AceTaskBar, type AceTaskBarProps } from './AceTaskBar'
-export {
-  aceTaskBarActionsClass,
-  aceTaskBarLeadingClass,
-  aceTaskBarShellClass,
-} from './taskBarFieldStyles'
+/** @deprecated Import from the Figma-named folder instead. */
+export * from '../TaskBar'

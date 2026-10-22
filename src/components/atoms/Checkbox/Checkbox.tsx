@@ -5,12 +5,12 @@ import { cn } from '../../../lib/cn'
 import {
   aceCheckboxClass,
   aceCheckboxIconSizeClass,
-  type AceCheckboxSize,
+  type CheckboxSize,
 } from './checkboxFieldStyles'
 
 export type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
   /** Default is Small (16px). Data table uses Medium. */
-  size?: AceCheckboxSize
+  size?: CheckboxSize
 }
 
 /** Horizontal bar for indeterminate — Figma Active uses a white inset ring, not a checkmark. */

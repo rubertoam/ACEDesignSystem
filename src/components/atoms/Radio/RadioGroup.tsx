@@ -6,7 +6,7 @@ import {
   aceRadioControlClass,
   aceRadioIndicatorClass,
   aceRadioItemRootClass,
-  type AceRadioSize,
+  type RadioSize,
 } from './radioFieldStyles'
 
 export const RadioGroup = forwardRef<
@@ -18,7 +18,7 @@ export const RadioGroup = forwardRef<
 RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
 
 export type RadioItemProps = ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> & {
-  size?: AceRadioSize
+  size?: RadioSize
 }
 
 export const RadioItem = forwardRef<ComponentRef<typeof RadioGroupPrimitive.Item>, RadioItemProps>(

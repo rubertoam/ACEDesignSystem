@@ -8,14 +8,14 @@ import {
   aceToggleIconGlyphMotion,
   aceToggleIconXClass,
   aceToggleThumbClass,
-  type AceToggleSize,
-  type AceToggleVariant,
+  type ToggleSize,
+  type ToggleVariant,
 } from './toggleFieldStyles'
 
 export type ToggleProps = ComponentPropsWithoutRef<typeof SwitchPrimitive.Root> & {
-  size?: AceToggleSize
+  size?: ToggleSize
   /** Standard white thumb; icon shows white check / dark X in the track (same tokens as standard). */
-  variant?: AceToggleVariant
+  variant?: ToggleVariant
 }
 
 /** Compact stroke icons for Icon variant (Figma Toggle Icon type). */

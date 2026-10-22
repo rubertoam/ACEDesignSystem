@@ -1,2 +1,2 @@
-export { AceSlider, type AceSliderProps, type AceSliderValue, type AceSliderVariant } from './AceSlider'
-export { AceSliderField, type AceSliderFieldProps } from './AceSliderField'
+/** @deprecated Import from the Figma-named folder instead. */
+export * from '../Slider'

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-import { AceAccordion, type AceAccordionSurface } from '../components/molecules/AceAccordion/AceAccordion'
-import { AceAccordionReviewProgress } from '../components/molecules/AceAccordion/AceAccordionReviewProgress'
+import { Accordion, type AccordionSurface } from '../components/molecules/Accordion/Accordion'
+import { AccordionReviewProgress } from '../components/molecules/Accordion/AccordionReviewProgress'
 import { LabCheckbox, LabRadioGroup } from '../lib/labControls'
 
 const DEMO_REVIEWED = 5
@@ -10,12 +10,12 @@ const DEMO_TOTAL = 12
 const sampleBody = (
   <p className="m-0 min-h-[18rem] [font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--screening-text-secondary)]">
     Accordion body content goes here. Expand and collapse uses a 420ms ease-out curve (
-    <code className="text-[var(--screening-text-primary)]">--ace-accordion-ease</code>).
+    <code className="text-[var(--screening-text-primary)]">--accordion-ease</code>).
   </p>
 )
 
 export function AccordionLab() {
-  const [surface, setSurface] = useState<AceAccordionSurface>('white')
+  const [surface, setSurface] = useState<AccordionSurface>('white')
   const [dropShadow, setDropShadow] = useState(false)
   const [showTag, setShowTag] = useState(true)
   const [showAddIcon, setShowAddIcon] = useState(true)
@@ -70,7 +70,7 @@ export function AccordionLab() {
       examples={
         <div className="flex w-full justify-start">
           <div className="w-full max-w-[42rem] min-w-[min(100%,42rem)]">
-            <AceAccordion
+            <Accordion
               key={accordionKey}
               title="[Enter Title]"
               surface={surface}
@@ -83,17 +83,17 @@ export function AccordionLab() {
               defaultOpen={startOpen}
               headerTrailing={
                 showProgressBar ? (
-                  <AceAccordionReviewProgress reviewed={DEMO_REVIEWED} total={DEMO_TOTAL} />
+                  <AccordionReviewProgress reviewed={DEMO_REVIEWED} total={DEMO_TOTAL} />
                 ) : undefined
               }
             >
               {sampleBody}
-            </AceAccordion>
+            </Accordion>
           </div>
         </div>
       }
       code={
-        <ComponentLabCode>{`<AceAccordion
+        <ComponentLabCode>{`<Accordion
   title="[Enter Title]"
   surface="white"
   dropShadow
@@ -103,11 +103,11 @@ export function AccordionLab() {
   showEditIcon
   showMoreIcon
   headerTrailing={
-    <AceAccordionReviewProgress reviewed={5} total={12} />
+    <AccordionReviewProgress reviewed={5} total={12} />
   }
 >
   {children}
-</AceAccordion>`}</ComponentLabCode>
+</Accordion>`}</ComponentLabCode>
       }
       usage={
         <p className="m-0 text-[var(--color-text-muted)]">
@@ -120,23 +120,23 @@ export function AccordionLab() {
           <code className="text-[var(--color-text-primary)]">showEditIcon</code>, and{' '}
           <code className="text-[var(--color-text-primary)]">showMoreIcon</code>. Pass{' '}
           <code className="text-[var(--color-text-primary)]">headerTrailing</code> with{' '}
-          <code className="text-[var(--color-text-primary)]">AceAccordionReviewProgress</code> for the data table review
+          <code className="text-[var(--color-text-primary)]">AccordionReviewProgress</code> for the data table review
           progress cluster (can combine with tag and icons).
         </p>
       }
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-accordion-surface-muted</code> (gray),{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-accordion-surface</code> (white)
+            <code className="text-[var(--color-text-primary)]">--accordion-surface-muted</code> (gray),{' '}
+            <code className="text-[var(--color-text-primary)]">--accordion-surface</code> (white)
           </li>
           <li>
             <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code> when{' '}
             <code className="text-[var(--color-text-primary)]">dropShadow</code> is true
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-accordion-duration</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-accordion-ease</code>
+            <code className="text-[var(--color-text-primary)]">--accordion-duration</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--accordion-ease</code>
           </li>
           <li>
             Progress - <code className="text-[var(--color-text-primary)]">--screening-progress-track</code>,{' '}

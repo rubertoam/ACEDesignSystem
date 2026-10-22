@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useState, type ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
-import { AceAvailabilityTag } from '../components/atoms/AceAvailabilityTag/AceAvailabilityTag'
-import { AceTabs, aceTabButtonId } from '../components/atoms/AceTabs/AceTabs'
+import { AvailabilityTag } from '../components/atoms/AvailabilityTag/AvailabilityTag'
+import { Tabs, tabButtonId } from '../components/atoms/Tabs/Tabs'
 import { getLabAvailability } from '../lib/labAvailability'
 import { cn } from '../lib/cn'
 import {
@@ -10,6 +10,8 @@ import {
   LabImplementationRulesDoc,
   splitImplementationRulesMarkdown,
 } from './LabImplementationRules'
+import { LabTokensInUse } from '../components/lab/LabTokensInUse'
+import { getLabComponentTokens } from './labComponentTokens'
 import { labUsageSections } from './labContent'
 
 export type ComponentLabTab = 'examples' | 'code' | 'usage' | 'qa' | 'changelog'
@@ -91,11 +93,16 @@ export function ComponentLabPage({
   const examplesContent = examples ?? preview
   const toolbarContent = examplesToolbar ?? previewToolbar
 
+  const catalogTokenGroups = useMemo(() => getLabComponentTokens(pathname), [pathname])
+
+  /** Catalog is the source of truth for token names; skip legacy Variables when present. */
   const legacyUsageContent = usage
-    ? labUsageSections(usage, variables)
-    : variables
-      ? labUsageSections(null, variables)
-      : null
+    ? labUsageSections(usage, catalogTokenGroups ? undefined : variables)
+    : catalogTokenGroups
+      ? null
+      : variables
+        ? labUsageSections(null, variables)
+        : null
 
   const { usageMarkdown, qaMarkdown } = useMemo(
     () =>
@@ -119,9 +126,10 @@ export function ComponentLabPage({
           ) : null}
           <LabImplementationRulesDoc markdown={usageMarkdown} />
         </>
-      ) : legacyUsageContent == null ? (
+      ) : legacyUsageContent == null && !catalogTokenGroups ? (
         EMPTY_IMPLEMENTATION_RULES
       ) : null}
+      {catalogTokenGroups ? <LabTokensInUse groups={catalogTokenGroups} /> : null}
     </>
   )
 
@@ -168,14 +176,14 @@ export function ComponentLabPage({
             ) : null}
           </div>
           {availability ? (
-            <AceAvailabilityTag status={availability} className="mt-0.5 shrink-0" />
+            <AvailabilityTag status={availability} className="mt-0.5 shrink-0" />
           ) : null}
         </div>
       </div>
 
       {tabItems.length > 0 ? (
         <div>
-          <AceTabs
+          <Tabs
             idPrefix={tabListId}
             items={tabItems}
             value={tab}
@@ -187,7 +195,7 @@ export function ComponentLabPage({
             <section
               id={examplesPanelId}
               role="tabpanel"
-              aria-labelledby={aceTabButtonId(tabListId, 'examples')}
+              aria-labelledby={tabButtonId(tabListId, 'examples')}
               className="pt-6"
             >
               {toolbarContent != null ? (
@@ -207,7 +215,7 @@ export function ComponentLabPage({
             <section
               id={codePanelId}
               role="tabpanel"
-              aria-labelledby={aceTabButtonId(tabListId, 'code')}
+              aria-labelledby={tabButtonId(tabListId, 'code')}
               className="pt-6"
             >
               <div className={cn(panel, 'space-y-4', p1)}>{code}</div>
@@ -218,7 +226,7 @@ export function ComponentLabPage({
             <section
               id={usagePanelId}
               role="tabpanel"
-              aria-labelledby={aceTabButtonId(tabListId, 'usage')}
+              aria-labelledby={tabButtonId(tabListId, 'usage')}
               className="pt-6"
             >
               <div className={cn(panel, 'space-y-4', p1, 'text-[var(--screening-text-primary)]')}>
@@ -231,7 +239,7 @@ export function ComponentLabPage({
             <section
               id={qaPanelId}
               role="tabpanel"
-              aria-labelledby={aceTabButtonId(tabListId, 'qa')}
+              aria-labelledby={tabButtonId(tabListId, 'qa')}
               className="pt-6"
             >
               <div className={cn(panel, 'space-y-4', p1, 'text-[var(--screening-text-primary)]')}>
@@ -244,7 +252,7 @@ export function ComponentLabPage({
             <section
               id={changelogPanelId}
               role="tabpanel"
-              aria-labelledby={aceTabButtonId(tabListId, 'changelog')}
+              aria-labelledby={tabButtonId(tabListId, 'changelog')}
               className="pt-6"
             >
               <div className={cn(panel, 'space-y-4', p1, 'text-[var(--screening-text-primary)]')}>

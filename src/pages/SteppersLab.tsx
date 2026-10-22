@@ -1,18 +1,18 @@
 import { useState } from 'react'
-import { AceStepper, type AceStepperVariant } from '../components/molecules/AceStepper'
+import { Stepper, type StepperVariant } from '../components/molecules/Stepper'
 import { LabCheckbox, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { cn } from '../lib/cn'
 
-const VARIANTS: { value: AceStepperVariant; label: string }[] = [
+const VARIANTS: { value: StepperVariant; label: string }[] = [
   { value: 'horizontal', label: 'Horizontal Stepper' },
   { value: 'vertical', label: 'Vertical Stepper' },
 ]
 
 export function SteppersLab() {
-  const [variant, setVariant] = useState<AceStepperVariant>('horizontal')
+  const [variant, setVariant] = useState<StepperVariant>('horizontal')
   const [value, setValue] = useState(5)
   const [disabled, setDisabled] = useState(false)
 
@@ -39,7 +39,7 @@ export function SteppersLab() {
             </p>
             <div className={labComponentContainerClass}>
               <div className="flex min-h-24 items-center justify-center p-6">
-                <AceStepper
+                <Stepper
                   variant={variant}
                   value={value}
                   onValueChange={setValue}
@@ -56,11 +56,11 @@ export function SteppersLab() {
               <div className="flex flex-wrap items-end justify-center gap-10 p-6">
                 <div className="flex flex-col items-center gap-2">
                   <span className="text-xs text-[var(--screening-text-muted)]">Horizontal</span>
-                  <AceStepper variant="horizontal" value={value} onValueChange={setValue} disabled={disabled} />
+                  <Stepper variant="horizontal" value={value} onValueChange={setValue} disabled={disabled} />
                 </div>
                 <div className="flex flex-col items-center gap-2">
                   <span className="text-xs text-[var(--screening-text-muted)]">Vertical</span>
-                  <AceStepper variant="vertical" value={value} onValueChange={setValue} disabled={disabled} />
+                  <Stepper variant="vertical" value={value} onValueChange={setValue} disabled={disabled} />
                 </div>
               </div>
             </div>
@@ -68,15 +68,15 @@ export function SteppersLab() {
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AceStepper } from '../components/molecules/AceStepper'
+        <ComponentLabCode>{`import { Stepper } from '../components/molecules/Stepper'
 
-<AceStepper
+<Stepper
   variant="horizontal"
   value={5}
   onValueChange={setValue}
 />
 
-<AceStepper
+<Stepper
   variant="vertical"
   value={5}
   onValueChange={setValue}

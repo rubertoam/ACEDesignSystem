@@ -1,9 +1,9 @@
 import { useEffect, useId, useLayoutEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { cn } from '../../../lib/cn'
-import { MaterialSymbol } from '../AceAccordion/MaterialSymbol'
-import { AceInlineMessage } from '../AceInlineMessage/AceInlineMessage'
-import type { AceInlineMessageTone } from '../AceInlineMessage/inlineMessageFieldStyles'
+import { MaterialSymbol } from '../Accordion/MaterialSymbol'
+import { InlineMessage } from '../InlineMessage/InlineMessage'
+import type { InlineMessageTone } from '../InlineMessage/inlineMessageFieldStyles'
 
 /** ACE typography tokens (`typography-tokens.css`) → `font` + `letter-spacing` */
 function aceTypography(token: string) {
@@ -326,7 +326,7 @@ export function DialogModal({
 
 export type DialogModalInlineMessageProps = {
   children: ReactNode
-  tone?: AceInlineMessageTone
+  tone?: InlineMessageTone
 }
 
 /** Inline message strip inside modal body (Figma Dialog Modals + Inline Messages). */
@@ -334,7 +334,7 @@ export function DialogModalInlineMessage({
   children,
   tone = 'error',
 }: DialogModalInlineMessageProps) {
-  return <AceInlineMessage tone={tone}>{children}</AceInlineMessage>
+  return <InlineMessage tone={tone}>{children}</InlineMessage>
 }
 
 /** @deprecated Prefer `DialogModalInlineMessage` with an explicit tone. */

@@ -1,9 +1,8 @@
-/** @deprecated Import from `AceBadge/badgeFieldStyles` instead. */
+/** @deprecated Use Badge/badgeFieldStyles. */
 export {
-  aceBadgeStatusDotClass as aceStatusPillDotClass,
-  aceBadgeStatusLabelClass as aceStatusPillLabelClass,
-  aceBadgeStatusShellClass,
-  aceBadgeVariantTokens as aceStatusPillVariantTokens,
-  aceStatusPillShellClass,
-  type AceBadgeVariant as AceStatusPillVariant,
-} from '../AceBadge/badgeFieldStyles'
+  badgeStatusDotClass as aceStatusPillDotClass,
+  badgeStatusLabelClass as aceStatusPillLabelClass,
+  badgeStatusShellClass as aceStatusPillShellClass,
+  badgeVariantTokens as aceStatusPillVariantTokens,
+  type BadgeVariant as AceStatusPillVariant,
+} from '../Badge/badgeFieldStyles'

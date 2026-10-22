@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { AceTooltip, AceTooltipContent, AceTooltipTrigger } from '../components/atoms/AceTooltip/AceTooltip'
-import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
-import { AceSlider } from '../components/molecules/AceSlider'
-import { sidebarIconButtonClass } from '../components/organisms/AceSidebar/sidebarRowActions'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../components/atoms/Tooltip/Tooltip'
+import { MaterialSymbol } from '../components/molecules/Accordion/MaterialSymbol'
+import { Slider } from '../components/molecules/Slider'
+import { sidebarIconButtonClass } from '../components/organisms/Sidebar/sidebarRowActions'
 import { screeningToolbarIconButtonClass } from '../components/organisms/ScreeningResultsTable/screeningTableToolbar'
 import { cn } from '../lib/cn'
 import { LabCheckbox, LabControlField, LabSelect } from '../lib/labControls'
@@ -13,7 +13,7 @@ import iconographyRules from './implementationRules/iconography.md?raw'
 
 const HOVER_DEMO_ICONS = ['more_horiz', 'search', 'settings', 'add', 'notifications'] as const
 
-/** Hover demo icon sizes - matches MaterialSymbol sm / md / lg / xl. */
+/** Hover demo icon sizes — Figma icon/size sm|md|lg|xl (12|16|20|24). */
 const ICON_PX_STEPS = [12, 16, 20, 24] as const
 const ICON_PX_MIN = ICON_PX_STEPS[0]
 const ICON_PX_MAX = ICON_PX_STEPS[ICON_PX_STEPS.length - 1]
@@ -46,15 +46,15 @@ const iconButtonStrokeClass = screeningToolbarIconButtonClass
 
 /** Hover fill on white pads - Figma `color/bg/primary`. */
 const iconButtonHoverOnWhiteClass =
-  'border-[var(--ace-icon-button-border)] bg-[var(--ace-icon-button-hover-bg)] text-[var(--ace-icon-button-icon)]'
+  'border-[var(--icon-button-border)] bg-[var(--icon-button-hover-bg)] text-[var(--icon-button-icon)]'
 
 /** Hover fill on gray pads - white so it contrasts with `--screening-surface-muted`. */
 const iconButtonHoverOnGrayClass =
-  'border-[var(--ace-icon-button-border)] bg-[var(--ace-icon-button-surface)] text-[var(--ace-icon-button-icon)]'
+  'border-[var(--icon-button-border)] bg-[var(--icon-button-surface)] text-[var(--icon-button-icon)]'
 
 /** Interactive `:hover` override when the demo pad is gray. */
 const iconButtonHoverOnGrayInteractiveClass =
-  'hover:border-[var(--ace-icon-button-border)] hover:bg-[var(--ace-icon-button-surface)] hover:text-[var(--ace-icon-button-icon)]'
+  'hover:border-[var(--icon-button-border)] hover:bg-[var(--icon-button-surface)] hover:text-[var(--icon-button-icon)]'
 
 function iconPxStyle(px: number) {
   const opsz = Math.min(48, Math.max(20, px))
@@ -88,12 +88,12 @@ function IconHoverDemoButton({
   if (!showTooltip) return button
 
   return (
-    <AceTooltip>
-      <AceTooltipTrigger asChild>{button}</AceTooltipTrigger>
-      <AceTooltipContent side="top" hideArrow variant="screening-toolbar">
+    <Tooltip>
+      <TooltipTrigger asChild>{button}</TooltipTrigger>
+      <TooltipContent side="top" hideArrow variant="screening-toolbar">
         Tooltip
-      </AceTooltipContent>
-    </AceTooltip>
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
@@ -195,7 +195,7 @@ function IconHoverSection() {
           className="shrink-0 pb-1.5"
         />
         <LabControlField label={`Icon size (${iconPx}px)`} className="w-[14rem] shrink-0">
-          <AceSlider
+          <Slider
             variant="discrete"
             min={ICON_PX_MIN}
             max={ICON_PX_MAX}
@@ -214,7 +214,7 @@ function IconHoverSection() {
       </div>
       <IconHoverVariant
         title="No border stroke"
-        description="Sidebar icons - transparent at rest; hover uses --ace-icon-button-hover-bg on white, or --ace-icon-button-surface (white) on gray."
+        description="Sidebar icons - transparent at rest; hover uses --icon-button-hover-bg on white, or --icon-button-surface (white) on gray."
         restClass={iconButtonGhostClass}
         surface={surface}
         showTooltips={showTooltips}
@@ -276,6 +276,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'account_circle',
     materialIoName: 'Account Circle',
     fill: 'outlined',
+    notes: 'Also Client Profile name / Client ID rows in Review Assigned.',
   },
   {
     id: 5,
@@ -357,6 +358,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'flash_on',
     materialIoName: 'Flash On',
     fill: 'outlined',
+    notes: 'Review Assigned screening toolbar Quick Clear.',
   },
   {
     id: 16,
@@ -365,7 +367,7 @@ const CATALOG: CatalogIcon[] = [
     materialIoName: 'Check Circle',
     fill: 'outlined',
     notes: 'Most commonly used in toast messages.',
-    colorClass: 'text-[var(--ace-toast-icon-success)]',
+    colorClass: 'text-[var(--toast-message-icon-success)]',
   },
   {
     id: 17,
@@ -374,7 +376,7 @@ const CATALOG: CatalogIcon[] = [
     materialIoName: 'Info',
     fill: 'outlined',
     notes: 'Toast or inline message (info variant).',
-    colorClass: 'text-[var(--ace-toast-icon-info)]',
+    colorClass: 'text-[var(--toast-message-icon-info)]',
   },
   {
     id: 18,
@@ -383,7 +385,7 @@ const CATALOG: CatalogIcon[] = [
     materialIoName: 'Error',
     fill: 'outlined',
     notes: 'Toast, inline message, modal, or failed input.',
-    colorClass: 'text-[var(--ace-toast-icon-error)]',
+    colorClass: 'text-[var(--toast-message-icon-error)]',
   },
   {
     id: 19,
@@ -392,15 +394,15 @@ const CATALOG: CatalogIcon[] = [
     materialIoName: 'Warning',
     fill: 'outlined',
     notes: 'Warning toast or warning inline message.',
-    colorClass: 'text-[var(--ace-toast-icon-warning)]',
+    colorClass: 'text-[var(--toast-message-icon-warning)]',
   },
   {
     id: 20,
-    label: 'Reorder',
-    name: 'drag_handle',
-    materialIoName: 'Drag Handle',
+    label: 'Reorder (columns)',
+    name: 'drag_indicator',
+    materialIoName: 'Drag Indicator',
     fill: 'outlined',
-    notes: 'Use Material Symbols styling for reorder handles.',
+    notes: 'Review Assigned screening table column reorder handle.',
   },
   {
     id: 21,
@@ -411,10 +413,11 @@ const CATALOG: CatalogIcon[] = [
   },
   {
     id: 22,
-    label: 'Settings',
+    label: 'Settings (gear)',
     name: 'settings',
     materialIoName: 'Settings',
     fill: 'outlined',
+    notes: 'Generic settings glyph. Product nav uses tune for FinScan Settings.',
   },
   {
     id: 23,
@@ -422,6 +425,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'search',
     materialIoName: 'Search',
     fill: 'outlined',
+    notes: 'Review Assigned sidebar Search Client ID.',
   },
   {
     id: 24,
@@ -429,6 +433,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'draft',
     materialIoName: 'Draft',
     fill: 'outlined',
+    notes: 'Review activity feed attachment tag.',
   },
   {
     id: 25,
@@ -436,6 +441,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'link',
     materialIoName: 'Link',
     fill: 'outlined',
+    notes: 'Review activity feed URL items.',
   },
   {
     id: 26,
@@ -475,7 +481,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'lock',
     materialIoName: 'Lock',
     fill: 'filled',
-    notes: 'Always use the filled variant.',
+    notes: 'Always use the filled variant. Case lock / Filter Locked semantics.',
   },
   {
     id: 31,
@@ -495,11 +501,12 @@ const CATALOG: CatalogIcon[] = [
   },
   {
     id: 33,
-    label: 'History → Data Manager',
+    label: 'History',
     name: 'history',
     materialIoName: 'History',
     fill: 'outlined',
-    notes: 'Data Manager tab card.',
+    notes:
+      'Data Manager tab card; Review drawer screening-history control. Not Work History (see tab_recent).',
   },
   {
     id: 34,
@@ -515,7 +522,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'keyboard_arrow_left',
     materialIoName: 'Keyboard Arrow Left',
     fill: 'outlined',
-    notes: 'Pagination and date picker month navigation.',
+    notes: 'Pagination, date picker, minimize case list, drilldown Back.',
   },
   {
     id: 36,
@@ -523,7 +530,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'check',
     materialIoName: 'Check',
     fill: 'outlined',
-    notes: 'Checkbox checked glyph and icon-toggle on state.',
+    notes: 'Checkbox, icon-toggle on, copy confirm, reviewed row indicator.',
   },
   {
     id: 37,
@@ -539,7 +546,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'delete',
     materialIoName: 'Delete',
     fill: 'outlined',
-    notes: 'Accordion actions, attachments remove, sidebar edit-group trash.',
+    notes: 'Accordion actions, attachments remove, documents row delete, sidebar trash.',
   },
   {
     id: 39,
@@ -563,7 +570,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'cloud_upload',
     materialIoName: 'Cloud Upload',
     fill: 'outlined',
-    notes: 'Attachments dropzone.',
+    notes: 'Attachments dropzone; review activity upload items.',
   },
   {
     id: 42,
@@ -587,7 +594,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'view_list',
     materialIoName: 'View List',
     fill: 'outlined',
-    notes: 'Data table columns menu trigger.',
+    notes: 'Review Assigned screening toolbar Edit Columns.',
   },
   {
     id: 45,
@@ -595,7 +602,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'visibility',
     materialIoName: 'Visibility',
     fill: 'outlined',
-    notes: 'Data table review-history toggle (shown).',
+    notes: 'Screening toolbar show review history (Level 2).',
   },
   {
     id: 46,
@@ -603,7 +610,7 @@ const CATALOG: CatalogIcon[] = [
     name: 'visibility_off',
     materialIoName: 'Visibility Off',
     fill: 'outlined',
-    notes: 'Data table review-history toggle (hidden).',
+    notes: 'Screening toolbar hide review history (Level 2).',
   },
   {
     id: 47,
@@ -651,15 +658,103 @@ const CATALOG: CatalogIcon[] = [
     name: 'left_panel_open',
     materialIoName: 'Left Panel Open',
     fill: 'outlined',
-    notes: 'Lab / shell sidebar expand control (closed state).',
+    notes: 'Closed-state glyph (rotated left_panel_close is used in Review Assigned).',
   },
   {
     id: 53,
-    label: 'Sidebar collapse',
+    label: 'Sidebar collapse / toggle',
     name: 'left_panel_close',
     materialIoName: 'Left Panel Close',
     fill: 'outlined',
-    notes: 'Lab / shell sidebar collapse control (open state).',
+    notes: 'Review Assigned page-header sidebar toggle (rotates when closed).',
+  },
+  {
+    id: 54,
+    label: 'Work History',
+    name: 'tab_recent',
+    materialIoName: 'Tab Recent',
+    fill: 'outlined',
+    notes: 'Review Assigned Level 1 page header Work History (replaces history).',
+  },
+  {
+    id: 55,
+    label: 'Insights',
+    name: 'earthquake',
+    materialIoName: 'Earthquake',
+    fill: 'outlined',
+    notes: 'Review Assigned Level 2 page header Insights.',
+  },
+  {
+    id: 56,
+    label: 'Groups / organization',
+    name: 'groups',
+    materialIoName: 'Groups',
+    fill: 'outlined',
+    notes: 'Sidebar Groups icon dropdown (Review Assigned org / group switcher).',
+  },
+  {
+    id: 57,
+    label: 'Application ID',
+    name: 'assignment_globe',
+    materialIoName: 'Assignment Globe',
+    fill: 'outlined',
+    notes: 'Sidebar Application ID icon dropdown (Review Assigned).',
+  },
+  {
+    id: 58,
+    label: 'Copy',
+    name: 'content_copy',
+    materialIoName: 'Content Copy',
+    fill: 'outlined',
+    notes: 'Client profile copyable panels; match history comment copy.',
+  },
+  {
+    id: 59,
+    label: 'Download',
+    name: 'download',
+    materialIoName: 'Download',
+    fill: 'outlined',
+    notes: 'Documents accordion row download.',
+  },
+  {
+    id: 60,
+    label: 'Settings / tune',
+    name: 'tune',
+    materialIoName: 'Tune',
+    fill: 'outlined',
+    notes: 'Site header Settings / product nav; settings landing cards.',
+  },
+  {
+    id: 61,
+    label: 'Reports / lab profile',
+    name: 'lab_profile',
+    materialIoName: 'Lab Profile',
+    fill: 'outlined',
+    notes: 'Client Networks drawer reports action.',
+  },
+  {
+    id: 62,
+    label: 'Submenu chevron',
+    name: 'chevron_right',
+    materialIoName: 'Chevron Right',
+    fill: 'outlined',
+    notes: 'Site header product-nav nested menu items.',
+  },
+  {
+    id: 63,
+    label: 'Panel resize',
+    name: 'drag_handle',
+    materialIoName: 'Drag Handle',
+    fill: 'outlined',
+    notes: 'Resizable panel grip (not table column reorder).',
+  },
+  {
+    id: 64,
+    label: 'Ask Chatty',
+    name: 'smart_toy',
+    materialIoName: 'Smart Toy',
+    fill: 'outlined',
+    notes: 'Ask Chatty FAB / bubble glyph.',
   },
 ]
 
@@ -673,7 +768,7 @@ export function IconographyLab() {
   return (
     <ComponentLabPage
       title="Iconography"
-      description="ACE uses Google Material Symbols Outlined across product components. Catalog includes Confluence iconography plus icons discovered in Timeline, Data Table, Attachments, Accordion, and related organisms."
+      description="ACE uses Google Material Symbols Outlined across product components. Catalog includes Confluence iconography plus icons from Review Assigned, Timeline, Data Table, Attachments, Accordion, Sidebar, and related organisms."
       examplesCanvas={false}
       examples={
         <div className="space-y-10">
@@ -844,16 +939,16 @@ export function IconographyLab() {
 <MaterialSymbol name="lock" size="md" filled />
 
 {/* Status (toast / inline) */}
-<MaterialSymbol name="check_circle" size="md" className="text-[var(--ace-toast-icon-success)]" />
-<MaterialSymbol name="error" size="md" className="text-[var(--ace-toast-icon-error)]" />
+<MaterialSymbol name="check_circle" size="md" className="text-[var(--toast-message-icon-success)]" />
+<MaterialSymbol name="error" size="md" className="text-[var(--toast-message-icon-error)]" />
 
 {/* Icon button hover - no resting border (sidebar) */}
-<button className="… border-transparent hover:border-[var(--ace-icon-button-border)] hover:bg-[var(--ace-icon-button-hover-bg)]">
+<button className="… border-transparent hover:border-[var(--icon-button-border)] hover:bg-[var(--icon-button-hover-bg)]">
   <MaterialSymbol name="more_horiz" size="md" className="text-current" />
 </button>
 
 {/* Icon button hover - border stroke (data table toolbar) */}
-<button className="… border border-[var(--ace-icon-button-border)] bg-[var(--ace-icon-button-surface)] hover:bg-[var(--ace-icon-button-hover-bg)]">
+<button className="… border border-[var(--icon-button-border)] bg-[var(--icon-button-surface)] hover:bg-[var(--icon-button-hover-bg)]">
   <MaterialSymbol name="search" size="md" className="text-current" />
 </button>`}</ComponentLabCode>
         </>
@@ -875,18 +970,20 @@ export function IconographyLab() {
                 <code className="text-[var(--screening-text-primary)]">sidebarIconButtonClass</code> /{' '}
                 <code className="text-[var(--screening-text-primary)]">sidebarRowActionButtonClass</code>
                 ). Transparent at rest; hover uses{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-icon-button-hover-bg</code> and{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-icon-button-border</code> (Figma{' '}
-                <code className="text-[var(--screening-text-primary)]">color/bg/primary</code> +{' '}
-                <code className="text-[var(--screening-text-primary)]">color/border/default</code>).
+                <code className="text-[var(--screening-text-primary)]">--icon-button-hover-bg</code> →{' '}
+                <code className="text-[var(--screening-text-primary)]">colors/icon/hover</code> and{' '}
+                <code className="text-[var(--screening-text-primary)]">--icon-button-border</code> →{' '}
+                <code className="text-[var(--screening-text-primary)]">colors/border/default</code>. Sizes use{' '}
+                <code className="text-[var(--screening-text-primary)]">icon/size/*</code> →{' '}
+                <code className="text-[var(--screening-text-primary)]">--icon-size-*</code>.
               </li>
               <li>
                 <strong className="text-[var(--screening-text-primary)]">Border stroke</strong>: data table toolbar
                 and row menus (
                 <code className="text-[var(--screening-text-primary)]">screeningToolbarIconButtonClass</code>). Resting
-                fill is <code className="text-[var(--screening-text-primary)]">--ace-icon-button-surface</code> with{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-icon-button-border</code>; hover fill is{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-icon-button-hover-bg</code>.
+                fill is <code className="text-[var(--screening-text-primary)]">--icon-button-surface</code> with{' '}
+                <code className="text-[var(--screening-text-primary)]">--icon-button-border</code>; hover fill is{' '}
+                <code className="text-[var(--screening-text-primary)]">--icon-button-hover-bg</code>.
               </li>
             </ul>
           </section>

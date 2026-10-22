@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { AceAvailabilityTag } from '../components/atoms/AceAvailabilityTag/AceAvailabilityTag'
+import { AvailabilityTag } from '../components/atoms/AvailabilityTag/AvailabilityTag'
 import { labNavSections, type LabNavSectionTitle } from '../pages/labNav'
 
 const OVERVIEW_PATHS: Record<LabNavSectionTitle, string> = {
@@ -33,7 +33,7 @@ export function LabOverviewList({ section }: { section: LabNavSectionTitle }) {
             ) : null}
           </div>
           {item.availability ? (
-            <AceAvailabilityTag status={item.availability} size="sm" className="shrink-0" />
+            <AvailabilityTag status={item.availability} size="sm" className="shrink-0" />
           ) : null}
         </li>
       ))}

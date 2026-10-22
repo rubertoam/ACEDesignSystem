@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { AceInputField } from '../components/atoms/AceInputField'
-import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+import { Input } from '../components/atoms/Input'
+import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
 import {
   DialogModal,
   DialogModalInlineMessage,
 } from '../components/molecules/DialogModal/DialogModal'
 import {
-  ACE_INLINE_MESSAGE_TONES,
-  type AceInlineMessageTone,
-} from '../components/molecules/AceInlineMessage/inlineMessageFieldStyles'
+  INLINE_MESSAGE_TONES,
+  type InlineMessageTone,
+} from '../components/molecules/InlineMessage/inlineMessageFieldStyles'
 import { LabCheckbox, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
@@ -34,14 +34,14 @@ const VARIANT_SHORT: Record<DialogVariantId, string> = {
   'extended-form': 'Extended form',
 }
 
-const INLINE_TONE_LABELS: Record<AceInlineMessageTone, string> = {
+const INLINE_TONE_LABELS: Record<InlineMessageTone, string> = {
   error: 'Error',
   success: 'Success',
   info: 'Info',
   warning: 'Warning',
 }
 
-const INLINE_COPY: Record<AceInlineMessageTone, string> = {
+const INLINE_COPY: Record<InlineMessageTone, string> = {
   error: 'This is an error inline message.',
   success: 'This is a success inline message.',
   info: 'This is a user info inline message.',
@@ -66,7 +66,7 @@ const openButtonClass = cn(
 
 function noop() {}
 
-function InlineStrip({ show, tone }: { show: boolean; tone: AceInlineMessageTone }) {
+function InlineStrip({ show, tone }: { show: boolean; tone: InlineMessageTone }) {
   if (!show) return null
   return <DialogModalInlineMessage tone={tone}>{INLINE_COPY[tone]}</DialogModalInlineMessage>
 }
@@ -77,7 +77,7 @@ function LabeledDropdown({ label, triggerLabel }: { label: string; triggerLabel:
       <span className="[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)] text-[var(--dialog-modal-title)]">
         {label}
       </span>
-      <AceDropdownMenu
+      <DropdownMenu
         triggerLabel={triggerLabel}
         triggerMode="field"
         size="sm"
@@ -98,7 +98,7 @@ function VariantBody({
 }: {
   variant: DialogVariantId
   showInlineMessage: boolean
-  inlineTone: AceInlineMessageTone
+  inlineTone: InlineMessageTone
   idPrefix: string
 }) {
   const inline = <InlineStrip show={showInlineMessage} tone={inlineTone} />
@@ -110,7 +110,7 @@ function VariantBody({
     case 'dropdown':
       return (
         <>
-          <AceDropdownMenu
+          <DropdownMenu
             triggerLabel="Dropdown No Label"
             triggerMode="field"
             size="sm"
@@ -125,7 +125,7 @@ function VariantBody({
     case 'form':
       return (
         <>
-          <AceInputField
+          <Input
             fieldSize="md"
             defaultValue="[Sample text]"
             aria-label="Sample text"
@@ -143,13 +143,13 @@ function VariantBody({
               <LabeledDropdown label="Label" triggerLabel="Dropdown Label" />
             </div>
             <div className="flex flex-col gap-3">
-              <AceInputField
+              <Input
                 label="Label"
                 fieldSize="md"
                 defaultValue="[Sample text]"
                 id={`${idPrefix}-field-1`}
               />
-              <AceInputField
+              <Input
                 label="Label"
                 fieldSize="md"
                 defaultValue="[Sample text]"
@@ -176,7 +176,7 @@ function ModalChrome({
 }: {
   variant: DialogVariantId
   showInlineMessage: boolean
-  inlineTone: AceInlineMessageTone
+  inlineTone: InlineMessageTone
   presentation: 'overlay' | 'static'
   open: boolean
   onClose: () => void
@@ -211,7 +211,7 @@ function ModalChrome({
 
 export function DialogModalLab() {
   const [showInlineMessage, setShowInlineMessage] = useState(true)
-  const [inlineTone, setInlineTone] = useState<AceInlineMessageTone>('error')
+  const [inlineTone, setInlineTone] = useState<InlineMessageTone>('error')
   const [liveVariant, setLiveVariant] = useState<DialogVariantId | null>(null)
 
   const toolbar = (
@@ -224,8 +224,8 @@ export function DialogModalLab() {
       <LabSelect
         label="Inline message tone"
         value={inlineTone}
-        onChange={(v) => setInlineTone(v as AceInlineMessageTone)}
-        options={ACE_INLINE_MESSAGE_TONES.map((value) => ({
+        onChange={(v) => setInlineTone(v as InlineMessageTone)}
+        options={INLINE_MESSAGE_TONES.map((value) => ({
           value,
           label: INLINE_TONE_LABELS[value],
         }))}
@@ -250,7 +250,7 @@ export function DialogModalLab() {
     <>
       <ComponentLabPage
         title="Dialog modal"
-        description="ACE dialog modals for single-task decisions - Basic Action, Delete, Dropdown, Form, and Extended Form (Figma Dialog Modals 3047:2036). Optional AceInlineMessage strip with selectable tone."
+        description="ACE dialog modals for single-task decisions - Basic Action, Delete, Dropdown, Form, and Extended Form (Figma Dialog Modals 3047:2036). Optional InlineMessage strip with selectable tone."
         examplesToolbar={toolbar}
         examples={
           <div className={cn(labExampleSectionClass, 'items-stretch')}>
@@ -348,7 +348,7 @@ export function DialogModalLab() {
             </li>
             <li>
               Inline strip - <code className="text-[var(--color-text-primary)]">DialogModalInlineMessage</code> with{' '}
-              <code className="text-[var(--color-text-primary)]">--ace-inline-message-*</code>.
+              <code className="text-[var(--color-text-primary)]">--inline-message-*</code>.
             </li>
             <li>
               Static gallery - <code className="text-[var(--color-text-primary)]">presentation=&quot;static&quot;</code>

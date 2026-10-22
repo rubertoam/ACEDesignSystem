@@ -1,22 +1,22 @@
 import { useState } from 'react'
-import { AceInlineMessage } from '../components/molecules/AceInlineMessage/AceInlineMessage'
+import { InlineMessage } from '../components/molecules/InlineMessage/InlineMessage'
 import {
-  ACE_INLINE_MESSAGE_TONES,
-  type AceInlineMessageTone,
-} from '../components/molecules/AceInlineMessage/inlineMessageFieldStyles'
+  INLINE_MESSAGE_TONES,
+  type InlineMessageTone,
+} from '../components/molecules/InlineMessage/inlineMessageFieldStyles'
 import { LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const TONE_LABELS: Record<AceInlineMessageTone, string> = {
+const TONE_LABELS: Record<InlineMessageTone, string> = {
   error: 'Error',
   success: 'Success',
   info: 'Info',
   warning: 'Warning',
 }
 
-const TONE_COPY: Record<AceInlineMessageTone, string> = {
+const TONE_COPY: Record<InlineMessageTone, string> = {
   error: 'This is an error inline message.',
   success: 'This is a success inline message.',
   info: 'This is a user info inline message.',
@@ -24,15 +24,15 @@ const TONE_COPY: Record<AceInlineMessageTone, string> = {
 }
 
 export function InlineMessagesLab() {
-  const [tone, setTone] = useState<AceInlineMessageTone>('error')
+  const [tone, setTone] = useState<InlineMessageTone>('error')
 
   const toolbar = (
     <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
       <LabSelect
         label="Tone"
         value={tone}
-        onChange={(v) => setTone(v as AceInlineMessageTone)}
-        options={ACE_INLINE_MESSAGE_TONES.map((value) => ({
+        onChange={(v) => setTone(v as InlineMessageTone)}
+        options={INLINE_MESSAGE_TONES.map((value) => ({
           value,
           label: TONE_LABELS[value],
         }))}
@@ -49,18 +49,18 @@ export function InlineMessagesLab() {
         <div className="space-y-10">
           <div className={cn('items-start', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Interactive - {TONE_LABELS[tone]}</p>
-            <AceInlineMessage tone={tone} className="max-w-xl">
+            <InlineMessage tone={tone} className="max-w-xl">
               {TONE_COPY[tone]}
-            </AceInlineMessage>
+            </InlineMessage>
           </div>
 
           <div className={cn('items-start', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>All tones</p>
             <div className="grid w-full gap-6 sm:grid-cols-2">
-              {ACE_INLINE_MESSAGE_TONES.map((item) => (
+              {INLINE_MESSAGE_TONES.map((item) => (
                 <div key={item} className="space-y-2">
                   <p className="m-0 text-xs text-[var(--color-text-muted)]">{TONE_LABELS[item]} message</p>
-                  <AceInlineMessage tone={item}>{TONE_COPY[item]}</AceInlineMessage>
+                  <InlineMessage tone={item}>{TONE_COPY[item]}</InlineMessage>
                 </div>
               ))}
             </div>
@@ -68,7 +68,7 @@ export function InlineMessagesLab() {
 
           <div className={cn('items-start', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Banner width</p>
-            <AceInlineMessage tone={tone}>{TONE_COPY[tone]}</AceInlineMessage>
+            <InlineMessage tone={tone}>{TONE_COPY[tone]}</InlineMessage>
           </div>
         </div>
       }
@@ -78,15 +78,15 @@ export function InlineMessagesLab() {
             Prefer inline messages for persistent context next to the content they describe. Use toasts for brief,
             transient feedback.
           </p>
-          <ComponentLabCode>{`import { AceInlineMessage } from '../components/molecules/AceInlineMessage/AceInlineMessage'
+          <ComponentLabCode>{`import { InlineMessage } from '../components/molecules/InlineMessage/InlineMessage'
 
-<AceInlineMessage tone="error">
+<InlineMessage tone="error">
   This is an error inline message.
-</AceInlineMessage>
+</InlineMessage>
 
-<AceInlineMessage tone="info">
+<InlineMessage tone="info">
   This is a user info inline message.
-</AceInlineMessage>`}</ComponentLabCode>
+</InlineMessage>`}</ComponentLabCode>
         </>
       }
       usage={
@@ -134,16 +134,16 @@ export function InlineMessagesLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Layout - <code className="text-[var(--color-text-primary)]">--ace-inline-message-radius</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-inline-message-px</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-inline-message-py</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-inline-message-gap</code>
+            Layout - <code className="text-[var(--color-text-primary)]">--inline-message-radius</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--inline-message-px</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--inline-message-py</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--inline-message-gap</code>
           </li>
           <li>
-            Text - <code className="text-[var(--color-text-primary)]">--ace-inline-message-text</code> (Caption Regular)
+            Text - <code className="text-[var(--color-text-primary)]">--inline-message-text</code> (Caption Regular)
           </li>
           <li>
-            Tones - <code className="text-[var(--color-text-primary)]">--ace-inline-message-*-bg</code>,{' '}
+            Tones - <code className="text-[var(--color-text-primary)]">--inline-message-*-bg</code>,{' '}
             <code className="text-[var(--color-text-primary)]">*-border</code>,{' '}
             <code className="text-[var(--color-text-primary)]">*-icon</code> for error, success, info, warning
           </li>
@@ -154,6 +154,29 @@ export function InlineMessagesLab() {
             <code className="text-[var(--color-text-primary)]">warning</code> (same set as Toast messages)
           </li>
         </ul>
+      }
+      changelog={
+        <div className="space-y-8">
+          <article className="space-y-3">
+            <header className="space-y-1">
+              <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">22 October 2026</h3>
+              <p className="m-0 text-sm text-[var(--color-text-muted)]">
+                Figma-aligned naming — <code className="text-[var(--color-text-primary)]">AceInlineMessage</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">InlineMessage</code>.
+              </p>
+            </header>
+            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+              <li>
+                CSS vars are now <code className="text-[var(--color-text-primary)]">--inline-message-*</code> (radius
+                → <code className="text-[var(--color-text-primary)]">--radius-component-inline-message</code>).
+              </li>
+              <li>
+                Temporary compat: <code className="text-[var(--color-text-primary)]">AceInlineMessage</code> export and{' '}
+                <code className="text-[var(--color-text-primary)]">--ace-inline-message-*</code> aliases still resolve.
+              </li>
+            </ul>
+          </article>
+        </div>
       }
     />
   )

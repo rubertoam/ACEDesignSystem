@@ -3,8 +3,8 @@ import { RadioGroup, RadioItem } from '../components/atoms/Radio/RadioGroup'
 import {
   aceRadioFieldClass,
   aceRadioFieldInteractiveClass,
-  type AceRadioFieldState,
-  type AceRadioSize,
+  type RadioFieldState,
+  type RadioSize,
 } from '../components/atoms/Radio/radioFieldStyles'
 import { LabRadioGroup } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
@@ -21,7 +21,7 @@ const COLUMNS: { key: PreviewCol; label: string }[] = [
   { key: 'disabled_selected', label: 'Disabled selected' },
 ]
 
-type SectionRow = { title: string; withLabel: boolean; size: AceRadioSize; field?: boolean }
+type SectionRow = { title: string; withLabel: boolean; size: RadioSize; field?: boolean }
 
 const SECTIONS: SectionRow[] = [
   { title: 'With text / Small', withLabel: true, size: 'sm' },
@@ -33,13 +33,13 @@ const SECTIONS: SectionRow[] = [
   { title: 'With background / Medium', withLabel: true, size: 'md', field: true },
 ]
 
-const labelClass: Record<AceRadioSize, string> = {
+const labelClass: Record<RadioSize, string> = {
   sm: 'text-sm text-[var(--screening-text-primary)] font-[family-name:var(--font-screening)]',
   md: 'text-sm text-[var(--screening-text-primary)] font-[family-name:var(--font-screening)] font-medium',
   lg: 'text-base text-[var(--screening-text-primary)] font-[family-name:var(--font-screening)] font-medium',
 }
 
-function fieldStateFromColumn(col: PreviewCol): AceRadioFieldState {
+function fieldStateFromColumn(col: PreviewCol): RadioFieldState {
   if (col === 'regular') return 'default'
   if (col === 'hover') return 'hover'
   if (col === 'active') return 'active'
@@ -53,7 +53,7 @@ function PreviewCell({
   field,
 }: {
   col: PreviewCol
-  size: AceRadioSize
+  size: RadioSize
   withLabel: boolean
   field?: boolean
 }) {
@@ -64,7 +64,7 @@ function PreviewCell({
   const groupValue = checked ? 'preview' : ''
 
   const fauxHoverClass =
-    hoverVisual ? '[&>span:first-child]:border-[var(--ace-radio-border-hover)] [&>span:first-child]:bg-[var(--ace-radio-surface-hover)]' : undefined
+    hoverVisual ? '[&>span:first-child]:border-[var(--radio-border-hover)] [&>span:first-child]:bg-[var(--radio-surface-hover)]' : undefined
 
   const control = (
     <RadioGroup
@@ -85,7 +85,7 @@ function PreviewCell({
             className={cn(
               'min-w-0 truncate',
               labelClass[size],
-              disabled && 'text-[var(--ace-radio-label-disabled)]',
+              disabled && 'text-[var(--radio-label-disabled)]',
             )}
           >
             Label
@@ -113,10 +113,10 @@ const FIELD_OPTIONS = [
 ] as const
 
 export function RadioPlaygroundLab() {
-  const [size, setSize] = useState<AceRadioSize>('md')
+  const [size, setSize] = useState<RadioSize>('md')
   const [value, setValue] = useState('a')
   const [fieldValue, setFieldValue] = useState('a')
-  const sizes: AceRadioSize[] = ['sm', 'md', 'lg']
+  const sizes: RadioSize[] = ['sm', 'md', 'lg']
 
   const toolbar = (
     <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -127,7 +127,7 @@ export function RadioPlaygroundLab() {
   return (
     <ComponentLabPage
       title="Radio buttons"
-      description="ACE Design System v.3 radio controls: small / medium / large circles, states (regular, hover, active, disabled, disabled selected), and optional field wrapper. Built on Radix Radio Group with --ace-radio-* tokens."
+      description="ACE Design System v.3 radio controls: small / medium / large circles, states (regular, hover, active, disabled, disabled selected), and optional field wrapper. Built on Radix Radio Group with --radio-* tokens."
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">
@@ -168,8 +168,10 @@ export function RadioPlaygroundLab() {
             <p className={labSectionLabelClass}>Interactive - with background</p>
             <p className="mb-4 m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
               Each option sits in <code className="text-[var(--color-text-primary)]">aceRadioFieldInteractiveClass()</code>.
-              Hover fills the field with Primary/50 (#EFEEF9); the selected option gets the purple border (Figma With
-              background).
+              Hover fills the field with{' '}
+              <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
+              <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; the selected option
+              gets the brand border (Figma With background).
             </p>
             <RadioGroup
               value={fieldValue}
@@ -258,9 +260,9 @@ export function RadioPlaygroundLab() {
             <code className="text-[var(--color-text-primary)]">radioFieldStyles.ts</code>.
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-radio-border-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-radio-indicator-*</code>, field tokens{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-radio-field-*</code>.
+            <code className="text-[var(--color-text-primary)]">--radio-border-*</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--radio-indicator-*</code>, field tokens{' '}
+            <code className="text-[var(--color-text-primary)]">--radio-field-*</code>.
           </li>
         </ul>
       }

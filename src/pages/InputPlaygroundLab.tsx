@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import { AceInputField, type AceInputFieldIcon, type AceInputFieldSize, type AceInputVisualState } from '../components/atoms/AceInputField'
+import { Input, type InputIcon, type InputSize, type InputVisualState } from '../components/atoms/Input'
 import { cn } from '../lib/cn'
 import { LabCheckbox, LabControlField, LabRadioGroup } from '../lib/labControls'
 import { labExampleSectionClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const SIZES: AceInputFieldSize[] = ['sm', 'md', 'lg']
-const VISUAL_STATES: AceInputVisualState[] = ['default', 'focus', 'error', 'disabled']
+const SIZES: InputSize[] = ['sm', 'md', 'lg']
+const VISUAL_STATES: InputVisualState[] = ['default', 'focus', 'error', 'disabled']
 
-function StateMatrix({ icon }: { icon: AceInputFieldIcon }) {
+function StateMatrix({ icon }: { icon: InputIcon }) {
   const iconLabel = icon === 'none' ? 'No icon' : icon === 'left' ? 'Icon left' : 'Icon right'
   return (
     <div className={cn('min-w-0', labExampleSectionClass)}>
@@ -36,7 +36,7 @@ function StateMatrix({ icon }: { icon: AceInputFieldIcon }) {
                 <td className="whitespace-nowrap px-4 py-4 font-medium capitalize text-[var(--color-text-primary)]">{st}</td>
                 {SIZES.map((sz) => (
                   <td key={sz} className="max-w-[14rem] px-4 py-4 align-top">
-                    <AceInputField
+                    <Input
                       fieldSize={sz}
                       icon={icon}
                       visualState={st}
@@ -90,7 +90,7 @@ function InputsChangelog() {
           </li>
           <li>
             Removed Figma-absent <code className="text-[var(--color-text-primary)]">active</code> visual state from{' '}
-            <code className="text-[var(--color-text-primary)]">AceInputVisualState</code>; matrix now matches Default /
+            <code className="text-[var(--color-text-primary)]">InputVisualState</code>; matrix now matches Default /
             Focus / Error / Disabled.
           </li>
           <li>
@@ -117,8 +117,8 @@ function InputsChangelog() {
 }
 
 export function InputPlaygroundLab() {
-  const [fieldSize, setFieldSize] = useState<AceInputFieldSize>('md')
-  const [icon, setIcon] = useState<AceInputFieldIcon>('none')
+  const [fieldSize, setFieldSize] = useState<InputSize>('md')
+  const [icon, setIcon] = useState<InputIcon>('none')
   const [showLabel, setShowLabel] = useState(true)
   const [error, setError] = useState(false)
   const [disabled, setDisabled] = useState(false)
@@ -160,7 +160,7 @@ export function InputPlaygroundLab() {
         <div className="space-y-12">
           <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] sm:p-8">
             <div className="max-w-md">
-              <AceInputField
+              <Input
                 fieldSize={fieldSize}
                 icon={icon}
                 label={showLabel ? 'Label' : undefined}
@@ -192,9 +192,9 @@ export function InputPlaygroundLab() {
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AceInputField } from '../components/atoms/AceInputField'
+        <ComponentLabCode>{`import { Input } from '../components/atoms/Input'
 
-<AceInputField
+<Input
   fieldSize="md"
   label="Email"
   placeholder="you@example.com"
@@ -205,57 +205,13 @@ export function InputPlaygroundLab() {
       usage={
         <div className={cn('max-w-3xl space-y-4', labUsageSectionClass)}>
           <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
-            Use <code className="text-[var(--color-text-primary)]">AceInputField</code> for product forms. Pass{' '}
+            Use <code className="text-[var(--color-text-primary)]">Input</code> for product forms. Pass{' '}
             <code className="text-[var(--color-text-primary)]">error</code> /{' '}
             <code className="text-[var(--color-text-primary)]">errorMessage</code> for validation;{' '}
             <code className="text-[var(--color-text-primary)]">icon</code> for optional search affordance. Reserve{' '}
             <code className="text-[var(--color-text-primary)]">visualState</code> for spec screenshots or QA grids —
             it freezes the shell and disables interaction.
           </p>
-          <div className="space-y-2">
-            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens in use</h4>
-            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Default</strong> —{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/default</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-default</code>; fill{' '}
-                <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; value{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-primary</code>; placeholder{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/placeholder</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-placeholder</code>; icon{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Focus</strong> — inner border{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/brand</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-brand</code>; fill{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; outer ring{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/focus</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-focus</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Error</strong> —{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-error</code>,{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-error</code>, helper{' '}
-                <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Disabled</strong> —{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-disabled-subtle</code>,{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-disabled-subtle</code>,{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-disabled</code>,{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-disabled</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Type</strong> — label / error{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; field{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code> (Body /
-                Regular). Size only changes height (36 / 44 / 52px).
-              </li>
-            </ul>
-          </div>
         </div>
       }
       variables={
@@ -286,7 +242,7 @@ export function InputPlaygroundLab() {
           <li>
             Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; field{' '}
             <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>. Heights{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-input-height-*</code> (36 / 44 / 52).
+            <code className="text-[var(--color-text-primary)]">--input-height-*</code> (36 / 44 / 52).
           </li>
         </ul>
       }

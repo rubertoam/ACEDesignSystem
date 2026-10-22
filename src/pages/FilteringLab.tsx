@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react'
-import { AceFilterChip, AceFilterToggleChip } from '../components/molecules/AceFiltering'
+import { FilterChip, FilterToggleChip } from '../components/molecules/Filtering'
 import {
-  AceDropdownMenu,
-  type AceDropdownMenuEntry,
-} from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
-import { aceFilterHeaderChipsClass } from '../components/molecules/AceFiltering/filterFieldStyles'
+  DropdownMenu,
+  type DropdownMenuEntry,
+} from '../components/molecules/DropdownMenu/DropdownMenu'
+import { filterHeaderChipsClass } from '../components/molecules/Filtering/filterFieldStyles'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
@@ -50,7 +50,7 @@ export function FilteringLab() {
     })
   }
 
-  const filterMenuItems: AceDropdownMenuEntry[] = useMemo(
+  const filterMenuItems: DropdownMenuEntry[] = useMemo(
     () =>
       FILTER_OPTIONS.map((option) => ({
         type: 'checkbox' as const,
@@ -76,15 +76,15 @@ export function FilteringLab() {
             <p className={labSectionLabelClass}>Filter triggers</p>
             <div className={labComponentContainerClass}>
               <div className="flex flex-col items-start gap-3">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="Filters"
                   triggerMode="filter"
                   items={filterMenuItems}
                 />
                 {activeChips.length > 0 ? (
-                  <div className={aceFilterHeaderChipsClass}>
+                  <div className={filterHeaderChipsClass}>
                     {activeChips.map((option) => (
-                      <AceFilterChip
+                      <FilterChip
                         key={option.id}
                         label={option.chipLabel}
                         onClear={() => clearFilter(option.id)}
@@ -103,7 +103,7 @@ export function FilteringLab() {
                 {(['Filter 1', 'Filter 2', 'Filter 3', 'Filter 4'] as const).map((label, index) => {
                   const id = FILTER_OPTIONS[index].id
                   return (
-                    <AceFilterToggleChip
+                    <FilterToggleChip
                       key={id}
                       label={label}
                       pressed={toggledChips.has(id)}
@@ -119,16 +119,16 @@ export function FilteringLab() {
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
-            Use <code className="text-[var(--screening-text-primary)]">AceDropdownMenu</code> with{' '}
+            Use <code className="text-[var(--screening-text-primary)]">DropdownMenu</code> with{' '}
             <code className="text-[var(--screening-text-primary)]">triggerMode=&quot;filter&quot;</code> for the
-            Filters menu. Use <code className="text-[var(--screening-text-primary)]">AceFilterToggleChip</code> for
+            Filters menu. Use <code className="text-[var(--screening-text-primary)]">FilterToggleChip</code> for
             on/off chips (no chevron or clear). Use{' '}
-            <code className="text-[var(--screening-text-primary)]">AceFilterChip</code> for clearable applied filters.
+            <code className="text-[var(--screening-text-primary)]">FilterChip</code> for clearable applied filters.
           </p>
-          <ComponentLabCode>{`import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
-import { AceFilterChip, AceFilterToggleChip } from '../components/molecules/AceFiltering'
+          <ComponentLabCode>{`import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
+import { FilterChip, FilterToggleChip } from '../components/molecules/Filtering'
 
-<AceDropdownMenu
+<DropdownMenu
   triggerLabel="Filters"
   triggerMode="filter"
   items={[
@@ -139,8 +139,8 @@ import { AceFilterChip, AceFilterToggleChip } from '../components/molecules/AceF
   ]}
 />
 
-<AceFilterToggleChip label="Filter 1" pressed={on} onClick={toggle} />
-<AceFilterChip label="Locked: All" onClear={...} />`}</ComponentLabCode>
+<FilterToggleChip label="Filter 1" pressed={on} onClick={toggle} />
+<FilterChip label="Locked: All" onClear={...} />`}</ComponentLabCode>
         </>
       }
       usage={
@@ -156,8 +156,15 @@ import { AceFilterChip, AceFilterToggleChip } from '../components/molecules/AceF
           <section className={labUsageSectionClass}>
             <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">States</h4>
             <p className="m-0 text-[var(--screening-text-muted)]">
-              Triggers and chips use Shade 0 with a Neutral/400 border at rest. Hover (and pressed toggle chips)
-              fill Neutral/700 with Neutral/100 text.
+              Triggers and chips use{' '}
+              <code className="text-[var(--screening-text-primary)]">colors/surface/primary</code> →{' '}
+              <code className="text-[var(--screening-text-primary)]">--color-surface-primary</code> with{' '}
+              <code className="text-[var(--screening-text-primary)]">colors/border/default</code> →{' '}
+              <code className="text-[var(--screening-text-primary)]">--color-border-default</code> at rest. Hover and
+              pressed toggle chips fill <code className="text-[var(--screening-text-primary)]">colors/bg/brand</code>{' '}
+              → <code className="text-[var(--screening-text-primary)]">--color-bg-brand</code> with{' '}
+              <code className="text-[var(--screening-text-primary)]">colors/text/inverse</code> →{' '}
+              <code className="text-[var(--screening-text-primary)]">--color-text-inverse</code>.
             </p>
           </section>
           <section className={labUsageSectionClass}>

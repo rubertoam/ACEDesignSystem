@@ -37,11 +37,18 @@ export const labNavGuidelinesItem: LabNavItem = {
   to: '/lab',
 }
 
-/** Top-level link below collapsible atomic-design sections. */
+/** Top-level links below collapsible atomic-design sections. */
 export const labNavLayoutsItem: LabNavItem = {
   label: 'Layouts',
   to: '/lab/layouts',
 }
+
+export const labNavTokensItem: LabNavItem = {
+  label: 'Tokens',
+  to: '/lab/layouts/tokens',
+}
+
+export const labNavLayoutItems: LabNavItem[] = [labNavLayoutsItem, labNavTokensItem]
 
 export const labNavSections: LabNavSection[] = [
   {
@@ -227,7 +234,7 @@ export function getLabNavFlat(): {
         availability: item.availability,
       })),
     ),
-    { ...labNavLayoutsItem, section: 'Layouts' },
+    ...labNavLayoutItems.map((item) => ({ ...item, section: 'Layouts' })),
   ]
 }
 

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AceInputField } from '../components/atoms/AceInputField'
+import { Input } from '../components/atoms/Input'
 import { LabControlField, LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-import { AcePagination } from '../components/molecules/AcePagination/AcePagination'
+import { Pagination } from '../components/molecules/Pagination/Pagination'
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50, 100, 250]
 
@@ -78,7 +78,7 @@ export function PaginationLab() {
 
           <div className="grid items-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <LabControlField label="Total items">
-              <AceInputField
+              <Input
                 fieldSize="sm"
                 type="number"
                 min={0}
@@ -103,7 +103,7 @@ export function PaginationLab() {
               options={PAGE_SIZE_OPTIONS.map((n) => ({ value: String(n), label: String(n) }))}
             />
             <LabControlField label="Current page">
-              <AceInputField
+              <Input
                 fieldSize="sm"
                 type="number"
                 min={1}
@@ -131,7 +131,7 @@ export function PaginationLab() {
             exercise ellipses.
           </div>
           <div className="shrink-0 border-t border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] px-[var(--space-4)] py-[var(--space-3)]">
-            <AcePagination
+            <Pagination
               totalItems={totalItems}
               page={page}
               pageSize={pageSize}
@@ -147,13 +147,13 @@ export function PaginationLab() {
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AcePagination } from '../components/molecules/AcePagination/AcePagination'
+        <ComponentLabCode>{`import { Pagination } from '../components/molecules/Pagination/Pagination'
 
 const [page, setPage] = useState(1)
 const [pageSize, setPageSize] = useState(25)
 const totalItems = 2487
 
-<AcePagination
+<Pagination
   totalItems={totalItems}
   page={page}
   pageSize={pageSize}
@@ -164,7 +164,7 @@ const totalItems = 2487
       }
       usage={
         <p className="m-0 text-[var(--color-text-muted)]">
-          Use <code className="text-[var(--color-text-primary)]">AcePagination</code> at the bottom of long lists or
+          Use <code className="text-[var(--color-text-primary)]">Pagination</code> at the bottom of long lists or
           tables. Parent owns <code className="text-[var(--color-text-primary)]">page</code>,{' '}
           <code className="text-[var(--color-text-primary)]">pageSize</code>, and{' '}
           <code className="text-[var(--color-text-primary)]">totalItems</code>; slice your data before rendering rows.
@@ -180,18 +180,23 @@ const totalItems = 2487
             <code className="text-[var(--color-text-primary)]">--screening-pagination-gap</code>
           </li>
           <li>
-            Page size: <code className="text-[var(--color-text-primary)]">AceDropdownMenu</code> field trigger (sm) + compact radio menu list
+            Page size: <code className="text-[var(--color-text-primary)]">DropdownMenu</code> field trigger (sm) + compact radio menu list
           </li>
           <li>
-            Active page: <code className="text-[var(--color-text-primary)]">--screening-primary</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-text-on-primary</code>
+            Active page: <code className="text-[var(--color-text-primary)]">--screening-primary</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">colors/action/primary</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-action-primary</code>; on-fill text{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-text-on-primary</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-inverse</code>
           </li>
           <li>
             Meta text: <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>
           </li>
           <li>
-            Footer shell (in table): <code className="text-[var(--color-text-primary)]">--screening-surface-muted</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--screening-border-strong</code>
+            Footer shell (in table): <code className="text-[var(--color-text-primary)]">--screening-surface-muted</code>{' '}
+            → <code className="text-[var(--color-text-primary)]">--color-bg-primary</code>;{' '}
+            <code className="text-[var(--color-text-primary)]">--screening-border-strong</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-border-default</code>
           </li>
         </ul>
       }

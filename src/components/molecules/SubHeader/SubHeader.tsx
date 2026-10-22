@@ -1,0 +1,203 @@
+import { Fragment, type ButtonHTMLAttributes, type HTMLAttributes, type ReactNode } from 'react'
+import { MaterialSymbol } from '../Accordion/MaterialSymbol'
+import { cn } from '../../../lib/cn'
+import {
+  subHeaderBackClass,
+  subHeaderDrilldownPaddingClass,
+  subHeaderHeadlineClass,
+  subHeaderIconButtonClass,
+  subHeaderPaginationLabelClass,
+  subHeaderPaginationNavClass,
+  subHeaderShellClass,
+  subHeaderStatClass,
+  subHeaderStatSeparatorClass,
+} from './subHeaderFieldStyles'
+
+export type SubHeaderProps = Omit<HTMLAttributes<HTMLElement>, 'children' | 'title'> & {
+  /** Left-side title. Hidden when `drillDown` is on. Default `[Headline]`. */
+  headline?: ReactNode
+  /** Show statistics cluster (`# Data` separators). */
+  statistics?: boolean
+  /** Stat labels when `statistics` is on. */
+  stats?: ReactNode[]
+  /** Show prev / label / next paging controls. */
+  paging?: boolean
+  /** Paging label. Default `# of #`. */
+  paginationLabel?: ReactNode
+  onPrevPage?: () => void
+  onNextPage?: () => void
+  prevDisabled?: boolean
+  nextDisabled?: boolean
+  /** Show vertical three-dot menu action. */
+  moreMenu?: boolean
+  onMore?: () => void
+  /** Replace headline with Back control and add drill-down start padding. */
+  drillDown?: boolean
+  backLabel?: ReactNode
+  onBack?: () => void
+  onRefresh?: () => void
+  onFavorite?: () => void
+  /** Optional trailing slot override (replaces built-in trailing controls). */
+  trailing?: ReactNode
+  /** Accessible name for the header landmark. */
+  'aria-label'?: string
+}
+
+function HeaderIconButton({
+  label,
+  children,
+  className,
+  ...rest
+}: ButtonHTMLAttributes<HTMLButtonElement> & { label: string; children: ReactNode }) {
+  return (
+    <button type="button" aria-label={label} className={cn(subHeaderIconButtonClass, className)} {...rest}>
+      {children}
+    </button>
+  )
+}
+
+function PaginationControls({
+  label,
+  onPrevPage,
+  onNextPage,
+  prevDisabled,
+  nextDisabled,
+}: {
+  label: ReactNode
+  onPrevPage?: () => void
+  onNextPage?: () => void
+  prevDisabled?: boolean
+  nextDisabled?: boolean
+}) {
+  return (
+    <div className="flex shrink-0 items-center gap-3 px-4">
+      <button
+        type="button"
+        aria-label="Previous"
+        disabled={prevDisabled}
+        onClick={onPrevPage}
+        className={subHeaderPaginationNavClass}
+      >
+        <MaterialSymbol
+          name="chevron_left"
+          size="sm"
+          className="block"
+          style={{ fontSize: 11, width: 11, height: 11 }}
+        />
+      </button>
+      <p className={subHeaderPaginationLabelClass}>{label}</p>
+      <button
+        type="button"
+        aria-label="Next"
+        disabled={nextDisabled}
+        onClick={onNextPage}
+        className={subHeaderPaginationNavClass}
+      >
+        <MaterialSymbol
+          name="chevron_right"
+          size="sm"
+          className="block"
+          style={{ fontSize: 11, width: 11, height: 11 }}
+        />
+      </button>
+    </div>
+  )
+}
+
+/**
+ * FinScan sub-header — responsive region chrome under the page header.
+ * Fills its parent width; optional statistics, paging, more menu, and drill-down.
+ */
+export function SubHeader({
+  headline = '[Headline]',
+  statistics = false,
+  stats = ['# Data', '# Data', '# Data', '# Data'],
+  paging = false,
+  paginationLabel = '# of #',
+  onPrevPage,
+  onNextPage,
+  prevDisabled,
+  nextDisabled,
+  moreMenu = false,
+  onMore,
+  drillDown = false,
+  backLabel = 'Back',
+  onBack,
+  onRefresh,
+  onFavorite,
+  trailing,
+  className,
+  'aria-label': ariaLabel = 'Sub-header',
+  ...rest
+}: SubHeaderProps) {
+  const showActions = paging || moreMenu || onRefresh != null || onFavorite != null
+  const showTrailing = trailing != null || statistics || showActions
+
+  return (
+    <header
+      {...rest}
+      aria-label={ariaLabel}
+      className={cn(subHeaderShellClass, drillDown && subHeaderDrilldownPaddingClass, className)}
+    >
+      {drillDown ? (
+        <button type="button" className={subHeaderBackClass} onClick={onBack}>
+          <MaterialSymbol
+            name="chevron_left"
+            size="sm"
+            className="block text-current"
+            style={{ fontSize: 11, width: 11, height: 11 }}
+          />
+          <span>{backLabel}</span>
+        </button>
+      ) : (
+        <p className={subHeaderHeadlineClass}>{headline}</p>
+      )}
+
+      {trailing != null ? (
+        trailing
+      ) : showTrailing ? (
+        <div className="flex shrink-0 items-center gap-8 py-3">
+          {statistics && stats.length > 0 ? (
+            <div className="flex shrink-0 items-center gap-3">
+              {stats.map((stat, index) => (
+                <Fragment key={index}>
+                  {index > 0 ? <span aria-hidden className={subHeaderStatSeparatorClass} /> : null}
+                  <p className={subHeaderStatClass}>{stat}</p>
+                </Fragment>
+              ))}
+            </div>
+          ) : null}
+
+          {showActions ? (
+            <div className="flex shrink-0 items-center gap-4">
+              {paging ? (
+                <PaginationControls
+                  label={paginationLabel}
+                  onPrevPage={onPrevPage}
+                  onNextPage={onNextPage}
+                  prevDisabled={prevDisabled}
+                  nextDisabled={nextDisabled}
+                />
+              ) : null}
+              {onRefresh != null ? (
+                <HeaderIconButton label="Refresh" onClick={onRefresh} className="h-[20px] w-4">
+                  <MaterialSymbol name="autorenew" size="md" className="block" />
+                </HeaderIconButton>
+              ) : null}
+              {onFavorite != null ? (
+                <HeaderIconButton label="Favorite" onClick={onFavorite} className="h-[22px] w-6">
+                  <MaterialSymbol name="star" size="xl" className="block" />
+                </HeaderIconButton>
+              ) : null}
+              {moreMenu ? (
+                <HeaderIconButton label="More actions" onClick={onMore} className="h-5 w-1">
+                  <MaterialSymbol name="more_vert" size="lg" className="block" />
+                </HeaderIconButton>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+    </header>
+  )
+}

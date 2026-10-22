@@ -68,7 +68,7 @@ export function FinScanIconLab() {
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--screening-text-muted)]">
           <li>
             Use <code className="text-[var(--screening-text-primary)]">variant="lockup"</code> in{' '}
-            <code className="text-[var(--screening-text-primary)]">AceSiteHeader</code> (default 24px height).
+            <code className="text-[var(--screening-text-primary)]">SiteHeader</code> (default 24px height).
           </li>
           <li>
             Hash mark rows map to{' '}
@@ -76,8 +76,9 @@ export function FinScanIconLab() {
             primary.
           </li>
           <li>
-            Wordmark fill: <code className="text-[var(--screening-text-primary)]">--ace-finscan-wordmark-fill</code>{' '}
-            (#3D2E8A).
+            Wordmark fill: <code className="text-[var(--screening-text-primary)]">--ace-finscan-wordmark-fill</code> →{' '}
+            <code className="text-[var(--screening-text-primary)]">color/primary/500</code> →{' '}
+            <code className="text-[var(--screening-text-primary)]">--color-primary-500</code>.
           </li>
           <li>Lockup gap: <code className="text-[var(--screening-text-primary)]">--ace-finscan-icon-gap</code> (12px).</li>
         </ul>

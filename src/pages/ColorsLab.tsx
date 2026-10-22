@@ -66,9 +66,12 @@ border-color: var(--color-border-default);`}</ComponentLabCode>
           </p>
           <p className="m-0 leading-relaxed">
             <strong className="text-[var(--screening-text-primary)]">Semantic Tokens</strong> mirror Figma
-            Semantic Color Tokens (Light): intent aliases that reference primitives (
+            Semantic Color Tokens (Light + Dark via{' '}
+            <code className="text-[var(--screening-text-primary)]">[data-theme=&apos;dark&apos;]</code>
+            ): intent aliases that reference primitives (
             <code className="text-[var(--screening-text-primary)]">colors/bg/*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">colors/border/*</code>, …).
+            <code className="text-[var(--screening-text-primary)]">colors/border/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">colors/badges/*</code>, …).
           </p>
         </div>
       }

@@ -1,17 +1,2 @@
-export {
-  AceProgressIndicator,
-  type AceProgressIndicatorProps,
-} from './AceProgressIndicator'
-export { AceProgressSpinner, type AceProgressSpinnerProps } from './AceProgressSpinner'
-export {
-  aceProgressIndicatorContentClass,
-  aceProgressIndicatorLabelClass,
-  aceProgressIndicatorLabelToneClass,
-  aceProgressIndicatorShellClass,
-  aceProgressIndicatorShellToneClass,
-  aceProgressIndicatorShellTypeClass,
-  aceProgressSpinnerClass,
-  aceProgressSpinnerToneClass,
-  type AceProgressIndicatorTone,
-  type AceProgressIndicatorType,
-} from './progressIndicatorFieldStyles'
+/** @deprecated Import from the Figma-named folder instead. */
+export * from '../ProgressIndicator'

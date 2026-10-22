@@ -1,11 +1,11 @@
 import { useState, type ReactNode } from 'react'
-import { AceButton } from '../components/atoms/AceButton'
-import { AceInputField } from '../components/atoms/AceInputField'
+import { Button } from '../components/atoms/Button'
+import { Input } from '../components/atoms/Input'
 import { Checkbox } from '../components/atoms/Checkbox/Checkbox'
 import { RadioGroup, RadioItem } from '../components/atoms/Radio/RadioGroup'
-import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
-import { AceInlineMessage } from '../components/molecules/AceInlineMessage/AceInlineMessage'
-import { AceInlineDrawer } from '../components/organisms/AceInlineDrawer/AceInlineDrawer'
+import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
+import { InlineMessage } from '../components/molecules/InlineMessage/InlineMessage'
+import { InlineDrawer } from '../components/organisms/InlineDrawer/InlineDrawer'
 import { cn } from '../lib/cn'
 import { LabCheckbox, LabRadioGroup, labControlLegendClass } from '../lib/labControls'
 import { labUsageSectionClass } from '../lib/labExampleSection'
@@ -38,7 +38,7 @@ const DROPDOWN_ITEMS = [
 
 function DrawerSection({ children }: { children: ReactNode }) {
   return (
-    <section className="flex w-full flex-col gap-[var(--ace-inline-drawer-section-gap)]">
+    <section className="flex w-full flex-col gap-[var(--inline-drawer-section-gap)]">
       <div className="flex w-full flex-col gap-2 pb-3">
         <p className={sectionHeaderClass}>Section Header</p>
         <div className="h-px w-full bg-[var(--screening-primary)]" aria-hidden />
@@ -59,7 +59,7 @@ function InlineDrawerDemoContent() {
         <p className={captionClass}>[Contextual text block about the fields below.]</p>
         <div className="flex w-full flex-col gap-2">
           <span className={fieldLabelClass}>Dropdown Label</span>
-          <AceDropdownMenu
+          <DropdownMenu
             triggerLabel={dropdown}
             items={DROPDOWN_ITEMS.map((item) => ({
               ...item,
@@ -70,21 +70,21 @@ function InlineDrawerDemoContent() {
             className="w-full [&_button]:!w-full [&_button]:!max-w-full"
           />
         </div>
-        <AceInputField fieldSize="sm" label="Input Field Label" defaultValue="Input Field" />
+        <Input fieldSize="sm" label="Input Field Label" defaultValue="Input Field" />
         <div className="flex w-full items-start justify-end gap-4">
-          <AceButton type="button" variant="secondary" size="sm">
+          <Button type="button" variant="secondary" size="sm">
             Secondary Button
-          </AceButton>
-          <AceButton type="button" variant="primary" size="sm">
+          </Button>
+          <Button type="button" variant="primary" size="sm">
             Primary Button
-          </AceButton>
+          </Button>
         </div>
       </DrawerSection>
 
       <DrawerSection>
         <p className={captionClass}>[Contextual text block about the fields below.]</p>
-        <AceInlineMessage tone="info">This is a user info inline message.</AceInlineMessage>
-        <AceInputField fieldSize="sm" label="Textbox Label" defaultValue="Textbox" />
+        <InlineMessage tone="info">This is a user info inline message.</InlineMessage>
+        <Input fieldSize="sm" label="Textbox Label" defaultValue="Textbox" />
         <RadioGroup
           value={radio}
           onValueChange={setRadio}
@@ -126,11 +126,11 @@ function InlineDrawerDemoContent() {
         <p className={captionClass}>[Contextual text block about the fields below.]</p>
         <div className="flex w-full items-start gap-4">
           <div className="min-w-0 flex-1">
-            <AceInputField fieldSize="sm" label="Textbox Label" defaultValue="Textbox" />
+            <Input fieldSize="sm" label="Textbox Label" defaultValue="Textbox" />
           </div>
           <div className="flex min-w-0 flex-1 flex-col gap-2">
             <span className={fieldLabelClass}>Dropdown Label</span>
-            <AceDropdownMenu
+            <DropdownMenu
               triggerLabel="Dropdown"
               items={DROPDOWN_ITEMS}
               triggerMode="field"
@@ -154,7 +154,7 @@ function DrawerMockHeader({
   return (
     <header className="flex shrink-0 items-center justify-between border-b-[0.5px] border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-8 py-3">
       <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--ace-neutral-800)]')}>Header</h1>
-      <AceButton
+      <Button
         type="button"
         variant="primary"
         size="md"
@@ -162,7 +162,7 @@ function DrawerMockHeader({
         aria-expanded={open}
       >
         Open Drawer
-      </AceButton>
+      </Button>
     </header>
   )
 }
@@ -215,7 +215,7 @@ export function InlineDrawerLab() {
                 edge to resize. Escape or the header close control dismisses it.
               </p>
             </div>
-            <AceInlineDrawer
+            <InlineDrawer
               open={open}
               onClose={() => setOpen(false)}
               title="Review"
@@ -227,7 +227,7 @@ export function InlineDrawerLab() {
               onSave={() => setOpen(false)}
             >
               {contentMode === 'content' ? <InlineDrawerDemoContent /> : null}
-            </AceInlineDrawer>
+            </InlineDrawer>
           </div>
         </div>
       }
@@ -238,20 +238,20 @@ export function InlineDrawerLab() {
             <code className="text-[var(--screening-text-primary)]">open</code> from the app chrome - width animates
             in-flow and can be resized like Review Assigned.
           </p>
-          <ComponentLabCode>{`import { AceInlineDrawer } from '../components/organisms/AceInlineDrawer/AceInlineDrawer'
+          <ComponentLabCode>{`import { InlineDrawer } from '../components/organisms/InlineDrawer/InlineDrawer'
 
 const [open, setOpen] = useState(true)
 
 <div className="flex min-h-0 flex-1">
   <main className="min-w-0 flex-1">{/* page content */}</main>
-  <AceInlineDrawer
+  <InlineDrawer
     open={open}
     onClose={() => setOpen(false)}
     title="Review"
     onSave={handleSave}
   >
     {/* optional body */}
-  </AceInlineDrawer>
+  </InlineDrawer>
 </div>`}</ComponentLabCode>
         </>
       }
@@ -270,7 +270,7 @@ const [open, setOpen] = useState(true)
             <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
               <li>
                 <strong className="text-[var(--screening-text-primary)]">Shell</strong>:{' '}
-                <code className="text-[var(--screening-text-primary)]">AceSideDrawer</code> - resizable in-flow panel
+                <code className="text-[var(--screening-text-primary)]">SideDrawer</code> - resizable in-flow panel
                 (Review Assigned <code className="text-[var(--screening-text-primary)]">SideDrawer</code>).
               </li>
               <li>

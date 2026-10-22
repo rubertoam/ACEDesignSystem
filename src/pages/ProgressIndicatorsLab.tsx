@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { AceProgressIndicator } from '../components/atoms/AceProgressIndicator'
-import { AceAccordionReviewProgress } from '../components/molecules/AceAccordion/AceAccordionReviewProgress'
+import { ProgressIndicator } from '../components/atoms/ProgressIndicator'
+import { AccordionReviewProgress } from '../components/molecules/Accordion/AccordionReviewProgress'
 import { LabCheckbox } from '../lib/labControls'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
@@ -22,9 +22,9 @@ export function ProgressIndicatorsLab() {
             <p className={labSectionLabelClass}>Table / review progress</p>
             <div className={labComponentContainerClass}>
               <div className="flex flex-wrap items-center gap-6">
-                <AceAccordionReviewProgress reviewed={0} total={12} />
-                <AceAccordionReviewProgress reviewed={5} total={12} />
-                <AceAccordionReviewProgress reviewed={12} total={12} />
+                <AccordionReviewProgress reviewed={0} total={12} />
+                <AccordionReviewProgress reviewed={5} total={12} />
+                <AccordionReviewProgress reviewed={12} total={12} />
               </div>
             </div>
           </div>
@@ -36,14 +36,14 @@ export function ProgressIndicatorsLab() {
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Processing - No Action</p>
             <div className={labComponentContainerClass}>
-              <AceProgressIndicator tone={tone} type="no-action" label="Progress" />
+              <ProgressIndicator tone={tone} type="no-action" label="Progress" />
             </div>
           </div>
 
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Processing - Action</p>
             <div className={labComponentContainerClass}>
-              <AceProgressIndicator
+              <ProgressIndicator
                 tone={tone}
                 type="action"
                 label="Progress"
@@ -56,9 +56,9 @@ export function ProgressIndicatorsLab() {
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
-            Use <code className="text-[var(--screening-text-primary)]">AceAccordionReviewProgress</code> for
+            Use <code className="text-[var(--screening-text-primary)]">AccordionReviewProgress</code> for
             determinate table review counts. Use{' '}
-            <code className="text-[var(--screening-text-primary)]">AceProgressIndicator</code> for indeterminate
+            <code className="text-[var(--screening-text-primary)]">ProgressIndicator</code> for indeterminate
             processing cards. Default{' '}
             <code className="text-[var(--screening-text-primary)]">tone=&quot;surface&quot;</code> (outlined). Set{' '}
             <code className="text-[var(--screening-text-primary)]">tone=&quot;brand&quot;</code> for the filled purple
@@ -67,18 +67,18 @@ export function ProgressIndicatorsLab() {
             <code className="text-[var(--screening-text-primary)]">action</code> (Cancel via{' '}
             <code className="text-[var(--screening-text-primary)]">onCancel</code>).
           </p>
-          <ComponentLabCode>{`import { AceProgressIndicator } from '../components/atoms/AceProgressIndicator'
-import { AceAccordionReviewProgress } from '../components/molecules/AceAccordion/AceAccordionReviewProgress'
+          <ComponentLabCode>{`import { ProgressIndicator } from '../components/atoms/ProgressIndicator'
+import { AccordionReviewProgress } from '../components/molecules/Accordion/AccordionReviewProgress'
 
-<AceAccordionReviewProgress reviewed={5} total={12} />
+<AccordionReviewProgress reviewed={5} total={12} />
 
 {/* Outlined (default) */}
-<AceProgressIndicator tone="surface" type="no-action" label="Progress" />
+<ProgressIndicator tone="surface" type="no-action" label="Progress" />
 
 {/* Filled */}
-<AceProgressIndicator tone="brand" type="no-action" label="Progress" />
+<ProgressIndicator tone="brand" type="no-action" label="Progress" />
 
-<AceProgressIndicator
+<ProgressIndicator
   tone="brand"
   type="action"
   label="Progress"
@@ -134,8 +134,8 @@ import { AceAccordionReviewProgress } from '../components/molecules/AceAccordion
           </li>
           <li>
             Processing:{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-progress-indicator-*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-progress-spinner-*</code>
+            <code className="text-[var(--screening-text-primary)]">--progress-indicator-*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">--progress-spinner-*</code>
           </li>
         </ul>
       }

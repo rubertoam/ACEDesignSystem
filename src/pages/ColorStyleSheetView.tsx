@@ -7,7 +7,7 @@ function StyleSheetSwatchCard({ swatch }: { swatch: StyleSheetSwatch }) {
       <div
         className={cn(
           'h-[3.125rem] w-full rounded-[5px]',
-          swatch.bordered && 'border border-[var(--ace-button-neutral-500)]',
+          swatch.bordered && 'border border-[var(--button-neutral-500)]',
         )}
         style={{ background: swatch.hex }}
       />

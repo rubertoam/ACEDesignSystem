@@ -4,7 +4,7 @@ import { Checkbox } from '../components/atoms/Checkbox/Checkbox'
 import {
   aceCheckboxLabelClass,
   aceCheckboxLabelDisabledClass,
-  type AceCheckboxSize,
+  type CheckboxSize,
 } from '../components/atoms/Checkbox/checkboxFieldStyles'
 import { LabRadioGroup } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
@@ -21,7 +21,7 @@ const COLUMNS: { key: PreviewCol; label: string }[] = [
   { key: 'disabled_selected', label: 'Disabled selected' },
 ]
 
-const SECTIONS: { title: string; withLabel: boolean; size: AceCheckboxSize }[] = [
+const SECTIONS: { title: string; withLabel: boolean; size: CheckboxSize }[] = [
   { title: 'With text / Small', withLabel: true, size: 'sm' },
   { title: 'Without text / Small', withLabel: false, size: 'sm' },
   { title: 'With text / Medium', withLabel: true, size: 'md' },
@@ -36,7 +36,7 @@ function PreviewCell({
   withLabel,
 }: {
   col: PreviewCol
-  size: AceCheckboxSize
+  size: CheckboxSize
   withLabel: boolean
 }) {
   const checked = col === 'active' || col === 'disabled_selected'
@@ -131,12 +131,12 @@ function CheckboxesChangelog() {
 }
 
 export function CheckboxPlaygroundLab() {
-  const [size, setSize] = useState<AceCheckboxSize>('md')
+  const [size, setSize] = useState<CheckboxSize>('md')
   const [a, setA] = useState(false)
   const [b, setB] = useState(true)
   const [c, setC] = useState<CheckedState>('indeterminate')
 
-  const sizes: AceCheckboxSize[] = ['sm', 'md', 'lg']
+  const sizes: CheckboxSize[] = ['sm', 'md', 'lg']
 
   const toolbar = (
     <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -239,59 +239,6 @@ import { aceCheckboxLabelClass } from '../components/atoms/Checkbox/checkboxFiel
             <code className="text-[var(--color-text-primary)]">aceCheckboxLabelClass</code> for “with text” variants.
             Selected appearance is a brand fill with a white inset ring — not a checkmark glyph.
           </p>
-          <div className="space-y-2">
-            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens in use</h4>
-            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Regular</strong> — fill{' '}
-                <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; border{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/brand</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-brand</code>; label{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Hover</strong> — fill{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; border{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-brand</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Active</strong> — fill{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/brand</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand</code>; border{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-brand</code>; inset{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; indeterminate bar{' '}
-                <code className="text-[var(--color-text-primary)]">colors/icon/inverse</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-inverse</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Disabled</strong> — border{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/disabled</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-disabled</code>; transparent fill;
-                label <code className="text-[var(--color-text-primary)]">colors/text/disabled</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-disabled</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Disabled selected</strong> — fill{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/disabled</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-disabled</code>; inset{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Focus</strong> — ring{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/focus</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-focus</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Type</strong> — Small label{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; Medium / Large{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>. Box sizes
-                16 / 20 / 24 via <code className="text-[var(--color-text-primary)]">size</code>.
-              </li>
-            </ul>
-          </div>
         </div>
       }
       variables={

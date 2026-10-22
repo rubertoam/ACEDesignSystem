@@ -1,13 +1,13 @@
 import { useId, useMemo, type ReactNode } from 'react'
-import { AceInputField } from '../components/atoms/AceInputField'
+import { Input } from '../components/atoms/Input'
 import { Checkbox } from '../components/atoms/Checkbox/Checkbox'
 import { RadioGroup, RadioItem } from '../components/atoms/Radio/RadioGroup'
-import type { AceRadioSize } from '../components/atoms/Radio/radioFieldStyles'
+import type { RadioSize } from '../components/atoms/Radio/radioFieldStyles'
 import {
-  AceDropdownMenu,
-  type AceButtonSize,
-  type AceDropdownMenuEntry,
-} from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+  DropdownMenu,
+  type ButtonSize,
+  type DropdownMenuEntry,
+} from '../components/molecules/DropdownMenu/DropdownMenu'
 import { cn } from './cn'
 
 /** Matches ACE field labels above controls (e.g. Data Table “Context”). */
@@ -150,7 +150,7 @@ export function LabCheckbox({
 }
 
 /** Single-choice control using ACE radio buttons (replaces native radios and segmented button groups). */
-const labRadioLabelClass: Record<AceRadioSize, string> = {
+const labRadioLabelClass: Record<RadioSize, string> = {
   sm: 'text-xs font-medium capitalize text-[var(--color-text-primary)]',
   md: 'text-sm font-medium capitalize text-[var(--color-text-primary)]',
   lg: 'text-base font-medium capitalize text-[var(--color-text-primary)]',
@@ -169,7 +169,7 @@ export function LabRadioGroup<T extends string>({
   onChange: (value: T) => void
   options: { value: T; label: string }[]
   className?: string
-  size?: AceRadioSize
+  size?: RadioSize
 }) {
   const baseId = useId()
   return (
@@ -206,13 +206,13 @@ export function LabSelect<T extends string>({
   onChange: (value: T) => void
   options: { value: T; label: string }[]
   className?: string
-  size?: AceButtonSize
+  size?: ButtonSize
   panelWidth?: 'default' | 'compact' | 'wide'
   disabled?: boolean
 }) {
   const selectedLabel = options.find((o) => o.value === value)?.label ?? 'Select'
 
-  const items: AceDropdownMenuEntry[] = useMemo(
+  const items: DropdownMenuEntry[] = useMemo(
     () => [
       {
         type: 'radioGroup',
@@ -229,7 +229,7 @@ export function LabSelect<T extends string>({
       <legend className={cn(labControlLegendClass, 'mb-[var(--ace-section-label-gap)] block w-full')}>
         {label}
       </legend>
-      <AceDropdownMenu
+      <DropdownMenu
         triggerLabel={selectedLabel}
         triggerMode="field"
         size={size}
@@ -260,7 +260,7 @@ export function LabTextInput({
 }) {
   return (
     <div className={className}>
-      <AceInputField
+      <Input
         label={label}
         fieldSize={fieldSize}
         value={value}

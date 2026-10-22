@@ -1,6 +1,2 @@
-export { AcePageHeader, type AcePageHeaderProps } from './AcePageHeader'
-export {
-  acePageHeaderLeadingClass,
-  acePageHeaderShellClass,
-  acePageHeaderTitleClass,
-} from './pageHeaderFieldStyles'
+/** @deprecated Import from the Figma-named folder instead. */
+export * from '../PageHeader'

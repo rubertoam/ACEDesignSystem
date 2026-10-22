@@ -5,20 +5,20 @@
 @layer components {
   .ace-toggle-track {
     transition-property: background-color;
-    transition-duration: var(--ace-toggle-duration);
-    transition-timing-function: var(--ace-toggle-ease);
+    transition-duration: var(--toggle-duration);
+    transition-timing-function: var(--toggle-ease);
   }
 
   .ace-toggle-thumb {
     transition-property: translate, background-color;
-    transition-duration: var(--ace-toggle-duration);
-    transition-timing-function: var(--ace-toggle-ease);
+    transition-duration: var(--toggle-duration);
+    transition-timing-function: var(--toggle-ease);
   }
 
   .ace-toggle-icon-glyph {
     transition-property: opacity;
-    transition-duration: var(--ace-toggle-duration);
-    transition-timing-function: var(--ace-toggle-ease);
+    transition-duration: var(--toggle-duration);
+    transition-timing-function: var(--toggle-ease);
   }
 
   @media (prefers-reduced-motion: reduce) {

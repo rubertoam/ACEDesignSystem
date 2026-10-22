@@ -1,1 +1,2 @@
-export { AceStepper, type AceStepperProps, type AceStepperVariant } from './AceStepper'
+/** @deprecated Import from the Figma-named folder instead. */
+export * from '../Stepper'

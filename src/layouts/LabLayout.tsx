@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useId, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { AceInputField } from '../components/atoms/AceInputField'
-import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
-import { AceSiteHeader } from '../components/organisms/AceSiteHeader/AceSiteHeader'
+import { Input } from '../components/atoms/Input'
+import { MaterialSymbol } from '../components/molecules/Accordion/MaterialSymbol'
+import { SiteHeader } from '../components/organisms/SiteHeader/SiteHeader'
 import { LabThemeProvider, type LabTheme } from '../contexts/LabThemeContext'
 import { aceChevronIconClass } from '../lib/aceChevron'
 import { cn } from '../lib/cn'
@@ -11,7 +11,7 @@ import {
   getLabNavFlat,
   getLabNavMatch,
   labNavGuidelinesItem,
-  labNavLayoutsItem,
+  labNavLayoutItems,
   labNavSections,
 } from '../pages/labNav'
 
@@ -26,7 +26,7 @@ const topNavLinkClass = ({ isActive }: { isActive: boolean }) =>
     navLinkBase,
     'py-2',
     isActive
-      ? 'bg-[var(--screening-primary-soft-bg)] font-semibold text-[var(--ace-sidebar-item-selected-text)] ring-1 ring-inset ring-[var(--screening-border-strong)]'
+      ? 'bg-[var(--screening-primary-soft-bg)] font-semibold text-[var(--sidebar-item-selected-text)] ring-1 ring-inset ring-[var(--screening-border-strong)]'
       : 'text-[var(--screening-text-muted)] hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)]',
   )
 
@@ -36,7 +36,7 @@ const sectionNavLinkClass = ({ isActive }: { isActive: boolean }) =>
     navLinkBase,
     'py-1 leading-tight',
     isActive
-      ? 'bg-[var(--screening-primary-soft-bg)] font-semibold text-[var(--ace-sidebar-item-selected-text)] ring-1 ring-inset ring-[var(--screening-border-strong)]'
+      ? 'bg-[var(--screening-primary-soft-bg)] font-semibold text-[var(--sidebar-item-selected-text)] ring-1 ring-inset ring-[var(--screening-border-strong)]'
       : 'text-[var(--screening-text-muted)] hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)]',
   )
 
@@ -100,8 +100,11 @@ export function LabLayout() {
 
   const showGuidelines =
     !isFiltering || labNavGuidelinesItem.label.toLowerCase().includes(navQueryNormalized)
-  const showLayouts =
-    !isFiltering || labNavLayoutsItem.label.toLowerCase().includes(navQueryNormalized)
+  const filteredLayoutItems = useMemo(() => {
+    if (!isFiltering) return labNavLayoutItems
+    return labNavLayoutItems.filter((item) => item.label.toLowerCase().includes(navQueryNormalized))
+  }, [isFiltering, navQueryNormalized])
+  const showLayouts = filteredLayoutItems.length > 0
 
   const filteredSections = useMemo(() => {
     if (!isFiltering) return labNavSections
@@ -196,7 +199,7 @@ export function LabLayout() {
       data-theme={theme}
       style={{ colorScheme: theme }}
     >
-      <AceSiteHeader
+      <SiteHeader
         navItems={[]}
         userName=""
         showNotifications={false}
@@ -206,7 +209,7 @@ export function LabLayout() {
       />
       <div className="flex min-h-0 flex-1">
       <aside
-        className="flex w-60 shrink-0 flex-col border-r border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] p-4 shadow-[var(--ace-sidebar-shadow)]"
+        className="flex w-60 shrink-0 flex-col border-r border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] p-4 shadow-[var(--sidebar-shadow)]"
         aria-label="Lab navigation"
       >
         <div className="mb-6 px-2">
@@ -230,7 +233,7 @@ export function LabLayout() {
         </ul>
         {/* Outside overflow-y nav so focus ring / active chrome is not clipped */}
         <div className="mb-4 p-0.5">
-          <AceInputField
+          <Input
             fieldSize="sm"
             icon="left"
             placeholder="Search"
@@ -319,11 +322,13 @@ export function LabLayout() {
                 aria-hidden
               />
               <ul className="m-0 list-none space-y-1 p-0">
-                <li>
-                  <NavLink to={labNavLayoutsItem.to} className={topNavLinkClass} end>
-                    {labNavLayoutsItem.label}
-                  </NavLink>
-                </li>
+                {filteredLayoutItems.map((item) => (
+                  <li key={item.to}>
+                    <NavLink to={item.to} className={topNavLinkClass} end={item.to === '/lab/layouts'}>
+                      {item.label}
+                    </NavLink>
+                  </li>
+                ))}
               </ul>
             </>
           ) : null}

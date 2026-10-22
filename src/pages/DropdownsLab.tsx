@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-import { AceDropdownMenu, type AceDropdownMenuEntry } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
-import { aceDropdownFieldLabelClass } from '../components/molecules/AceDropdownMenu/dropdownFieldStyles'
+import { DropdownMenu, type DropdownMenuEntry } from '../components/molecules/DropdownMenu/DropdownMenu'
+import { aceDropdownFieldLabelClass } from '../components/molecules/DropdownMenu/dropdownFieldStyles'
 import { cn } from '../lib/cn'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 
@@ -66,8 +66,10 @@ function DropdownsChangelog() {
             gray hover + focus ring only.
           </li>
           <li>
-            Secondary Active / FilterChip Selected use brand fill + inverse text/icons (replacing Neutral/700 chip
-            fill).
+            Secondary Active / FilterChip Selected use{' '}
+            <code className="text-[var(--color-text-primary)]">colors/bg/brand</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand</code> with inverse text/icons
+            (replacing the old neutral chip fill).
           </li>
           <li>
             MenuList elevation uses Shadow (MD) (
@@ -84,8 +86,8 @@ function DropdownsChangelog() {
           </li>
           <li>Added this Changelog tab documenting the Dropdowns / Menus update.</li>
           <li>
-            Usage tab updated with Tokens in use for triggers (Primary / Secondary / FilterChip) and MenuList
-            states (default, hover, selected, destructive, search).
+            Usage tab documents trigger modes and MenuList patterns; token catalog lists Semantic paths for
+            Primary / Secondary / FilterChip and menu states.
           </li>
           <li>
             Secondary trigger demo opens the MenuList multi-select panel (sections + Select All + checkboxes), not
@@ -171,7 +173,7 @@ export function DropdownsLab() {
   const section1AllSelected = section1Item1 && section1Item2
   const section2AllSelected = section2Item2 && section2Item3 && section2Item4
 
-  const multiSelectItems: AceDropdownMenuEntry[] = useMemo(
+  const multiSelectItems: DropdownMenuEntry[] = useMemo(
     () => [
       {
         type: 'sectionHeader',
@@ -250,12 +252,12 @@ export function DropdownsLab() {
     [section1AllSelected, section1Item1, section1Item2, section2AllSelected, section2Item2, section2Item3, section2Item4],
   )
 
-  const primaryItems: AceDropdownMenuEntry[] = [
+  const primaryItems: DropdownMenuEntry[] = [
     { type: 'item', label: 'Menu Item 1', onSelect: () => setLastAction('Menu Item 1') },
     { type: 'item', label: 'Menu Item 2', onSelect: () => setLastAction('Menu Item 2') },
   ]
 
-  const threeDotItems: AceDropdownMenuEntry[] = [
+  const threeDotItems: DropdownMenuEntry[] = [
     { type: 'item', label: 'Edit', onSelect: () => setLastAction('Edit') },
     { type: 'item', label: 'Copy', onSelect: () => setLastAction('Copy') },
     { type: 'item', label: 'Export', onSelect: () => setLastAction('Export') },
@@ -264,7 +266,7 @@ export function DropdownsLab() {
 
   const hasColumnSelection = colClient || colApplication || colAssignment || colRecord || colMatch
 
-  const switcherItems: AceDropdownMenuEntry[] = useMemo(
+  const switcherItems: DropdownMenuEntry[] = useMemo(
     () => [
       { type: 'menuHeader', label: 'Show Columns' },
       { type: 'toggle', label: 'Client Name', checked: colClient, onCheckedChange: setColClient },
@@ -279,7 +281,7 @@ export function DropdownsLab() {
     [colApplication, colAssignment, colClient, colMatch, colRecord, hasColumnSelection],
   )
 
-  const checkboxItems: AceDropdownMenuEntry[] = useMemo(
+  const checkboxItems: DropdownMenuEntry[] = useMemo(
     () => [
       { type: 'menuHeader', label: 'User Assignment' },
       ...assignmentUsers.map((u) => ({
@@ -296,9 +298,9 @@ export function DropdownsLab() {
     [assignmentUsers, hasAssignmentSelection],
   )
 
-  const searchItems: AceDropdownMenuEntry[] = useMemo(() => {
+  const searchItems: DropdownMenuEntry[] = useMemo(() => {
     const q = searchQuery.trim()
-    const base: AceDropdownMenuEntry[] = [
+    const base: DropdownMenuEntry[] = [
       {
         type: 'search',
         value: searchQuery,
@@ -342,7 +344,7 @@ export function DropdownsLab() {
     ]
   }, [assignmentUsers, filteredUsers, hasAssignmentSelection, searchQuery])
 
-  const viewOptionsItems: AceDropdownMenuEntry[] = useMemo(
+  const viewOptionsItems: DropdownMenuEntry[] = useMemo(
     () => [
       { type: 'label', label: 'Account' },
       { type: 'item', label: 'Profile', shortcut: '⌘P', onSelect: () => setLastAction('Profile') },
@@ -409,7 +411,7 @@ export function DropdownsLab() {
               <LabRow label="Primary" hint="Field · open = LabelActive">
                 <div className="flex flex-col gap-2">
                   <span className={aceDropdownFieldLabelClass}>Label</span>
-                  <AceDropdownMenu
+                  <DropdownMenu
                     triggerLabel="Dropdown Label"
                     triggerMode="field"
                     size="md"
@@ -420,7 +422,7 @@ export function DropdownsLab() {
                 </div>
               </LabRow>
               <LabRow label="Secondary" hint="Compact · opens MenuList (multi-select)">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="Dropdown No Label"
                   triggerMode="filter"
                   panelWidth="wide"
@@ -435,7 +437,7 @@ export function DropdownsLab() {
             <p className={labSectionLabelClass}>Menu lists</p>
             <div className="flex flex-col gap-4">
               <LabRow label="Multi-select" hint="Sections · Select All · checkboxes">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="Multi-select"
                   triggerMode="field"
                   size="md"
@@ -446,7 +448,7 @@ export function DropdownsLab() {
               </LabRow>
 
               <LabRow label="Primary" hint="Brand pipe + row fill on hover / selected">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="Primary"
                   triggerMode="field"
                   size="md"
@@ -457,7 +459,7 @@ export function DropdownsLab() {
               </LabRow>
 
               <LabRow label="Three dot" hint="Compact overflow actions">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="Three dot"
                   triggerMode="field"
                   size="sm"
@@ -469,7 +471,7 @@ export function DropdownsLab() {
               </LabRow>
 
               <LabRow label="Switcher" hint="Toggles · Reset turns all off">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="Switcher"
                   triggerMode="field"
                   size="md"
@@ -479,7 +481,7 @@ export function DropdownsLab() {
               </LabRow>
 
               <LabRow label="Checkbox" hint="User assignment · Reset All">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="Checkbox"
                   triggerMode="field"
                   size="md"
@@ -489,7 +491,7 @@ export function DropdownsLab() {
               </LabRow>
 
               <LabRow label="Search" hint="Type to filter · match highlight">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="Search"
                   triggerMode="field"
                   size="md"
@@ -499,7 +501,7 @@ export function DropdownsLab() {
               </LabRow>
 
               <LabRow label="View options" hint="Checkbox · radio · submenu flyout">
-                <AceDropdownMenu
+                <DropdownMenu
                   triggerLabel="View options"
                   triggerMode="field"
                   size="md"
@@ -512,10 +514,10 @@ export function DropdownsLab() {
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+        <ComponentLabCode>{`import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
 
 {/* Primary field trigger */}
-<AceDropdownMenu
+<DropdownMenu
   triggerLabel="Dropdown Label"
   triggerMode="field"
   panelWidth="wide"
@@ -526,7 +528,7 @@ export function DropdownsLab() {
 />
 
 {/* Secondary / FilterChip trigger — opens MenuList (sections + Select All + checkboxes) */}
-<AceDropdownMenu
+<DropdownMenu
   triggerLabel="Dropdown No Label"
   triggerMode="filter"
   panelWidth="wide"
@@ -534,7 +536,7 @@ export function DropdownsLab() {
 />
 
 {/* MenuList with search + checkboxes */}
-<AceDropdownMenu
+<DropdownMenu
   triggerLabel="Search"
   triggerMode="field"
   items={[
@@ -548,11 +550,11 @@ export function DropdownsLab() {
       usage={
         <div className={cn('max-w-3xl space-y-4', labUsageSectionClass)}>
           <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
-            Import <code className="text-[var(--color-text-primary)]">AceDropdownMenu</code> with a typed{' '}
+            Import <code className="text-[var(--color-text-primary)]">DropdownMenu</code> with a typed{' '}
             <code className="text-[var(--color-text-primary)]">items</code> array. Use{' '}
             <code className="text-[var(--color-text-primary)]">triggerMode=&quot;field&quot;</code> for Primary
             dropdowns (form fields), <code className="text-[var(--color-text-primary)]">filter</code> for Secondary /
-            FilterChip triggers, or <code className="text-[var(--color-text-primary)]">aceButton</code> / custom{' '}
+            FilterChip triggers, or <code className="text-[var(--color-text-primary)]">button</code> / custom{' '}
             <code className="text-[var(--color-text-primary)]">trigger</code> for icon overflow. Secondary triggers open
             the <strong className="font-medium text-[var(--color-text-primary)]">MenuList</strong> pattern (section
             headers, Select All / Deselect All, assignment checkboxes) — not the Primary item list. Pass{' '}
@@ -564,89 +566,17 @@ export function DropdownsLab() {
             Menu panels compose design-system <code className="text-[var(--color-text-primary)]">Checkbox</code> and{' '}
             <code className="text-[var(--color-text-primary)]">Toggle</code> at{' '}
             <code className="text-[var(--color-text-primary)]">size=&quot;sm&quot;</code>. Primary list rows show a
-            brand pipe on hover/selected; Destructive rows use status error. Figma:{' '}
+            brand pipe on hover/selected; Destructive rows use{' '}
+            <code className="text-[var(--color-text-primary)]">colors/status/error</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-status-error</code>. Figma:{' '}
             <code className="text-[var(--color-text-primary)]">414:2617</code> (Dropdowns + Menus).
           </p>
-          <div className="space-y-2">
-            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens in use</h4>
-            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Primary default</strong> — surface{' '}
-                <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; border{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/default</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-default</code>; text{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-primary</code>; icon{' '}
-                <code className="text-[var(--color-text-primary)]">colors/icon/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Primary open (LabelActive)</strong> —
-                border <code className="text-[var(--color-text-primary)]">colors/border/brand</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-brand</code>; fill{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; focus ring{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/focus</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-focus</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Secondary Active / FilterChip Selected</strong>{' '}
-                — fill <code className="text-[var(--color-text-primary)]">colors/bg/brand</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand</code>; text{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/inverse</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-inverse</code>; icon{' '}
-                <code className="text-[var(--color-text-primary)]">colors/icon/inverse</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-inverse</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Menu panel</strong> — surface{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; border{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-default</code>; shadow Shadow (MD) →{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Menu hover</strong> — row{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/secondary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-secondary</code>; pipe{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/brand</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-brand</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Menu selected</strong> — row{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; item text{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/secondary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-secondary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Destructive</strong> —{' '}
-                <code className="text-[var(--color-text-primary)]">colors/status/error</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Search</strong> — placeholder{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/placeholder</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-placeholder</code>; icons{' '}
-                <code className="text-[var(--color-text-primary)]">colors/icon/secondary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-secondary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Type</strong> — trigger Caption/Regular{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; section Caption/Bold{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-caption-bold</code>; Select All / Reset
-                Footer/Regular <code className="text-[var(--color-text-primary)]">--ace-type-footer-regular</code>;
-                items Body/Regular{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>.
-              </li>
-            </ul>
-          </div>
         </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Primary trigger: <code className="text-[var(--color-text-primary)]">--ace-dropdown-trigger-*</code> →{' '}
+            Primary trigger: <code className="text-[var(--color-text-primary)]">--dropdown-menu-trigger-*</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-border-default</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-border-brand</code>,{' '}
@@ -654,29 +584,29 @@ export function DropdownsLab() {
             <code className="text-[var(--color-text-primary)]">--color-text-primary</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-border-focus</code>. Width{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-trigger-width</code> (200px).
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-trigger-width</code> (200px).
           </li>
           <li>
-            Secondary / FilterChip: <code className="text-[var(--color-text-primary)]">--ace-filter-trigger-*</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-filter-chip-*</code> →{' '}
+            Secondary / FilterChip: <code className="text-[var(--color-text-primary)]">--filter-trigger-*</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">--filter-chip-*</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-bg-brand</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-text-inverse</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-icon-inverse</code>.
           </li>
           <li>
-            Menu panel: <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-surface</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-border</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-shadow</code> →{' '}
+            Menu panel: <code className="text-[var(--color-text-primary)]">--dropdown-menu-surface</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-border</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-shadow</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>.
           </li>
           <li>
-            Rows: <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-row-hover</code> →{' '}
+            Rows: <code className="text-[var(--color-text-primary)]">--dropdown-menu-row-hover</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-bg-secondary</code>;{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-row-selected</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-row-selected</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; pipe/actions{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-primary</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-primary</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-text-brand</code>; danger{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-dropdown-menu-danger</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-danger</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
           </li>
           <li>
@@ -686,8 +616,9 @@ export function DropdownsLab() {
             <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>.
           </li>
           <li>
-            Nested controls: <code className="text-[var(--color-text-primary)]">--screening-checkbox-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-toggle-*</code> (sm in menus).
+            Nested controls: <code className="text-[var(--color-text-primary)]">--screening-checkbox-*</code> aliases
+            map to Semantic <code className="text-[var(--color-text-primary)]">--color-*</code>; toggles use{' '}
+            <code className="text-[var(--color-text-primary)]">--toggle-*</code> (sm in menus).
           </li>
         </ul>
       }

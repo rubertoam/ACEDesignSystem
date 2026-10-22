@@ -1,12 +1,12 @@
-import { AceBadge } from '../components/atoms/AceBadge/AceBadge'
-import type { AceBadgeVariant } from '../components/atoms/AceBadge/badgeFieldStyles'
+import { Badge } from '../components/atoms/Badge/Badge'
+import type { BadgeVariant } from '../components/atoms/Badge/badgeFieldStyles'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 const VARIANTS: {
-  value: AceBadgeVariant
+  value: BadgeVariant
   label: string
 }[] = [
   { value: 'purple', label: 'Purple' },
@@ -33,9 +33,9 @@ export function BadgesLab() {
             <div className={labComponentContainerClass}>
               <div className="flex flex-wrap items-center gap-4">
                 {VARIANTS.map(({ value, label }) => (
-                  <AceBadge key={value} appearance="pill" variant={value}>
+                  <Badge key={value} appearance="pill" variant={value}>
                     {label}
-                  </AceBadge>
+                  </Badge>
                 ))}
               </div>
             </div>
@@ -46,9 +46,9 @@ export function BadgesLab() {
             <div className={labComponentContainerClass}>
               <div className="flex flex-wrap items-center gap-4">
                 {VARIANTS.map(({ value, label }) => (
-                  <AceBadge key={value} appearance="tag" variant={value}>
+                  <Badge key={value} appearance="tag" variant={value}>
                     {label}
-                  </AceBadge>
+                  </Badge>
                 ))}
               </div>
             </div>
@@ -63,13 +63,13 @@ export function BadgesLab() {
             <code className="text-[var(--screening-text-primary)]">variant</code> colors. Pass label text as{' '}
             <code className="text-[var(--screening-text-primary)]">children</code>.
           </p>
-          <ComponentLabCode>{`import { AceBadge } from '../components/atoms/AceBadge/AceBadge'
+          <ComponentLabCode>{`import { Badge } from '../components/atoms/Badge/Badge'
 
-<AceBadge appearance="pill" variant="purple">Purple</AceBadge>
-<AceBadge appearance="pill" variant="orange">Orange</AceBadge>
+<Badge appearance="pill" variant="purple">Purple</Badge>
+<Badge appearance="pill" variant="orange">Orange</Badge>
 
-<AceBadge appearance="tag" variant="purple">Purple</AceBadge>
-<AceBadge appearance="tag" variant="gray">Gray</AceBadge>`}</ComponentLabCode>
+<Badge appearance="tag" variant="purple">Purple</Badge>
+<Badge appearance="tag" variant="gray">Gray</Badge>`}</ComponentLabCode>
         </>
       }
       usage={
@@ -128,10 +128,10 @@ export function BadgesLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Pill layout - <code className="text-[var(--color-text-primary)]">--ace-status-pill-*</code>
+            Pill layout - <code className="text-[var(--color-text-primary)]">--badge-*</code>
           </li>
           <li>
-            Tag layout - <code className="text-[var(--color-text-primary)]">--ace-badge-tag-*</code> (radius, padding);
+            Tag layout - <code className="text-[var(--color-text-primary)]">--badge-tag-*</code> (radius, padding);
             colors reuse the pill variant tokens
           </li>
           <li>

@@ -14,6 +14,7 @@ import { TaskBarLab } from './pages/TaskBarLab'
 import { PageHeadersLab } from './pages/PageHeadersLab'
 import { OrganismsLab } from './pages/OrganismsLab'
 import { LayoutsLab } from './pages/LayoutsLab'
+import { TokensLab } from './pages/TokensLab'
 import { DialogModalLab } from './pages/DialogModalLab'
 import { DateAndTimePickersLab } from './pages/DateAndTimePickersLab'
 import { SidebarLab } from './pages/SidebarLab'
@@ -94,6 +95,7 @@ export default function App() {
         <Route path="organisms/attachments" element={<AttachmentsLab />} />
         <Route path="organisms/scrollable-list" element={<ScrollableListLab />} />
         <Route path="layouts" element={<LayoutsLab />} />
+        <Route path="layouts/tokens" element={<TokensLab />} />
       </Route>
       <Route path="*" element={<Navigate to="/lab" replace />} />
     </Routes>

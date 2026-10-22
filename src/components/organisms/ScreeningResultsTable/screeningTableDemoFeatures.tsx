@@ -7,10 +7,10 @@ import {
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from 'react'
-import { AceDropdownMenu, type AceDropdownMenuEntry } from '../../molecules/AceDropdownMenu/AceDropdownMenu'
-import { AceInputField } from '../../atoms/AceInputField'
-import { AceStepper } from '../../molecules/AceStepper'
-import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
+import { DropdownMenu, type DropdownMenuEntry } from '../../molecules/DropdownMenu/DropdownMenu'
+import { Input } from '../../atoms/Input'
+import { Stepper } from '../../molecules/Stepper'
+import { MaterialSymbol } from '../../molecules/Accordion/MaterialSymbol'
 import { cn } from '../../../lib/cn'
 import type { ScreeningColumnKey } from './screeningTableColumns'
 
@@ -331,7 +331,7 @@ export function EditableCell({
       className={cn('px-[var(--space-3)] py-[var(--space-2)] align-middle', columnResizeActiveClass(highlighted))}
       style={columnWidthStyle(width)}
     >
-      <AceInputField
+      <Input
         fieldSize="md"
         value={value}
         disabled={disabled}
@@ -357,7 +357,7 @@ export function DropdownCell({
   width?: number
   highlighted?: boolean
 }) {
-  const items: AceDropdownMenuEntry[] = DEMO_DROPDOWN_OPTIONS.map((option) => ({
+  const items: DropdownMenuEntry[] = DEMO_DROPDOWN_OPTIONS.map((option) => ({
     type: 'item',
     label: option.label,
     selected: option.value === value,
@@ -371,7 +371,7 @@ export function DropdownCell({
       className={cn('px-[var(--space-3)] py-[var(--space-2)] align-middle', columnResizeActiveClass(highlighted))}
       style={columnWidthStyle(width)}
     >
-      <AceDropdownMenu
+      <DropdownMenu
         triggerLabel={label}
         triggerMode="field"
         size="sm"
@@ -407,7 +407,7 @@ export function StepperCell({
       className={cn('px-[var(--space-3)] py-[var(--space-2)] align-middle', columnResizeActiveClass(highlighted))}
       style={columnWidthStyle(width)}
     >
-      <AceStepper
+      <Stepper
         variant="horizontal"
         value={value}
         min={min}

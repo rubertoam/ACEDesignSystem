@@ -1,11 +1,11 @@
 import { useCallback, useId, useMemo, useState } from 'react'
-import { AceBadge } from '../../atoms/AceBadge/AceBadge'
-import { AceAccordion } from '../../molecules/AceAccordion/AceAccordion'
-import { MaterialSymbol } from '../../molecules/AceAccordion/MaterialSymbol'
+import { Badge } from '../../atoms/Badge/Badge'
+import { Accordion } from '../../molecules/Accordion/Accordion'
+import { MaterialSymbol } from '../../molecules/Accordion/MaterialSymbol'
 import {
-  AceDropdownMenu,
-  type AceDropdownMenuEntry,
-} from '../../molecules/AceDropdownMenu/AceDropdownMenu'
+  DropdownMenu,
+  type DropdownMenuEntry,
+} from '../../molecules/DropdownMenu/DropdownMenu'
 import { TablePagination } from '../../molecules/TablePagination'
 import { cn } from '../../../lib/cn'
 import {
@@ -42,7 +42,7 @@ const actionButtonClass = cn(
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 
-const USER_ROW_ACTION_ITEMS: AceDropdownMenuEntry[] = [
+const USER_ROW_ACTION_ITEMS: DropdownMenuEntry[] = [
   { type: 'item', label: 'Edit' },
   { type: 'item', label: 'View' },
   { type: 'item', label: 'Delete', destructive: true },
@@ -141,7 +141,7 @@ export function UserListTable({
     <div className="flex max-h-[var(--screening-body-max-height)] min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
       <div className="shrink-0 border-b border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-[var(--space-4)] py-[var(--space-3)]">
         <div className="flex flex-wrap items-center justify-between gap-x-[var(--space-3)] gap-y-[var(--space-2)]">
-          <AceDropdownMenu
+          <DropdownMenu
             triggerLabel="Filters"
             triggerMode="field"
             size="sm"
@@ -294,12 +294,12 @@ export function UserListTable({
                             key={column.key}
                             className="whitespace-nowrap px-[var(--space-3)] py-[var(--space-3)]"
                           >
-                            <AceBadge
+                            <Badge
                               appearance="pill"
                               variant={row.status === 'Active' ? 'green' : 'gray'}
                             >
                               {row.status}
-                            </AceBadge>
+                            </Badge>
                           </td>
                         )
                       case 'lastLogin':
@@ -341,7 +341,7 @@ export function UserListTable({
                       case 'actions':
                         return (
                           <td key={column.key} className="px-[var(--space-2)] py-[var(--space-2)] text-right">
-                            <AceDropdownMenu
+                            <DropdownMenu
                               items={USER_ROW_ACTION_ITEMS}
                               align="end"
                               panelWidth="hug"
@@ -384,7 +384,7 @@ export function UserListTable({
   )
 
   return (
-    <AceAccordion
+    <Accordion
       className={cn(
         'border-[var(--screening-border-strong)] transition-shadow duration-200 ease-out hover:shadow-[var(--screening-shadow-card-hover)]',
         className,
@@ -406,6 +406,6 @@ export function UserListTable({
       contentPadding={false}
     >
       {mainPanel}
-    </AceAccordion>
+    </Accordion>
   )
 }

@@ -1,9 +1,9 @@
-/** @deprecated Import from `AcePagination` — kept for existing data table imports. */
+/** @deprecated Import from `Pagination` — kept for existing data table imports. */
 export {
-  AcePagination,
-  AcePagination as TablePagination,
+  Pagination,
+  Pagination as TablePagination,
   rangeLabel,
   visiblePageItems,
-  type AcePaginationProps,
-  type AcePaginationProps as TablePaginationProps,
-} from './AcePagination/AcePagination'
+  type PaginationProps,
+  type PaginationProps as TablePaginationProps,
+} from './Pagination/Pagination'

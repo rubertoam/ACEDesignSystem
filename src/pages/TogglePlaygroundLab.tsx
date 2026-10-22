@@ -1,11 +1,11 @@
 import { useId, useState } from 'react'
 import { Toggle } from '../components/atoms/Toggle/Toggle'
 import {
-  ACE_TOGGLE_SIZE_LABELS,
+  TOGGLE_SIZE_LABELS,
   aceToggleLabelClass,
   aceToggleLabelDisabledClass,
-  type AceToggleSize,
-  type AceToggleVariant,
+  type ToggleSize,
+  type ToggleVariant,
 } from '../components/atoms/Toggle/toggleFieldStyles'
 import { cn } from '../lib/cn'
 import { LabRadioGroup, LabSelect } from '../lib/labControls'
@@ -23,7 +23,7 @@ const COLUMNS: { key: PreviewCol; label: string }[] = [
   { key: 'inactive_on', label: 'Inactive & selected' },
 ]
 
-const SECTIONS: { title: string; withLabel: boolean; size: AceToggleSize; variant?: AceToggleVariant }[] = [
+const SECTIONS: { title: string; withLabel: boolean; size: ToggleSize; variant?: ToggleVariant }[] = [
   { title: 'Standard / With text / Small', withLabel: true, size: 'sm' },
   { title: 'Standard / Without text / Small', withLabel: false, size: 'sm' },
   { title: 'Standard / With text / Large', withLabel: true, size: 'md' },
@@ -39,9 +39,9 @@ function PreviewCell({
   variant = 'standard',
 }: {
   col: PreviewCol
-  size: AceToggleSize
+  size: ToggleSize
   withLabel: boolean
-  variant?: AceToggleVariant
+  variant?: ToggleVariant
 }) {
   const isHover = col === 'hover'
   const checked = isHover ? false : col === 'active_on' || col === 'inactive_on'
@@ -57,7 +57,7 @@ function PreviewCell({
       tabIndex={-1}
       className={cn(
         'pointer-events-none select-none',
-        isHover && '!bg-[var(--ace-toggle-track-off-hover)]',
+        isHover && '!bg-[var(--toggle-track-off-hover)]',
       )}
       aria-label={`${col} ${size}${withLabel ? ' with label' : ''}${variant === 'icon' ? ' icon' : ''}`}
     />
@@ -75,7 +75,7 @@ function PreviewCell({
   )
 }
 
-function DescriptivePattern({ size }: { size: AceToggleSize }) {
+function DescriptivePattern({ size }: { size: ToggleSize }) {
   const [on, setOn] = useState(false)
   const toggleId = useId()
   return (
@@ -154,11 +154,11 @@ type ToggleLabVariant = 'standard' | 'descriptive' | 'icon'
 
 export function TogglePlaygroundLab() {
   const [variant, setVariant] = useState<ToggleLabVariant>('standard')
-  const [size, setSize] = useState<AceToggleSize>('md')
+  const [size, setSize] = useState<ToggleSize>('md')
   const [checked, setChecked] = useState(false)
   const toggleId = useId()
 
-  const sizes: AceToggleSize[] = ['sm', 'md']
+  const sizes: ToggleSize[] = ['sm', 'md']
 
   const toolbar = (
     <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -176,7 +176,7 @@ export function TogglePlaygroundLab() {
         label="Size"
         value={size}
         onChange={setSize}
-        options={sizes.map((s) => ({ value: s, label: ACE_TOGGLE_SIZE_LABELS[s] }))}
+        options={sizes.map((s) => ({ value: s, label: TOGGLE_SIZE_LABELS[s] }))}
       />
     </div>
   )
@@ -219,7 +219,7 @@ export function TogglePlaygroundLab() {
               <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
                 Matches the Figma state matrix: active vs inactive (disabled) × off vs on, plus hover (unselected
                 track with brand-hover fill). All variants share the same track padding (
-                <code className="text-[var(--color-text-primary)]">--ace-toggle-track-padding</code>, 4px). Icon rows
+                <code className="text-[var(--color-text-primary)]">--toggle-track-padding</code>, 4px). Icon rows
                 add a white check and dark X in the track with a white thumb. Sizes: Small (
                 <code className="text-[var(--color-text-primary)]">sm</code>) and Large (
                 <code className="text-[var(--color-text-primary)]">md</code>) only.
@@ -294,104 +294,40 @@ import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyle
             control plus a supporting text block (Figma <code className="text-[var(--color-text-primary)]">4081:1009</code>
             ).
           </p>
-          <div className="space-y-2">
-            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens in use</h4>
-            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Active &amp; unselected</strong> —
-                track <code className="text-[var(--color-text-primary)]">colors/bg/secondary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-secondary</code>; thumb{' '}
-                <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; label{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Hover</strong> — track{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Active &amp; selected</strong> — track{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/brand</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand</code>; selected hover{' '}
-                <code className="text-[var(--color-text-primary)]">colors/action/primary-hover</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-action-primary-hover</code>; icon check{' '}
-                <code className="text-[var(--color-text-primary)]">colors/icon/inverse</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-inverse</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Inactive &amp; unselected</strong> —
-                track <code className="text-[var(--color-text-primary)]">colors/bg/disabled-subtle</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-disabled-subtle</code>; label{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/disabled</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-disabled</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Inactive &amp; selected</strong> — track{' '}
-                <code className="text-[var(--color-text-primary)]">colors/bg/brand-subtle</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-bg-brand-subtle</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Icon (off)</strong> — X glyph{' '}
-                <code className="text-[var(--color-text-primary)]">colors/icon/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Focus</strong> — ring{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/focus</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-focus</code>; offset{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Descriptive</strong> — border{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/default</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-default</code>; YES/NO{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/brand</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-brand</code>; surface{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Type</strong> — Caption/Regular{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code> for labels
-                (Small and Large). Track sizes 36×20 / 44×24 via <code className="text-[var(--color-text-primary)]">size</code>.
-              </li>
-            </ul>
-          </div>
         </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Off: <code className="text-[var(--color-text-primary)]">--ace-toggle-track-off</code> →{' '}
+            Off: <code className="text-[var(--color-text-primary)]">--toggle-track-off</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-bg-secondary</code>; thumb{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-toggle-thumb</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--toggle-thumb</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; label{' '}
             <code className="text-[var(--color-text-primary)]">--color-text-primary</code>.
           </li>
           <li>
-            Hover: <code className="text-[var(--color-text-primary)]">--ace-toggle-track-off-hover</code> →{' '}
+            Hover: <code className="text-[var(--color-text-primary)]">--toggle-track-off-hover</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>.
           </li>
           <li>
-            On: <code className="text-[var(--color-text-primary)]">--ace-toggle-track-on</code> →{' '}
+            On: <code className="text-[var(--color-text-primary)]">--toggle-track-on</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-bg-brand</code>; on-hover{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-toggle-track-on-hover</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--toggle-track-on-hover</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-action-primary-hover</code>; check{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-toggle-icon-glyph-on</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--toggle-icon-glyph-on</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-icon-inverse</code>.
           </li>
           <li>
-            Inactive: <code className="text-[var(--color-text-primary)]">--ace-toggle-track-disabled-off</code> →{' '}
+            Inactive: <code className="text-[var(--color-text-primary)]">--toggle-track-disabled-off</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-bg-disabled-subtle</code>;{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-toggle-track-disabled-on</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--toggle-track-disabled-on</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-bg-brand-subtle</code>; label{' '}
             <code className="text-[var(--color-text-primary)]">--color-text-disabled</code>.
           </li>
           <li>
-            Icon off: <code className="text-[var(--color-text-primary)]">--ace-toggle-icon-glyph-off</code> →{' '}
+            Icon off: <code className="text-[var(--color-text-primary)]">--toggle-icon-glyph-off</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>. Focus:{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-toggle-focus-ring</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--toggle-focus-ring</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-border-focus</code>.
           </li>
           <li>
@@ -401,7 +337,7 @@ import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyle
           </li>
           <li>
             Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>. Padding{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-toggle-track-padding</code>.
+            <code className="text-[var(--color-text-primary)]">--toggle-track-padding</code>.
           </li>
         </ul>
       }

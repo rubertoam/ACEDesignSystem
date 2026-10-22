@@ -1,5 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react'
-import { AceLandingPageCard, LANDING_PAGE_CARD_ICONS } from '../components/organisms/AceCards'
+import { LandingPageCard, LANDING_PAGE_CARD_ICONS } from '../components/organisms/Cards'
 import { LabCheckbox, LabControlField, LabTextInput } from '../lib/labControls'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
@@ -40,7 +40,7 @@ function CardsChangelog() {
           <li>Removed the 1px stroke under the landing page card header.</li>
           <li>
             Added <code className="text-[var(--color-text-primary)]">showBadge</code> (lab: Header badge) to hide the
-            description-variant AceBadge without clearing <code className="text-[var(--color-text-primary)]">tag</code>
+            description-variant Badge without clearing <code className="text-[var(--color-text-primary)]">tag</code>
             .
           </li>
         </ul>
@@ -56,7 +56,7 @@ function CardsChangelog() {
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
           <li>
             Removed the expandable Data Card section from the Cards lab (examples, controls, usage, and code samples).{' '}
-            <code className="text-[var(--color-text-primary)]">AceDataCard</code> remains in the package for product
+            <code className="text-[var(--color-text-primary)]">DataCard</code> remains in the package for product
             use.
           </li>
         </ul>
@@ -89,7 +89,7 @@ function CardsChangelog() {
           </li>
           <li>
             Description tag switched from solid purple/white pill to{' '}
-            <code className="text-[var(--color-text-primary)]">AceBadge</code> purple pill (
+            <code className="text-[var(--color-text-primary)]">Badge</code> purple pill (
             <code className="text-[var(--color-text-primary)]">colors/badges/purple-fill</code> /{' '}
             <code className="text-[var(--color-text-primary)]">purple-border</code>).
           </li>
@@ -102,7 +102,7 @@ function CardsChangelog() {
           <li>
             Compact header action hit targets; third stats icon uses the Figma people glyph asset.
           </li>
-          <li>Added this Changelog tab; Usage tab lists Tokens in use with Figma paths + CSS vars.</li>
+          <li>Added this Changelog tab; Usage tab guidance pairs with the auto-injected token catalog.</li>
         </ul>
       </article>
     </div>
@@ -187,22 +187,22 @@ export function CardsLab() {
   return (
     <ComponentLabPage
       title="Cards"
-      description="Landing page navigation cards (stats and description) — semantic tokens, AceBadge, and ACE drop shadows. Figma 4130:1977."
+      description="Landing page navigation cards (stats and description) — semantic tokens, Badge, and ACE drop shadows. Figma 4130:1977."
       examplesCanvas={false}
       examples={
         <div className={labComponentContainerClass}>
           {landingControls}
           <div className="flex flex-wrap gap-8">
-            <AceLandingPageCard variant="stats" statItems={statItems} {...cardProps} />
-            <AceLandingPageCard variant="description" description={bodyText} {...cardProps} />
+            <LandingPageCard variant="stats" statItems={statItems} {...cardProps} />
+            <LandingPageCard variant="description" description={bodyText} {...cardProps} />
           </div>
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AceLandingPageCard } from '../components/organisms/AceCards'
+        <ComponentLabCode>{`import { LandingPageCard } from '../components/organisms/Cards'
 
-<AceLandingPageCard variant="stats" title="Screening" statItems={...} />
-<AceLandingPageCard variant="description" title="Screening" tag="Purple" showBadge description="..." />`}</ComponentLabCode>
+<LandingPageCard variant="stats" title="Screening" statItems={...} />
+<LandingPageCard variant="description" title="Screening" tag="Purple" showBadge description="..." />`}</ComponentLabCode>
       }
       usage={
         <div className="space-y-6 text-sm leading-relaxed text-[var(--color-text-muted)]">
@@ -210,52 +210,14 @@ export function CardsLab() {
             Landing page cards navigate users to tools (screening, simulators, etc.). Variants:{' '}
             <code className="text-[var(--color-text-primary)]">stats</code> (icon row) and{' '}
             <code className="text-[var(--color-text-primary)]">description</code> (body copy + optional purple
-            AceBadge). Hover elevates shadow XS → XL.
+            Badge). Hover elevates shadow XS → XL.
           </p>
-          <div className="space-y-2">
-            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens in use</h4>
-            <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Surface &amp; border</strong> —{' '}
-                <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>;{' '}
-                <code className="text-[var(--color-text-primary)]">colors/border/default</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-border-default</code> (thin 0.5px); radius{' '}
-                <code className="text-[var(--color-text-primary)]">radius/sm</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--radius-sm</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Type &amp; icons</strong> — title P1
-                Bold / body &amp; footer Caption Regular (
-                <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-bold</code>,{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>); text{' '}
-                <code className="text-[var(--color-text-primary)]">colors/text/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-text-primary</code>; icons{' '}
-                <code className="text-[var(--color-text-primary)]">colors/icon/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Link &amp; badge</strong> — link{' '}
-                <code className="text-[var(--color-text-primary)]">colors/action/primary</code> →{' '}
-                <code className="text-[var(--color-text-primary)]">--color-action-primary</code>; badge{' '}
-                <code className="text-[var(--color-text-primary)]">colors/badges/purple-fill</code> /{' '}
-                <code className="text-[var(--color-text-primary)]">purple-border</code> via{' '}
-                <code className="text-[var(--color-text-primary)]">AceBadge</code> purple (
-                <code className="text-[var(--color-text-primary)]">--ace-status-pill-purple-*</code>).
-              </li>
-              <li>
-                <strong className="font-medium text-[var(--color-text-primary)]">Shadows</strong> — Default Shadow (XS)
-                → <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code>; Hover Shadow (XL) →{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code>.
-              </li>
-            </ul>
-          </div>
         </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Landing aliases: <code className="text-[var(--color-text-primary)]">--ace-landing-page-card-*</code> →{' '}
+            Landing aliases: <code className="text-[var(--color-text-primary)]">--landing-page-card-*</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-border-default</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-text-primary</code>,{' '}
@@ -265,7 +227,7 @@ export function CardsLab() {
             <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code>.
           </li>
           <li>
-            Badge: <code className="text-[var(--color-text-primary)]">--ace-status-pill-purple-*</code> (Figma{' '}
+            Badge: <code className="text-[var(--color-text-primary)]">--badge-purple-*</code> (Figma{' '}
             <code className="text-[var(--color-text-primary)]">colors/badges/purple-*</code>).
           </li>
         </ul>

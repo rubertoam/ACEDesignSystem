@@ -172,5 +172,5 @@ export function parseAgeForSort(label: string): number {
 export const screeningDisabledRowClass = cn(
   'bg-[var(--screening-surface-row-muted)]',
   '[&_td]:italic [&_td_*]:italic',
-  '[&_td]:!text-[var(--ace-button-neutral-600)] [&_td_*]:!text-[var(--ace-button-neutral-600)]',
+  '[&_td]:!text-[var(--button-neutral-600)] [&_td_*]:!text-[var(--button-neutral-600)]',
 )

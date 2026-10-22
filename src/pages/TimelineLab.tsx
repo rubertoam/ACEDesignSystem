@@ -1,5 +1,5 @@
-import { AceTimeline, DEMO_TIMELINE_ITEMS } from '../components/organisms/AceTimeline/AceTimeline'
-import { AceTimelineItem } from '../components/organisms/AceTimeline/AceTimelineItem'
+import { Timeline, DEMO_TIMELINE_ITEMS } from '../components/organisms/Timeline/Timeline'
+import { TimelineItem } from '../components/organisms/Timeline/TimelineItem'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
@@ -18,7 +18,7 @@ export function TimelineLab() {
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Interactive</p>
             <div className={labComponentContainerClass}>
-              <AceTimeline items={DEMO_TIMELINE_ITEMS} />
+              <Timeline items={DEMO_TIMELINE_ITEMS} />
             </div>
           </div>
 
@@ -30,7 +30,7 @@ export function TimelineLab() {
                 <div className="flex flex-col gap-8">
                   <div className={labStaticExampleGroupClass}>
                     <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Default</p>
-                    <AceTimelineItem
+                    <TimelineItem
                       variant={BREAKDOWN_VARIANT.variant}
                       label={BREAKDOWN_VARIANT.label}
                       timestamp={BREAKDOWN_VARIANT.timestamp}
@@ -40,7 +40,7 @@ export function TimelineLab() {
                   </div>
                   <div className={labStaticExampleGroupClass}>
                     <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Highlight</p>
-                    <AceTimelineItem
+                    <TimelineItem
                       variant={BREAKDOWN_VARIANT.variant}
                       label={BREAKDOWN_VARIANT.label}
                       timestamp={BREAKDOWN_VARIANT.timestamp}
@@ -50,7 +50,7 @@ export function TimelineLab() {
                   </div>
                   <div className={labStaticExampleGroupClass}>
                     <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Expanded</p>
-                    <AceTimelineItem
+                    <TimelineItem
                       variant={BREAKDOWN_VARIANT.variant}
                       label={BREAKDOWN_VARIANT.label}
                       timestamp={BREAKDOWN_VARIANT.timestamp}
@@ -65,7 +65,7 @@ export function TimelineLab() {
                 <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">All status variants</p>
                 <div className="flex flex-col gap-4">
                   {DEMO_TIMELINE_ITEMS.map((item) => (
-                    <AceTimelineItem
+                    <TimelineItem
                       key={item.id}
                       variant={item.variant}
                       label={item.label}
@@ -83,18 +83,18 @@ export function TimelineLab() {
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
-            Pass an array of items to <code className="text-[var(--screening-text-primary)]">AceTimeline</code>, or
-            render <code className="text-[var(--screening-text-primary)]">AceTimelineItem</code> directly for custom
+            Pass an array of items to <code className="text-[var(--screening-text-primary)]">Timeline</code>, or
+            render <code className="text-[var(--screening-text-primary)]">TimelineItem</code> directly for custom
             layouts.
           </p>
           <ComponentLabCode>{`import {
-  AceTimeline,
+  Timeline,
   DEMO_TIMELINE_ITEMS,
-} from '../components/organisms/AceTimeline/AceTimeline'
+} from '../components/organisms/Timeline/Timeline'
 
-<AceTimeline items={DEMO_TIMELINE_ITEMS} />
+<Timeline items={DEMO_TIMELINE_ITEMS} />
 
-<AceTimelineItem
+<TimelineItem
   variant="escalation"
   label="[Escalation]"
   timestamp="03-15-2026 14:22:10"
@@ -141,20 +141,20 @@ export function TimelineLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Shell - <code className="text-[var(--color-text-primary)]">--ace-timeline-border</code>, padding, item gap
+            Shell - <code className="text-[var(--color-text-primary)]">--timeline-border</code>, padding, item gap
           </li>
           <li>
             Typography - P2 title row, P1 subtitle, caption sort control
           </li>
           <li>
             Variants - icon and highlight tokens per status (
-            <code className="text-[var(--color-text-primary)]">--ace-timeline-icon-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-timeline-highlight-*</code>)
+            <code className="text-[var(--color-text-primary)]">--timeline-icon-*</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--timeline-highlight-*</code>)
           </li>
           <li>
             Motion - expand/collapse uses accordion tokens (
-            <code className="text-[var(--color-text-primary)]">--ace-accordion-duration</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-accordion-ease</code>)
+            <code className="text-[var(--color-text-primary)]">--accordion-duration</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--accordion-ease</code>)
           </li>
         </ul>
       }

@@ -1,10 +1,10 @@
 import { useId, useState } from 'react'
-import { AceSlider, type AceSliderVariant } from '../components/molecules/AceSlider'
+import { Slider, type SliderVariant } from '../components/molecules/Slider'
 import { LabCheckbox, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-const VARIANTS: { key: AceSliderVariant; label: string; defaultValue: number | [number, number] }[] = [
+const VARIANTS: { key: SliderVariant; label: string; defaultValue: number | [number, number] }[] = [
   { key: 'continuous', label: 'Continuous', defaultValue: 50 },
   { key: 'discrete', label: 'Discrete', defaultValue: 50 },
   { key: 'ranged', label: 'Ranged', defaultValue: [25, 75] },
@@ -16,7 +16,7 @@ const STATE_COLUMNS = [
   { key: 'hover' as const, label: 'Hover' },
 ]
 
-const DEFAULT_SHOW_COUNTER: Record<AceSliderVariant, boolean> = {
+const DEFAULT_SHOW_COUNTER: Record<SliderVariant, boolean> = {
   continuous: false,
   discrete: false,
   ranged: false,
@@ -27,7 +27,7 @@ function StaticReferencePreview({
   variant,
   state,
 }: {
-  variant: AceSliderVariant
+  variant: SliderVariant
   state: 'default' | 'hover'
 }) {
   const config = VARIANTS.find((v) => v.key === variant)!
@@ -35,7 +35,7 @@ function StaticReferencePreview({
 
   return (
     <div className="pointer-events-none w-full max-w-[21rem] min-w-[16rem] select-none">
-      <AceSlider
+      <Slider
         id={previewId}
         variant={variant}
         defaultValue={config.defaultValue}
@@ -50,9 +50,9 @@ function StaticReferencePreview({
 }
 
 export function SlidersLab() {
-  const [variant, setVariant] = useState<AceSliderVariant>('continuous')
+  const [variant, setVariant] = useState<SliderVariant>('continuous')
   const [showCounterByVariant, setShowCounterByVariant] =
-    useState<Record<AceSliderVariant, boolean>>(DEFAULT_SHOW_COUNTER)
+    useState<Record<SliderVariant, boolean>>(DEFAULT_SHOW_COUNTER)
   const [value, setValue] = useState(50)
   const [rangeValue, setRangeValue] = useState<[number, number]>([25, 75])
   const [centeredValue, setCenteredValue] = useState(-17)
@@ -81,7 +81,7 @@ export function SlidersLab() {
 
   const interactiveSlider =
     variant === 'ranged' ? (
-      <AceSlider
+      <Slider
         key="ranged"
         variant="ranged"
         value={rangeValue}
@@ -92,7 +92,7 @@ export function SlidersLab() {
         className="max-w-[21rem]"
       />
     ) : variant === 'centered' ? (
-      <AceSlider
+      <Slider
         key="centered"
         variant="centered"
         value={centeredValue}
@@ -103,7 +103,7 @@ export function SlidersLab() {
         className="max-w-[21rem]"
       />
     ) : (
-      <AceSlider
+      <Slider
         key={variant}
         variant={variant}
         value={value}
@@ -166,12 +166,12 @@ export function SlidersLab() {
         </div>
       }
       code={
-        <ComponentLabCode>{`import { AceSlider } from '../components/molecules/AceSlider'
+        <ComponentLabCode>{`import { Slider } from '../components/molecules/Slider'
 
-<AceSlider variant="continuous" defaultValue={50} onValueChange={(v) => ...} />
-<AceSlider variant="discrete" discreteSteps={10} />
-<AceSlider variant="ranged" defaultValue={[25, 75]} showTooltip onValueChange={(v) => ...} />
-<AceSlider variant="centered" defaultValue={-17} showTooltip />`}</ComponentLabCode>
+<Slider variant="continuous" defaultValue={50} onValueChange={(v) => ...} />
+<Slider variant="discrete" discreteSteps={10} />
+<Slider variant="ranged" defaultValue={[25, 75]} showTooltip onValueChange={(v) => ...} />
+<Slider variant="centered" defaultValue={-17} showTooltip />`}</ComponentLabCode>
       }
       usage={
         <p className="m-0 text-[var(--screening-text-muted)]">
@@ -182,17 +182,21 @@ export function SlidersLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--screening-text-muted)]">
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-slider-track-inactive</code> (#efeef9),{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-slider-range</code> / handle (#523eb9).
+            Inactive track: <code className="text-[var(--screening-text-primary)]">--slider-track-inactive</code>{' '}
+            → <code className="text-[var(--screening-text-primary)]">colors/bg/brand-hover</code> →{' '}
+            <code className="text-[var(--screening-text-primary)]">--color-bg-brand-hover</code>; range / handle{' '}
+            <code className="text-[var(--screening-text-primary)]">--slider-range</code> →{' '}
+            <code className="text-[var(--screening-text-primary)]">colors/action/primary</code> →{' '}
+            <code className="text-[var(--screening-text-primary)]">--color-action-primary</code>.
           </li>
           <li>
-            Discrete ticks: <code className="text-[var(--screening-text-primary)]">--ace-slider-tick-on-range</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-slider-tick-on-track</code>.
+            Discrete ticks: <code className="text-[var(--screening-text-primary)]">--slider-tick-on-range</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">--slider-tick-on-track</code>.
           </li>
           <li>
             Value counter: <code className="text-[var(--screening-text-primary)]">showTooltip</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-slider-tooltip-bg</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-slider-tooltip-text</code>.
+            <code className="text-[var(--screening-text-primary)]">--slider-tooltip-bg</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">--slider-tooltip-text</code>.
           </li>
         </ul>
       }

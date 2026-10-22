@@ -1,32 +1,32 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
-import { AceInputField } from '../components/atoms/AceInputField'
+import { MaterialSymbol } from '../components/molecules/Accordion/MaterialSymbol'
+import { Input } from '../components/atoms/Input'
 import {
-  AceTooltip,
-  AceTooltipContent,
-  AceTooltipProvider,
-  AceTooltipTrigger,
-} from '../components/atoms/AceTooltip/AceTooltip'
-import { AceDropdownMenu } from '../components/molecules/AceDropdownMenu/AceDropdownMenu'
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../components/atoms/Tooltip/Tooltip'
+import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
 import { DialogModal } from '../components/molecules/DialogModal/DialogModal'
 import {
   GroupFormDialog,
   type GroupFormDialogItem,
   type GroupFormDialogMode,
-} from '../components/organisms/AceSidebar/GroupFormDialog'
+} from '../components/organisms/Sidebar/GroupFormDialog'
 import {
-  AceSidebar,
-  type AceSidebarGroup,
-  type AceSidebarMenuAction,
-  type AceSidebarNavItem,
-  type AceSidebarOrganizationDisplay,
-  type AceSidebarVariant,
-} from '../components/organisms/AceSidebar/AceSidebar'
+  Sidebar,
+  type SidebarGroup,
+  type SidebarMenuAction,
+  type SidebarNavItem,
+  type SidebarOrganizationDisplay,
+  type SidebarVariant,
+} from '../components/organisms/Sidebar/Sidebar'
 import {
   sidebarIconButtonBorderedClass,
   sidebarIconButtonClass,
-} from '../components/organisms/AceSidebar/sidebarRowActions'
+} from '../components/organisms/Sidebar/sidebarRowActions'
 import { cn } from '../lib/cn'
 import { labUsageSectionClass } from '../lib/labExampleSection'
 import { LabCheckbox, LabRadioGroup, labControlLegendClass } from '../lib/labControls'
@@ -39,7 +39,7 @@ const ORGANIZATIONS = [
   { id: 'org-3', label: 'Organization 3' },
 ]
 
-const NAV_ITEMS: AceSidebarNavItem[] = [
+const NAV_ITEMS: SidebarNavItem[] = [
   { id: 'nav-1', label: 'Navigation Item 1' },
   { id: 'nav-2', label: 'Navigation Item 2' },
   { id: 'nav-3', label: 'Navigation Item 3' },
@@ -49,7 +49,7 @@ const NAV_ITEMS: AceSidebarNavItem[] = [
   { id: 'nav-7', label: 'Navigation Item 7' },
 ]
 
-function buildInitialGroups(selectedId: string): AceSidebarGroup[] {
+function buildInitialGroups(selectedId: string): SidebarGroup[] {
   return [
     {
       id: 'group-1',
@@ -130,9 +130,9 @@ function SidebarMockHeader({
 export function SidebarLab() {
   const [menuHost, setMenuHost] = useState<HTMLDivElement | null>(null)
   const [open, setOpen] = useState(true)
-  const [variant, setVariant] = useState<AceSidebarVariant>('navigation')
+  const [variant, setVariant] = useState<SidebarVariant>('navigation')
   const [organizationDisplay, setOrganizationDisplay] =
-    useState<AceSidebarOrganizationDisplay>('switcher')
+    useState<SidebarOrganizationDisplay>('switcher')
   const [showHeaderTrailing, setShowHeaderTrailing] = useState(true)
   const [showGroupAdd, setShowGroupAdd] = useState(false)
   const [selectedOrg, setSelectedOrg] = useState('org-1')
@@ -252,7 +252,7 @@ export function SidebarLab() {
     closeGroupForm()
   }
 
-  const handleGroupMenuAction = (action: AceSidebarMenuAction, groupId: string, label: string) => {
+  const handleGroupMenuAction = (action: SidebarMenuAction, groupId: string, label: string) => {
     if (action === 'edit') {
       openEditGroup(groupId)
       return
@@ -336,7 +336,7 @@ export function SidebarLab() {
         prev.map((g) => (g.id === group.id ? { ...g, expanded: !g.expanded } : g)),
       ),
     onAdd: () => openNewGroupItemModal(group.id),
-    onMenuAction: (action: AceSidebarMenuAction) =>
+    onMenuAction: (action: SidebarMenuAction) =>
       handleGroupMenuAction(action, group.id, group.label),
     items: group.items?.map((item) => ({
       ...item,
@@ -355,7 +355,7 @@ export function SidebarLab() {
         <div className="flex flex-wrap items-end gap-4">
         <div className="flex flex-col gap-[var(--ace-section-label-gap)]">
           <span className={labControlLegendClass}>Sidebar variant</span>
-          <AceDropdownMenu
+          <DropdownMenu
             triggerLabel={variantLabel}
             triggerMode="field"
             size="md"
@@ -401,16 +401,16 @@ export function SidebarLab() {
   )
 
   const headerTrailing = showHeaderTrailing ? (
-    <AceTooltip>
-      <AceTooltipTrigger asChild>
+    <Tooltip>
+      <TooltipTrigger asChild>
         <button type="button" aria-label="Search" className={sidebarIconButtonBorderedClass}>
           <MaterialSymbol name="search" size="md" className="text-current" />
         </button>
-      </AceTooltipTrigger>
-      <AceTooltipContent side="bottom" variant="screening-toolbar" hideArrow>
+      </TooltipTrigger>
+      <TooltipContent side="bottom" variant="screening-toolbar" hideArrow>
         Search
-      </AceTooltipContent>
-    </AceTooltip>
+      </TooltipContent>
+    </Tooltip>
   ) : undefined
 
   return (
@@ -424,10 +424,10 @@ export function SidebarLab() {
             ref={setMenuHost}
             className="flex h-[min(85vh,52rem)] min-h-[40rem] flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]"
           >
-            <AceTooltipProvider>
+            <TooltipProvider>
               <SidebarMockHeader open={open} onToggleSidebar={() => setOpen((v) => !v)} />
               <div className="flex min-h-0 flex-1">
-                <AceSidebar
+                <Sidebar
                   open={open}
                   variant={variant}
                   organizations={ORGANIZATIONS}
@@ -471,7 +471,7 @@ export function SidebarLab() {
                   </p>
                 </div>
               </div>
-            </AceTooltipProvider>
+            </TooltipProvider>
           </div>
         }
         code={
@@ -481,13 +481,13 @@ export function SidebarLab() {
               <code className="text-[var(--screening-text-primary)]">menuPortalContainer</code> when menus render inside
               a clipped viewport.
             </p>
-            <ComponentLabCode>{`import { AceSidebar } from '../components/organisms/AceSidebar/AceSidebar'
-import { sidebarIconButtonBorderedClass } from '../components/organisms/AceSidebar/sidebarRowActions'
-import { MaterialSymbol } from '../components/molecules/AceAccordion/MaterialSymbol'
+            <ComponentLabCode>{`import { Sidebar } from '../components/organisms/Sidebar/Sidebar'
+import { sidebarIconButtonBorderedClass } from '../components/organisms/Sidebar/sidebarRowActions'
+import { MaterialSymbol } from '../components/molecules/Accordion/MaterialSymbol'
 
 const [open, setOpen] = useState(true)
 
-<AceSidebar
+<Sidebar
   open={open}
   variant="groups"
   onNewGroup={() => setNewGroupOpen(true)}
@@ -500,7 +500,7 @@ const [open, setOpen] = useState(true)
   }
 />
 
-<AceSidebar
+<Sidebar
   variant="navigation"
   organizations={[
     { id: 'org-1', label: 'Organization 1' },
@@ -559,21 +559,29 @@ const [open, setOpen] = useState(true)
               <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Group form dialog (Edit / Copy)</h4>
               <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Edit</strong>: trash marks an item for removal; restore uses a Success/500 (
-                  <code className="text-[var(--screening-text-primary)]">--ace-success-500</code>) circle with a white plus.
+                  <strong className="text-[var(--screening-text-primary)]">Edit</strong>: trash marks an item for removal;
+                  restore uses <code className="text-[var(--screening-text-primary)]">color/success/500</code> →{' '}
+                  <code className="text-[var(--screening-text-primary)]">--color-success-500</code> (via{' '}
+                  <code className="text-[var(--screening-text-primary)]">--ace-success-500</code>) with a white plus.
                 </li>
                 <li>
                   <strong className="text-[var(--screening-text-primary)]">Dimming</strong>: only the item label is dimmed (
-                  <code className="text-[var(--screening-text-primary)]">opacity-50</code>); action icons stay at full strength so Success/500 and danger colors read correctly.
+                  <code className="text-[var(--screening-text-primary)]">opacity-50</code>); action icons stay at full
+                  strength so success and danger colors read correctly.
                 </li>
                 <li>
-                  Action hover washes: trash → Error/50 (
-                  <code className="text-[var(--screening-text-primary)]">--ace-error-50</code>), restore → Success/50 (
+                  Action hover washes: trash → <code className="text-[var(--screening-text-primary)]">color/error/50</code>{' '}
+                  → <code className="text-[var(--screening-text-primary)]">--color-error-50</code> (via{' '}
+                  <code className="text-[var(--screening-text-primary)]">--ace-error-50</code>), restore →{' '}
+                  <code className="text-[var(--screening-text-primary)]">color/success/50</code> →{' '}
+                  <code className="text-[var(--screening-text-primary)]">--color-success-50</code> (via{' '}
                   <code className="text-[var(--screening-text-primary)]">--ace-success-50</code>).
                 </li>
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Copy</strong>: checkboxes include/exclude items; included count uses purple 400 (
-                  <code className="text-[var(--screening-text-primary)]">--ace-button-purple-400</code>).
+                  <strong className="text-[var(--screening-text-primary)]">Copy</strong>: checkboxes include/exclude items;
+                  included count uses <code className="text-[var(--screening-text-primary)]">colors/text/brand</code> →{' '}
+                  <code className="text-[var(--screening-text-primary)]">--color-text-brand</code> (←{' '}
+                  <code className="text-[var(--screening-text-primary)]">color/primary/400</code>).
                 </li>
               </ul>
             </section>
@@ -626,7 +634,7 @@ const [open, setOpen] = useState(true)
           </div>
         }
       >
-        <AceInputField
+        <Input
           id="sidebar-new-group-name"
           label="Group name"
           value={newGroupName}
@@ -669,7 +677,7 @@ const [open, setOpen] = useState(true)
           </div>
         }
       >
-        <AceInputField
+        <Input
           id="sidebar-new-group-item-name"
           label="Item name"
           value={newGroupItemName}
@@ -747,7 +755,7 @@ const [open, setOpen] = useState(true)
           </div>
         }
       >
-        <AceInputField
+        <Input
           id="sidebar-delete-confirm"
           label="Confirmation"
           value={deleteConfirmText}

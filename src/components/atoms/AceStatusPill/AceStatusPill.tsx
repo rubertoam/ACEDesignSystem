@@ -1,5 +1,2 @@
-/** @deprecated Import from `AceBadge` instead. */
-export {
-  AceBadge as AceStatusPill,
-  type AceBadgeProps as AceStatusPillProps,
-} from '../AceBadge/AceBadge'
+/** @deprecated Use Badge. */
+export { Badge as AceStatusPill, type BadgeProps as AceStatusPillProps } from '../Badge/Badge'
