@@ -1,9 +1,11 @@
 import { LabOverviewList } from '../lib/labOverviewList'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+import { ComponentLabPage } from './ComponentLabPage'
+import { moleculesLabCode, moleculesLabUsage, overviewLabQa } from './labTabDocs'
 
 export function MoleculesLab() {
   return (
     <ComponentLabPage
+      qa={overviewLabQa}
       title="Overview"
       description="Search forms, breadcrumbs, and other small compositions of atoms."
       examples={
@@ -12,16 +14,8 @@ export function MoleculesLab() {
           <LabOverviewList section="Molecules" />
         </div>
       }
-      code={
-        <ComponentLabCode>{`import { YourMolecule } from '../components/molecules/YourMolecule'
-
-<YourMolecule label="…" />`}</ComponentLabCode>
-      }
-      usage={
-        <p className="m-0 text-[var(--color-text-muted)]">
-          Describe composition, required props, and when to use this molecule vs a smaller atom.
-        </p>
-      }
+      code={moleculesLabCode}
+      usage={moleculesLabUsage}
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>

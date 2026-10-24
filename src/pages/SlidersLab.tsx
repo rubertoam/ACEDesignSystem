@@ -2,8 +2,8 @@ import { useId, useState } from 'react'
 import { Slider, type SliderVariant } from '../components/molecules/Slider'
 import { LabCheckbox, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-
+import { ComponentLabPage } from './ComponentLabPage'
+import { sliderLabCode, sliderLabQa, sliderLabUsage } from './labTabDocs'
 const VARIANTS: { key: SliderVariant; label: string; defaultValue: number | [number, number] }[] = [
   { key: 'continuous', label: 'Continuous', defaultValue: 50 },
   { key: 'discrete', label: 'Discrete', defaultValue: 50 },
@@ -117,6 +117,7 @@ export function SlidersLab() {
 
   return (
     <ComponentLabPage
+      qa={sliderLabQa}
       title="Sliders"
       description="ACE Design System v.3 sliders: Continuous, Discrete, Ranged, and Centered variants with Default and Hover handle states (Figma 2505:47). Built on Radix Slider."
       examplesToolbar={toolbar}
@@ -165,20 +166,8 @@ export function SlidersLab() {
           ))}
         </div>
       }
-      code={
-        <ComponentLabCode>{`import { Slider } from '../components/molecules/Slider'
-
-<Slider variant="continuous" defaultValue={50} onValueChange={(v) => ...} />
-<Slider variant="discrete" discreteSteps={10} />
-<Slider variant="ranged" defaultValue={[25, 75]} showTooltip onValueChange={(v) => ...} />
-<Slider variant="centered" defaultValue={-17} showTooltip />`}</ComponentLabCode>
-      }
-      usage={
-        <p className="m-0 text-[var(--screening-text-muted)]">
-          Static reference rows match Figma Default and Hover columns and are not interactive (no value counter).
-          Use Interactive with Show counter to preview the hover value bubble per variant. See node 2505:47.
-        </p>
-      }
+      code={sliderLabCode}
+      usage={sliderLabUsage}
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--screening-text-muted)]">
           <li>

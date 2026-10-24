@@ -12,6 +12,8 @@ import { LabRadioGroup, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { toggleLabQa } from './labTabDocs'
 /** Column keys align with Figma state titles. */
 type PreviewCol = 'active_off' | 'hover' | 'active_on' | 'inactive_off' | 'inactive_on'
 
@@ -183,6 +185,7 @@ export function TogglePlaygroundLab() {
 
   return (
     <ComponentLabPage
+      qa={toggleLabQa}
       title="Toggles"
       description="ACE Design System v.3 toggles (Figma 117:1265 / set 5283:2831): Standard or Icon; Small / Large (36×20 / 44×24); with or without label; Active unselected, Hover, Active selected, Inactive unselected, Inactive selected; Descriptive Toggle pattern (4081:1009). Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examplesToolbar={toolbar}
@@ -341,6 +344,7 @@ import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyle
           </li>
         </ul>
       }
+
       changelog={<TogglesChangelog />}
     />
   )

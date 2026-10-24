@@ -1,5 +1,9 @@
 import { useCallback, useId, useState, type ReactNode } from 'react'
-import { aceChevronIconClass } from '../../../lib/aceChevron'
+import { Badge, type BadgeVariant } from '../../atoms/Badge/Badge'
+import {
+  sidebarIconButtonClass,
+  sidebarRowActionIconClass,
+} from '../../organisms/Sidebar/sidebarRowActions'
 import { cn } from '../../../lib/cn'
 import { MaterialSymbol } from './MaterialSymbol'
 
@@ -10,6 +14,8 @@ export type AccordionProps = {
   children?: ReactNode
   tagLabel?: string
   showTag?: boolean
+  /** Badge pill color when `showTag` is on. Defaults to `purple` (Figma Accordion). */
+  tagVariant?: BadgeVariant
   surface?: AccordionSurface
   /** Applies --ace-drop-shadow-xs independently of surface color. */
   dropShadow?: boolean
@@ -42,6 +48,9 @@ export type AccordionProps = {
 const durationAccordion = 'duration-[var(--accordion-duration)]'
 const easeAccordion = '[transition-timing-function:var(--accordion-ease)]'
 
+/** Figma Accordion icon glyph = 20px (`icon/size/lg`) in 32px no-border hit target. */
+const accordionIconGlyphSize = 'lg' as const
+
 function surfaceBgClass(surface: AccordionSurface) {
   return surface === 'gray'
     ? 'bg-[var(--accordion-surface-muted)]'
@@ -49,10 +58,7 @@ function surfaceBgClass(surface: AccordionSurface) {
 }
 
 const titleClass =
-  '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)] text-[var(--accordion-title)]'
-
-const tagClass =
-  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)] rounded-full bg-[var(--accordion-tag-bg)] px-3 py-0.5 text-[var(--accordion-tag-text)]'
+  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)] text-[var(--accordion-title)]'
 
 function ActionButton({
   label,
@@ -67,7 +73,7 @@ function ActionButton({
     <button
       type="button"
       aria-label={label}
-      className="inline-flex size-6 shrink-0 items-center justify-center rounded-[var(--radius-sm)] transition-colors hover:bg-[var(--screening-surface-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]"
+      className={sidebarIconButtonClass}
       onClick={(e) => {
         e.stopPropagation()
         onClick?.()
@@ -105,7 +111,7 @@ function AccordionPanel({
         <div
           className={cn(
             'bg-inherit',
-            contentPadding && 'px-[var(--accordion-px)] py-[var(--accordion-py)]',
+            contentPadding && 'px-[var(--accordion-px)] pb-[var(--accordion-py)] pt-0',
           )}
         >
           {children}
@@ -118,8 +124,9 @@ function AccordionPanel({
 export function Accordion({
   title,
   children,
-  tagLabel = '[Label]',
+  tagLabel = 'Badge',
   showTag = true,
+  tagVariant = 'purple',
   surface = 'white',
   dropShadow = false,
   showAddIcon = true,
@@ -194,18 +201,13 @@ export function Accordion({
         <span className="flex min-w-0 items-center gap-[var(--accordion-gap)]">
           {showChevron ? (
             <span
-              className={cn(
-                'flex shrink-0 items-center justify-center transition-transform',
-                durationAccordion,
-                easeAccordion,
-                open ? 'rotate-0' : '-rotate-90',
-              )}
+              className="inline-flex size-8 shrink-0 items-center justify-center text-[var(--accordion-icon)]"
               aria-hidden
             >
               <MaterialSymbol
-                name="keyboard_arrow_down"
-                size="md"
-                className={cn(aceChevronIconClass, 'text-[var(--accordion-title)]')}
+                name={open ? 'keyboard_arrow_down' : 'keyboard_arrow_right'}
+                size={accordionIconGlyphSize}
+                className={sidebarRowActionIconClass}
               />
             </span>
           ) : null}
@@ -213,29 +215,50 @@ export function Accordion({
         </span>
 
         {headerTrailing != null || hasDefaultRightChrome ? (
-          <span className="flex shrink-0 items-center gap-[var(--accordion-gap)]">
+          <span className="flex shrink-0 items-center gap-[var(--accordion-actions-gap)]">
             {headerTrailing}
             {hasDefaultRightChrome ? (
               <>
-                {showTag ? <span className={tagClass}>{tagLabel}</span> : null}
-                {showAddIcon ? (
-                  <ActionButton label="Add" onClick={onAddClick}>
-                    <MaterialSymbol name="add_circle" size="sm" className="text-[var(--accordion-icon)]" />
-                  </ActionButton>
+                {showTag ? (
+                  <Badge appearance="pill" variant={tagVariant}>
+                    {tagLabel}
+                  </Badge>
                 ) : null}
-                {showDeleteIcon ? (
-                  <ActionButton label="Delete" onClick={onDeleteClick}>
-                    <MaterialSymbol name="delete" size="sm" className="text-[var(--accordion-icon)]" />
+                {/* Figma Accordion actions order: more → edit → delete; add is catalog extension */}
+                {showMoreIcon ? (
+                  <ActionButton label="More options" onClick={onMoreClick}>
+                    <MaterialSymbol
+                      name="more_horiz"
+                      size={accordionIconGlyphSize}
+                      className={sidebarRowActionIconClass}
+                    />
                   </ActionButton>
                 ) : null}
                 {showEditIcon ? (
                   <ActionButton label="Edit" onClick={onEditClick}>
-                    <MaterialSymbol name="edit" size="sm" className="text-[var(--accordion-icon)]" />
+                    <MaterialSymbol
+                      name="edit"
+                      size={accordionIconGlyphSize}
+                      className={sidebarRowActionIconClass}
+                    />
                   </ActionButton>
                 ) : null}
-                {showMoreIcon ? (
-                  <ActionButton label="More options" onClick={onMoreClick}>
-                    <MaterialSymbol name="more_horiz" size="sm" className="text-[var(--accordion-icon)]" />
+                {showDeleteIcon ? (
+                  <ActionButton label="Delete" onClick={onDeleteClick}>
+                    <MaterialSymbol
+                      name="delete"
+                      size={accordionIconGlyphSize}
+                      className={sidebarRowActionIconClass}
+                    />
+                  </ActionButton>
+                ) : null}
+                {showAddIcon ? (
+                  <ActionButton label="Add" onClick={onAddClick}>
+                    <MaterialSymbol
+                      name="add_circle"
+                      size={accordionIconGlyphSize}
+                      className={sidebarRowActionIconClass}
+                    />
                   </ActionButton>
                 ) : null}
               </>

@@ -5,6 +5,8 @@ import { LabCheckbox, LabControlField, LabRadioGroup } from '../lib/labControls'
 import { labExampleSectionClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { inputLabQa } from './labTabDocs'
 const SIZES: InputSize[] = ['sm', 'md', 'lg']
 const VISUAL_STATES: InputVisualState[] = ['default', 'focus', 'error', 'disabled']
 
@@ -153,6 +155,7 @@ export function InputPlaygroundLab() {
 
   return (
     <ComponentLabPage
+      qa={inputLabQa}
       title="Input fields"
       description="ACE Design System v.3 text inputs (Figma 408:1976): sm/md/lg heights (36/44/52px); default, focus (brand border + lavender fill + focus ring), error, and disabled. Optional search icon left or right. Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examplesToolbar={toolbar}
@@ -246,6 +249,7 @@ export function InputPlaygroundLab() {
           </li>
         </ul>
       }
+
       changelog={<InputsChangelog />}
     />
   )

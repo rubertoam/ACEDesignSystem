@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Input } from '../components/atoms/Input'
 import { MaterialSymbol } from '../components/molecules/Accordion/MaterialSymbol'
@@ -6,12 +6,11 @@ import { SiteHeader } from '../components/organisms/SiteHeader/SiteHeader'
 import { LabThemeProvider, type LabTheme } from '../contexts/LabThemeContext'
 import { aceChevronIconClass } from '../lib/aceChevron'
 import { cn } from '../lib/cn'
-import { LabSegmentedToggle } from '../lib/labControls'
 import {
   getLabNavFlat,
   getLabNavMatch,
+  labNavBottomItems,
   labNavGuidelinesItem,
-  labNavLayoutItems,
   labNavSections,
 } from '../pages/labNav'
 
@@ -26,7 +25,7 @@ const topNavLinkClass = ({ isActive }: { isActive: boolean }) =>
     navLinkBase,
     'py-2',
     isActive
-      ? 'bg-[var(--screening-primary-soft-bg)] font-semibold text-[var(--sidebar-item-selected-text)] ring-1 ring-inset ring-[var(--screening-border-strong)]'
+      ? 'lab-nav-link-active font-semibold text-[var(--sidebar-item-selected-text)]'
       : 'text-[var(--screening-text-muted)] hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)]',
   )
 
@@ -36,7 +35,7 @@ const sectionNavLinkClass = ({ isActive }: { isActive: boolean }) =>
     navLinkBase,
     'py-1 leading-tight',
     isActive
-      ? 'bg-[var(--screening-primary-soft-bg)] font-semibold text-[var(--sidebar-item-selected-text)] ring-1 ring-inset ring-[var(--screening-border-strong)]'
+      ? 'lab-nav-link-active font-semibold text-[var(--sidebar-item-selected-text)]'
       : 'text-[var(--screening-text-muted)] hover:bg-[var(--screening-surface-hover)] hover:text-[var(--screening-text-primary)]',
   )
 
@@ -62,24 +61,83 @@ function LabThemeToggle({
   theme: LabTheme
   onThemeChange: (theme: LabTheme) => void
 }) {
-  const labelId = useId()
+  const isDark = theme === 'dark'
+
   return (
-    <div className="flex items-center gap-2 overflow-visible py-1">
+    <div
+      role="group"
+      aria-label="Color theme"
+      className={cn(
+        'relative inline-grid h-8 max-w-full shrink-0 grid-cols-2 items-center gap-0.5 overflow-hidden rounded-full p-0.5',
+        'border border-solid border-[var(--color-border-default)]',
+        'bg-[color-mix(in_srgb,var(--color-bg-secondary)_88%,transparent)]',
+        'shadow-[inset_0_1px_0_color-mix(in_srgb,var(--color-surface-primary)_55%,transparent)]',
+        'transition-[background-color,border-color]',
+        'duration-[var(--ace-motion-duration-medium)]',
+        '[transition-timing-function:var(--ace-motion-ease-standard)]',
+      )}
+    >
+      {/* Sliding thumb — pin left/right so it never overflows the track */}
       <span
-        id={labelId}
-        className={cn(p1, 'text-sm font-semibold text-[var(--screening-text-primary)]')}
-      >
-        Theme
-      </span>
-      <LabSegmentedToggle
-        aria-labelledby={labelId}
-        value={theme}
-        onChange={onThemeChange}
-        options={[
-          { value: 'light', label: 'Light' },
-          { value: 'dark', label: 'Dark' },
-        ]}
+        aria-hidden
+        className={cn(
+          'pointer-events-none absolute inset-y-0.5 rounded-full',
+          'transition-[left,right] duration-300 ease-[cubic-bezier(0.34,1.3,0.64,1)]',
+          'motion-reduce:transition-none',
+          isDark ? 'left-[calc(50%+1px)] right-0.5' : 'left-0.5 right-[calc(50%+1px)]',
+          isDark
+            ? 'bg-[linear-gradient(145deg,#0c4a6e_0%,#0369a1_52%,#0ea5e9_100%)]'
+            : 'bg-[linear-gradient(145deg,#fbbf24_0%,#f59e0b_55%,#f97316_100%)]',
+        )}
       />
+
+      <button
+        type="button"
+        aria-pressed={!isDark}
+        aria-label="Light theme"
+        onClick={() => onThemeChange('light')}
+        className={cn(
+          'relative z-[1] inline-flex h-7 items-center justify-center gap-1 rounded-full px-2.5',
+          '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+          'transition-colors duration-200',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--screening-primary-ring)]',
+          !isDark ? 'text-[#1c1917]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
+        )}
+      >
+        <MaterialSymbol
+          name="light_mode"
+          size="sm"
+          className={cn(
+            'transition-transform duration-300 ease-[cubic-bezier(0.34,1.3,0.64,1)]',
+            !isDark ? 'rotate-0 scale-110 text-[#1c1917]' : 'rotate-[-20deg] scale-95 opacity-70',
+          )}
+        />
+        <span>Light</span>
+      </button>
+
+      <button
+        type="button"
+        aria-pressed={isDark}
+        aria-label="Dark theme"
+        onClick={() => onThemeChange('dark')}
+        className={cn(
+          'relative z-[1] inline-flex h-7 items-center justify-center gap-1 rounded-full px-2.5',
+          '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+          'transition-colors duration-200',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--screening-primary-ring)]',
+          isDark ? 'text-white' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
+        )}
+      >
+        <MaterialSymbol
+          name="dark_mode"
+          size="sm"
+          className={cn(
+            'transition-transform duration-300 ease-[cubic-bezier(0.34,1.3,0.64,1)]',
+            isDark ? 'rotate-0 scale-110 text-white' : 'rotate-[18deg] scale-95 opacity-70',
+          )}
+        />
+        <span>Dark</span>
+      </button>
     </div>
   )
 }
@@ -87,7 +145,7 @@ function LabThemeToggle({
 export function LabLayout() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const [theme, setTheme] = useState<LabTheme>('light')
+  const [theme, setTheme] = useState<LabTheme>('dark')
   const [navQuery, setNavQuery] = useState('')
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     Atoms: false,
@@ -100,11 +158,11 @@ export function LabLayout() {
 
   const showGuidelines =
     !isFiltering || labNavGuidelinesItem.label.toLowerCase().includes(navQueryNormalized)
-  const filteredLayoutItems = useMemo(() => {
-    if (!isFiltering) return labNavLayoutItems
-    return labNavLayoutItems.filter((item) => item.label.toLowerCase().includes(navQueryNormalized))
+  const filteredBottomItems = useMemo(() => {
+    if (!isFiltering) return labNavBottomItems
+    return labNavBottomItems.filter((item) => item.label.toLowerCase().includes(navQueryNormalized))
   }, [isFiltering, navQueryNormalized])
-  const showLayouts = filteredLayoutItems.length > 0
+  const showBottomNav = filteredBottomItems.length > 0
 
   const filteredSections = useMemo(() => {
     if (!isFiltering) return labNavSections
@@ -195,11 +253,12 @@ export function LabLayout() {
   return (
     <LabThemeProvider theme={theme}>
     <div
-      className="flex min-h-screen flex-col bg-[var(--screening-surface-muted)]"
+      className="lab-shell flex min-h-screen flex-col"
       data-theme={theme}
       style={{ colorScheme: theme }}
     >
       <SiteHeader
+        className="lab-header-band !h-auto min-h-[var(--site-header-height)] overflow-hidden"
         navItems={[]}
         userName=""
         showNotifications={false}
@@ -209,18 +268,12 @@ export function LabLayout() {
       />
       <div className="flex min-h-0 flex-1">
       <aside
-        className="flex w-60 shrink-0 flex-col border-r border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] p-4 shadow-[var(--sidebar-shadow)]"
+        className="lab-sidebar flex w-60 shrink-0 flex-col border-r border-solid border-[var(--screening-border-strong)] p-4"
         aria-label="Lab navigation"
       >
+        <div className="relative z-[1] flex min-h-0 flex-1 flex-col">
         <div className="mb-6 px-2">
-          <p
-            className={cn(
-              'm-0 [font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]',
-              'text-base text-[var(--screening-text-primary)]',
-            )}
-          >
-            ACE Design System
-          </p>
+          <p className="lab-brand-mark m-0 text-xl">ACE Design System</p>
         </div>
         <ul className="m-0 mb-3 list-none space-y-1 p-0">
           {showGuidelines ? (
@@ -314,7 +367,7 @@ export function LabLayout() {
             )
           })}
           </div>
-          {showLayouts ? (
+          {showBottomNav ? (
             <>
               <div
                 className="my-6 border-t border-solid border-[var(--screening-border-strong)]"
@@ -322,7 +375,7 @@ export function LabLayout() {
                 aria-hidden
               />
               <ul className="m-0 list-none space-y-1 p-0">
-                {filteredLayoutItems.map((item) => (
+                {filteredBottomItems.map((item) => (
                   <li key={item.to}>
                     <NavLink to={item.to} className={topNavLinkClass} end={item.to === '/lab/layouts'}>
                       {item.label}
@@ -332,12 +385,13 @@ export function LabLayout() {
               </ul>
             </>
           ) : null}
-          {isFiltering && !showGuidelines && filteredSections.length === 0 && !showLayouts ? (
+          {isFiltering && !showGuidelines && filteredSections.length === 0 && !showBottomNav ? (
             <p className="m-0 px-2 text-sm text-[var(--screening-text-muted)]">No matches</p>
           ) : null}
         </nav>
+        </div>
       </aside>
-        <main className="min-w-0 flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10">
+        <main className="lab-main min-w-0 flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10">
           <Outlet />
         </main>
       </div>

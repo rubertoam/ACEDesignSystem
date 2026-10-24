@@ -6,6 +6,7 @@
 @import './styles/interactive-cursor.css';
 @import './styles/toggle.css';
 @import './styles/tooltip.css';
+@import './styles/lab-chrome.css';
 
 html {
   font-family: var(--font-screening);

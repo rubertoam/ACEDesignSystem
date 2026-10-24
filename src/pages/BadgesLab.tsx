@@ -5,6 +5,8 @@ import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } fr
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { badgesLabQa } from './labTabDocs'
 const VARIANTS: {
   value: BadgeVariant
   label: string
@@ -23,6 +25,7 @@ const VARIANTS: {
 export function BadgesLab() {
   return (
     <ComponentLabPage
+      qa={badgesLabQa}
       title="Badges"
       description="Pills for screening table rows and tags for client profile accordion headers - both from the Review Assigned prototype, sharing the same color variants."
       examplesCanvas={false}

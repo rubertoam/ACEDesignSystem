@@ -9,6 +9,7 @@ import { LabCheckbox, LabControlField, LabSelect } from '../lib/labControls'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabPage, ComponentLabCode } from './ComponentLabPage'
+
 import iconographyRules from './implementationRules/iconography.md?raw'
 
 const HOVER_DEMO_ICONS = ['more_horiz', 'search', 'settings', 'add', 'notifications'] as const
@@ -44,17 +45,37 @@ const iconButtonGhostClass = sidebarIconButtonClass
 /** Data table toolbar / row actions - always bordered; resting surface is white. */
 const iconButtonStrokeClass = screeningToolbarIconButtonClass
 
-/** Hover fill on white pads - Figma `color/bg/primary`. */
-const iconButtonHoverOnWhiteClass =
-  'border-[var(--icon-button-border)] bg-[var(--icon-button-hover-bg)] text-[var(--icon-button-icon)]'
+type IconHoverChrome = 'ghost' | 'stroke'
 
-/** Hover fill on gray pads - white so it contrasts with `--screening-surface-muted`. */
-const iconButtonHoverOnGrayClass =
-  'border-[var(--icon-button-border)] bg-[var(--icon-button-surface)] text-[var(--icon-button-icon)]'
+/**
+ * Forced hover fill (Hover column).
+ * - White pad: `--icon-button-hover-bg` (colors/bg/primary).
+ * - Gray pad + ghost: white surface so hover chrome reads on muted.
+ * - Gray pad + stroke: same hover-bg as product (fill matches pad; border stays).
+ */
+function iconButtonForcedHoverClass(surface: HoverSurface, chrome: IconHoverChrome): string {
+  if (surface === 'gray' && chrome === 'ghost') {
+    return cn(
+      'border-[var(--icon-button-border)] bg-[var(--icon-button-surface)] text-[var(--icon-button-icon)]',
+    )
+  }
+  return cn(
+    'border-[var(--icon-button-border)] bg-[var(--icon-button-hover-bg)] text-[var(--icon-button-icon)]',
+  )
+}
 
-/** Interactive `:hover` override when the demo pad is gray. */
-const iconButtonHoverOnGrayInteractiveClass =
-  'hover:border-[var(--icon-button-border)] hover:bg-[var(--icon-button-surface)] hover:text-[var(--icon-button-icon)]'
+/**
+ * Live `:hover` override. Only ghost-on-gray needs a special fill (white); stroke keeps
+ * `--icon-button-hover-bg` so white rest → muted hover is visible on the gray pad.
+ */
+function iconButtonInteractiveHoverClass(surface: HoverSurface, chrome: IconHoverChrome): string | false {
+  if (surface === 'gray' && chrome === 'ghost') {
+    return cn(
+      'hover:border-[var(--icon-button-border)] hover:bg-[var(--icon-button-surface)] hover:text-[var(--icon-button-icon)]',
+    )
+  }
+  return false
+}
 
 function iconPxStyle(px: number) {
   const opsz = Math.min(48, Math.max(20, px))
@@ -101,6 +122,7 @@ function IconHoverVariant({
   title,
   description,
   restClass,
+  chrome,
   surface,
   showTooltips,
   iconPx,
@@ -108,6 +130,7 @@ function IconHoverVariant({
   title: string
   description: string
   restClass: string
+  chrome: IconHoverChrome
   surface: HoverSurface
   showTooltips: boolean
   iconPx: number
@@ -116,13 +139,8 @@ function IconHoverVariant({
     'flex flex-wrap items-center gap-2 rounded-[var(--radius-md)] p-3',
     hoverSurfaceClass[surface],
   )
-  const hoverFillClass =
-    surface === 'gray' ? iconButtonHoverOnGrayClass : iconButtonHoverOnWhiteClass
-  const interactiveRestClass = cn(
-    restClass,
-    surface === 'gray' && iconButtonHoverOnGrayInteractiveClass,
-  )
-  const forcedHoverClass = cn(restClass, hoverFillClass)
+  const interactiveRestClass = cn(restClass, iconButtonInteractiveHoverClass(surface, chrome))
+  const forcedHoverClass = cn(restClass, iconButtonForcedHoverClass(surface, chrome))
 
   return (
     <div className="min-w-0 w-full space-y-3">
@@ -214,16 +232,18 @@ function IconHoverSection() {
       </div>
       <IconHoverVariant
         title="No border stroke"
-        description="Sidebar icons - transparent at rest; hover uses --icon-button-hover-bg on white, or --icon-button-surface (white) on gray."
+        description="Sidebar icons — transparent at rest. Hover uses --icon-button-hover-bg (colors/bg/primary) on white; on gray, hover uses --icon-button-surface so the chrome stays visible."
         restClass={iconButtonGhostClass}
+        chrome="ghost"
         surface={surface}
         showTooltips={showTooltips}
         iconPx={iconPx}
       />
       <IconHoverVariant
         title="Border stroke"
-        description="Data table toolbar / row actions - soft border at rest; hover fill is muted on white backgrounds and white on gray."
+        description="Data table toolbar / row actions — white surface at rest; hover fill is --icon-button-hover-bg (colors/bg/primary). On a gray pad that fill matches the pad so the border is the main hover cue."
         restClass={iconButtonStrokeClass}
+        chrome="stroke"
         surface={surface}
         showTooltips={showTooltips}
         iconPx={iconPx}
@@ -778,9 +798,9 @@ export function IconographyLab() {
               <div className="flex flex-wrap items-end gap-8">
                 {(
                   [
-                    { size: 'sm' as const, label: 'sm · 12px', note: 'Accordion / dense actions' },
+                    { size: 'sm' as const, label: 'sm · 12px', note: 'Dense actions' },
                     { size: 'md' as const, label: 'md · 16px', note: 'Default UI' },
-                    { size: 'lg' as const, label: 'lg · 20px', note: 'Controls / emphasis' },
+                    { size: 'lg' as const, label: 'lg · 20px', note: 'Accordion header / emphasis' },
                     { size: 'xl' as const, label: 'xl · 24px', note: 'Headers / toolbar' },
                   ] as const
                 ).map(({ size, label, note }) => (
@@ -971,7 +991,7 @@ export function IconographyLab() {
                 <code className="text-[var(--screening-text-primary)]">sidebarRowActionButtonClass</code>
                 ). Transparent at rest; hover uses{' '}
                 <code className="text-[var(--screening-text-primary)]">--icon-button-hover-bg</code> →{' '}
-                <code className="text-[var(--screening-text-primary)]">colors/icon/hover</code> and{' '}
+                <code className="text-[var(--screening-text-primary)]">colors/bg/primary</code> and{' '}
                 <code className="text-[var(--screening-text-primary)]">--icon-button-border</code> →{' '}
                 <code className="text-[var(--screening-text-primary)]">colors/border/default</code>. Sizes use{' '}
                 <code className="text-[var(--screening-text-primary)]">icon/size/*</code> →{' '}
@@ -1015,6 +1035,7 @@ export function IconographyLab() {
           </section>
         </>
       }
+
       implementationRulesMarkdown={iconographyRules}
     />
   )

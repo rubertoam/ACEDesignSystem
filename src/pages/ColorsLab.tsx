@@ -10,6 +10,8 @@ import {
 } from './colorsLabData'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { colorsLabQa } from './labTabDocs'
 type ColorsLabView = 'stylesheet' | 'primitives' | 'semantics'
 
 export function ColorsLab() {
@@ -32,6 +34,7 @@ export function ColorsLab() {
 
   return (
     <ComponentLabPage
+      qa={colorsLabQa}
       title="Colors"
       description="Documents the colors style sheet along with the primitive and semantic color tokens from Figma."
       examplesToolbar={toolbar}

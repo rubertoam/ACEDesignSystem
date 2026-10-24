@@ -379,7 +379,8 @@
   --color-surface-page-layout: var(--color-dark-950); /* colors/surface/page-layout ← color/dark/950 */
   --color-surface-elevated: var(--color-dark-750); /* colors/surface/elevated ← color/dark/750 */
   --color-text-primary: var(--color-neutral-50); /* colors/text/primary ← color/neutral/50 */
-  --color-text-secondary: var(--color-neutral-300); /* colors/text/secondary ← color/neutral/300 */
+  /* Lab readability: one step lighter than Figma neutral/300 so body copy stays clear on dark surfaces */
+  --color-text-secondary: var(--color-neutral-200); /* colors/text/secondary ← color/neutral/200 (was 300) */
   --color-text-disabled: var(--color-dark-200); /* colors/text/disabled ← color/dark/200 */
   --color-text-placeholder: var(--color-neutral-600); /* colors/text/placeholder ← color/neutral/600 */
   --color-text-inverse: var(--color-neutral-900); /* colors/text/inverse ← color/neutral/900 */

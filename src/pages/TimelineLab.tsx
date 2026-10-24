@@ -5,11 +5,14 @@ import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClas
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { timelineLabQa } from './labTabDocs'
 const BREAKDOWN_VARIANT = DEMO_TIMELINE_ITEMS[0]
 
 export function TimelineLab() {
   return (
     <ComponentLabPage
+      qa={timelineLabQa}
       title="Timeline"
       description="Chronological event history for match and transaction workflows (Figma Timeline 4622:1645). Five status variants, sort control, expand-all, and per-item detail panels."
       examplesCanvas={false}

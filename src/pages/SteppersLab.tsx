@@ -3,7 +3,8 @@ import { Stepper, type StepperVariant } from '../components/molecules/Stepper'
 import { LabCheckbox, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { labComponentContainerClass } from '../lib/labChrome'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+import { ComponentLabPage } from './ComponentLabPage'
+import { stepperLabCode, stepperLabQa, stepperLabUsage } from './labTabDocs'
 import { cn } from '../lib/cn'
 
 const VARIANTS: { value: StepperVariant; label: string }[] = [
@@ -18,6 +19,7 @@ export function SteppersLab() {
 
   return (
     <ComponentLabPage
+      qa={stepperLabQa}
       title="Steppers"
       description="Numeric steppers for adjusting values. Horizontal uses minus and plus; Vertical uses chevrons above and below the value."
       examplesToolbar={
@@ -67,40 +69,8 @@ export function SteppersLab() {
           </div>
         </div>
       }
-      code={
-        <ComponentLabCode>{`import { Stepper } from '../components/molecules/Stepper'
-
-<Stepper
-  variant="horizontal"
-  value={5}
-  onValueChange={setValue}
-/>
-
-<Stepper
-  variant="vertical"
-  value={5}
-  onValueChange={setValue}
-/>`}</ComponentLabCode>
-      }
-      usage={
-        <ul className="m-0 list-disc space-y-1 ps-5 text-sm text-[var(--color-text-muted)]">
-          <li>
-            <code className="text-[var(--color-text-primary)]">variant=&quot;horizontal&quot;</code>: minus / plus
-            controls flanking the value
-          </li>
-          <li>
-            <code className="text-[var(--color-text-primary)]">variant=&quot;vertical&quot;</code>: chevrons above and
-            below the value
-          </li>
-          <li>
-            Bound with <code className="text-[var(--color-text-primary)]">value</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">onValueChange</code>; optional{' '}
-            <code className="text-[var(--color-text-primary)]">min</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">max</code>, and{' '}
-            <code className="text-[var(--color-text-primary)]">step</code>
-          </li>
-        </ul>
-      }
+      code={stepperLabCode}
+      usage={stepperLabUsage}
     />
   )
 }

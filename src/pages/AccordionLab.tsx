@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+
+import { accordionLabQa } from './labTabDocs'
 import { Accordion, type AccordionSurface } from '../components/molecules/Accordion/Accordion'
 import { AccordionReviewProgress } from '../components/molecules/Accordion/AccordionReviewProgress'
 import { LabCheckbox, LabRadioGroup } from '../lib/labControls'
@@ -39,8 +41,9 @@ export function AccordionLab() {
 
   return (
     <ComponentLabPage
+      qa={accordionLabQa}
       title="Accordions"
-      description="Standard collapsed / expanded accordion from ACE (Figma Accordions). Toggle gray or white background, drop shadow (XS) independently, review progress (data table pattern), and show or hide the tag and each Material icon on the right."
+      description="Standard collapsed / expanded accordion from ACE (Figma Accordions 332:1500). Shell uses radius/sm, spacing/16·12, purple Badge pill, and Iconography no-border icons at icon/size/lg (20px) in a 32px hit target."
       examplesToolbar={
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
@@ -60,10 +63,10 @@ export function AccordionLab() {
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-[var(--color-border)] pt-3">
             <span className="text-xs font-medium text-[var(--color-text-muted)]">Icons</span>
-            <LabCheckbox label="Add" checked={showAddIcon} onCheckedChange={setShowAddIcon} />
-            <LabCheckbox label="Delete" checked={showDeleteIcon} onCheckedChange={setShowDeleteIcon} />
-            <LabCheckbox label="Edit" checked={showEditIcon} onCheckedChange={setShowEditIcon} />
             <LabCheckbox label="More" checked={showMoreIcon} onCheckedChange={setShowMoreIcon} />
+            <LabCheckbox label="Edit" checked={showEditIcon} onCheckedChange={setShowEditIcon} />
+            <LabCheckbox label="Delete" checked={showDeleteIcon} onCheckedChange={setShowDeleteIcon} />
+            <LabCheckbox label="Add" checked={showAddIcon} onCheckedChange={setShowAddIcon} />
           </div>
         </div>
       }
@@ -96,15 +99,13 @@ export function AccordionLab() {
         <ComponentLabCode>{`<Accordion
   title="[Enter Title]"
   surface="white"
-  dropShadow
+  tagLabel="Badge"
+  tagVariant="purple"
   showTag
-  showAddIcon
-  showDeleteIcon
-  showEditIcon
   showMoreIcon
-  headerTrailing={
-    <AccordionReviewProgress reviewed={5} total={12} />
-  }
+  showEditIcon
+  showDeleteIcon
+  showAddIcon
 >
   {children}
 </Accordion>`}</ComponentLabCode>

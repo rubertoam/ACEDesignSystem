@@ -9,6 +9,8 @@ import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } fr
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { inlineMessageLabQa } from './labTabDocs'
 const TONE_LABELS: Record<InlineMessageTone, string> = {
   error: 'Error',
   success: 'Success',
@@ -42,6 +44,7 @@ export function InlineMessagesLab() {
 
   return (
     <ComponentLabPage
+      qa={inlineMessageLabQa}
       title="Inline messages"
       description="In-page and banner alerts for error, information, success, and warning feedback (Figma Inline Messages 4481:275). Uses the same Material status icons as Toast messages and the Iconography catalog."
       examplesToolbar={toolbar}
@@ -155,6 +158,7 @@ export function InlineMessagesLab() {
           </li>
         </ul>
       }
+
       changelog={
         <div className="space-y-8">
           <article className="space-y-3">

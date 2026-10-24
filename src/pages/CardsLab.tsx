@@ -2,8 +2,10 @@ import { useMemo, useState, type ReactNode } from 'react'
 import { LandingPageCard, LANDING_PAGE_CARD_ICONS } from '../components/organisms/Cards'
 import { LabCheckbox, LabControlField, LabTextInput } from '../lib/labControls'
 import { cn } from '../lib/cn'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+import { ComponentLabPage } from './ComponentLabPage'
 
+
+import { cardsLabQa, cardsLabCode, cardsLabUsage } from './labTabDocs'
 const DEFAULT_DESCRIPTION =
   '[Description option for this card which can provide some contextual information to users about what this is.]'
 
@@ -186,6 +188,7 @@ export function CardsLab() {
 
   return (
     <ComponentLabPage
+      qa={cardsLabQa}
       title="Cards"
       description="Landing page navigation cards (stats and description) — semantic tokens, Badge, and ACE drop shadows. Figma 4130:1977."
       examplesCanvas={false}
@@ -198,22 +201,8 @@ export function CardsLab() {
           </div>
         </div>
       }
-      code={
-        <ComponentLabCode>{`import { LandingPageCard } from '../components/organisms/Cards'
-
-<LandingPageCard variant="stats" title="Screening" statItems={...} />
-<LandingPageCard variant="description" title="Screening" tag="Purple" showBadge description="..." />`}</ComponentLabCode>
-      }
-      usage={
-        <div className="space-y-6 text-sm leading-relaxed text-[var(--color-text-muted)]">
-          <p className="m-0">
-            Landing page cards navigate users to tools (screening, simulators, etc.). Variants:{' '}
-            <code className="text-[var(--color-text-primary)]">stats</code> (icon row) and{' '}
-            <code className="text-[var(--color-text-primary)]">description</code> (body copy + optional purple
-            Badge). Hover elevates shadow XS → XL.
-          </p>
-        </div>
-      }
+      code={cardsLabCode}
+      usage={cardsLabUsage}
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
@@ -232,6 +221,7 @@ export function CardsLab() {
           </li>
         </ul>
       }
+
       changelog={<CardsChangelog />}
     />
   )

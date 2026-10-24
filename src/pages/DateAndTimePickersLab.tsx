@@ -12,6 +12,7 @@ import { LabCheckbox, LabSelect } from '../lib/labControls'
 import { cn } from '../lib/cn'
 import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+
 import timePickerRules from './implementationRules/timePicker.md?raw'
 
 const DATE_MODE_OPTIONS = [
@@ -201,6 +202,7 @@ import { DatePicker } from '../components/organisms/DatePicker/DatePicker'
           </section>
         </>
       }
+
       implementationRulesMarkdown={timePickerRules}
     />
   )

@@ -103,18 +103,41 @@ function toEntries(tokens) {
   }))
 }
 
-function groupEntries(entries) {
+/** Natural sort so color/…/50 precedes …/100 (localeCompare alone puts 50 after 400). */
+function naturalPathCompare(a, b) {
+  return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+}
+
+/**
+ * Primitive group order: all `color/*` families first, then `border-width`,
+ * then remaining groups alphabetically.
+ */
+function primitiveGroupCompare(a, b) {
+  const aColor = a.startsWith('color/')
+  const bColor = b.startsWith('color/')
+  if (aColor !== bColor) return aColor ? -1 : 1
+  if (a === 'border-width' && b !== 'border-width') {
+    // After colors; before other non-color groups
+    return bColor ? 1 : -1
+  }
+  if (b === 'border-width' && a !== 'border-width') {
+    return aColor ? -1 : 1
+  }
+  return naturalPathCompare(a, b)
+}
+
+function groupEntries(entries, { groupCompare = naturalPathCompare } = {}) {
   const map = new Map()
   for (const e of entries) {
     if (!map.has(e.group)) map.set(e.group, [])
     map.get(e.group).push(e)
   }
   return [...map.entries()]
-    .sort(([a], [b]) => a.localeCompare(b))
+    .sort(([a], [b]) => groupCompare(a, b))
     .map(([id, tokens]) => ({
       id,
       label: id,
-      tokens: tokens.sort((a, b) => a.path.localeCompare(b.path)),
+      tokens: tokens.sort((a, b) => naturalPathCompare(a.path, b.path)),
     }))
 }
 
@@ -141,7 +164,7 @@ function withDark(entries) {
   })
 }
 
-const primitiveGroups = groupEntries(prim)
+const primitiveGroups = groupEntries(prim, { groupCompare: primitiveGroupCompare })
 const semanticGroups = groupEntries(withDark(toEntries(semanticLight)))
 const componentGroups = groupEntries(withDark(toEntries(componentLight)))
 

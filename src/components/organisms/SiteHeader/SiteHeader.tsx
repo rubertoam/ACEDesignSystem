@@ -160,7 +160,7 @@ export function SiteHeader({
             {greeting}
           </p>
         ) : null}
-        <div className="flex items-center gap-[var(--site-header-toolbar-gap)] overflow-visible py-1">
+        <div className="flex max-w-full items-center gap-[var(--site-header-toolbar-gap)] py-0.5">
           {showNotifications ? (
             <ToolbarIconButton label="Notifications" onClick={onNotificationsClick}>
               <MaterialSymbol

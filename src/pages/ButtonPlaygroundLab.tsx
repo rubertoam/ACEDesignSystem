@@ -16,6 +16,8 @@ import { labComponentContainerClass, labPanelClass, labTableSurfaceClass } from 
 import { LabCheckbox, LabRadioGroup, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+
+import { buttonLabQa } from './labTabDocs'
 import { cn } from '../lib/cn'
 
 const VARIANTS: ButtonVariant[] = ['primary', 'secondary', 'tertiary']
@@ -299,6 +301,7 @@ export function ButtonPlaygroundLab() {
 
   return (
     <ComponentLabPage
+      qa={buttonLabQa}
       title="Buttons"
       description="ACE Design System v.3 buttons from Figma Buttons (2067:191): primary, secondary, and tertiary fill styles; small / medium / large; default, hover, pressed, and disabled. Color for interactive states comes from Action token families (primary, secondary, success, error, warning) via actionTone. Descriptive buttons (ButtonDescriptive 4118:682) are included on this page."
       examplesToolbar={toolbar}
@@ -489,6 +492,7 @@ export function ButtonPlaygroundLab() {
           </li>
         </ul>
       }
+
       changelog={<ButtonsChangelog />}
     />
   )

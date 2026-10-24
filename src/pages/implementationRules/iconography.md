@@ -58,7 +58,7 @@ Prefer the horizontal kebab `more_horiz` for menus.
 | No border stroke | Transparent + transparent border; icon `--ace-icon-button-icon-rest-ghost` | `--ace-icon-button-hover-bg` + `--ace-icon-button-border` + `--ace-icon-button-icon` |
 | Border stroke | `--ace-icon-button-surface` + `--ace-icon-button-border` + `--ace-icon-button-icon` | Same border; fill `--ace-icon-button-hover-bg` |
 
-Figma semantic aliases: `color/bg/primary` → `--ace-icon-button-hover-bg` (`--ace-neutral-50`); `color/border/default` → `--ace-icon-button-border` (`--screening-border-soft`); `color/icon/primary` → `--ace-icon-button-icon` (`--ace-neutral-900`); `color/surface/primary` → `--ace-icon-button-surface`.
+Figma semantic aliases: `colors/bg/primary` → `--icon-button-hover-bg` (and `--ace-icon-button-hover-bg`); `colors/border/default` → `--icon-button-border`; `colors/icon/primary` → `--icon-button-icon`; `colors/surface/primary` → `--icon-button-surface`.
 
 Sidebar row actions fade in on row or header hover / focus. An open menu keeps the hover look.
 
@@ -116,8 +116,15 @@ Look up names on fonts.google.com/icons and turn spaces into underscores.
 
 ## 9. QA checklist
 
+### Matrix
+| Variant / mode | Cover | Pass when |
+|----------------|-------|-----------|
+| size sm → xl | Outlined and filled samples | Optical size matches `--icon-size-*`; weight 300 still hits cleanly |
+| ghost / stroke icon buttons | Rest + hover on gray and white surfaces | Hover tokens apply; focus ring visible |
+| status / toast glyphs | Success, info, warning, error | Colors match toast/status icon tokens |
+
+### Interaction & a11y
 - Font loads and ligatures render as icons, not raw text
-- sm / md / lg / xl sizes and outlined vs filled all look right
-- Ghost and stroke hover work on both gray and white surfaces
 - Icon-only buttons have `aria-label`; decorative glyphs stay `aria-hidden`
 - Dense toolbars with `weight={300}` still hit cleanly in 32px (`size-8`) targets
+- Don’t rely on color alone for status — pair icons with visible text in messaging patterns

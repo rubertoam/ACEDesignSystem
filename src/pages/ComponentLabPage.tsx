@@ -19,20 +19,11 @@ export type ComponentLabTab = 'examples' | 'code' | 'usage' | 'qa' | 'changelog'
 const p1 =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
 
-const panel = cn(
-  'rounded-[var(--radius-lg)] border border-solid border-[var(--screening-border-strong)]',
-  'bg-[var(--screening-surface)] p-6 shadow-[var(--ace-drop-shadow-xs)]',
-)
+const panel = cn('lab-panel p-6')
 
-const examplesToolbarPanel = cn(
-  'w-full min-w-0 rounded-[var(--radius-lg)] border border-solid border-[var(--screening-border-strong)]',
-  'bg-[var(--screening-surface)] p-4 shadow-[var(--ace-drop-shadow-xs)] sm:p-5',
-)
+const examplesToolbarPanel = cn('lab-panel w-full min-w-0 p-4 sm:p-5')
 
-const examplesCanvasPanel = cn(
-  'w-full min-w-0 rounded-[var(--radius-lg)] border border-solid border-[var(--screening-border-strong)]',
-  'bg-[var(--screening-surface)] p-6 shadow-[var(--ace-drop-shadow-xs)]',
-)
+const examplesCanvasPanel = cn('lab-panel w-full min-w-0 p-6')
 
 const codeBlockClass = cn(
   'overflow-x-auto rounded-[var(--radius-md)] border border-solid border-[var(--screening-border-soft)]',
@@ -41,7 +32,7 @@ const codeBlockClass = cn(
 
 export type ComponentLabPageProps = {
   title: string
-  description?: string
+  description?: ReactNode
   examples?: ReactNode
   /** When false, examples render without the outer canvas panel (e.g. nested section containers). Default true. */
   examplesCanvas?: boolean
@@ -49,8 +40,14 @@ export type ComponentLabPageProps = {
   code?: ReactNode
   usage?: ReactNode
   /**
+   * Explicit QA tab content (preferred for variant-aware checklists).
+   * When omitted, falls back to the `## N. QA checklist` section in
+   * `implementationRulesMarkdown`, then to the empty-state message.
+   */
+  qa?: ReactNode
+  /**
    * Business rules markdown. Merged into the Usage tab (without QA checklist).
-   * The QA checklist section becomes the QA tab content.
+   * The QA checklist section becomes the QA tab content when `qa` is not set.
    */
   implementationRulesMarkdown?: string
   /** @deprecated Use `examples` */
@@ -75,6 +72,7 @@ export function ComponentLabPage({
   examplesToolbar,
   code,
   usage,
+  qa,
   implementationRulesMarkdown,
   preview,
   previewToolbar,
@@ -133,11 +131,14 @@ export function ComponentLabPage({
     </>
   )
 
-  const qaTabContent = qaMarkdown ? (
-    <LabImplementationRulesDoc markdown={qaMarkdown} showDocumentTitle={false} />
-  ) : (
-    EMPTY_QA_CHECKLIST
-  )
+  const qaTabContent =
+    qa != null ? (
+      qa
+    ) : qaMarkdown ? (
+      <LabImplementationRulesDoc markdown={qaMarkdown} showDocumentTitle={false} />
+    ) : (
+      EMPTY_QA_CHECKLIST
+    )
 
   const tabItems = useMemo(() => {
     const items: { id: ComponentLabTab; label: string }[] = []
@@ -172,7 +173,9 @@ export function ComponentLabPage({
               {title}
             </h2>
             {description ? (
-              <p className={cn('mt-[var(--ace-section-label-gap)]', p1, 'text-[var(--screening-text-muted)]')}>{description}</p>
+              <div className={cn('mt-[var(--ace-section-label-gap)]', p1, 'text-[var(--screening-text-muted)]')}>
+                {typeof description === 'string' ? <p className="m-0">{description}</p> : description}
+              </div>
             ) : null}
           </div>
           {availability ? (

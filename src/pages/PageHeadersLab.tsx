@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { PageHeader } from '../components/molecules/PageHeader'
 import { SubHeader } from '../components/molecules/SubHeader'
 import { LabCheckbox, labControlLegendClass } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-
+import { ComponentLabPage } from './ComponentLabPage'
+import { pageHeadersLabCode, pageHeadersLabQa, pageHeadersLabUsage } from './labTabDocs'
 export function PageHeadersLab() {
   const [showSidebarControl, setShowSidebarControl] = useState(true)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -18,6 +18,7 @@ export function PageHeadersLab() {
 
   return (
     <ComponentLabPage
+      qa={pageHeadersLabQa}
       title="Page Headers"
       description="Application page header and composable, responsive sub-header for content regions."
       examplesToolbar={
@@ -65,53 +66,8 @@ export function PageHeadersLab() {
           </div>
         </div>
       }
-      code={
-        <ComponentLabCode>{`import { PageHeader } from '../components/molecules/PageHeader'
-import { SubHeader } from '../components/molecules/SubHeader'
-
-<PageHeader
-  title="Headline"
-  showSidebarControl
-  sidebarOpen={sidebarOpen}
-  onToggleSidebar={toggleSidebar}
-/>
-
-<SubHeader
-  statistics={${statistics}}
-  paging={${paging}}
-  moreMenu={${moreMenu}}
-  drillDown={${drillDown}}
-/>`}</ComponentLabCode>
-      }
-      usage={
-        <>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
-            <p className="m-0 text-[var(--screening-text-muted)]">
-              Place <code className="text-[var(--screening-text-primary)]">PageHeader</code> under{' '}
-              <code className="text-[var(--screening-text-primary)]">SiteHeader</code> for the page title. Use{' '}
-              <code className="text-[var(--screening-text-primary)]">SubHeader</code> in content regions - it fills
-              its parent width and supports optional statistics, paging, more menu, or drill-down.
-            </p>
-          </section>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tokens</h4>
-            <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>
-                Header:{' '}
-                <code className="text-[var(--screening-text-primary)]">--page-header-bg</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--page-header-border</code>
-              </li>
-              <li>
-                Sub-header:{' '}
-                <code className="text-[var(--screening-text-primary)]">--sub-header-bg</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--sub-header-border</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--sub-header-radius</code>
-              </li>
-            </ul>
-          </section>
-        </>
-      }
+      code={pageHeadersLabCode}
+      usage={pageHeadersLabUsage}
     />
   )
 }

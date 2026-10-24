@@ -6,6 +6,8 @@ import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } fr
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { tabsLabQa } from './labTabDocs'
 const DEMO_TABS = [
   { id: 'tab-1', label: 'Enter Text' },
   { id: 'tab-2', label: 'Enter Text' },
@@ -54,6 +56,7 @@ export function TabsLab() {
 
   return (
     <ComponentLabPage
+      qa={tabsLabQa}
       title="Tabs"
       description="Vertical, horizontal and card tabs. Tabs organize content into separate views and allow navigation between them (Figma Tabs 5196:82)."
       examplesCanvas={false}

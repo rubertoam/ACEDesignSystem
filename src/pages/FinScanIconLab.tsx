@@ -3,6 +3,8 @@ import { FinScanIcon, type FinScanIconVariant } from '../components/atoms/FinSca
 import { LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { finScanIconLabQa } from './labTabDocs'
 const VARIANTS: { id: FinScanIconVariant; label: string; description: string }[] = [
   { id: 'lockup', label: 'Lockup', description: 'Hash mark + wordmark (site header)' },
   { id: 'mark', label: 'Hash mark', description: 'Icon only, 24×24' },
@@ -17,6 +19,7 @@ export function FinScanIconLab() {
 
   return (
     <ComponentLabPage
+      qa={finScanIconLabQa}
       title="FinScan Logo"
       description="Official FinScan brand lockup from ACE Design System - hash mark dot grid and wordmark with registered trademark."
       examplesToolbar={

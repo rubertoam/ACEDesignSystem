@@ -3,16 +3,17 @@ import { Button } from '../components/atoms/Button'
 import { TaskBar } from '../components/molecules/TaskBar'
 import { labComponentContainerClass } from '../lib/labChrome'
 import { LabCheckbox } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-
+import { ComponentLabPage } from './ComponentLabPage'
+import { taskBarLabCode, taskBarLabQa, taskBarLabUsage } from './labTabDocs'
 export function TaskBarLab() {
   const [showLeading, setShowLeading] = useState(false)
   const [lastAction, setLastAction] = useState<string | null>(null)
 
   return (
     <ComponentLabPage
+      qa={taskBarLabQa}
       title="Task Bar"
       description="Bottom action bar for app shells - Review Assigned chrome with optional leading context and end-aligned actions."
       examplesToolbar={
@@ -80,44 +81,8 @@ export function TaskBarLab() {
           </div>
         </div>
       }
-      code={
-        <ComponentLabCode>{`import { Button } from '../components/atoms/Button'
-import { TaskBar } from '../components/molecules/TaskBar'
-
-<TaskBar
-  leading={
-    <>
-      <span>3 selected</span>
-      <button type="button">Deselect all</button>
-    </>
-  }
->
-  <Button variant="secondary" onClick={openModal}>Modal</Button>
-  <Button variant="primary" onClick={openDrawer}>Inline Drawer</Button>
-</TaskBar>`}</ComponentLabCode>
-      }
-      usage={
-        <>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
-            <p className="m-0 text-[var(--screening-text-muted)]">
-              Use under the main content column in app shells (e.g. Layouts / Review Assigned) for primary page
-              actions. Keep selection context in <code className="text-[var(--screening-text-primary)]">leading</code>{' '}
-              (end-aligned, before the action buttons) and primary / secondary actions as children.
-            </p>
-          </section>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tokens</h4>
-            <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>
-                <code className="text-[var(--screening-text-primary)]">--task-bar-surface</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--task-bar-border</code>,{' '}
-                <code className="text-[var(--screening-text-primary)]">--task-bar-shadow</code>
-              </li>
-            </ul>
-          </section>
-        </>
-      }
+      code={taskBarLabCode}
+      usage={taskBarLabUsage}
     />
   )
 }

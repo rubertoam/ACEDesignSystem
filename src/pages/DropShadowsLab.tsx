@@ -1,7 +1,7 @@
 import { cn } from '../lib/cn'
 import { labExampleSectionClass } from '../lib/labExampleSection'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-
+import { ComponentLabPage } from './ComponentLabPage'
+import { dropShadowsLabCode, dropShadowsLabQa, dropShadowsLabUsage } from './labTabDocs'
 type ShadowRow = {
   title: string
   spec: string
@@ -30,7 +30,8 @@ function ShadowDemoCard({ cssVar }: { cssVar: string }) {
 export function DropShadowsLab() {
   return (
     <ComponentLabPage
-      title="Drop shadows"
+      qa={dropShadowsLabQa}
+      title="Shadows"
       description="ACE elevation tokens for single-layer drop shadows (Figma Drop Shadows). Add via box-shadow using the --ace-drop-shadow-* variables in variables.css. Use the lab Theme control (top bar) for light vs dark surfaces."
       examples={
         <div className="space-y-8">
@@ -54,25 +55,8 @@ export function DropShadowsLab() {
           ))}
         </div>
       }
-      code={
-        <ComponentLabCode>{`.elevated-card {
-  box-shadow: var(--ace-drop-shadow-md);
-  border-radius: var(--radius-lg);
-}`}</ComponentLabCode>
-      }
-      usage={
-        <div className="space-y-4">
-          <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
-            Apply the token as <code className="text-[var(--color-text-primary)]">box-shadow</code> (or map it in Tailwind with arbitrary{' '}
-            <code className="text-[var(--color-text-primary)]">shadow-[var(--ace-drop-shadow-md)]</code>). Use larger steps for higher elevation;{' '}
-            <code className="text-[var(--color-text-primary)]">none</code> removes shadow.
-          </p>
-          <p className="m-0 text-sm text-[var(--color-text-muted)]">
-            The dialog modal uses <code className="text-[var(--color-text-primary)]">--dialog-modal-shadow</code>, which resolves to{' '}
-            <code className="text-[var(--color-text-primary)]">var(--ace-drop-shadow-xl)</code>.
-          </p>
-        </div>
-      }
+      code={dropShadowsLabCode}
+      usage={dropShadowsLabUsage}
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>

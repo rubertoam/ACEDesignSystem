@@ -52,21 +52,24 @@ export default function App() {
         <Route path="atoms/colors" element={<ColorsLab />} />
         <Route path="atoms/typography" element={<TypographyLab />} />
         <Route path="atoms/iconography" element={<IconographyLab />} />
-        <Route path="atoms/motion" element={<AnimationsLab />} />
-        <Route path="atoms/animations" element={<Navigate to="/lab/atoms/motion" replace />} />
-        <Route path="atoms/drop-shadows" element={<DropShadowsLab />} />
+        <Route path="atoms/animations" element={<AnimationsLab />} />
+        <Route path="atoms/motion" element={<Navigate to="/lab/atoms/animations" replace />} />
+        <Route path="atoms/shadows" element={<DropShadowsLab />} />
+        <Route path="atoms/drop-shadows" element={<Navigate to="/lab/atoms/shadows" replace />} />
         <Route path="atoms/buttons" element={<ButtonPlaygroundLab />} />
-        <Route path="atoms/inputs" element={<InputPlaygroundLab />} />
+        <Route path="atoms/inputs" element={<Navigate to="/lab/molecules/inputs" replace />} />
         <Route path="atoms/checkboxes" element={<CheckboxPlaygroundLab />} />
         <Route path="atoms/toggles" element={<TogglePlaygroundLab />} />
         <Route path="atoms/radios" element={<RadioPlaygroundLab />} />
         <Route path="atoms/badges" element={<BadgesLab />} />
-        <Route path="atoms/progress-indicators" element={<ProgressIndicatorsLab />} />
+        <Route path="atoms/progress-indicators" element={<Navigate to="/lab/molecules/progress-indicators" replace />} />
         <Route path="atoms/tooltips" element={<TooltipLab />} />
         <Route path="atoms/tabs" element={<Navigate to="/lab/molecules/tabs" replace />} />
         <Route path="atoms/finscan-logo" element={<FinScanIconLab />} />
         <Route path="atoms/finscan-icon" element={<Navigate to="/lab/atoms/finscan-logo" replace />} />
         <Route path="molecules" element={<MoleculesLab />} />
+        <Route path="molecules/inputs" element={<InputPlaygroundLab />} />
+        <Route path="molecules/progress-indicators" element={<ProgressIndicatorsLab />} />
         <Route path="molecules/dropdowns" element={<DropdownsLab />} />
         <Route path="molecules/accordions" element={<AccordionLab />} />
         <Route path="molecules/pagination" element={<PaginationLab />} />
@@ -93,7 +96,8 @@ export default function App() {
         <Route path="organisms/cards" element={<CardsLab />} />
         <Route path="organisms/timeline" element={<TimelineLab />} />
         <Route path="organisms/attachments" element={<AttachmentsLab />} />
-        <Route path="organisms/scrollable-list" element={<ScrollableListLab />} />
+        <Route path="organisms/squeeze-box" element={<ScrollableListLab />} />
+        <Route path="organisms/scrollable-list" element={<Navigate to="/lab/organisms/squeeze-box" replace />} />
         <Route path="layouts" element={<LayoutsLab />} />
         <Route path="layouts/tokens" element={<TokensLab />} />
       </Route>

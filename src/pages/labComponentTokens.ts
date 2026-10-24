@@ -5,7 +5,14 @@
  * Component CSS vars use Figma kebab names (e.g. `--inline-message-*`, `--button-*`).
  * Matching `--ace-*` aliases remain in variables.css as a temporary compat layer only.
  * Foundation tokens (`--ace-type-*`, `--ace-motion-*`, `--ace-drop-shadow-*`, color scales) are unchanged.
+ *
+ * Token layers (Layouts → Tokens):
+ * - Primitive — raw scales (color/*, spacing/N, radius/sm, typography/size, …)
+ * - Semantic — intent aliases (colors/*, spacing/layout, …)
+ * - Component — component bindings (radius/component/*, icon/size/*, --accordion-*, …)
  */
+
+export type LabTokenLevel = 'primitive' | 'semantic' | 'component'
 
 export type LabTokenRef = {
   /** Figma path when applicable (e.g. colors/action/primary) */
@@ -13,6 +20,8 @@ export type LabTokenRef = {
   /** CSS custom property */
   cssVar: string
   note?: string
+  /** Override auto-inferred layer when needed */
+  level?: LabTokenLevel
 }
 
 export type LabTokenGroup = {
@@ -20,13 +29,109 @@ export type LabTokenGroup = {
   tokens: LabTokenRef[]
 }
 
-const t = (figma: string, cssVar: string, note?: string): LabTokenRef => ({
+export const LAB_TOKEN_LEVEL_LABELS: Record<LabTokenLevel, string> = {
+  primitive: 'Primitive',
+  semantic: 'Semantic',
+  component: 'Component',
+}
+
+export const LAB_TOKEN_LEVEL_ORDER: LabTokenLevel[] = ['primitive', 'semantic', 'component']
+
+const t = (figma: string, cssVar: string, note?: string, level?: LabTokenLevel): LabTokenRef => ({
   figma,
   cssVar,
   note,
+  level,
 })
 
-const css = (cssVar: string, note?: string): LabTokenRef => ({ cssVar, note })
+const css = (cssVar: string, note?: string, level?: LabTokenLevel): LabTokenRef => ({
+  cssVar,
+  note,
+  level,
+})
+
+/** Classify a Usage-tab token against ACE Primitive / Semantic / Component layers. */
+export function inferLabTokenLevel(token: LabTokenRef): LabTokenLevel {
+  if (token.level) return token.level
+
+  const figma = (token.figma ?? '').trim().toLowerCase()
+  const cssVar = token.cssVar.trim().toLowerCase()
+
+  if (cssVar.startsWith('primitive')) return 'primitive'
+  if (cssVar.startsWith('semantic')) return 'semantic'
+  if (cssVar.startsWith('component')) return 'component'
+
+  if (figma) {
+    if (
+      figma.startsWith('radius/component') ||
+      figma.startsWith('icon/size') ||
+      figma.startsWith('spacing/component') ||
+      figma.startsWith('typography/ui') ||
+      figma.startsWith('typography/heading') ||
+      figma.startsWith('typography/body')
+    ) {
+      return 'component'
+    }
+    if (
+      figma.startsWith('colors/') ||
+      figma.startsWith('border/width') ||
+      figma.startsWith('spacing/layout')
+    ) {
+      return 'semantic'
+    }
+    if (
+      figma.startsWith('color/') ||
+      /^spacing\/\d/.test(figma) ||
+      /^radius\/(sm|md|lg|xl|2xl|full|none)\b/.test(figma) ||
+      figma.startsWith('typography/size') ||
+      figma.startsWith('typography/line-height') ||
+      figma.startsWith('typography/letter-spacing') ||
+      figma.startsWith('border-width/')
+    ) {
+      return 'primitive'
+    }
+  }
+
+  if (
+    cssVar.includes('--radius-component') ||
+    cssVar.includes('--spacing-component') ||
+    cssVar.includes('--icon-size') ||
+    cssVar.includes('--typography-ui') ||
+    cssVar.includes('--typography-heading') ||
+    cssVar.includes('--typography-body') ||
+    cssVar.includes('--ace-type') ||
+    cssVar.includes('--icon-button') ||
+    /--(accordion|badge|button|checkbox|toggle|radio|tooltip|tabs|tab-card|toast-message|inline-message|progress-indicator|dropdown|filter|slider|stepper|task-bar|page-header|sub-header|dialog-modal|screening|date-picker|time-picker|sidebar|inline-drawer|site-header|landing-page-card|data-card|timeline|attachments|scrollable-list|availability-tag)(-|\*|$|\/)/.test(
+      cssVar,
+    )
+  ) {
+    return 'component'
+  }
+
+  if (
+    /^--color-(neutral|primary|secondary|blue|teal|success|warning|error|dark)(-|\*|$)/.test(cssVar) ||
+    /^--spacing-\d/.test(cssVar) ||
+    /^--radius-(sm|md|lg|xl|2xl|full|none)(-|\*|$)/.test(cssVar) ||
+    cssVar.startsWith('--typography-size') ||
+    cssVar.startsWith('--typography-line-height') ||
+    cssVar.startsWith('--typography-letter-spacing') ||
+    cssVar.startsWith('--border-width') ||
+    cssVar.startsWith('--ace-drop-shadow') ||
+    cssVar.startsWith('--ace-motion') ||
+    cssVar.startsWith('--type-size')
+  ) {
+    return 'primitive'
+  }
+
+  if (
+    /^--color-(surface|bg|text|border|action|status|icon|badges)/.test(cssVar) ||
+    cssVar.startsWith('--spacing-layout')
+  ) {
+    return 'semantic'
+  }
+
+  return 'component'
+}
 
 /** Shared semantic sets reused across labs */
 const surfaceText = [
@@ -154,9 +259,9 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       ],
     },
   ],
-  '/lab/atoms/motion': [
+  '/lab/atoms/animations': [
     {
-      title: 'Motion',
+      title: 'Animations',
       tokens: [
         css('--ace-motion-ease-standard'),
         css('--ace-motion-duration-fast'),
@@ -165,7 +270,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       ],
     },
   ],
-  '/lab/atoms/drop-shadows': [
+  '/lab/atoms/shadows': [
     {
       title: 'Elevation',
       tokens: [
@@ -203,7 +308,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       ],
     },
   ],
-  '/lab/atoms/inputs': [
+  '/lab/molecules/inputs': [
     {
       title: 'Field states',
       tokens: [
@@ -277,7 +382,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       ],
     },
   ],
-  '/lab/atoms/progress-indicators': [
+  '/lab/molecules/progress-indicators': [
     {
       title: 'Progress',
       tokens: [
@@ -339,10 +444,14 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/bg/primary', '--color-bg-primary'),
         t('colors/border/default', '--color-border-default'),
-        t('colors/text/primary', '--color-text-primary'),
-        t('colors/bg/tertiary', '--color-bg-tertiary', 'tag chip'),
-        t('colors/icon/primary', '--color-icon-primary'),
+        t('colors/text/primary', '--color-text-primary', 'title + icons'),
+        t('radius/sm', '--radius-sm', 'shell radius'),
+        t('spacing/16', '--spacing-16', 'padding-x / title gap'),
+        t('spacing/12', '--spacing-12', 'padding-y'),
+        t('spacing/4', '--spacing-4', 'actions gap'),
+        t('icon/size/lg', '--icon-size-lg', 'header glyphs 20px'),
         css('--accordion-*'),
+        css('--badge-purple-*', 'header Badge pill'),
       ],
     },
   ],
@@ -612,7 +721,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       ],
     },
   ],
-  '/lab/organisms/scrollable-list': [
+  '/lab/organisms/squeeze-box': [
     {
       title: 'Scrollable list',
       tokens: [
@@ -642,9 +751,21 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Catalog layers',
       tokens: [
-        css('Primitive — color|typography|spacing|radius|border-width from Default.tokens.json'),
-        css('Semantic — colors/* + layout aliases from Light/Dark.tokens.json'),
-        css('Component — radius/component|spacing/component padding|typography/ui|heading|body|icon/size'),
+        css(
+          'Primitive — color|typography|spacing|radius|border-width from Default.tokens.json',
+          undefined,
+          'primitive',
+        ),
+        css(
+          'Semantic — colors/* + layout aliases from Light/Dark.tokens.json',
+          undefined,
+          'semantic',
+        ),
+        css(
+          'Component — radius/component|spacing/component padding|typography/ui|heading|body|icon/size',
+          undefined,
+          'component',
+        ),
       ],
     },
   ],

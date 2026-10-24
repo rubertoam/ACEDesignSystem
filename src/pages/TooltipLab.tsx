@@ -12,9 +12,12 @@ import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } fr
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { tooltipLabQa } from './labTabDocs'
 export function TooltipLab() {
   return (
     <ComponentLabPage
+      qa={tooltipLabQa}
       title="Tooltips"
       description="Short contextual labels on hover or focus. Screening toolbar tooltips use typography/ui/caption on a bordered surface with XS drop shadow and no arrow."
       examples={
@@ -111,7 +114,7 @@ export function TooltipLab() {
                 Transform origin uses{' '}
                 <code className="text-[var(--screening-text-primary)]">--radix-tooltip-content-transform-origin</code>.
                 Catalog entry: <code className="text-[var(--screening-text-primary)]">tooltip-enter-exit</code> on the
-                Motion lab.
+                Animations lab.
               </li>
             </ul>
           </section>
@@ -152,6 +155,7 @@ export function TooltipLab() {
           </li>
         </ul>
       }
+
       changelog={
         <div className="space-y-8">
           <article className="space-y-3">

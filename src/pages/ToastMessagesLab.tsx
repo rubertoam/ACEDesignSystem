@@ -6,6 +6,8 @@ import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } fr
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { toastLabQa } from './labTabDocs'
 const TONES: { value: ToastMessageTone; label: string }[] = [
   { value: 'success', label: 'Success' },
   { value: 'info', label: 'Info' },
@@ -118,6 +120,7 @@ export function ToastMessagesLab() {
 
   return (
     <ComponentLabPage
+      qa={toastLabQa}
       title="Toast messages"
       description="Transient notification cards for success, info, warning, and error feedback (Figma Toast Messages 2783:5). Six layouts - default, action, double action, and multi-line variants - with dismiss, text actions, and confirm."
       examplesToolbar={toolbar}
@@ -246,6 +249,7 @@ export function ToastMessagesLab() {
           </li>
         </ul>
       }
+
       changelog={
         <div className="space-y-8">
           <article className="space-y-3">

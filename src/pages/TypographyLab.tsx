@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+
+import { typographyLabQa } from './labTabDocs'
 import { TypographyPrimitiveTokensView } from './TypographyPrimitiveTokensView'
 import { TypographySemanticTokensView } from './TypographySemanticTokensView'
 import { TypographyStyleSheetView } from './TypographyStyleSheetView'
@@ -35,6 +37,7 @@ export function TypographyLab() {
 
   return (
     <ComponentLabPage
+      qa={typographyLabQa}
       title="Typography"
       description="Documents the typography style sheet along with typography, primitive, and semantic tokens from Figma."
       examplesToolbar={toolbar}

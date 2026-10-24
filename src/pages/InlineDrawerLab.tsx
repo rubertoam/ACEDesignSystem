@@ -11,6 +11,8 @@ import { LabCheckbox, LabRadioGroup, labControlLegendClass } from '../lib/labCon
 import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { inlineDrawerLabQa } from './labTabDocs'
 const h6Bold =
   '[font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]'
 const p1 =
@@ -201,6 +203,7 @@ export function InlineDrawerLab() {
 
   return (
     <ComponentLabPage
+      qa={inlineDrawerLabQa}
       title="Inline Drawer"
       description="Right-side in-flow panel from Review Assigned: resizable SideDrawer shell with Review header chrome, close control, and Close / Confirm footer. Not an overlay."
       examplesToolbar={examplesToolbar}

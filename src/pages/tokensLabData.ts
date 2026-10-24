@@ -22,55 +22,17 @@ export type TokenCatalogGroup = {
 
 export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
   {
-    "id": "border-width",
-    "label": "border-width",
-    "tokens": [
-      {
-        "path": "border-width/default",
-        "cssVar": "--border-width-default",
-        "type": "number",
-        "value": "1",
-        "alias": null,
-        "group": "border-width"
-      },
-      {
-        "path": "border-width/heavy",
-        "cssVar": "--border-width-heavy",
-        "type": "number",
-        "value": "4",
-        "alias": null,
-        "group": "border-width"
-      },
-      {
-        "path": "border-width/none",
-        "cssVar": "--border-width-none",
-        "type": "number",
-        "value": "0",
-        "alias": null,
-        "group": "border-width"
-      },
-      {
-        "path": "border-width/thick",
-        "cssVar": "--border-width-thick",
-        "type": "number",
-        "value": "2",
-        "alias": null,
-        "group": "border-width"
-      },
-      {
-        "path": "border-width/thin",
-        "cssVar": "--border-width-thin",
-        "type": "number",
-        "value": "0.5",
-        "alias": null,
-        "group": "border-width"
-      }
-    ]
-  },
-  {
     "id": "color/blue",
     "label": "color/blue",
     "tokens": [
+      {
+        "path": "color/blue/50",
+        "cssVar": "--color-blue-50",
+        "type": "color",
+        "value": "#EAF8FE",
+        "alias": null,
+        "group": "color/blue"
+      },
       {
         "path": "color/blue/100",
         "cssVar": "--color-blue-100",
@@ -100,14 +62,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-blue-400",
         "type": "color",
         "value": "#089DE1",
-        "alias": null,
-        "group": "color/blue"
-      },
-      {
-        "path": "color/blue/50",
-        "cssVar": "--color-blue-50",
-        "type": "color",
-        "value": "#EAF8FE",
         "alias": null,
         "group": "color/blue"
       },
@@ -158,6 +112,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/dark",
     "tokens": [
       {
+        "path": "color/dark/50",
+        "cssVar": "--color-dark-50",
+        "type": "color",
+        "value": "#B6C2CF",
+        "alias": null,
+        "group": "color/dark"
+      },
+      {
         "path": "color/dark/100",
         "cssVar": "--color-dark-100",
         "type": "color",
@@ -186,14 +148,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-dark-400",
         "type": "color",
         "value": "#38414A",
-        "alias": null,
-        "group": "color/dark"
-      },
-      {
-        "path": "color/dark/50",
-        "cssVar": "--color-dark-50",
-        "type": "color",
-        "value": "#B6C2CF",
         "alias": null,
         "group": "color/dark"
       },
@@ -260,6 +214,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/error",
     "tokens": [
       {
+        "path": "color/error/50",
+        "cssVar": "--color-error-50",
+        "type": "color",
+        "value": "#FDF4F6",
+        "alias": null,
+        "group": "color/error"
+      },
+      {
         "path": "color/error/100",
         "cssVar": "--color-error-100",
         "type": "color",
@@ -288,14 +250,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-error-400",
         "type": "color",
         "value": "#EA7D93",
-        "alias": null,
-        "group": "color/error"
-      },
-      {
-        "path": "color/error/50",
-        "cssVar": "--color-error-50",
-        "type": "color",
-        "value": "#FDF4F6",
         "alias": null,
         "group": "color/error"
       },
@@ -346,6 +300,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/neutral",
     "tokens": [
       {
+        "path": "color/neutral/50",
+        "cssVar": "--color-neutral-50",
+        "type": "color",
+        "value": "#FAFAFB",
+        "alias": null,
+        "group": "color/neutral"
+      },
+      {
         "path": "color/neutral/100",
         "cssVar": "--color-neutral-100",
         "type": "color",
@@ -374,14 +336,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-neutral-400",
         "type": "color",
         "value": "#CFD2D9",
-        "alias": null,
-        "group": "color/neutral"
-      },
-      {
-        "path": "color/neutral/50",
-        "cssVar": "--color-neutral-50",
-        "type": "color",
-        "value": "#FAFAFB",
         "alias": null,
         "group": "color/neutral"
       },
@@ -432,6 +386,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/primary",
     "tokens": [
       {
+        "path": "color/primary/50",
+        "cssVar": "--color-primary-50",
+        "type": "color",
+        "value": "#EFEEF9",
+        "alias": null,
+        "group": "color/primary"
+      },
+      {
         "path": "color/primary/100",
         "cssVar": "--color-primary-100",
         "type": "color",
@@ -460,14 +422,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-primary-400",
         "type": "color",
         "value": "#523EB9",
-        "alias": null,
-        "group": "color/primary"
-      },
-      {
-        "path": "color/primary/50",
-        "cssVar": "--color-primary-50",
-        "type": "color",
-        "value": "#EFEEF9",
         "alias": null,
         "group": "color/primary"
       },
@@ -518,6 +472,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/secondary",
     "tokens": [
       {
+        "path": "color/secondary/50",
+        "cssVar": "--color-secondary-50",
+        "type": "color",
+        "value": "#FCF2FB",
+        "alias": null,
+        "group": "color/secondary"
+      },
+      {
         "path": "color/secondary/100",
         "cssVar": "--color-secondary-100",
         "type": "color",
@@ -546,14 +508,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-secondary-400",
         "type": "color",
         "value": "#D258CF",
-        "alias": null,
-        "group": "color/secondary"
-      },
-      {
-        "path": "color/secondary/50",
-        "cssVar": "--color-secondary-50",
-        "type": "color",
-        "value": "#FCF2FB",
         "alias": null,
         "group": "color/secondary"
       },
@@ -626,6 +580,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/success",
     "tokens": [
       {
+        "path": "color/success/50",
+        "cssVar": "--color-success-50",
+        "type": "color",
+        "value": "#F8FBF1",
+        "alias": null,
+        "group": "color/success"
+      },
+      {
         "path": "color/success/100",
         "cssVar": "--color-success-100",
         "type": "color",
@@ -654,14 +616,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-success-400",
         "type": "color",
         "value": "#A1CF4C",
-        "alias": null,
-        "group": "color/success"
-      },
-      {
-        "path": "color/success/50",
-        "cssVar": "--color-success-50",
-        "type": "color",
-        "value": "#F8FBF1",
         "alias": null,
         "group": "color/success"
       },
@@ -712,6 +666,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/teal",
     "tokens": [
       {
+        "path": "color/teal/50",
+        "cssVar": "--color-teal-50",
+        "type": "color",
+        "value": "#F0FBFC",
+        "alias": null,
+        "group": "color/teal"
+      },
+      {
         "path": "color/teal/100",
         "cssVar": "--color-teal-100",
         "type": "color",
@@ -740,14 +702,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-teal-400",
         "type": "color",
         "value": "#28CAD5",
-        "alias": null,
-        "group": "color/teal"
-      },
-      {
-        "path": "color/teal/50",
-        "cssVar": "--color-teal-50",
-        "type": "color",
-        "value": "#F0FBFC",
         "alias": null,
         "group": "color/teal"
       },
@@ -798,6 +752,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/warning",
     "tokens": [
       {
+        "path": "color/warning/50",
+        "cssVar": "--color-warning-50",
+        "type": "color",
+        "value": "#FDF3EA",
+        "alias": null,
+        "group": "color/warning"
+      },
+      {
         "path": "color/warning/100",
         "cssVar": "--color-warning-100",
         "type": "color",
@@ -826,14 +788,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-warning-400",
         "type": "color",
         "value": "#EB974D",
-        "alias": null,
-        "group": "color/warning"
-      },
-      {
-        "path": "color/warning/50",
-        "cssVar": "--color-warning-50",
-        "type": "color",
-        "value": "#FDF3EA",
         "alias": null,
         "group": "color/warning"
       },
@@ -884,6 +838,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "label": "color/warning 2",
     "tokens": [
       {
+        "path": "color/warning 2/50",
+        "cssVar": "--color-warning-2-50",
+        "type": "color",
+        "value": "#FFFCF3",
+        "alias": null,
+        "group": "color/warning 2"
+      },
+      {
         "path": "color/warning 2/100",
         "cssVar": "--color-warning-2-100",
         "type": "color",
@@ -912,14 +874,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--color-warning-2-400",
         "type": "color",
         "value": "#FFD560",
-        "alias": null,
-        "group": "color/warning 2"
-      },
-      {
-        "path": "color/warning 2/50",
-        "cssVar": "--color-warning-2-50",
-        "type": "color",
-        "value": "#FFFCF3",
         "alias": null,
         "group": "color/warning 2"
       },
@@ -962,6 +916,52 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "value": "#423100",
         "alias": null,
         "group": "color/warning 2"
+      }
+    ]
+  },
+  {
+    "id": "border-width",
+    "label": "border-width",
+    "tokens": [
+      {
+        "path": "border-width/default",
+        "cssVar": "--border-width-default",
+        "type": "number",
+        "value": "1",
+        "alias": null,
+        "group": "border-width"
+      },
+      {
+        "path": "border-width/heavy",
+        "cssVar": "--border-width-heavy",
+        "type": "number",
+        "value": "4",
+        "alias": null,
+        "group": "border-width"
+      },
+      {
+        "path": "border-width/none",
+        "cssVar": "--border-width-none",
+        "type": "number",
+        "value": "0",
+        "alias": null,
+        "group": "border-width"
+      },
+      {
+        "path": "border-width/thick",
+        "cssVar": "--border-width-thick",
+        "type": "number",
+        "value": "2",
+        "alias": null,
+        "group": "border-width"
+      },
+      {
+        "path": "border-width/thin",
+        "cssVar": "--border-width-thin",
+        "type": "number",
+        "value": "0.5",
+        "alias": null,
+        "group": "border-width"
       }
     ]
   },
@@ -1072,6 +1072,38 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "group": "spacing"
       },
       {
+        "path": "spacing/2",
+        "cssVar": "--spacing-2",
+        "type": "number",
+        "value": "2",
+        "alias": null,
+        "group": "spacing"
+      },
+      {
+        "path": "spacing/4",
+        "cssVar": "--spacing-4",
+        "type": "number",
+        "value": "4",
+        "alias": null,
+        "group": "spacing"
+      },
+      {
+        "path": "spacing/6",
+        "cssVar": "--spacing-6",
+        "type": "number",
+        "value": "6",
+        "alias": null,
+        "group": "spacing"
+      },
+      {
+        "path": "spacing/8",
+        "cssVar": "--spacing-8",
+        "type": "number",
+        "value": "8",
+        "alias": null,
+        "group": "spacing"
+      },
+      {
         "path": "spacing/10",
         "cssVar": "--spacing-10",
         "type": "number",
@@ -1088,26 +1120,10 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "group": "spacing"
       },
       {
-        "path": "spacing/128",
-        "cssVar": "--spacing-128",
-        "type": "number",
-        "value": "128",
-        "alias": null,
-        "group": "spacing"
-      },
-      {
         "path": "spacing/16",
         "cssVar": "--spacing-16",
         "type": "number",
         "value": "16",
-        "alias": null,
-        "group": "spacing"
-      },
-      {
-        "path": "spacing/2",
-        "cssVar": "--spacing-2",
-        "type": "number",
-        "value": "2",
         "alias": null,
         "group": "spacing"
       },
@@ -1136,14 +1152,6 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "group": "spacing"
       },
       {
-        "path": "spacing/4",
-        "cssVar": "--spacing-4",
-        "type": "number",
-        "value": "4",
-        "alias": null,
-        "group": "spacing"
-      },
-      {
         "path": "spacing/40",
         "cssVar": "--spacing-40",
         "type": "number",
@@ -1168,26 +1176,10 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "group": "spacing"
       },
       {
-        "path": "spacing/6",
-        "cssVar": "--spacing-6",
-        "type": "number",
-        "value": "6",
-        "alias": null,
-        "group": "spacing"
-      },
-      {
         "path": "spacing/64",
         "cssVar": "--spacing-64",
         "type": "number",
         "value": "64",
-        "alias": null,
-        "group": "spacing"
-      },
-      {
-        "path": "spacing/8",
-        "cssVar": "--spacing-8",
-        "type": "number",
-        "value": "8",
         "alias": null,
         "group": "spacing"
       },
@@ -1204,6 +1196,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--spacing-96",
         "type": "number",
         "value": "96",
+        "alias": null,
+        "group": "spacing"
+      },
+      {
+        "path": "spacing/128",
+        "cssVar": "--spacing-128",
+        "type": "number",
+        "value": "128",
         "alias": null,
         "group": "spacing"
       }

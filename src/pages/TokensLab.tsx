@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { cn } from '../lib/cn'
-import { LabSegmentedToggle } from '../lib/labControls'
+import { LabSelect } from '../lib/labControls'
 import { ComponentLabPage } from './ComponentLabPage'
+import { tokensLabCode, tokensLabQa, tokensLabUsage } from './labTabDocs'
 import {
   TOKEN_CATALOG_COUNTS,
   TOKEN_COMPONENT_GROUPS,
@@ -60,7 +61,7 @@ function TokenRow({ token, showDark }: { token: TokenCatalogEntry; showDark: boo
           ) : token.darkValue ? (
             <span className="font-mono">{token.darkValue}</span>
           ) : (
-            <span className="opacity-40">—</span>
+            <span className="opacity-40">-</span>
           )}
         </td>
       ) : null}
@@ -133,58 +134,44 @@ export function TokensLab() {
 
   return (
     <ComponentLabPage
+      qa={tokensLabQa}
       title="Tokens"
-      description="Full catalog of Figma-exported Primitive, Semantic, and Component tokens used by the ACE lab."
+      description={
+        <div>
+          <p className="m-0 mb-4">
+            Full catalog of Figma-exported Primitive, Semantic, and Component tokens used by the ACE lab.
+          </p>
+          <ul className="m-0 list-disc space-y-1.5 pb-1 pl-5">
+            <li>
+              <strong className="text-[var(--screening-text-primary)]">Primitive</strong>: the basic building blocks:
+              exact colors, spacing sizes, corner roundness, and font sizes. Think of these as the paint cans and
+              measuring sticks. You usually don’t pick them in the product; they feed the layers below.
+            </li>
+            <li>
+              <strong className="text-[var(--screening-text-primary)]">Semantic</strong>: names that say what something
+              is for, like “primary button color,” “body text,” or “page background.” These can change for light and
+              dark mode. Prefer these when styling the product.
+            </li>
+            <li>
+              <strong className="text-[var(--screening-text-primary)]">Component</strong>: values tied to a specific UI
+              piece, for example a button’s corner radius, an icon’s size, or a field’s padding. Use these when that
+              component should own its own look.
+            </li>
+          </ul>
+        </div>
+      }
       examplesToolbar={
-        <LabSegmentedToggle
-          aria-label="Token layer"
+        <LabSelect
+          label="Token layer"
           value={view}
           onChange={setView}
           options={VIEW_OPTIONS}
+          className="w-full max-w-[16rem]"
         />
       }
       examples={<TokensCatalog groups={groups} showDark={view !== 'primitive'} />}
-      code={`/* Sources */
-tokens/figma/Primitives/Default.tokens.json
-tokens/figma/Semantic/Light.tokens.json
-tokens/figma/Semantic/Dark.tokens.json
-
-/* Generated CSS */
-src/styles/color-tokens.css
-
-/* Regenerate catalog */
-node scripts/generate-tokens-lab-data.mjs`}
-      usage={
-        <div className="max-w-3xl space-y-4 text-[var(--color-text-muted)]">
-          <p className="m-0 leading-relaxed">
-            <strong className="text-[var(--color-text-primary)]">Primitive</strong> tokens are raw scales from
-            Figma Primitives / Default (<code className="text-[var(--color-text-primary)]">color/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">typography/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">spacing/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">radius/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">border-width/*</code>).
-          </p>
-          <p className="m-0 leading-relaxed">
-            <strong className="text-[var(--color-text-primary)]">Semantic</strong> tokens are intent aliases from
-            Semantic Light / Dark (<code className="text-[var(--color-text-primary)]">colors/bg/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">colors/action/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">colors/badges/*</code>, …). Dark values appear when
-            viewing the Semantic or Component layer.
-          </p>
-          <p className="m-0 leading-relaxed">
-            <strong className="text-[var(--color-text-primary)]">Component</strong> tokens are the
-            component-scoped Semantic groups:{' '}
-            <code className="text-[var(--color-text-primary)]">radius/component/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">spacing/component padding/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">typography/ui|heading|body/*</code>, and{' '}
-            <code className="text-[var(--color-text-primary)]">icon/size/*</code>.
-          </p>
-          <p className="m-0 leading-relaxed">
-            Prefer Semantic (or Component) names in product CSS. Reach for Primitives only when defining new
-            Semantic aliases.
-          </p>
-        </div>
-      }
+      code={tokensLabCode}
+      usage={tokensLabUsage}
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>

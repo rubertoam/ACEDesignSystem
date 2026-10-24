@@ -9,6 +9,8 @@ import {
 import { LabRadioGroup } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+
+import { radioLabQa } from './labTabDocs'
 import { cn } from '../lib/cn'
 
 type PreviewCol = 'regular' | 'hover' | 'active' | 'disabled' | 'disabled_selected'
@@ -126,6 +128,7 @@ export function RadioPlaygroundLab() {
 
   return (
     <ComponentLabPage
+      qa={radioLabQa}
       title="Radio buttons"
       description="ACE Design System v.3 radio controls: small / medium / large circles, states (regular, hover, active, disabled, disabled selected), and optional field wrapper. Built on Radix Radio Group with --radio-* tokens."
       examplesToolbar={toolbar}

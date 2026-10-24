@@ -1,9 +1,11 @@
 import { LabOverviewList } from '../lib/labOverviewList'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+import { ComponentLabPage } from './ComponentLabPage'
+import { atomsLabCode, atomsLabUsage, overviewLabQa } from './labTabDocs'
 
 export function AtomsLab() {
   return (
     <ComponentLabPage
+      qa={overviewLabQa}
       title="Overview"
       description="Buttons, icons, inputs, and other indivisible UI primitives. Add nested routes in App.tsx when you need one lab page per atom."
       examples={
@@ -12,16 +14,8 @@ export function AtomsLab() {
           <LabOverviewList section="Atoms" />
         </div>
       }
-      code={
-        <ComponentLabCode>{`import { YourAtom } from '../components/atoms/YourAtom'
-
-<YourAtom />`}</ComponentLabCode>
-      }
-      usage={
-        <p className="m-0 text-[var(--color-text-muted)]">
-          Document props, variants, and accessibility expectations for each atom.
-        </p>
-      }
+      code={atomsLabCode}
+      usage={atomsLabUsage}
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>

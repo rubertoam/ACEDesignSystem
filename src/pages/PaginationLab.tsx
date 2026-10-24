@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { Input } from '../components/atoms/Input'
 import { LabControlField, LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+
+import { paginationLabQa } from './labTabDocs'
 import { Pagination } from '../components/molecules/Pagination/Pagination'
 
 const PAGE_SIZE_OPTIONS = [10, 25, 50, 100, 250]
@@ -50,6 +52,7 @@ export function PaginationLab() {
 
   return (
     <ComponentLabPage
+      qa={paginationLabQa}
       title="Pagination"
       description="Table footer pagination from Review Assigned (Figma). Range label, page-size select, prev/numbered/next controls, and ellipses for long page counts."
       examplesToolbar={

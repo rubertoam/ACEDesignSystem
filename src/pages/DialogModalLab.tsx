@@ -14,6 +14,8 @@ import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } fr
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { dialogModalLabQa } from './labTabDocs'
 type DialogVariantId = 'action' | 'delete' | 'dropdown' | 'form' | 'extended-form'
 
 const VARIANTS: DialogVariantId[] = ['action', 'delete', 'dropdown', 'form', 'extended-form']
@@ -249,6 +251,7 @@ export function DialogModalLab() {
   return (
     <>
       <ComponentLabPage
+        qa={dialogModalLabQa}
         title="Dialog modal"
         description="ACE dialog modals for single-task decisions - Basic Action, Delete, Dropdown, Form, and Extended Form (Figma Dialog Modals 3047:2036). Optional InlineMessage strip with selectable tone."
         examplesToolbar={toolbar}

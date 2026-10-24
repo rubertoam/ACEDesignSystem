@@ -16,6 +16,8 @@ import {
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { siteHeaderLabQa } from './labTabDocs'
 const ALL_NAV_ITEMS: { id: string; label: string }[] = [
   { id: 'home', label: 'Home' },
   { id: 'reporting', label: 'Reporting' },
@@ -152,6 +154,7 @@ export function SiteHeaderLab() {
 
   return (
     <ComponentLabPage
+      qa={siteHeaderLabQa}
       title="Site header"
       description="Top navigation for FinScan - brand, primary menu items with dropdown chevrons, and user toolbar actions."
       examplesToolbar={examplesToolbar}

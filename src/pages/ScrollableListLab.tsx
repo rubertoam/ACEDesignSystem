@@ -10,6 +10,8 @@ import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } fr
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { scrollableListLabQa } from './labTabDocs'
 const ITEM_DEMO = DEMO_SCROLLABLE_LIST_ITEMS[0]
 
 export function ScrollableListLab() {
@@ -33,7 +35,8 @@ export function ScrollableListLab() {
 
   return (
     <ComponentLabPage
-      title="Scrollable List"
+      qa={scrollableListLabQa}
+      title="Squeeze Box"
       description="A list component with optional filter, sort, and searching functions. This component can also be navigated with a keyboard and can be minimized."
       examplesCanvas={false}
       examples={

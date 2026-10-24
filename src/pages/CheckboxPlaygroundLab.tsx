@@ -9,6 +9,8 @@ import {
 import { LabRadioGroup } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+
+import { checkboxLabQa } from './labTabDocs'
 import { cn } from '../lib/cn'
 
 type PreviewCol = 'regular' | 'hover' | 'active' | 'disabled' | 'disabled_selected'
@@ -146,6 +148,7 @@ export function CheckboxPlaygroundLab() {
 
   return (
     <ComponentLabPage
+      qa={checkboxLabQa}
       title="Checkboxes"
       description="ACE Design System v.3 checkboxes (Figma 317:1492 / set 322:1747): with or without text; small / medium / large (16 / 20 / 24); regular (brand border), hover (lavender fill), active (brand fill + white inset), disabled, disabled selected. Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examplesToolbar={toolbar}
@@ -280,6 +283,7 @@ import { aceCheckboxLabelClass } from '../components/atoms/Checkbox/checkboxFiel
           </li>
         </ul>
       }
+
       changelog={<CheckboxesChangelog />}
     />
   )

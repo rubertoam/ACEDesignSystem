@@ -236,6 +236,7 @@ Controlled: pass `value` and `onChange`. Uncontrolled: leave `value` off; you ca
 
 ## 11. QA checklist
 
+### TimePicker
 - Opening the panel focuses hours with the value selected; draft is never blank
 - Editing the draft leaves the trigger alone until Set
 - Set, Enter on a field, or Enter on Set fires `onChange` once and updates the trigger
@@ -248,3 +249,10 @@ Controlled: pass `value` and `onChange`. Uncontrolled: leave `value` off; you ca
 - `minuteStep` only affects steppers and arrows, not free typing
 - `defaultMode="scheduling"` rounds up to the next step from now
 - Disabled: trigger is inert and the panel does not open
+
+### DatePicker (lab variants)
+- **Single:** open panel; pick a day; Set updates the trigger once; Cancel / Escape / outside click discard the draft
+- **Range:** select start and end (including across months); range fill tokens show between endpoints; incomplete range cannot Set until both ends exist (or matches documented behavior)
+- Reset clears the draft selection without leaving a stale confirmed value on Cancel paths
+- Disabled trigger does not open the panel
+- Keyboard: focus moves through calendar chrome; selected day is announced / visible

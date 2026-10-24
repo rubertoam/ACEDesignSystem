@@ -33,9 +33,16 @@ function component(
 
 /** Top-level link (no section heading in sidebar). */
 export const labNavGuidelinesItem: LabNavItem = {
-  label: 'Guidelines',
+  label: 'Our Philosophy',
   to: '/lab',
 }
+
+/** Top-level link above Layouts (brand asset, not an atom playground). */
+export const labNavFinScanLogoItem: LabNavItem = component(
+  'FinScan Logo',
+  '/lab/atoms/finscan-logo',
+  'hash mark + wordmark lockup (Figma Icon / FinScan 2782:29).',
+)
 
 /** Top-level links below collapsible atomic-design sections. */
 export const labNavLayoutsItem: LabNavItem = {
@@ -50,16 +57,14 @@ export const labNavTokensItem: LabNavItem = {
 
 export const labNavLayoutItems: LabNavItem[] = [labNavLayoutsItem, labNavTokensItem]
 
+/** FinScan Logo + Layouts + Tokens (rendered below Atoms / Molecules / Organisms). */
+export const labNavBottomItems: LabNavItem[] = [labNavFinScanLogoItem, ...labNavLayoutItems]
+
 export const labNavSections: LabNavSection[] = [
   {
     title: 'Atoms',
     items: [
       { label: 'Overview', to: '/lab/atoms' },
-      component(
-        'FinScan Logo',
-        '/lab/atoms/finscan-logo',
-        'hash mark + wordmark lockup (Figma Icon / FinScan 2782:29).',
-      ),
       component('Colors', '/lab/atoms/colors', 'tokens from variables.css with swatches.'),
       component(
         'Typography',
@@ -72,20 +77,22 @@ export const labNavSections: LabNavSection[] = [
         'Material Symbols catalog, sizes, fill rules, and product usage.',
       ),
       component(
-        'Motion',
-        '/lab/atoms/motion',
-        'motion catalog, easing/duration tokens, and live demos for developers.',
+        'Animations',
+        '/lab/atoms/animations',
+        'animation catalog, easing/duration tokens, and live demos for developers.',
       ),
-      component('Drop shadows', '/lab/atoms/drop-shadows', 'elevation tokens (Figma Drop Shadows 71-71).'),
+      component('Shadows', '/lab/atoms/shadows', 'elevation tokens (Figma Drop Shadows 71-71).'),
+      component('Badges', '/lab/atoms/badges', 'pills and tags - shared color variants (Review Assigned).'),
+      component('Tooltips', '/lab/atoms/tooltips', 'contextual labels for icon controls - screening toolbar pattern.'),
       component(
         'Buttons',
         '/lab/atoms/buttons',
         'ACE button variants, sizes, states, and descriptive tiles (Figma Buttons 2067:191, ButtonDescriptive 4118:682).',
       ),
       component(
-        'Inputs',
-        '/lab/atoms/inputs',
-        'text fields, sizes, states, optional search icon (Figma Input frame).',
+        'Radio buttons',
+        '/lab/atoms/radios',
+        'sizes, states, field wrapper (Figma Radio Buttons 331-1755).',
       ),
       component(
         'Checkboxes',
@@ -93,18 +100,6 @@ export const labNavSections: LabNavSection[] = [
         'with/without label, sizes, states (Figma Checkboxes 317-1492).',
       ),
       component('Toggles', '/lab/atoms/toggles', 'switch states, descriptive pattern (Figma Toggles 117-1265).'),
-      component(
-        'Radio buttons',
-        '/lab/atoms/radios',
-        'sizes, states, field wrapper (Figma Radio Buttons 331-1755).',
-      ),
-      component('Badges', '/lab/atoms/badges', 'pills and tags - shared color variants (Review Assigned).'),
-      component(
-        'Progress Indicators',
-        '/lab/atoms/progress-indicators',
-        'table review bar + processing spinner cards (Figma Progress Indicators 414:4109).',
-      ),
-      component('Tooltips', '/lab/atoms/tooltips', 'contextual labels for icon controls - screening toolbar pattern.'),
     ],
   },
   {
@@ -112,9 +107,19 @@ export const labNavSections: LabNavSection[] = [
     items: [
       { label: 'Overview', to: '/lab/molecules' },
       component(
+        'Inputs',
+        '/lab/molecules/inputs',
+        'text fields, sizes, states, optional search icon (Figma Input frame).',
+      ),
+      component(
         'Dropdowns',
         '/lab/molecules/dropdowns',
         'Primary / Secondary triggers + MenuList variants (Figma 1307:3725 / 5318:1634), semantic --color-* tokens.',
+      ),
+      component(
+        'Filtering',
+        '/lab/molecules/filtering',
+        'Filters dropdown and applied filter chips (Figma Table Headers 1540:4577).',
       ),
       component(
         'Accordions',
@@ -137,19 +142,14 @@ export const labNavSections: LabNavSection[] = [
         'horizontal (−/+) and vertical (chevron) numeric steppers.',
       ),
       component(
-        'Task Bar',
-        '/lab/molecules/task-bar',
-        'bottom action bar for app shells (Review Assigned).',
+        'Tabs',
+        '/lab/molecules/tabs',
+        'horizontal, vertical, and Tab Cards (Figma Tabs 5196:82).',
       ),
       component(
         'Page Headers',
         '/lab/molecules/page-headers',
         'Review Assigned page header and responsive sub-header with statistics, paging, more menu, drill-down.',
-      ),
-      component(
-        'Tabs',
-        '/lab/molecules/tabs',
-        'horizontal, vertical, and Tab Cards (Figma Tabs 5196:82).',
       ),
       component(
         'Toast messages',
@@ -162,9 +162,14 @@ export const labNavSections: LabNavSection[] = [
         'error, info, success, and warning in-page / banner alerts (Figma 4481-275).',
       ),
       component(
-        'Filtering',
-        '/lab/molecules/filtering',
-        'Filters dropdown and applied filter chips (Figma Table Headers 1540:4577).',
+        'Progress Indicators',
+        '/lab/molecules/progress-indicators',
+        'table review bar + processing spinner cards (Figma Progress Indicators 414:4109).',
+      ),
+      component(
+        'Task Bar',
+        '/lab/molecules/task-bar',
+        'bottom action bar for app shells (Review Assigned).',
       ),
     ],
   },
@@ -177,7 +182,6 @@ export const labNavSections: LabNavSection[] = [
         '/lab/organisms/dialog-modal',
         'Basic Action, Delete, Dropdown, Form, Extended Form + optional inline message (Figma 3047-2036).',
       ),
-      component('Data Table', '/lab/organisms/data-table'),
       component(
         'Date and time pickers',
         '/lab/organisms/date-time-pickers',
@@ -190,9 +194,9 @@ export const labNavSections: LabNavSection[] = [
         'right in-flow panel with sidebar open/close motion (Figma 1063-3635).',
       ),
       component(
-        'Site header',
-        '/lab/organisms/site-header',
-        'top navigation, FinScan brand, and user toolbar.',
+        'Squeeze Box',
+        '/lab/organisms/squeeze-box',
+        'filter, sort, minimize, and selectable rows (Review Assigned Case List).',
       ),
       component(
         'Cards',
@@ -210,10 +214,11 @@ export const labNavSections: LabNavSection[] = [
         'file upload dropzone and URL linking for case evidence (Figma 3313-156).',
       ),
       component(
-        'Scrollable List',
-        '/lab/organisms/scrollable-list',
-        'filter, sort, minimize, and selectable rows (Review Assigned Case List).',
+        'Site header',
+        '/lab/organisms/site-header',
+        'top navigation, FinScan brand, and user toolbar.',
       ),
+      component('Data Table', '/lab/organisms/data-table'),
     ],
   },
 ]
@@ -225,7 +230,7 @@ export function getLabNavFlat(): {
   availability?: LabAvailabilityStatus
 }[] {
   return [
-    { ...labNavGuidelinesItem, section: 'Guidelines' },
+    { ...labNavGuidelinesItem, section: 'Our Philosophy' },
     ...labNavSections.flatMap((section) =>
       section.items.map((item) => ({
         label: item.label,
@@ -234,6 +239,10 @@ export function getLabNavFlat(): {
         availability: item.availability,
       })),
     ),
+    {
+      ...labNavFinScanLogoItem,
+      section: 'Brand',
+    },
     ...labNavLayoutItems.map((item) => ({ ...item, section: 'Layouts' })),
   ]
 }

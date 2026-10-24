@@ -2,7 +2,7 @@ import { createContext, useContext, type ReactNode } from 'react'
 
 export type LabTheme = 'light' | 'dark'
 
-const LabThemeContext = createContext<LabTheme>('light')
+const LabThemeContext = createContext<LabTheme>('dark')
 
 export function LabThemeProvider({ theme, children }: { theme: LabTheme; children: ReactNode }) {
   return <LabThemeContext.Provider value={theme}>{children}</LabThemeContext.Provider>

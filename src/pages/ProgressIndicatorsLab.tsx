@@ -3,16 +3,17 @@ import { ProgressIndicator } from '../components/atoms/ProgressIndicator'
 import { AccordionReviewProgress } from '../components/molecules/Accordion/AccordionReviewProgress'
 import { LabCheckbox } from '../lib/labControls'
 import { labComponentContainerClass } from '../lib/labChrome'
-import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-
+import { ComponentLabPage } from './ComponentLabPage'
+import { progressLabCode, progressLabQa, progressLabUsage } from './labTabDocs'
 export function ProgressIndicatorsLab() {
   const [filled, setFilled] = useState(false)
   const tone = filled ? 'brand' : 'surface'
 
   return (
     <ComponentLabPage
+      qa={progressLabQa}
       title="Progress Indicators"
       description="Table review progress and processing overlays - determinate bar for data tables, indeterminate spinner cards for long-running actions (Figma Progress Indicators 414:4109)."
       examplesCanvas={false}
@@ -53,76 +54,8 @@ export function ProgressIndicatorsLab() {
           </div>
         </div>
       }
-      code={
-        <>
-          <p className="m-0 text-[var(--screening-text-muted)]">
-            Use <code className="text-[var(--screening-text-primary)]">AccordionReviewProgress</code> for
-            determinate table review counts. Use{' '}
-            <code className="text-[var(--screening-text-primary)]">ProgressIndicator</code> for indeterminate
-            processing cards. Default{' '}
-            <code className="text-[var(--screening-text-primary)]">tone=&quot;surface&quot;</code> (outlined). Set{' '}
-            <code className="text-[var(--screening-text-primary)]">tone=&quot;brand&quot;</code> for the filled purple
-            treatment. <code className="text-[var(--screening-text-primary)]">type</code> is{' '}
-            <code className="text-[var(--screening-text-primary)]">no-action</code> or{' '}
-            <code className="text-[var(--screening-text-primary)]">action</code> (Cancel via{' '}
-            <code className="text-[var(--screening-text-primary)]">onCancel</code>).
-          </p>
-          <ComponentLabCode>{`import { ProgressIndicator } from '../components/atoms/ProgressIndicator'
-import { AccordionReviewProgress } from '../components/molecules/Accordion/AccordionReviewProgress'
-
-<AccordionReviewProgress reviewed={5} total={12} />
-
-{/* Outlined (default) */}
-<ProgressIndicator tone="surface" type="no-action" label="Progress" />
-
-{/* Filled */}
-<ProgressIndicator tone="brand" type="no-action" label="Progress" />
-
-<ProgressIndicator
-  tone="brand"
-  type="action"
-  label="Progress"
-  onCancel={() => { /* abort */ }}
-/>`}</ComponentLabCode>
-        </>
-      }
-      usage={
-        <>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
-            <p className="m-0 text-[var(--screening-text-muted)]">
-              <strong className="text-[var(--screening-text-primary)]">Table / review progress</strong>: show how many
-              rows are reviewed in screening results or accordion headers.{' '}
-              <strong className="text-[var(--screening-text-primary)]">Processing</strong>: block or overlay while a
-              copy, export, or similar job runs. Prefer{' '}
-              <strong className="text-[var(--screening-text-primary)]">Action</strong> when the user can cancel.
-            </p>
-          </section>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Variants</h4>
-            <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Filled off</strong> (
-                <code className="text-[var(--screening-text-primary)]">tone=&quot;surface&quot;</code>): white surface,
-                brand border, brand spinner and label.
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Filled on</strong> (
-                <code className="text-[var(--screening-text-primary)]">tone=&quot;brand&quot;</code>): solid FinScan
-                Primary fill, light spinner and label.
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">type=&quot;no-action&quot;</strong>: spinner +
-                status only.
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">type=&quot;action&quot;</strong>: adds secondary
-                Cancel button.
-              </li>
-            </ul>
-          </section>
-        </>
-      }
+      code={progressLabCode}
+      usage={progressLabUsage}
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--screening-text-muted)]">
           <li>

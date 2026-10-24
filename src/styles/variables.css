@@ -273,7 +273,8 @@
   --icon-button-icon: var(--color-icon-primary);
   --icon-button-icon-rest-ghost: var(--color-text-primary);
   --icon-button-surface: var(--color-surface-primary);
-  --icon-button-hover-bg: var(--color-icon-hover);
+  /* Figma Iconography hover fill → colors/bg/primary (not colors/icon/hover) */
+  --icon-button-hover-bg: var(--color-bg-primary);
   --icon-button-border: var(--color-border-default);
   /* Success / Warning / Notice / Error — Figma primitives */
   --ace-success-50: var(--color-success-50);
@@ -329,7 +330,7 @@
     5 * var(--ace-edit-group-item-row-height) + 4 * var(--space-1) + 2 * var(--space-2)
   );
 
-  /* Motion — shared easing/duration tokens (see Motion lab + aceAnimations.ts) */
+  /* Motion — shared easing/duration tokens (see Animations lab + aceAnimations.ts) */
   --ace-motion-ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
   --ace-motion-duration-fast: 150ms;
   --ace-motion-duration-medium: 300ms;
@@ -621,7 +622,7 @@
   --timeline-icon-size: var(--spacing-32);
   --timeline-icon-size-hover: calc(var(--spacing-32) + var(--spacing-4));
   --timeline-icon-glyph-size: var(--icon-size-md);
-  --timeline-icon-glyph-size-hover: var(--icon-size-lg);
+  --timeline-icon-glyph-size-hover: var(--icon-size-lg);
   --timeline-border: var(--color-border-default);
   --timeline-sort-bg: var(--color-surface-primary);
   --timeline-title: var(--ace-neutral-800);
@@ -648,8 +649,8 @@
   --attachments-padding: 0.75rem;
   --attachments-gap: 0.75rem;
   --attachments-border: var(--screening-border-strong);
-  --attachments-surface: var(--screening-surface);
-  --attachments-dropzone-border: var(--screening-primary);
+  --attachments-surface: var(--screening-surface);
+  --attachments-dropzone-border: var(--screening-primary);
   --attachments-title: var(--screening-primary);
   --attachments-label: var(--screening-text-secondary);
   --attachments-link: var(--screening-primary);
@@ -735,18 +736,20 @@
   --screening-duration-accordion: 420ms;
   --screening-ease-accordion: cubic-bezier(0.33, 1, 0.68, 1);
 
-  /* ACE Accordion — Figma Accordions (332:1500) */
+  /* ACE Accordion — Figma Accordions (332:1500 / component 4529:486) */
   --accordion-surface: var(--color-surface-primary);
   --accordion-surface-muted: var(--color-bg-primary);
   --accordion-border: var(--color-border-default);
-  --accordion-radius: var(--radius-component-input);
-  --accordion-px: 1rem;
-  --accordion-py: 0.75rem;
-  --accordion-gap: 1rem;
+  --accordion-radius: var(--radius-sm); /* radius/sm = 4 */
+  --accordion-px: var(--spacing-16); /* spacing/16 */
+  --accordion-py: var(--spacing-12); /* spacing/12 */
+  --accordion-gap: var(--spacing-16); /* title ↔ chevron */
+  --accordion-actions-gap: var(--spacing-4); /* badge + icon cluster */
   --accordion-title: var(--color-text-primary);
   --accordion-tag-bg: var(--color-bg-tertiary);
   --accordion-tag-text: var(--color-text-primary);
-  --accordion-icon: var(--color-icon-primary);
+  /* Figma Accordion icons use colors/text/primary */
+  --accordion-icon: var(--color-text-primary);
   --accordion-content-bg: var(--color-surface-primary);
   --accordion-duration: 420ms;
   --accordion-ease: cubic-bezier(0.33, 1, 0.68, 1);
@@ -872,6 +875,7 @@
   --ace-accordion-duration: var(--accordion-duration);
   --ace-accordion-ease: var(--accordion-ease);
   --ace-accordion-gap: var(--accordion-gap);
+  --ace-accordion-actions-gap: var(--accordion-actions-gap);
   --ace-accordion-icon: var(--accordion-icon);
   --ace-accordion-px: var(--accordion-px);
   --ace-accordion-py: var(--accordion-py);
@@ -1385,7 +1389,8 @@
     --screening-border-soft: var(--color-border-subtle);
     --screening-text-primary: var(--color-text-primary);
     --screening-text-secondary: var(--color-text-secondary);
-    --screening-text-muted: var(--color-text-disabled);
+    /* Prefer readable body/supporting copy; keep --color-text-disabled for true disabled UI */
+    --screening-text-muted: var(--color-neutral-300);
     --screening-primary-ring-offset: var(--color-surface-primary);
     --screening-icon-muted: var(--color-icon-secondary);
     --screening-progress-track: var(--color-bg-tertiary);
@@ -1404,7 +1409,7 @@
     --screening-chip-active-border: var(--color-border-brand);
     /* Checkbox / Toggle colors follow color-tokens.css semantic dark mappings via light aliases above. */
     --toast-message-bg: var(--color-surface-primary);
-    --toast-message-border: var(--color-border-default);
+    --toast-message-border: var(--color-border-default);
     --toast-message-dismiss-icon: var(--color-icon-secondary);
     --timeline-surface: var(--ace-dark-mode-800);
     --timeline-sort-bg: var(--color-surface-primary);
@@ -1425,7 +1430,7 @@
     --slider-handle-disabled: var(--color-neutral-500);
     --radio-bg-inner: var(--color-surface-primary);
     --radio-border-default: var(--color-icon-primary);
-    --radio-border-hover: var(--color-icon-primary);
+    --radio-border-hover: var(--color-icon-primary);
     --radio-border-selected: var(--color-action-primary);
     --radio-indicator-selected: var(--color-action-primary);
     --radio-border-disabled: var(--color-icon-disabled);
@@ -1484,7 +1489,8 @@
     --ace-neutral-200: var(--ace-dark-mode-600);
     --ace-lab-segmented-indicator-bg: var(--ace-dark-mode-500);
     --ace-lab-segmented-indicator-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 2px 8px rgb(0 0 0 / 0.22);
-    --sidebar-menu-icon: var(--screening-icon-muted);
+    --sidebar-menu-icon: var(--screening-icon-muted);
+
 
     /* Dialog actions — follow Semantic dark action / status */
     --dialog-modal-primary: var(--color-action-primary);
@@ -1519,7 +1525,7 @@
     /* Scrollable List */
     --scrollable-list-surface: var(--screening-surface);
     --scrollable-list-border: var(--screening-border-strong);
-    --scrollable-list-title: var(--screening-text-primary);
+    --scrollable-list-title: var(--screening-text-primary);
     --scrollable-list-item-selected-bg: var(--color-bg-tertiary);
     --scrollable-list-item-hover-bg: var(--color-bg-tertiary);
     --scrollable-list-icon: var(--color-icon-brand);
@@ -1529,13 +1535,13 @@
     --landing-page-card-footer-bg: var(--color-surface-primary);
     --landing-page-card-title-color: var(--color-text-primary);
     --landing-page-card-body-color: var(--color-text-primary);
-    --landing-page-card-footer-stat-color: var(--color-text-primary);
+    --landing-page-card-footer-stat-color: var(--color-text-primary);
     --data-card-surface: var(--color-surface-primary);
     --data-card-header-bg: var(--color-bg-primary);
     --data-card-text: var(--color-text-primary);
     --data-card-link: var(--color-action-primary);
 
-    /* Date picker */
+    /* Date picker */
     --date-picker-weekday: var(--screening-text-secondary);
     --date-picker-day: var(--screening-text-secondary);
 
@@ -1546,7 +1552,8 @@
     --screening-pagination-page-size-border: var(--color-border-default);
     --availability-tag-available-bg: var(--color-status-success-subtle);
     --availability-tag-available-border: color-mix(in srgb, var(--color-status-success) 30%, transparent);
-    --availability-tag-available-text: var(--color-status-success);
+    --availability-tag-available-text: var(--color-status-success);
+
     --availability-tag-planned-bg: var(--color-bg-brand-hover);
     --availability-tag-planned-border: var(--color-badges-purple-border);
     --availability-tag-planned-text: var(--color-action-primary);

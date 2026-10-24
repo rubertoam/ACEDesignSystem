@@ -30,6 +30,8 @@ import { labControlLegendClass } from '../lib/labControls'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { layoutsLabQa } from './labTabDocs'
 const SITE_NAV_ITEMS: SiteHeaderNavItem[] = [
   { id: 'home', label: 'Home' },
   { id: 'reporting', label: 'Reporting' },
@@ -480,6 +482,7 @@ export function LayoutsLab() {
 
   return (
     <ComponentLabPage
+      qa={layoutsLabQa}
       title="Layouts"
       description="Page and application layouts composed from organisms, molecules, and atoms."
       examplesToolbar={

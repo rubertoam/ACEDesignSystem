@@ -462,10 +462,10 @@ export function SidebarLab() {
                   <p className="mt-2 text-sm text-[var(--screening-text-muted)]">
                     App shell preview based on Review Assigned header. Sidebar motion is documented on the{' '}
                     <Link
-                      to="/lab/atoms/motion"
+                      to="/lab/atoms/animations"
                       className="text-[var(--screening-primary)] underline underline-offset-2"
                     >
-                      Motion
+                      Animations
                     </Link>{' '}
                     page.
                   </p>
@@ -586,12 +586,12 @@ const [open, setOpen] = useState(true)
               </ul>
             </section>
             <section className={labUsageSectionClass}>
-              <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Motion</h4>
+              <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Animations</h4>
               <p className="m-0 text-[var(--screening-text-muted)]">
                 Panel width, group expand/collapse, chevron rotation, row hover, and action opacity use{' '}
                 <code className="text-[var(--screening-text-primary)]">--ace-motion-ease-standard</code>. See the{' '}
-                <Link to="/lab/atoms/motion" className="text-[var(--screening-primary)] underline underline-offset-2">
-                  Motion
+                <Link to="/lab/atoms/animations" className="text-[var(--screening-primary)] underline underline-offset-2">
+                  Animations
                 </Link>{' '}
                 lab.
               </p>

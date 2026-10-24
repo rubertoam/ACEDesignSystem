@@ -5,6 +5,8 @@ import { ACE_ANIMATIONS, ACE_MOTION_EASE_STANDARD } from '../lib/aceAnimations'
 import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
+
+import { animationsLabQa } from './labTabDocs'
 function AnimationCatalogTable() {
   return (
     <div className="overflow-x-auto rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]">
@@ -112,12 +114,13 @@ function AccordionMotionDemo() {
 export function AnimationsLab() {
   return (
     <ComponentLabPage
-      title="Motion"
-      description="Central registry of ACE motion: easing curves, durations, and per-component transitions. Update src/lib/aceAnimations.ts whenever you add animation to a component."
+      qa={animationsLabQa}
+      title="Animations"
+      description="Central registry of ACE animations: easing curves, durations, and per-component transitions. Update src/lib/aceAnimations.ts whenever you add animation to a component."
       examples={
         <div className="space-y-10">
           <section className="space-y-3">
-            <h3 className="m-0 text-base font-semibold text-[var(--screening-text-primary)]">Motion tokens</h3>
+            <h3 className="m-0 text-base font-semibold text-[var(--screening-text-primary)]">Animation tokens</h3>
             <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-[var(--screening-text-muted)]">
               <li>
                 Standard ease:{' '}

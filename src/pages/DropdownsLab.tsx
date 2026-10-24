@@ -1,5 +1,7 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
+
+import { dropdownsLabQa } from './labTabDocs'
 import { DropdownMenu, type DropdownMenuEntry } from '../components/molecules/DropdownMenu/DropdownMenu'
 import { aceDropdownFieldLabelClass } from '../components/molecules/DropdownMenu/dropdownFieldStyles'
 import { cn } from '../lib/cn'
@@ -396,6 +398,7 @@ export function DropdownsLab() {
 
   return (
     <ComponentLabPage
+      qa={dropdownsLabQa}
       title="Dropdowns"
       description="ACE Design System v.3 dropdowns (Figma 1307:3725 / set 2277:136) and menus (5318:1634 / MenuList 1541:6165): Primary field (default / LabelActive), Secondary / FilterChip triggers, and MenuList variants (MultiSelect, Primary, Three Dot, Switchers, Checkbox, Search). Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examples={
@@ -622,6 +625,7 @@ export function DropdownsLab() {
           </li>
         </ul>
       }
+
       changelog={<DropdownsChangelog />}
     />
   )

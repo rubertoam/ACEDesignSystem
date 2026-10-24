@@ -7,10 +7,10 @@ import {
   type AttachmentLink,
 } from '../components/organisms/Attachments/Attachments'
 import { labComponentContainerClass } from '../lib/labChrome'
-import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
-import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-
+import { ComponentLabPage } from './ComponentLabPage'
+import { attachmentsLabCode, attachmentsLabQa, attachmentsLabUsage } from './labTabDocs'
 function createId(prefix: string) {
   return `${prefix}-${Math.random().toString(36).slice(2, 9)}`
 }
@@ -49,6 +49,7 @@ export function AttachmentsLab() {
 
   return (
     <ComponentLabPage
+      qa={attachmentsLabQa}
       title="Attachments"
       description="File upload dropzone and URL linking pattern for case workflows (Figma Attachments 3313:156). Built from Button, Input, and ACE typography tokens."
       examplesCanvas={false}
@@ -83,63 +84,8 @@ export function AttachmentsLab() {
           </div>
         </div>
       }
-      code={
-        <>
-          <p className="m-0 text-[var(--screening-text-muted)]">
-            Control file rows and links with arrays. Wire upload and URL actions to your API; the organism handles
-            layout and status presentation only.
-          </p>
-          <ComponentLabCode>{`import {
-  Attachments,
-  DEMO_ATTACHMENT_FILES,
-  DEMO_ATTACHMENT_LINKS,
-} from '../components/organisms/Attachments/Attachments'
-
-<Attachments
-  files={files}
-  links={links}
-  urlDraft={urlDraft}
-  onUrlDraftChange={setUrlDraft}
-  onFilesSelected={handleFiles}
-  onAddUrl={handleAddUrl}
-  onRemoveFile={removeFile}
-  onRemoveLink={removeLink}
-/>
-
-<Attachments
-  files={DEMO_ATTACHMENT_FILES}
-  links={DEMO_ATTACHMENT_LINKS}
-/>`}</ComponentLabCode>
-        </>
-      }
-      usage={
-        <>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
-            <p className="m-0 text-[var(--screening-text-muted)]">
-              Use when users need to attach supporting documents and external reference links to a record. The dropzone
-              supports drag-and-drop and the Upload button; URL links are added through the caption input and Add URL
-              action.
-            </p>
-          </section>
-          <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">File statuses</h4>
-            <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Uploading / Queued</strong>: in-progress
-                transfer
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Failed</strong>: error with alert icon
-              </li>
-              <li>
-                <strong className="text-[var(--screening-text-primary)]">Complete</strong>: removable with trash
-                control
-              </li>
-            </ul>
-          </section>
-        </>
-      }
+      code={attachmentsLabCode}
+      usage={attachmentsLabUsage}
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
