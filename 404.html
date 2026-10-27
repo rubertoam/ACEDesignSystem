@@ -1,7 +1,16 @@
 <!doctype html>
-<html lang="en" data-theme="dark" style="color-scheme: dark">
+<html lang="en" style="color-scheme: light">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      try {
+        var t = localStorage.getItem('ace-lab-theme')
+        if (t === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark')
+          document.documentElement.style.colorScheme = 'dark'
+        }
+      } catch (e) {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="/ACEDesignSystem/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
@@ -14,8 +23,8 @@
       rel="stylesheet"
     />
     <title>ACE Design System</title>
-    <script type="module" crossorigin src="/ACEDesignSystem/assets/index-CkJkb8sZ.js"></script>
-    <link rel="stylesheet" crossorigin href="/ACEDesignSystem/assets/index-CSVSgRpv.css">
+    <script type="module" crossorigin src="/ACEDesignSystem/assets/index-wrGDfet6.js"></script>
+    <link rel="stylesheet" crossorigin href="/ACEDesignSystem/assets/index-CSp1iZNK.css">
   </head>
   <body>
     <div id="root"></div>
