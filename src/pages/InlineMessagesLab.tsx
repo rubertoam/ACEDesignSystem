@@ -1,16 +1,13 @@
-import { useState } from 'react'
 import { InlineMessage } from '../components/molecules/InlineMessage/InlineMessage'
 import {
   INLINE_MESSAGE_TONES,
   type InlineMessageTone,
 } from '../components/molecules/InlineMessage/inlineMessageFieldStyles'
-import { LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-
-
 import { inlineMessageLabQa } from './labTabDocs'
+
 const TONE_LABELS: Record<InlineMessageTone, string> = {
   error: 'Error',
   success: 'Success',
@@ -26,37 +23,13 @@ const TONE_COPY: Record<InlineMessageTone, string> = {
 }
 
 export function InlineMessagesLab() {
-  const [tone, setTone] = useState<InlineMessageTone>('error')
-
-  const toolbar = (
-    <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
-      <LabSelect
-        label="Tone"
-        value={tone}
-        onChange={(v) => setTone(v as InlineMessageTone)}
-        options={INLINE_MESSAGE_TONES.map((value) => ({
-          value,
-          label: TONE_LABELS[value],
-        }))}
-      />
-    </div>
-  )
-
   return (
     <ComponentLabPage
       qa={inlineMessageLabQa}
       title="Inline messages"
       description="In-page and banner alerts for error, information, success, and warning feedback (Figma Inline Messages 4481:275). Uses the same Material status icons as Toast messages and the Iconography catalog."
-      examplesToolbar={toolbar}
       examples={
         <div className="space-y-10">
-          <div className={cn('items-start', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>{TONE_LABELS[tone]}</p>
-            <InlineMessage tone={tone} className="max-w-xl">
-              {TONE_COPY[tone]}
-            </InlineMessage>
-          </div>
-
           <div className={cn('items-start', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>All tones</p>
             <div className="grid w-full gap-6 sm:grid-cols-2">
@@ -71,7 +44,7 @@ export function InlineMessagesLab() {
 
           <div className={cn('items-start', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Banner width</p>
-            <InlineMessage tone={tone}>{TONE_COPY[tone]}</InlineMessage>
+            <InlineMessage tone="error">{TONE_COPY.error}</InlineMessage>
           </div>
         </div>
       }
@@ -158,7 +131,6 @@ export function InlineMessagesLab() {
           </li>
         </ul>
       }
-
       changelog={
         <div className="space-y-8">
           <article className="space-y-3">
