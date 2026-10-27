@@ -39,7 +39,7 @@ export type ToastMessageProps = {
   confirmLabel?: string
   onConfirm?: () => void
   /**
-   * Optional countdown fill (0–1). Renders a tone-tinted bar along the bottom edge.
+   * Optional countdown fill (0-1). Renders a tone-tinted bar along the bottom edge.
    * Product hosts own the timer; pass remaining/total each frame.
    */
   progress?: number
@@ -189,7 +189,8 @@ function renderActions({
   if (hasDoubleAction) {
     return (
       <div className={toastMessageDoubleActionRowClass}>
-        <ActionLink label={cancelLabel ?? 'Cancel'} onClick={onCancel} tone={tone} />
+        {/* Figma: Cancel is always brand purple; Confirm is the filled primary. */}
+        <ActionLink label={cancelLabel ?? 'Cancel'} onClick={onCancel} tone="success" />
         <ConfirmButton label={confirmLabel ?? 'Confirm'} onClick={onConfirm} />
       </div>
     )

@@ -25,7 +25,7 @@ function TokenListItem({ token }: { token: LabTokenRef }) {
         </>
       ) : null}
       <code className="text-[var(--color-text-primary)]">{token.cssVar}</code>
-      {token.note ? <span className="text-[var(--color-text-muted)]"> — {token.note}</span> : null}
+      {token.note ? <span className="text-[var(--color-text-muted)]"> - {token.note}</span> : null}
     </li>
   )
 }

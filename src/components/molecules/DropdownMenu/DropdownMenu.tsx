@@ -10,9 +10,14 @@ import { Checkbox } from '../../atoms/Checkbox/Checkbox'
 import { Toggle } from '../../atoms/Toggle/Toggle'
 import { FilterTrigger } from '../Filtering/FilterTrigger'
 import { MaterialSymbol } from '../Accordion/MaterialSymbol'
+import {
+  aceDropdownFieldChevronClass,
+  aceDropdownFieldTriggerClass,
+  AceDropdownChevron,
+} from './dropdownFieldStyles'
+import { highlightMenuLabel } from './menuEntryHighlight'
 import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
-import { highlightMenuLabel } from './menuEntryHighlight'
 
 /** Keeps the dropdown open while interacting with non-item controls (search, checkbox, etc.). */
 function preventMenuClose(e: { preventDefault: () => void }) {
@@ -21,7 +26,7 @@ function preventMenuClose(e: { preventDefault: () => void }) {
 
 export type { ButtonActionTone, ButtonSize, ButtonVariant }
 
-export type DropdownMenuPanelWidth = 'default' | 'compact' | 'wide' | 'hug'
+export type DropdownMenuPanelWidth = 'default' | 'compact' | 'wide' | 'primary' | 'hug'
 
 /** Entries allowed inside a submenu (no nested submenus). */
 export type DropdownMenuSubItem =
@@ -50,8 +55,11 @@ export type DropdownMenuSubItem =
       disabled?: boolean
       style?: 'menu' | 'assignment'
       matchHighlight?: string
-      /** Soft row fill — `warning` uses `--ace-warning-50`. */
-      emphasized?: boolean | 'warning'
+      /**
+       * Soft row fill - `true` / selected → bg/brand-hover; `hover` → bg/secondary (Search Results);
+       * `warning` → `--ace-warning-50`.
+       */
+      emphasized?: boolean | 'warning' | 'hover'
     }
   | {
       id?: string
@@ -107,7 +115,7 @@ export type DropdownMenuProps = {
   /** Field = screening toolbar style; button = Button; filter = FilterTrigger. */
   triggerMode?: DropdownTriggerMode
   variant?: ButtonVariant
-  /** Button trigger only — maps to `--color-action-{tone}*`. */
+  /** Button trigger only - maps to `--color-action-{tone}*`. */
   actionTone?: ButtonActionTone
   size?: ButtonSize
   /** Field trigger only: show caret. */
@@ -135,6 +143,7 @@ export type DropdownMenuPanelProps = {
   'aria-label'?: string
 }
 
+/** Body/Regular · typography/body/body-main (14) - menu item + search field labels */
 const itemType = cn(
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
 )
@@ -152,74 +161,85 @@ const menuHeaderClass = cn(
 
 const sectionHeaderClass = cn(
   'uppercase text-[var(--color-text-primary)]',
-  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]',
 )
 
+/** Figma Select All / Deselect All - Footnote/Regular · colors/text/primary */
 const sectionActionClass = cn(
-  'text-[var(--color-action-primary)] hover:underline',
+  'text-[var(--dropdown-menu-action,var(--color-text-primary))] hover:underline',
   '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
 )
 
+/** Figma Reset / Reset All - Caption/Regular · colors/text/primary */
 const footerActionClass = cn(
-  'text-[var(--color-action-primary)] hover:underline',
+  'text-[var(--dropdown-menu-action,var(--color-text-primary))] hover:underline',
   '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
 )
 
 export const dropdownMenuPanelClass = cn(
   /* Above dialog overlay (z-200) so menus open on top of modals */
-  'z-[300] overflow-hidden rounded-[var(--radius-md)] border border-solid border-[var(--dropdown-menu-border)] bg-[var(--dropdown-menu-surface,var(--screening-surface,#ffffff))]',
+  'z-[300] overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--dropdown-menu-border)] bg-[var(--dropdown-menu-surface,var(--color-surface-primary,#ffffff))]',
   'shadow-[var(--dropdown-menu-shadow)]',
 )
 
 const panelWidthClass: Record<DropdownMenuPanelWidth, string> = {
-  default: 'min-w-[11.5rem] p-1',
+  /** Secondary Switchers / Checkbox / Search - Figma 184px */
+  default: 'w-[11.5rem] py-1',
+  /** Icon / Three-dot - Figma 108px · py 8 */
   compact: 'w-[6.75rem] py-2',
-  wide: 'w-[16.5rem] py-2',
+  /** MultiSelect - Figma 264px · py 16 */
+  wide: 'w-[16.5rem] py-4',
+  /** Primary SingleSelect - Figma 264px · py 8 */
+  primary: 'w-[16.5rem] py-2',
   /** Width follows menu content (toolbars, short labels). */
-  hug: 'w-max min-w-0 p-1',
+  hug: 'w-max min-w-0 py-1',
 }
 
 const itemClass = cn(
   itemType,
-  'relative flex cursor-pointer select-none items-center rounded-[var(--radius-sm)] text-[var(--color-text-primary)] outline-none',
+  'relative flex cursor-pointer select-none items-center text-[var(--color-text-primary)] outline-none',
   'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-  'data-[highlighted]:bg-[var(--screening-surface-hover)] data-[highlighted]:text-[var(--color-text-primary)]',
+  'data-[highlighted]:bg-[var(--dropdown-menu-row-hover)] data-[highlighted]:text-[var(--color-text-primary)]',
 )
 
-const primaryItemClass = cn(itemClass, 'group gap-0 px-0 py-2')
-
-const compactItemClass = cn(itemClass, 'px-3 py-1')
+const primaryItemClass = cn(itemClass, 'group gap-0 px-0')
 
 const paddedIndicatorItem = cn(itemClass, 'px-[var(--space-3)] py-[var(--space-2)] pl-8')
 
 const assignmentCheckboxRow = cn(
   itemType,
-  'flex cursor-pointer select-none items-center gap-[var(--space-2)] px-[var(--space-3)] py-1 text-[var(--color-text-primary)]',
+  'group flex cursor-pointer select-none items-center gap-0 px-0 text-[var(--color-text-primary)]',
 )
 
-/** Screening-token field trigger — works in Workbench without unpublished dropdown CSS vars. */
+/** Brand pipe - Figma Menus hover / selected (colors/text/brand · 3px) */
+function MenuRowPipe({ active }: { active?: boolean }) {
+  return (
+    <span
+      className={cn(
+        'w-[3px] shrink-0 self-stretch bg-transparent',
+        active
+          ? 'bg-[var(--dropdown-menu-primary)]'
+          : 'group-data-[highlighted]:bg-[var(--dropdown-menu-primary)]',
+      )}
+      aria-hidden
+    />
+  )
+}
+
 const fieldSizeClass: Record<ButtonSize, string> = {
   sm: cn(
-    'gap-[var(--button-gap-sm)] px-[var(--button-px-sm)] py-[var(--button-py-sm)]',
+    'min-h-9 gap-[var(--space-2)] px-[var(--dropdown-menu-trigger-px)] py-[var(--dropdown-menu-trigger-py)]',
     '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
   ),
   md: cn(
-    'gap-[var(--button-gap-md)] px-[var(--button-px-md)] py-[var(--button-py-md)]',
-    '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+    'min-h-11 gap-[var(--space-2)] px-[var(--dropdown-menu-trigger-px)] py-[var(--dropdown-menu-trigger-py)]',
+    '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
   ),
   lg: cn(
-    'gap-[var(--button-gap-lg)] px-[var(--button-px-lg)] py-[var(--button-py-lg)]',
-    '[font:var(--ace-type-paragraph-p2-regular)] [letter-spacing:var(--ace-type-paragraph-p2-regular-tracking)]',
+    'min-h-13 gap-[var(--space-2)] px-[var(--dropdown-menu-trigger-px)] py-3',
+    '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
   ),
 }
-
-const fieldTriggerBase = cn(
-  'inline-flex w-[var(--dropdown-menu-trigger-width)] max-w-[var(--dropdown-menu-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]',
-  'text-[var(--color-text-primary)] outline-none transition-colors',
-  'hover:bg-[var(--screening-surface-hover)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
-  'data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:ring-2 data-[state=open]:ring-[var(--screening-primary-ring)] data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-[var(--screening-primary-ring-offset)]',
-  'disabled:pointer-events-none disabled:opacity-50',
-)
 
 const shortcutClass =
   'ml-auto shrink-0 pl-4 [font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)] text-[var(--color-text-muted)]'
@@ -232,9 +252,10 @@ function panelShellClass(panelWidth: DropdownMenuPanelWidth, className?: string)
   return cn(dropdownMenuPanelClass, panelWidthClass[panelWidth], className)
 }
 
-function checkboxEmphasizedClass(emphasized?: boolean | 'warning') {
+function checkboxEmphasizedClass(emphasized?: boolean | 'warning' | 'hover') {
   if (emphasized === 'warning') return 'bg-[var(--ace-warning-50)]'
-  if (emphasized) return 'bg-[var(--screening-surface-muted)]'
+  if (emphasized === 'hover') return 'bg-[var(--dropdown-menu-row-hover)]'
+  if (emphasized) return 'bg-[var(--dropdown-menu-row-selected)]'
   return null
 }
 
@@ -242,17 +263,21 @@ function MenuCheckboxRow({
   checked,
   disabled,
   label,
-  matchHighlight,
   emphasized,
+  matchHighlight,
+  withPipe,
   onCheckedChange,
 }: {
   checked: boolean
   disabled?: boolean
   label: string
+  emphasized?: boolean | 'warning' | 'hover'
   matchHighlight?: string
-  emphasized?: boolean | 'warning'
+  /** Primary MultiSelect - brand pipe on hover / selected (Figma 5318:1634) */
+  withPipe?: boolean
   onCheckedChange: (checked: boolean) => void
 }) {
+  const isSelected = emphasized === true
   return (
     <DropdownMenuPrimitive.Item
       disabled={disabled}
@@ -261,16 +286,21 @@ function MenuCheckboxRow({
         assignmentCheckboxRow,
         'w-full outline-none',
         checkboxEmphasizedClass(emphasized),
-        'data-[highlighted]:bg-[var(--screening-surface-hover)]',
+        isSelected
+          ? 'bg-[var(--dropdown-menu-row-selected)]'
+          : 'data-[highlighted]:bg-[var(--dropdown-menu-row-hover)]',
       )}
       onSelect={(e) => {
         preventMenuClose(e)
         if (!disabled) onCheckedChange(!checked)
       }}
     >
-      <Checkbox size="sm" checked={checked} disabled={disabled} tabIndex={-1} className="pointer-events-none" aria-hidden />
-      <span className="min-w-0 flex-1 truncate text-left">
-        {matchHighlight ? highlightMenuLabel(label, matchHighlight) : label}
+      {withPipe ? <MenuRowPipe active={isSelected} /> : null}
+      <span className={cn('flex min-w-0 flex-1 items-center gap-2', withPipe ? 'gap-3 p-2' : 'px-3 py-1')}>
+        <Checkbox size="sm" checked={checked} disabled={disabled} tabIndex={-1} className="pointer-events-none" aria-hidden />
+        <span className="min-w-0 flex-1 truncate text-left">
+          {matchHighlight ? highlightMenuLabel(label, matchHighlight) : label}
+        </span>
       </span>
     </DropdownMenuPrimitive.Item>
   )
@@ -293,15 +323,17 @@ function MenuToggleRow({
       aria-label={label}
       className={cn(
         assignmentCheckboxRow,
-        'w-full outline-none data-[highlighted]:bg-[var(--screening-surface-hover)]',
+        'w-full outline-none data-[highlighted]:bg-[var(--dropdown-menu-row-hover)]',
       )}
       onSelect={(e) => {
         preventMenuClose(e)
         if (!disabled) onCheckedChange(!checked)
       }}
     >
-      <Toggle size="sm" checked={checked} disabled={disabled} tabIndex={-1} className="pointer-events-none" aria-hidden />
-      <span className="min-w-0 flex-1 truncate text-left">{label}</span>
+      <span className="flex min-w-0 flex-1 items-center gap-2 px-3 py-1">
+        <Toggle size="sm" checked={checked} disabled={disabled} tabIndex={-1} className="pointer-events-none" aria-hidden />
+        <span className="min-w-0 flex-1 truncate text-left">{label}</span>
+      </span>
     </DropdownMenuPrimitive.Item>
   )
 }
@@ -309,29 +341,38 @@ function MenuToggleRow({
 function PrimaryMenuItem({
   entry,
   staticDisplay,
+  compact,
 }: {
   entry: Extract<DropdownMenuSubItem, { type: 'item' }>
   staticDisplay?: boolean
+  compact?: boolean
 }) {
   const isSelected = entry.highlighted || entry.selected
+  const Icon = entry.icon
   const rowClass = cn(
     primaryItemClass,
-    isSelected && 'bg-[var(--screening-surface-hover)]',
-    entry.destructive && 'text-[var(--dialog-modal-danger)]',
+    isSelected
+      ? 'bg-[var(--dropdown-menu-row-selected)]'
+      : 'data-[highlighted]:bg-[var(--dropdown-menu-row-hover)]',
+    entry.destructive && 'text-[var(--dropdown-menu-danger)]',
     entry.disabled && 'pointer-events-none opacity-50',
   )
   const body = (
     <>
+      <MenuRowPipe active={isSelected} />
       <span
         className={cn(
-          'w-[3px] shrink-0 self-stretch bg-transparent',
-          isSelected
-            ? 'bg-[var(--dropdown-menu-primary)]'
-            : 'group-data-[highlighted]:bg-[var(--dropdown-menu-primary)]',
+          'flex min-w-0 flex-1 items-center gap-[var(--space-2)]',
+          compact ? 'px-3 py-1' : 'p-2',
+          (entry.shortcut || Icon) && 'justify-between gap-[var(--space-3)]',
         )}
-        aria-hidden
-      />
-      <span className="min-w-0 flex-1 truncate px-2">{entry.label}</span>
+      >
+        <span className="flex min-w-0 flex-1 items-center gap-[var(--space-2)]">
+          {Icon ? <Icon className="size-4 shrink-0 text-[var(--dropdown-menu-icon)]" aria-hidden /> : null}
+          <span className="min-w-0 truncate">{entry.label}</span>
+        </span>
+        {entry.shortcut ? <span className={shortcutClass}>{entry.shortcut}</span> : null}
+      </span>
     </>
   )
 
@@ -368,13 +409,13 @@ function MenuEntries({
 
   return entries.map((entry, i) => {
     if (entry.type === 'separator') {
-      const sep = <div className="my-1 h-px bg-[var(--screening-border-row)]" />
+      const sep = <div className="my-1 h-px bg-[var(--dropdown-menu-border)]" />
       return staticDisplay ? (
         <div key={entryKey(entry, i)} role="separator">
           {sep}
         </div>
       ) : (
-        <DropdownMenuPrimitive.Separator key={entryKey(entry, i)} className="my-1 h-px bg-[var(--screening-border-row)]" />
+        <DropdownMenuPrimitive.Separator key={entryKey(entry, i)} className="my-1 h-px bg-[var(--dropdown-menu-border)]" />
       )
     }
 
@@ -387,23 +428,34 @@ function MenuEntries({
     }
 
     if (entry.type === 'sectionHeader') {
+      const action = entry.action ? (
+        staticDisplay ? (
+          <button
+            type="button"
+            className={cn(sectionActionClass, 'cursor-pointer border-0 bg-transparent p-0')}
+            onClick={() => entry.action?.onSelect?.()}
+          >
+            {entry.action.label}
+          </button>
+        ) : (
+          <DropdownMenuPrimitive.Item
+            className={cn(sectionActionClass, 'cursor-pointer outline-none')}
+            onSelect={(e) => {
+              preventMenuClose(e)
+              entry.action?.onSelect?.()
+            }}
+          >
+            {entry.action.label}
+          </DropdownMenuPrimitive.Item>
+        )
+      ) : null
       return (
         <div
           key={entryKey(entry, i)}
           className="flex items-center justify-between px-2.5 pb-1 pt-2"
         >
           <span className={sectionHeaderClass}>{entry.label}</span>
-          {entry.action ? (
-            <DropdownMenuPrimitive.Item
-              className={cn(sectionActionClass, 'cursor-pointer outline-none')}
-              onSelect={(e) => {
-                preventMenuClose(e)
-                entry.action?.onSelect?.()
-              }}
-            >
-              {entry.action.label}
-            </DropdownMenuPrimitive.Item>
-          ) : null}
+          {action}
         </div>
       )
     }
@@ -433,7 +485,7 @@ function MenuEntries({
       return (
         <div
           key={entryKey(entry, i)}
-          className="flex items-center justify-between gap-2 border-b border-[var(--screening-border-row)] px-[var(--space-3)] py-2"
+          className="flex items-center justify-between gap-2 px-[var(--space-3)] py-2"
           onPointerDown={preventMenuClose}
           onKeyDown={(e) => e.stopPropagation()}
         >
@@ -448,22 +500,22 @@ function MenuEntries({
             onChange={(e) => entry.onChange?.(e.target.value)}
             onPointerDown={(e) => e.stopPropagation()}
             className={cn(
-              'min-w-0 flex-1 border-0 bg-transparent p-0 text-[var(--color-text-primary)] outline-none placeholder:text-[var(--color-text-muted)]',
-              '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+              itemType,
+              'min-w-0 flex-1 border-0 bg-transparent p-0 text-[var(--dropdown-menu-text)] outline-none placeholder:text-[var(--dropdown-menu-search-placeholder)]',
             )}
           />
           {entry.value ? (
             <button
               type="button"
               aria-label="Clear search"
-              className="inline-flex size-3 shrink-0 items-center justify-center text-[var(--screening-icon-muted)]"
+              className="inline-flex size-3 shrink-0 items-center justify-center text-[var(--dropdown-menu-icon)]"
               onPointerDown={preventMenuClose}
               onClick={() => entry.onClear?.()}
             >
-              <MaterialSymbol name="close" size="sm" className="text-[var(--screening-icon-muted)]" />
+              <MaterialSymbol name="close" size="sm" className="text-[var(--dropdown-menu-icon)]" />
             </button>
           ) : (
-            <MaterialSymbol name="search" size="sm" className="shrink-0 text-[var(--screening-icon-muted)]" />
+            <MaterialSymbol name="search" size="sm" className="shrink-0 text-[var(--dropdown-menu-icon)]" />
           )}
         </div>
       )
@@ -476,8 +528,10 @@ function MenuEntries({
             key={entryKey(entry, i)}
             className={cn(assignmentCheckboxRow, entry.disabled && 'cursor-not-allowed opacity-50')}
           >
-            <Toggle size="sm" checked={entry.checked} disabled={entry.disabled} onCheckedChange={entry.onCheckedChange} />
-            <span className="min-w-0 truncate">{entry.label}</span>
+            <span className="flex min-w-0 flex-1 items-center gap-2 px-3 py-1">
+              <Toggle size="sm" checked={entry.checked} disabled={entry.disabled} onCheckedChange={entry.onCheckedChange} />
+              <span className="min-w-0 truncate">{entry.label}</span>
+            </span>
           </label>
         )
       }
@@ -505,6 +559,49 @@ function MenuEntries({
     }
 
     if (entry.type === 'radioGroup') {
+      if (staticDisplay) {
+        return (
+          <div key={entryKey(entry, i)} role="radiogroup" className="flex flex-col">
+            {entry.options.map((opt) => {
+              const selected = opt.value === entry.value
+              return (
+                <div
+                  key={opt.value}
+                  role="radio"
+                  aria-checked={selected}
+                  aria-disabled={opt.disabled || undefined}
+                  className={cn(
+                    paddedIndicatorItem,
+                    opt.imageUrl && 'gap-[var(--space-2)] pl-9',
+                    opt.disabled && 'pointer-events-none opacity-50',
+                    selected && 'bg-[var(--dropdown-menu-row-selected)]',
+                  )}
+                >
+                  <span className="absolute left-2 top-1/2 size-4 -translate-y-1/2" aria-hidden>
+                    {selected ? (
+                      <span className="absolute left-1/2 top-1/2 block size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--dropdown-menu-primary)]" />
+                    ) : null}
+                  </span>
+                  {opt.imageUrl ? (
+                    <img
+                      src={opt.imageUrl}
+                      alt=""
+                      className="size-8 shrink-0 rounded-full object-cover"
+                    />
+                  ) : null}
+                  <span
+                    className={
+                      panelWidth === 'hug' ? 'whitespace-nowrap' : 'min-w-0 truncate'
+                    }
+                  >
+                    {opt.label}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        )
+      }
       return (
         <DropdownMenuPrimitive.RadioGroup
           key={entryKey(entry, i)}
@@ -524,7 +621,7 @@ function MenuEntries({
             >
               <span className="absolute left-2 top-1/2 size-4 -translate-y-1/2">
                 <DropdownMenuPrimitive.ItemIndicator className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <span className="block size-2 rounded-full bg-[var(--screening-primary)]" />
+                  <span className="block size-2 rounded-full bg-[var(--dropdown-menu-primary)]" />
                 </DropdownMenuPrimitive.ItemIndicator>
               </span>
               {opt.imageUrl ? (
@@ -534,7 +631,13 @@ function MenuEntries({
                   className="size-8 shrink-0 rounded-full object-cover"
                 />
               ) : null}
-              <span className="min-w-0 truncate">{opt.label}</span>
+              <span
+                className={
+                  panelWidth === 'hug' ? 'whitespace-nowrap' : 'min-w-0 truncate'
+                }
+              >
+                {opt.label}
+              </span>
             </DropdownMenuPrimitive.RadioItem>
           ))}
         </DropdownMenuPrimitive.RadioGroup>
@@ -542,6 +645,8 @@ function MenuEntries({
     }
 
     if (entry.type === 'checkbox') {
+      const withPipe = panelWidth === 'wide'
+      const isSelected = entry.emphasized === true
       if (staticDisplay) {
         return (
           <label
@@ -549,17 +654,23 @@ function MenuEntries({
             className={cn(
               assignmentCheckboxRow,
               checkboxEmphasizedClass(entry.emphasized),
+              isSelected && 'bg-[var(--dropdown-menu-row-selected)]',
               entry.disabled && 'cursor-not-allowed opacity-50',
             )}
           >
-            <Checkbox
-              size="sm"
-              checked={entry.checked}
-              disabled={entry.disabled}
-              onCheckedChange={entry.onCheckedChange}
-            />
-            <span className="min-w-0 truncate">
-              {entry.matchHighlight ? highlightMenuLabel(entry.label, entry.matchHighlight) : entry.label}
+            {withPipe ? <MenuRowPipe active={isSelected} /> : null}
+            <span className={cn('flex min-w-0 flex-1 items-center gap-2', withPipe ? 'gap-3 p-2' : 'px-3 py-1')}>
+              <Checkbox
+                size="sm"
+                checked={entry.checked}
+                disabled={entry.disabled}
+                onCheckedChange={entry.onCheckedChange}
+              />
+              <span className="min-w-0 truncate">
+                {entry.matchHighlight
+                  ? highlightMenuLabel(entry.label, entry.matchHighlight)
+                  : entry.label}
+              </span>
             </span>
           </label>
         )
@@ -570,14 +681,39 @@ function MenuEntries({
           checked={entry.checked}
           disabled={entry.disabled}
           label={entry.label}
-          matchHighlight={entry.matchHighlight}
           emphasized={entry.emphasized}
+          matchHighlight={entry.matchHighlight}
+          withPipe={withPipe}
           onCheckedChange={entry.onCheckedChange}
         />
       )
     }
 
     if (entry.type === 'sub') {
+      if (staticDisplay) {
+        return (
+          <div key={entryKey(entry, i)} className="flex flex-col">
+            <div
+              className={cn(
+                itemClass,
+                'justify-between gap-[var(--space-2)] px-[var(--space-3)] py-[var(--space-2)] pr-[var(--space-2)]',
+                entry.disabled && 'pointer-events-none opacity-50',
+              )}
+            >
+              <span className="min-w-0 truncate">{entry.label}</span>
+              <MaterialSymbol name="keyboard_arrow_right" size="md" className={cn(aceChevronIconClass, 'opacity-70')} />
+            </div>
+            <div className="ml-2 border-l border-[var(--dropdown-menu-border)] pl-1">
+              <MenuEntries
+                entries={entry.items}
+                portalContainer={portalContainer}
+                staticDisplay
+                panelWidth={panelWidth}
+              />
+            </div>
+          </div>
+        )
+      }
       return (
         <DropdownMenuPrimitive.Sub key={entryKey(entry, i)}>
           <DropdownMenuPrimitive.SubTrigger
@@ -601,45 +737,13 @@ function MenuEntries({
       )
     }
 
-    if (panelWidth === 'wide' && !entry.icon && !entry.shortcut) {
-      return <PrimaryMenuItem key={entryKey(entry, i, entry.label)} entry={entry} staticDisplay={staticDisplay} />
-    }
-
-    const Icon = entry.icon
-    const isSelected = entry.highlighted || entry.selected
-    const rowClass = cn(
-      compact ? compactItemClass : cn(itemClass, 'px-[var(--space-3)] py-[var(--space-2)]'),
-      isSelected && 'bg-[var(--screening-surface-hover)]',
-      (entry.shortcut || Icon) && 'justify-between gap-[var(--space-3)]',
-      entry.destructive &&
-        'text-[var(--dialog-modal-danger)] data-[highlighted]:bg-[var(--screening-surface-hover)] data-[highlighted]:text-[var(--dialog-modal-danger)]',
-    )
-
-    if (staticDisplay) {
-      return (
-        <div key={entryKey(entry, i, entry.label)} role="menuitem" className={rowClass}>
-          <span className="flex min-w-0 flex-1 items-center gap-[var(--space-2)]">
-            {Icon ? <Icon className="size-4 shrink-0 text-[var(--screening-icon-muted)]" aria-hidden /> : null}
-            <span className="min-w-0 truncate">{entry.label}</span>
-          </span>
-          {entry.shortcut ? <span className={shortcutClass}>{entry.shortcut}</span> : null}
-        </div>
-      )
-    }
-
     return (
-      <DropdownMenuPrimitive.Item
+      <PrimaryMenuItem
         key={entryKey(entry, i, entry.label)}
-        disabled={entry.disabled}
-        className={rowClass}
-        onSelect={() => entry.onSelect?.()}
-      >
-        <span className="flex min-w-0 flex-1 items-center gap-[var(--space-2)]">
-          {Icon ? <Icon className="size-4 shrink-0 text-[var(--screening-icon-muted)]" aria-hidden /> : null}
-          <span className="min-w-0 truncate">{entry.label}</span>
-        </span>
-        {entry.shortcut ? <span className={shortcutClass}>{entry.shortcut}</span> : null}
-      </DropdownMenuPrimitive.Item>
+        entry={entry}
+        staticDisplay={staticDisplay}
+        compact={compact}
+      />
     )
   })
 }
@@ -701,16 +805,18 @@ export function DropdownMenu({
       <button
         type="button"
         disabled={disabled}
-        className={cn(fieldTriggerBase, fieldSizeClass[size], 'justify-between', className)}
+        className={cn(aceDropdownFieldTriggerClass, fieldSizeClass[size], 'justify-between', className)}
       >
-        <span className="min-w-0 flex-1 truncate text-left">{triggerLabel}</span>
-        {showChevron ? (
-          <MaterialSymbol
-            name="keyboard_arrow_down"
-            size="md"
-            className={cn('ml-auto shrink-0 opacity-70', aceChevronIconClass)}
-          />
-        ) : null}
+        <span
+          className={
+            panelWidth === 'hug'
+              ? 'whitespace-nowrap text-left'
+              : 'min-w-0 flex-1 truncate text-left'
+          }
+        >
+          {triggerLabel}
+        </span>
+        {showChevron ? <AceDropdownChevron className={cn('ml-auto', aceDropdownFieldChevronClass)} /> : null}
       </button>
     )
 

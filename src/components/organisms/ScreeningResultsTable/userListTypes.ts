@@ -69,7 +69,7 @@ const PAD_LOGINS = [
   '23 Jun 2026',
 ] as const
 
-/** 42 rows — matches User List pagination mock (1–10 of 42). */
+/** 42 rows - matches User List pagination mock (1-10 of 42). */
 export const MOCK_USER_LIST_ROWS: UserListRow[] = (() => {
   const rows: UserListRow[] = SEED_ROWS.map((row, index) => ({
     ...row,

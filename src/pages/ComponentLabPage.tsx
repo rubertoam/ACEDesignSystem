@@ -56,7 +56,7 @@ export type ComponentLabPageProps = {
   previewToolbar?: ReactNode
   /** @deprecated Fold into `usage` */
   variables?: ReactNode
-  /** Optional Changelog tab — component evolution history. */
+  /** Optional Changelog tab - component evolution history. */
   changelog?: ReactNode
 }
 
@@ -110,9 +110,12 @@ export function ComponentLabPage({
     [implementationRulesMarkdown],
   )
 
-  const hasExamples = examplesContent != null
+  const hasExamples = examplesContent != null || toolbarContent != null
   const hasCode = code != null
   const hasChangelog = changelog != null
+  const hasUsage =
+    legacyUsageContent != null || Boolean(implementationRulesMarkdown) || Boolean(catalogTokenGroups)
+  const hasQa = qa != null || Boolean(qaMarkdown)
 
   const usageTabContent = (
     <>
@@ -144,11 +147,13 @@ export function ComponentLabPage({
     const items: { id: ComponentLabTab; label: string }[] = []
     if (hasExamples) items.push({ id: 'examples', label: 'Examples' })
     if (hasCode) items.push({ id: 'code', label: 'Code' })
-    items.push({ id: 'usage', label: 'Usage' })
-    items.push({ id: 'qa', label: 'QA' })
+    if (hasUsage) items.push({ id: 'usage', label: 'Usage' })
+    if (hasQa) items.push({ id: 'qa', label: 'QA' })
     if (hasChangelog) items.push({ id: 'changelog', label: 'Changelog' })
     return items
-  }, [hasExamples, hasCode, hasChangelog])
+  }, [hasExamples, hasCode, hasUsage, hasQa, hasChangelog])
+
+  const examplesOnly = tabItems.length === 1 && tabItems[0]?.id === 'examples'
 
   const [tab, setTab] = useState<ComponentLabTab>(tabItems[0]?.id ?? 'examples')
 
@@ -184,7 +189,22 @@ export function ComponentLabPage({
         </div>
       </div>
 
-      {tabItems.length > 0 ? (
+      {examplesOnly ? (
+        <div>
+          {toolbarContent != null ? (
+            <div className="mb-3 flex flex-col gap-2">
+              <div className={examplesToolbarPanel}>{toolbarContent}</div>
+            </div>
+          ) : null}
+          {examplesContent != null ? (
+            examplesCanvas ? (
+              <div className={examplesCanvasPanel}>{examplesContent}</div>
+            ) : (
+              <div className="w-full min-w-0">{examplesContent}</div>
+            )
+          ) : null}
+        </div>
+      ) : tabItems.length > 0 ? (
         <div>
           <Tabs
             idPrefix={tabListId}
@@ -206,11 +226,13 @@ export function ComponentLabPage({
                   <div className={examplesToolbarPanel}>{toolbarContent}</div>
                 </div>
               ) : null}
-              {examplesCanvas ? (
-                <div className={examplesCanvasPanel}>{examplesContent}</div>
-              ) : (
-                <div className="w-full min-w-0">{examplesContent}</div>
-              )}
+              {examplesContent != null ? (
+                examplesCanvas ? (
+                  <div className={examplesCanvasPanel}>{examplesContent}</div>
+                ) : (
+                  <div className="w-full min-w-0">{examplesContent}</div>
+                )
+              ) : null}
             </section>
           ) : null}
 
@@ -225,7 +247,7 @@ export function ComponentLabPage({
             </section>
           ) : null}
 
-          {tab === 'usage' ? (
+          {hasUsage && tab === 'usage' ? (
             <section
               id={usagePanelId}
               role="tabpanel"
@@ -238,7 +260,7 @@ export function ComponentLabPage({
             </section>
           ) : null}
 
-          {tab === 'qa' ? (
+          {hasQa && tab === 'qa' ? (
             <section
               id={qaPanelId}
               role="tabpanel"

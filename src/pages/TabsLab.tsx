@@ -169,7 +169,7 @@ import { TabCards } from '../components/atoms/Tabs/TabCards'
               <li>Subtitle - Caption Regular (12, optional)</li>
               <li>Description - Caption Regular (12)</li>
               <li>
-                States — default (<code className="text-[var(--screening-text-primary)]">colors/surface/primary</code>{' '}
+                States - default (<code className="text-[var(--screening-text-primary)]">colors/surface/primary</code>{' '}
                 + <code className="text-[var(--screening-text-primary)]">colors/border/default</code>), hover (
                 <code className="text-[var(--screening-text-primary)]">colors/bg/brand-hover</code> →{' '}
                 <code className="text-[var(--screening-text-primary)]">--color-bg-brand-hover</code> + XL drop shadow),

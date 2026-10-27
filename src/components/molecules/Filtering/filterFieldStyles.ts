@@ -1,6 +1,6 @@
 import { cn } from '../../../lib/cn'
 
-/** Caption/Regular — Figma Secondary / FilterChip trigger text. */
+/** Caption/Regular - Figma Secondary / FilterChip trigger text. */
 const filterType = cn(
   '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
 )
@@ -17,7 +17,7 @@ export const filterTriggerClass = cn(
   'disabled:pointer-events-none disabled:opacity-50',
 )
 
-/** Toggle chip — same shell as filter trigger; pressed = brand fill (no chevron / clear). */
+/** Toggle chip - same shell as filter trigger; pressed = brand fill (no chevron / clear). */
 export const filterToggleChipClass = filterTriggerClass
 
 export const filterToggleChipPressedClass = cn(

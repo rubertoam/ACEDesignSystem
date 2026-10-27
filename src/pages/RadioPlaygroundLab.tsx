@@ -6,8 +6,8 @@ import {
   type RadioFieldState,
   type RadioSize,
 } from '../components/atoms/Radio/radioFieldStyles'
-import { LabRadioGroup } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { LabSelect } from '../lib/labControls'
+import { labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 import { radioLabQa } from './labTabDocs'
@@ -33,6 +33,12 @@ const SECTIONS: SectionRow[] = [
   { title: 'With text / Large', withLabel: true, size: 'lg' },
   { title: 'Without text / Large', withLabel: false, size: 'lg' },
   { title: 'With background / Medium', withLabel: true, size: 'md', field: true },
+]
+
+const SIZE_OPTIONS: { value: RadioSize; label: string }[] = [
+  { value: 'sm', label: 'Small' },
+  { value: 'md', label: 'Medium' },
+  { value: 'lg', label: 'Large' },
 ]
 
 const labelClass: Record<RadioSize, string> = {
@@ -65,8 +71,9 @@ function PreviewCell({
 
   const groupValue = checked ? 'preview' : ''
 
-  const fauxHoverClass =
-    hoverVisual ? '[&>span:first-child]:border-[var(--radio-border-hover)] [&>span:first-child]:bg-[var(--radio-surface-hover)]' : undefined
+  const fauxHoverClass = hoverVisual
+    ? '[&>span:first-child]:border-[var(--radio-border-hover)] [&>span:first-child]:bg-[var(--radio-surface-hover)]'
+    : undefined
 
   const control = (
     <RadioGroup
@@ -118,11 +125,50 @@ export function RadioPlaygroundLab() {
   const [size, setSize] = useState<RadioSize>('md')
   const [value, setValue] = useState('a')
   const [fieldValue, setFieldValue] = useState('a')
-  const sizes: RadioSize[] = ['sm', 'md', 'lg']
 
   const toolbar = (
-    <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-      <LabRadioGroup label="Size" value={size} onChange={setSize} options={sizes.map((s) => ({ value: s, label: s }))} />
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect label="Size" value={size} onChange={setSize} options={SIZE_OPTIONS} />
+      </div>
+
+      <div className="flex flex-col gap-4 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <p className={labSectionLabelClass}>Plain</p>
+        <RadioGroup
+          value={value}
+          onValueChange={setValue}
+          className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-6"
+          aria-label="Example radio group"
+        >
+          <RadioItem value="a" size={size} id="radio-lab-a">
+            <span className={labelClass[size]}>Option A</span>
+          </RadioItem>
+          <RadioItem value="b" size={size} id="radio-lab-b">
+            <span className={labelClass[size]}>Option B</span>
+          </RadioItem>
+          <RadioItem value="c" size={size} id="radio-lab-c">
+            <span className={labelClass[size]}>Option C</span>
+          </RadioItem>
+        </RadioGroup>
+      </div>
+
+      <div className="flex flex-col gap-4 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <p className={labSectionLabelClass}>With background</p>
+        <RadioGroup
+          value={fieldValue}
+          onValueChange={setFieldValue}
+          className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
+          aria-label="Example radio group with background"
+        >
+          {FIELD_OPTIONS.map((opt) => (
+            <div key={opt.value} className={aceRadioFieldInteractiveClass({ checked: fieldValue === opt.value })}>
+              <RadioItem value={opt.value} size={size} id={opt.id}>
+                <span className={labelClass[size]}>{opt.label}</span>
+              </RadioItem>
+            </div>
+          ))}
+        </RadioGroup>
+      </div>
     </div>
   )
 
@@ -133,110 +179,51 @@ export function RadioPlaygroundLab() {
       description="ACE Design System v.3 radio controls: small / medium / large circles, states (regular, hover, active, disabled, disabled selected), and optional field wrapper. Built on Radix Radio Group with --radio-* tokens."
       examplesToolbar={toolbar}
       examples={
-        <div className="space-y-12">
-          <div
-            className={cn(
-              'rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] sm:p-8',
-              labExampleSectionClass,
-            )}
-          >
-            <p className={labSectionLabelClass}>Interactive - plain</p>
-            <RadioGroup
-              value={value}
-              onValueChange={setValue}
-              className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-6"
-              aria-label="Example radio group"
-            >
-              <RadioItem value="a" size={size} id="radio-lab-a">
-                <span className={labelClass[size]}>Option A</span>
-              </RadioItem>
-              <RadioItem value="b" size={size} id="radio-lab-b">
-                <span className={labelClass[size]}>Option B</span>
-              </RadioItem>
-              <RadioItem value="c" size={size} id="radio-lab-c">
-                <span className={labelClass[size]}>Option C</span>
-              </RadioItem>
-            </RadioGroup>
-            <p className="mt-4 m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              Use arrow keys inside the group; hover an unchecked option for the filled hover ring. Size follows the control above.
+        <section className="space-y-5">
+          <div className={cn('w-full min-w-0', labUsageSectionClass)}>
+            <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+            <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+              Matches the Figma matrix. Hover uses a faux fill on the circle; use the controls above for real
+              hover.
             </p>
           </div>
-
-          <div
-            className={cn(
-              'rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] sm:p-8',
-              labExampleSectionClass,
-            )}
-          >
-            <p className={labSectionLabelClass}>Interactive - with background</p>
-            <p className="mb-4 m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              Each option sits in <code className="text-[var(--color-text-primary)]">aceRadioFieldInteractiveClass()</code>.
-              Hover fills the field with{' '}
-              <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
-              <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; the selected option
-              gets the brand border (Figma With background).
-            </p>
-            <RadioGroup
-              value={fieldValue}
-              onValueChange={setFieldValue}
-              className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
-              aria-label="Example radio group with background"
-            >
-              {FIELD_OPTIONS.map((opt) => (
-                <div key={opt.value} className={aceRadioFieldInteractiveClass({ checked: fieldValue === opt.value })}>
-                  <RadioItem value={opt.value} size={size} id={opt.id}>
-                    <span className={labelClass[size]}>{opt.label}</span>
-                  </RadioItem>
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
-
-          <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className={cn('max-w-3xl', labUsageSectionClass)}>
-              <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
-              <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                Matches the Figma matrix. Hover uses a faux fill on the circle; use the interactive group for real hover.
-              </p>
-            </div>
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
-              <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-                    <th className="min-w-[12rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                      Variant
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+            <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+                  <th className="min-w-[12rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
+                    Variant
+                  </th>
+                  {COLUMNS.map((c) => (
+                    <th
+                      key={c.key}
+                      className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]"
+                    >
+                      {c.label}
                     </th>
-                    {COLUMNS.map((c) => (
-                      <th
-                        key={c.key}
-                        className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]"
-                      >
-                        {c.label}
-                      </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--color-border)] bg-[var(--color-surface)]">
+                {SECTIONS.map((section) => (
+                  <tr key={section.title}>
+                    <td className="px-4 py-4 font-medium text-[var(--color-text-primary)]">{section.title}</td>
+                    {COLUMNS.map((col) => (
+                      <td key={col.key} className="px-4 py-4 align-middle">
+                        <PreviewCell
+                          col={col.key}
+                          size={section.size}
+                          withLabel={section.withLabel}
+                          field={section.field}
+                        />
+                      </td>
                     ))}
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--color-border)] bg-[var(--color-surface)]">
-                  {SECTIONS.map((section) => (
-                    <tr key={section.title}>
-                      <td className="px-4 py-4 font-medium text-[var(--color-text-primary)]">{section.title}</td>
-                      {COLUMNS.map((col) => (
-                        <td key={col.key} className="px-4 py-4 align-middle">
-                          <PreviewCell
-                            col={col.key}
-                            size={section.size}
-                            withLabel={section.withLabel}
-                            field={section.field}
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       }
       code={
         <ComponentLabCode>{`import { RadioGroup, RadioItem } from '../components/atoms/Radio/RadioGroup'
@@ -249,9 +236,11 @@ export function RadioPlaygroundLab() {
       usage={
         <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
           Import <code className="text-[var(--color-text-primary)]">RadioGroup</code> and{' '}
-          <code className="text-[var(--color-text-primary)]">RadioItem</code>. Set <code className="text-[var(--color-text-primary)]">value</code> /{' '}
-          <code className="text-[var(--color-text-primary)]">onValueChange</code> on the group; each item needs a unique{' '}
-          <code className="text-[var(--color-text-primary)]">value</code> string. Optional label text goes as children of the item.
+          <code className="text-[var(--color-text-primary)]">RadioItem</code>. Set{' '}
+          <code className="text-[var(--color-text-primary)]">value</code> /{' '}
+          <code className="text-[var(--color-text-primary)]">onValueChange</code> on the group; each item needs a
+          unique <code className="text-[var(--color-text-primary)]">value</code> string. Optional label text goes as
+          children of the item.
         </p>
       }
       variables={

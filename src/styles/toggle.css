@@ -1,5 +1,5 @@
 /**
- * ACE Toggle motion — thumb uses Tailwind v4 `translate` utilities (not transform).
+ * ACE Toggle motion - thumb uses Tailwind v4 `translate` utilities (not transform).
  * transition-property must include `translate` or the slide appears instant.
  */
 @layer components {

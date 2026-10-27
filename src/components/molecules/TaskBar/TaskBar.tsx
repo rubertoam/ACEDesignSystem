@@ -19,7 +19,7 @@ export type TaskBarProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
 }
 
 /**
- * Bottom action bar for app shells — Review Assigned task bar chrome.
+ * Bottom action bar for app shells - Review Assigned task bar chrome.
  * Place under main content; pass actions as children.
  */
 export function TaskBar({

@@ -18,7 +18,7 @@ export const scrollableListShellMinimizedClass = 'w-10'
 export const scrollableListHeaderClass =
   'flex shrink-0 items-center justify-between gap-2 px-3 pb-3 pt-5'
 
-/** List title — Paragraph P1 Bold. */
+/** List title - Paragraph P1 Bold. */
 export const scrollableListTitleClass = cn(
   'm-0 min-w-0 truncate',
   '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
@@ -35,7 +35,7 @@ export const scrollableListSectionHeaderClass = cn(
   'border-[var(--scrollable-list-border)] bg-[var(--scrollable-list-surface)] px-4 py-2.5',
 )
 
-/** Section title — Caption SemiBold. */
+/** Section title - Caption SemiBold. */
 export const scrollableListSectionTitleClass = cn(
   '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
   'text-[var(--color-text-secondary)]',
@@ -59,14 +59,14 @@ export const scrollableListItemSelectedClass =
 export const scrollableListItemFocusRingClass =
   'pointer-events-none absolute inset-0 z-20 border-[0.5px] border-solid border-[var(--screening-primary)]'
 
-/** Primary row label — Paragraph P1 Regular. */
+/** Primary row label - Paragraph P1 Regular. */
 export const scrollableListItemLabelClass = cn(
   'm-0 w-full truncate',
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
   'text-[var(--scrollable-list-item-text)]',
 )
 
-/** Secondary row line — Footer Regular. */
+/** Secondary row line - Footer Regular. */
 export const scrollableListItemDescriptionClass = cn(
   'm-0 w-full truncate',
   '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
@@ -76,7 +76,7 @@ export const scrollableListItemDescriptionClass = cn(
 export const scrollableListMinimizedClass =
   'flex h-full min-h-0 flex-col items-center gap-3 px-1 pb-3 pt-3'
 
-/** Minimized vertical title — Caption Bold. */
+/** Minimized vertical title - Caption Bold. */
 export const scrollableListMinimizedTitleClass = cn(
   'max-h-full truncate',
   '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]',

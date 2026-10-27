@@ -21,7 +21,7 @@ export function LabQaChecklist({
         <p className={cn('m-0 text-sm leading-relaxed', muted)}>{intro}</p>
       ) : (
         <p className={cn('m-0 text-sm leading-relaxed', muted)}>
-          Walk the Examples toolbar and canvases in this lab. Check each item against the variants and states listed —
+          Walk the Examples toolbar and canvases in this lab. Check each item against the variants and states listed -
           fail the task if a listed combination is missing, incorrect, or inaccessible.
         </p>
       )}

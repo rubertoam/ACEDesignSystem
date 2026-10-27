@@ -3,7 +3,7 @@ import { cn } from '../../../lib/cn'
 export type CheckboxSize = 'sm' | 'md' | 'lg'
 
 /**
- * ACE Checkbox surface — Figma Checkbox set 322:1747 (doc page 317:1492).
+ * ACE Checkbox surface - Figma Checkbox set 322:1747 (doc page 317:1492).
  * Regular: surface fill + brand border · Hover: brand-hover fill + brand border ·
  * Active: brand fill with white inset ring (no checkmark) · Disabled: border/disabled ·
  * Disabled-Selected: bg/disabled + white inset.
@@ -13,17 +13,17 @@ export const aceCheckboxSurfaceClass = cn(
   'border-[var(--screening-checkbox-border)] bg-[var(--screening-checkbox-inner-bg)]',
   'text-[var(--screening-checkbox-check)]',
   'transition-[border-color,background-color,color,box-shadow] duration-150 ease-out',
-  /* Hover (unchecked) — brand border + brand-hover fill */
+  /* Hover (unchecked) - brand border + brand-hover fill */
   'enabled:data-[state=unchecked]:hover:border-[var(--screening-checkbox-border-hover)]',
   'enabled:data-[state=unchecked]:hover:bg-[var(--screening-checkbox-bg-hover)]',
-  /* Checked / indeterminate — filled square + white inset ring */
+  /* Checked / indeterminate - filled square + white inset ring */
   'data-[state=checked]:border-[var(--screening-checkbox-checked-border)] data-[state=checked]:bg-[var(--screening-checkbox-checked-bg)]',
   'data-[state=checked]:shadow-[inset_0_0_0_1.5px_var(--screening-checkbox-checked-inset)]',
   'data-[state=indeterminate]:border-[var(--screening-checkbox-checked-border)] data-[state=indeterminate]:bg-[var(--screening-checkbox-checked-bg)]',
   'data-[state=indeterminate]:shadow-[inset_0_0_0_1.5px_var(--screening-checkbox-checked-inset)]',
   /* Focus */
   'outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--color-surface-primary)]',
-  /* Disabled unchecked — transparent fill, disabled border */
+  /* Disabled unchecked - transparent fill, disabled border */
   'disabled:cursor-not-allowed',
   'disabled:border-[var(--screening-checkbox-disabled-border)] disabled:bg-transparent',
   /* Disabled selected / indeterminate */
@@ -35,21 +35,21 @@ export const aceCheckboxSurfaceClass = cn(
   'disabled:data-[state=indeterminate]:text-[var(--screening-checkbox-disabled-check)]',
 )
 
-/** Box sizes — Figma Small 16 / Medium 20 / Large 24; Large uses 1.5px stroke + 4px radius. */
+/** Box sizes - Figma Small 16 / Medium 20 / Large 24; Large uses 1.5px stroke + 4px radius. */
 export const checkboxSizeClass: Record<CheckboxSize, string> = {
   sm: 'size-4 shrink-0 rounded-[var(--radius-checkbox)] border',
   md: 'size-5 shrink-0 rounded-[var(--radius-checkbox)] border',
   lg: 'size-6 shrink-0 rounded-[var(--radius-sm)] border-[1.5px]',
 }
 
-/** Indeterminate bar only — selected state uses the filled square + inset, not a glyph. */
+/** Indeterminate bar only - selected state uses the filled square + inset, not a glyph. */
 export const aceCheckboxIconSizeClass: Record<CheckboxSize, string> = {
   sm: 'h-0.5 w-2',
   md: 'h-0.5 w-2.5',
   lg: 'h-[3px] w-3',
 }
 
-/** Label next to checkbox — Caption 12 (sm) / Body 14 (md, lg). */
+/** Label next to checkbox - Caption 12 (sm) / Body 14 (md, lg). */
 export const aceCheckboxLabelClass: Record<CheckboxSize, string> = {
   sm: '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--color-text-primary)]',
   md: '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--color-text-primary)]',

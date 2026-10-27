@@ -52,7 +52,7 @@ export type ScrollableListItem = {
   label: string
   /**
    * Secondary line under the title (e.g. `ID-1001`).
-   * Prefer this over embedding the count in the string — use `count` for the results piece.
+   * Prefer this over embedding the count in the string - use `count` for the results piece.
    */
   subtext?: string
   /** @deprecated Use `subtext` (+ optional `count`). Still honored when `subtext` is omitted. */

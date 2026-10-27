@@ -1,5 +1,5 @@
 /**
- * Design tokens — map Figma variables and code primitives here.
+ * Design tokens - map Figma variables and code primitives here.
  * Import this file from your global stylesheet (see `src/style.css`).
  *
  * Literal colors/sizes are allowed only inside this file as token definitions.
@@ -25,7 +25,7 @@
   --radius-checkbox: 0.1875rem;
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
 
-  /* ACE drop shadows — Figma Drop Shadows (71:71); single-layer elevation, 10% alpha */
+  /* ACE drop shadows - Figma Drop Shadows (71:71); single-layer elevation, 10% alpha */
   /** Space between a subsection label and its content (labs, documentation). */
   --ace-section-label-gap: var(--space-3); /* 12px */
 
@@ -36,7 +36,7 @@
   --ace-drop-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.1);
   --ace-drop-shadow-xl: 0 12px 24px rgb(0 0 0 / 0.1);
 
-  /* Dialog modal — ACE Dialog Modals (Figma node 3047:2036) */
+  /* Dialog modal - ACE Dialog Modals (Figma node 3047:2036) */
   --dialog-modal-surface: var(--color-surface-primary);
   --dialog-modal-border: var(--color-neutral-100);
   --dialog-modal-radius: var(--radius-component-modal);
@@ -66,19 +66,19 @@
   --dialog-modal-inline-error-bg: var(--ace-error-50);
   --dialog-modal-inline-error-border: var(--color-border-error);
 
-  /* ACE neutrals — alias Figma primitive neutrals */
+  /* ACE neutrals - alias Figma primitive neutrals */
   --ace-neutral-50: var(--color-neutral-50);
   --ace-neutral-100: var(--color-neutral-100);
   --ace-neutral-200: var(--color-neutral-200);
   --ace-neutral-800: var(--color-neutral-800);
   --ace-neutral-900: var(--color-neutral-900);
 
-  /* ——— Data table (screening) organism — mapped to Semantic color tokens ——— */
+  /* --- Data table (screening) organism - mapped to Semantic color tokens --- */
   --screening-surface: var(--color-surface-primary);
   --screening-surface-muted: var(--color-bg-primary);
   --screening-surface-hover: var(--color-bg-secondary);
   --screening-surface-row-muted: var(--color-bg-secondary);
-  /* Review Assigned expanded detail — muted callout (not row white). */
+  /* Review Assigned expanded detail - muted callout (not row white). */
   --screening-surface-expanded: var(--screening-surface-muted);
   --screening-surface-selected: color-mix(in srgb, var(--color-bg-brand-hover) 60%, transparent);
   /* Expanded-row indent rail (Review Assigned List Profile: primary @ 25%). */
@@ -98,7 +98,7 @@
   --screening-primary-soft-bg-hover: var(--color-action-primary-hover-subtle);
   --screening-primary-ring: color-mix(in srgb, var(--color-action-primary) 35%, transparent);
   --screening-primary-ring-offset: var(--color-surface-primary);
-  /* Lab / docs chrome — screening aliases; Figma --color-text-primary stays from color-tokens.css */
+  /* Lab / docs chrome - screening aliases; Figma --color-text-primary stays from color-tokens.css */
   --color-background: var(--color-bg-primary);
   --color-surface: var(--color-surface-primary);
   --color-text-muted: var(--color-text-disabled);
@@ -111,14 +111,14 @@
   --screening-chip-inactive-border: var(--color-border-default);
   --screening-chip-inactive-hover-bg: var(--color-bg-secondary);
   --screening-chip-inactive-hover-border: var(--color-neutral-500);
-  /* AceBadge purple / New — Semantic colors/badges/* */
+  /* AceBadge purple / New - Semantic colors/badges/* */
   --screening-pill-new-border: var(--color-badges-purple-border);
   --screening-pill-new-surface: var(--color-badges-purple-fill);
   --screening-pill-new-dot: var(--color-badges-purple-border);
   --screening-pill-new-label: var(--color-badges-purple-border);
   --screening-chip-active-text: var(--color-text-brand);
   --screening-chip-active-border: var(--color-border-brand);
-  /* AceBadge orange / Escalate — Semantic colors/badges/* */
+  /* AceBadge orange / Escalate - Semantic colors/badges/* */
   --screening-pill-escalated-border: var(--color-badges-orange-border);
   --screening-pill-escalated-surface: var(--color-badges-orange-fill);
   --screening-pill-escalated-dot: var(--color-badges-orange-border);
@@ -127,7 +127,7 @@
   --screening-age-fresh: var(--color-status-success);
   --screening-age-warn: var(--color-status-warning);
   --screening-age-stale: var(--color-status-error);
-  /* Match-string tiles — same surface/label/border as AceBadge status pills */
+  /* Match-string tiles - same surface/label/border as AceBadge status pills */
   --screening-tile-e-bg: var(--badge-red-surface);
   --screening-tile-e-fg: var(--badge-red-label);
   --screening-tile-e-border: var(--badge-red-border);
@@ -144,10 +144,10 @@
   --screening-tile-b-fg: var(--badge-gray-label);
   --screening-tile-b-border: var(--badge-gray-border);
   /* Dropdown trigger + MenuList (Figma Dropdowns 1307:3725 / Menus 5318:1634; sets 2277:136, 1541:6165) */
-  --dropdown-menu-trigger-width: 12.5rem; /* 200px — Primary field */
+  --dropdown-menu-trigger-width: 12.5rem; /* 200px - Primary field */
   --dropdown-menu-trigger-radius: var(--radius-component-input);
   --dropdown-menu-trigger-px: 0.75rem; /* 12px */
-  --dropdown-menu-trigger-py: 0.5rem; /* 8px — Primary */
+  --dropdown-menu-trigger-py: 0.5rem; /* 8px - Primary */
   --dropdown-menu-trigger-border: var(--color-border-default);
   --dropdown-menu-trigger-bg: var(--color-surface-primary);
   --dropdown-menu-trigger-text: var(--color-text-primary);
@@ -157,7 +157,7 @@
   --dropdown-menu-trigger-focus-ring: var(--color-border-focus);
   --dropdown-menu-trigger-label: var(--color-text-primary);
   --dropdown-menu-secondary-px: 0.5rem; /* 8px */
-  --dropdown-menu-secondary-py: 0.25rem; /* 4px — Secondary / FilterChip */
+  --dropdown-menu-secondary-py: 0.25rem; /* 4px - Secondary / FilterChip */
   --dropdown-menu-secondary-active-bg: var(--color-bg-brand);
   --dropdown-menu-secondary-active-text: var(--color-text-inverse);
   --dropdown-menu-secondary-active-icon: var(--color-icon-inverse);
@@ -167,9 +167,10 @@
   --dropdown-menu-text: var(--color-text-primary);
   --dropdown-menu-text-secondary: var(--color-text-secondary);
   --dropdown-menu-text-muted: var(--color-text-secondary);
-  --dropdown-menu-primary: var(--color-text-brand); /* pipe + Select All / Reset */
-  --dropdown-menu-row-hover: var(--color-bg-secondary);
-  --dropdown-menu-row-selected: var(--color-bg-brand-hover);
+  --dropdown-menu-primary: var(--color-text-brand); /* brand pipe on hover / selected rows */
+  --dropdown-menu-action: var(--color-text-primary); /* Select All / Reset All (Figma Menus 5318:1634) */
+  --dropdown-menu-row-hover: var(--color-bg-secondary); /* colors/bg/secondary */
+  --dropdown-menu-row-selected: var(--color-bg-brand-hover); /* colors/bg/brand-hover */
   --dropdown-menu-row-emphasis: var(--color-bg-brand-hover);
   --dropdown-menu-danger: var(--color-status-error);
   --dropdown-menu-search-placeholder: var(--color-text-placeholder);
@@ -181,18 +182,18 @@
 
   /* Date picker (Figma 419:3010) */
   --date-picker-trigger-width: 15rem; /* 240px */
-  --date-picker-panel-width: 29.25rem; /* 468px — range (dual month) */
+  --date-picker-panel-width: 29.25rem; /* 468px - range (dual month) */
   --date-picker-panel-width-single: 15.5rem; /* single month */
-  --date-picker-month-title: var(--ace-neutral-800);
+  --date-picker-month-title: var(--color-text-primary);
   --date-picker-weekday: var(--screening-text-secondary);
   --date-picker-day: var(--screening-text-secondary);
   --date-picker-day-muted: var(--screening-text-muted);
   --date-picker-day-on-primary: var(--color-text-inverse);
   --date-picker-range-fill: var(--screening-primary-soft-bg); /* Primary/50 #EFEEF9 */
-  --date-picker-day-size: 1.75rem; /* 28px — circle fits inside cell gap */
+  --date-picker-day-size: 1.75rem; /* 28px - circle fits inside cell gap */
   --date-picker-day-gap: 0.125rem; /* 2px between day cells */
 
-  /* Site header / top navigation (Figma 225:1406) — height 75% of prior 4rem */
+  /* Site header / top navigation (Figma 225:1406) - height 75% of prior 4rem */
   --site-header-height: 3rem;
   --site-header-px: 2rem;
   --site-header-py: 0.5rem;
@@ -202,14 +203,14 @@
   --site-header-nav-gap: 2rem;
   --site-header-actions-gap: 1.5rem;
   --site-header-toolbar-gap: 0.75rem;
-  --site-header-toolbar-icon-color: var(--ace-neutral-800);
+  --site-header-toolbar-icon-color: var(--color-icon-primary);
   --site-header-icon-notifications-width: 1.5rem;
   --site-header-icon-notifications-height: 1.5rem;
   --site-header-icon-help-size: 1.5rem;
   --site-header-nav-hover: var(--screening-surface-hover);
   --site-header-greeting-color: var(--screening-primary);
 
-  /* Lab segmented toggle — soft track, elevated indicator pill */
+  /* Lab segmented toggle - soft track, elevated indicator pill */
   --ace-lab-segmented-track-bg: var(--screening-surface-muted);
   --ace-lab-segmented-track-border: var(--screening-border-soft);
   --ace-lab-segmented-indicator-bg: var(--screening-surface);
@@ -222,7 +223,7 @@
   --ace-finscan-mark-blue: var(--color-blue-500);
   --ace-finscan-mark-magenta: var(--color-secondary-500);
 
-  /* Secondary — Enlighten Violet (Figma 2794:97) */
+  /* Secondary - Enlighten Violet (Figma 2794:97) */
   --ace-secondary-enlighten-violet-50: var(--color-secondary-50);
   --ace-secondary-enlighten-violet-100: var(--color-secondary-100);
   --ace-secondary-enlighten-violet-200: var(--color-secondary-200);
@@ -234,7 +235,7 @@
   --ace-secondary-enlighten-violet-800: var(--color-secondary-800);
   --ace-secondary-enlighten-violet-900: var(--color-secondary-900);
 
-  /* Secondary — FinScan Teal (Figma 2794:187) */
+  /* Secondary - FinScan Teal (Figma 2794:187) */
   --ace-secondary-teal-50: var(--color-teal-50);
   --ace-secondary-teal-100: var(--color-teal-100);
   --ace-secondary-teal-200: var(--color-teal-200);
@@ -246,7 +247,7 @@
   --ace-secondary-teal-800: var(--color-teal-800);
   --ace-secondary-teal-900: var(--color-teal-900);
 
-  /* Dark mode scale — Figma color/dark/* primitives (updated export) */
+  /* Dark mode scale - Figma color/dark/* primitives (updated export) */
   --ace-dark-mode-50: var(--color-dark-50);
   --ace-dark-mode-100: var(--color-dark-100);
   --ace-dark-mode-200: var(--color-dark-200);
@@ -267,16 +268,19 @@
   --sidebar-width: 18.125rem; /* 290px */
   --sidebar-menu-icon: var(--color-icon-primary);
   /**
-   * Iconography icon buttons (Figma Iconography · Icon button hover).
-   * Border uses color/border/default via --color-border-default.
+   * Iconography icon buttons (Figma Iconography · Icon component set).
+   * Hover fill: colors/icon/hover. Border stroke rest/hover border: colors/border/default.
+   * No-border hover border matches the hover fill. Surface: colors/icon/inverse.
    */
   --icon-button-icon: var(--color-icon-primary);
   --icon-button-icon-rest-ghost: var(--color-text-primary);
-  --icon-button-surface: var(--color-surface-primary);
-  /* Figma Iconography hover fill → colors/bg/primary (not colors/icon/hover) */
-  --icon-button-hover-bg: var(--color-bg-primary);
+  --icon-button-icon-disabled: var(--color-icon-disabled);
+  --icon-button-surface: var(--color-icon-inverse);
+  --icon-button-hover-bg: var(--color-icon-hover);
   --icon-button-border: var(--color-border-default);
-  /* Success / Warning / Notice / Error — Figma primitives */
+  --icon-button-disabled-bg: var(--color-action-disabled-button);
+  --icon-button-disabled-border: var(--color-border-disabled-subtle);
+  /* Success / Warning / Notice / Error - Figma primitives */
   --ace-success-50: var(--color-success-50);
   --ace-success-500: var(--color-success-500);
   --ace-warning-50: var(--color-warning-50);
@@ -311,17 +315,17 @@
   --sidebar-item-selected-bg: var(--screening-primary-soft-bg);
   --sidebar-item-selected-text: var(--dialog-modal-primary);
   --sidebar-item-hover-bg: var(--ace-neutral-100);
-  /** Neutral 400 — expanded group container stroke (Figma). */
+  /** Neutral 400 - expanded group container stroke (Figma). */
   --sidebar-group-expanded-border: var(--button-neutral-400);
   --sidebar-group-hover-bg: var(--ace-neutral-100);
-  /** No-border icon hover fill — icon button hover token */
+  /** No-border icon hover fill - icon button hover token */
   --sidebar-row-action-hover-bg: var(--icon-button-hover-bg);
   --sidebar-group-gap: var(--space-3);
   --sidebar-nav-px: var(--space-3);
   --sidebar-nav-py: 0.375rem;
   /* Full-width controls in header align with group row hover area (nav column) */
   --sidebar-control-width: calc(var(--sidebar-width) - 2 * var(--sidebar-nav-px));
-  /* Edit group dialog — items list scrolls after 5 rows */
+  /* Edit group dialog - items list scrolls after 5 rows */
   --ace-edit-group-restore-bg: var(--ace-success-500);
   --ace-edit-group-restore-hover-bg: var(--ace-success-50);
   --ace-edit-group-trash-hover-bg: var(--ace-error-50);
@@ -330,7 +334,7 @@
     5 * var(--ace-edit-group-item-row-height) + 4 * var(--space-1) + 2 * var(--space-2)
   );
 
-  /* Motion — shared easing/duration tokens (see Animations lab + aceAnimations.ts) */
+  /* Motion - shared easing/duration tokens (see Animations lab + aceAnimations.ts) */
   --ace-motion-ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
   --ace-motion-duration-fast: 150ms;
   --ace-motion-duration-medium: 300ms;
@@ -338,8 +342,8 @@
   --sidebar-duration-panel: var(--ace-motion-duration-medium);
   --sidebar-duration-expand: var(--ace-motion-duration-medium);
 
-  /* Inline Drawer — right in-flow panel (Figma 1063:3635 / 4081:943+) */
-  --inline-drawer-width: 30rem; /* 480px — Review Assigned SideDrawer default */
+  /* Inline Drawer - right in-flow panel (Figma 1063:3635 / 4081:943+) */
+  --inline-drawer-width: 30rem; /* 480px - Review Assigned SideDrawer default */
   --inline-drawer-border: var(--color-border-default);
   --inline-drawer-shadow: -6px 0 5px rgb(0 0 0 / 0.03);
   --inline-drawer-duration-panel: var(--sidebar-duration-panel);
@@ -350,20 +354,20 @@
   --inline-drawer-section-gap: 0.625rem; /* 10px */
   --inline-drawer-footer-gap: 1rem; /* 16px */
 
-  /* ACE Task Bar — Review Assigned bottom action bar */
+  /* ACE Task Bar - Review Assigned bottom action bar */
   --task-bar-surface: var(--screening-surface);
   --task-bar-border: var(--screening-border-strong);
   --task-bar-shadow: var(--ace-drop-shadow-xs);
   --task-bar-px: 1rem; /* 16px */
   --task-bar-py: 1rem; /* 16px */
 
-  /* ACE Page Header — Review Assigned title bar under site nav */
+  /* ACE Page Header - Review Assigned title bar under site nav */
   --page-header-bg: var(--screening-surface); /* Shades / 0 */
   --page-header-border: var(--screening-border-strong);
   --page-header-px: 2rem; /* 32px */
   --page-header-py: 0.75rem; /* 12px */
 
-  /* ACE Sub-header — Figma Headers 1049:2627 (full / split) */
+  /* ACE Sub-header - Figma Headers 1049:2627 (full / split) */
   --sub-header-bg: var(--screening-surface); /* Shades / 0 */
   --sub-header-border: var(--screening-border-strong);
   --sub-header-radius: var(--radius-sm);
@@ -386,7 +390,7 @@
   --tabs-vertical-indicator-width: 0.125rem;
   --tabs-vertical-indicator-height: 1.5rem;
 
-  /* Tab cards — Figma Cards / Tab (4130:4356) */
+  /* Tab cards - Figma Cards / Tab (4130:4356) */
   --tab-card-gap: var(--space-4);
   --tab-card-radius: 6px;
   --tab-card-padding: 0.875rem;
@@ -395,16 +399,16 @@
   --tab-card-border-default: var(--color-border-default);
   --tab-card-surface-emphasis: var(--screening-primary-soft-bg);
   --tab-card-border-active: var(--screening-primary);
-  --tab-card-title-color: var(--ace-neutral-800);
+  --tab-card-title-color: var(--color-text-primary);
   --tab-card-subtitle-color: var(--screening-text-secondary);
-  --tab-card-description-color: var(--ace-neutral-800);
+  --tab-card-description-color: var(--color-text-primary);
   --tab-card-icon-primary: var(--screening-primary);
 
-  /* Data table outer card — ACE Drop Shadows XS at rest (Figma 71:71); hover uses SM */
+  /* Data table outer card - ACE Drop Shadows XS at rest (Figma 71:71); hover uses SM */
   --screening-shadow-card: var(--ace-drop-shadow-xs);
   --screening-shadow-card-hover: var(--ace-drop-shadow-sm);
 
-  /* Landing page card — Figma Cards (4130:1977 / sets 4212:1424–1427) */
+  /* Landing page card - Figma Cards (4130:1977 / sets 4212:1424-1427) */
   --landing-page-card-width: 25rem; /* 400px */
   --landing-page-card-min-height: 12.5rem; /* 200px */
   --landing-page-card-radius: var(--radius-component-card);
@@ -432,7 +436,7 @@
   --landing-page-card-footer-px: 1.5rem;
   --landing-page-card-footer-py: 0.75rem;
 
-  /* Data card (medium) — Figma Cards / Data (2046:5157); aliases → semantic colors */
+  /* Data card (medium) - Figma Cards / Data (2046:5157); aliases → semantic colors */
   --data-card-width: 43.25rem;
   --data-card-radius: var(--radius-component-card);
   --data-card-border: var(--screening-border-row);
@@ -454,7 +458,7 @@
   --screening-progress-height: var(--space-2);
   --screening-table-min-width: 45rem;
   --screening-body-max-height: calc(100dvh - 14rem);
-  /* ACE Checkbox — Figma Checkbox 322:1747 / doc 317:1492 → semantic color tokens */
+  /* ACE Checkbox - Figma Checkbox 322:1747 / doc 317:1492 → semantic color tokens */
   --screening-checkbox-inner-bg: var(--color-surface-primary);
   --screening-checkbox-border: var(--color-border-brand);
   --screening-checkbox-border-hover: var(--color-border-brand);
@@ -468,7 +472,7 @@
   --screening-checkbox-disabled-check: var(--color-text-disabled);
   --screening-checkbox-disabled-checked-bg: var(--color-bg-disabled);
 
-  /* ACE Toggle — Figma Toggles (117:1265) / set 5283:2831 */
+  /* ACE Toggle - Figma Toggles (117:1265) / set 5283:2831 */
   --toggle-duration: var(--ace-motion-duration-medium);
   --toggle-ease: var(--ace-motion-ease-standard);
   --toggle-thumb: var(--color-surface-primary);
@@ -485,7 +489,7 @@
   --toggle-icon-glyph-off: var(--color-icon-primary);
   --toggle-icon-glyph-on: var(--color-icon-inverse);
 
-  /* ACE Tooltip — Review Assigned screening toolbar pattern */
+  /* ACE Tooltip - Review Assigned screening toolbar pattern */
   --tooltip-radius: var(--radius-component-tooltip);
   --tooltip-px: var(--space-3);
   --tooltip-py: var(--space-2);
@@ -496,7 +500,7 @@
   --tooltip-duration: var(--ace-motion-duration-fast);
   --tooltip-ease: ease;
 
-  /* ACE Badge / Status pill — Figma Badge (5064:2991): px 8, py 2, gap 6, Caption Regular 12 / 1.65 */
+  /* ACE Badge / Status pill - Figma Badge: px 8, py 2, gap 6, Caption Semi Bold (body-secondary 12 / 1.65) */
   --badge-radius: var(--radius-component-badge);
   --badge-gap: var(--spacing-component-padding-gap-xs);
   /* Figma badge py is 2px; closest component padding step is xs (4). Keep optical 2px. */
@@ -505,9 +509,9 @@
   --badge-pl: var(--badge-px);
   --badge-pr: var(--badge-px);
   --badge-dot-size: 0.5rem; /* 8px */
-  --badge-label-size: var(--typography-ui-caption);
+  --badge-label-size: var(--typography-body-body-secondary);
   --badge-label-leading: 1.65;
-  /* Status pills — Semantic colors/badges/* (fill + border); label/dot use border */
+  /* Status pills - Semantic colors/badges/* (fill + border); label/dot use border */
   --badge-purple-border: var(--color-badges-purple-border);
   --badge-purple-surface: var(--color-badges-purple-fill);
   --badge-purple-dot: var(--color-badges-purple-border);
@@ -545,7 +549,7 @@
   --badge-red-dot: var(--color-badges-red-border);
   --badge-red-label: var(--color-badges-red-border);
 
-  /* ACE Badge tag — same padding/colors as pills; squared radius */
+  /* ACE Badge tag - same padding/colors as pills; squared radius */
   --badge-tag-gap: var(--badge-gap);
   --badge-tag-radius: var(--radius-sm); /* tags stay squared; pills use --radius-component-badge */
   --badge-tag-px: var(--badge-px);
@@ -561,7 +565,7 @@
   --badge-tag-warning-icon-bg: var(--color-badges-orange-border);
   --badge-tag-warning-icon-fg: var(--color-text-inverse);
 
-  /* ACE Toast — Figma Toast Messages (2783:5) */
+  /* ACE Toast - Figma Toast Messages (2783:5) */
   --toast-message-width: 25rem;
   --toast-message-radius: var(--radius-component-tooltip);
   --toast-message-px: 1rem;
@@ -592,7 +596,7 @@
   --toast-message-progress-track: var(--color-status-success-subtle);
   --toast-message-progress-fill: var(--color-status-success);
 
-  /* ACE Inline Messages — Figma Inline Messages 4481:275 (banner / in-page alerts) */
+  /* ACE Inline Messages - Figma Inline Messages 4481:275 (banner / in-page alerts) */
   --inline-message-radius: var(--radius-component-inline-message);
   --inline-message-px: var(--spacing-component-padding-padding-lg);
   --inline-message-py: var(--spacing-component-padding-padding-sm);
@@ -611,7 +615,7 @@
   --inline-message-warning-border: var(--color-border-warning);
   --inline-message-warning-icon: var(--color-status-warning);
 
-  /* ACE Timeline — Figma Timeline (4622:1645) */
+  /* ACE Timeline - Figma Timeline (4622:1645) */
   --timeline-radius: var(--radius-component-card);
   --timeline-padding: var(--spacing-component-padding-padding-lg);
   --timeline-section-gap: var(--spacing-layout-stack-gap);
@@ -625,8 +629,8 @@
   --timeline-icon-glyph-size-hover: var(--icon-size-lg);
   --timeline-border: var(--color-border-default);
   --timeline-sort-bg: var(--color-surface-primary);
-  --timeline-title: var(--ace-neutral-800);
-  --timeline-subtitle: var(--ace-neutral-800);
+  --timeline-title: var(--color-text-primary);
+  --timeline-subtitle: var(--color-text-primary);
   --timeline-separator: var(--color-border-default);
   --timeline-link: var(--screening-primary);
   --timeline-link-hover: var(--screening-primary-hover-border);
@@ -644,7 +648,7 @@
   --timeline-highlight-blocked: var(--ace-error-50);
   --timeline-highlight-safe: var(--ace-success-50);
 
-  /* ACE Attachments — Figma Attachments (3313:156) */
+  /* ACE Attachments - Figma Attachments (3313:156) */
   --attachments-radius: 4px;
   --attachments-padding: 0.75rem;
   --attachments-gap: 0.75rem;
@@ -659,16 +663,16 @@
   --attachments-error: var(--dialog-modal-danger);
   --attachments-divider: var(--screening-border-strong);
 
-  /* ACE Scrollable List — Review Assigned CaseList shell */
+  /* ACE Scrollable List - Review Assigned CaseList shell */
   --scrollable-list-surface: var(--screening-surface);
   --scrollable-list-border: var(--screening-border-strong);
   --scrollable-list-title: var(--screening-text-primary);
-  --scrollable-list-item-text: var(--ace-neutral-800);
+  --scrollable-list-item-text: var(--color-text-primary);
   --scrollable-list-item-selected-bg: var(--color-bg-tertiary);
   --scrollable-list-item-hover-bg: var(--color-bg-tertiary);
   --scrollable-list-icon: var(--color-icon-brand);
 
-  /* ACE Filtering — Secondary / FilterChip (Figma Dropdowns 2277:136; Table Headers 1540:4577) */
+  /* ACE Filtering - Secondary / FilterChip (Figma Dropdowns 2277:136; Table Headers 1540:4577) */
   --filter-radius: var(--radius-component-input);
   --filter-gap: 0.5rem;
   --filter-px: var(--dropdown-menu-secondary-px);
@@ -690,7 +694,7 @@
   --filter-header-gap: 0.75rem;
   --filter-search-width: 12.5rem;
 
-  /* ACE Slider — Figma Sliders (2505:47) */
+  /* ACE Slider - Figma Sliders (2505:47) */
   --slider-track-height: 0.625rem;
   --slider-radius: 4px;
   --slider-handle-height: 2.25rem;
@@ -713,7 +717,7 @@
   --slider-focus-ring: var(--screening-primary-ring);
   --slider-ring-offset: var(--screening-primary-ring-offset);
 
-  /* ACE Radio — Figma Radio Buttons (331:1755) */
+  /* ACE Radio - Figma Radio Buttons (331:1755) */
   --radio-bg-inner: var(--color-surface-primary);
   --radio-border-default: var(--color-icon-primary);
   --radio-border-hover: var(--color-icon-primary);
@@ -736,7 +740,7 @@
   --screening-duration-accordion: 420ms;
   --screening-ease-accordion: cubic-bezier(0.33, 1, 0.68, 1);
 
-  /* ACE Accordion — Figma Accordions (332:1500 / component 4529:486) */
+  /* ACE Accordion - Figma Accordions (332:1500 / component 4529:486) */
   --accordion-surface: var(--color-surface-primary);
   --accordion-surface-muted: var(--color-bg-primary);
   --accordion-border: var(--color-border-default);
@@ -753,23 +757,12 @@
   --accordion-content-bg: var(--color-surface-primary);
   --accordion-duration: 420ms;
   --accordion-ease: cubic-bezier(0.33, 1, 0.68, 1);
-  /* Lab availability tags — product usage status on component pages */
-  --availability-tag-available-bg: var(--color-status-success-subtle);
-  --availability-tag-available-border: color-mix(in srgb, var(--color-status-success) 20%, transparent);
-  --availability-tag-available-text: var(--color-status-success);
-  --availability-tag-in-progress-bg: var(--ace-notice-100);
-  --availability-tag-in-progress-border: var(--ace-notice-200);
-  --availability-tag-in-progress-text: var(--ace-warning-600);
-  --availability-tag-planned-bg: var(--color-bg-brand-hover);
-  --availability-tag-planned-border: var(--color-primary-100);
-  --availability-tag-planned-text: var(--color-action-primary);
-
-  /* Table pagination — Review Assigned (Figma 102:5124) */
+  /* Table pagination - Review Assigned (Figma 102:5124) */
   --screening-pagination-btn-size: 2rem;
   --screening-pagination-btn-radius: 0.1875rem;
   --screening-pagination-gap: 0.25rem;
   --screening-pagination-page-size-border: var(--color-neutral-500);
-  /* Input — ACE Design System v.3 Figma Input (408:1976); shared with data table search */
+  /* Input - ACE Design System v.3 Figma Input (408:1976); shared with data table search */
   --screening-input-height-sm: 2.25rem; /* 36px */
   --screening-input-radius: var(--radius-component-input);
   --screening-input-px: 0.75rem; /* 12px */
@@ -781,11 +774,11 @@
   --screening-input-focus-ring: var(--color-border-focus);
   --screening-input-placeholder: var(--color-text-placeholder);
 
-  /* ACE Input atom — Figma Input (408:1976); semantic aliases for component + lab docs */
+  /* ACE Input atom - Figma Input (408:1976); semantic aliases for component + lab docs */
   --input-height-sm: var(--screening-input-height-sm);
   --input-height-md: 2.75rem; /* 44px */
   --input-height-lg: 3.25rem; /* 52px */
-  --input-label-gap: 0.375rem; /* 6px — organism stack gap */
+  --input-label-gap: 0.375rem; /* 6px - organism stack gap */
   --input-error-bg: var(--color-bg-error);
   --input-error-border: var(--color-border-error);
   --input-error-message: var(--color-status-error);
@@ -795,7 +788,7 @@
   --input-icon: var(--color-icon-primary);
   --input-icon-disabled: var(--color-icon-disabled);
 
-  /* ACE Progress Indicators — Figma Progress Indicators 414:4109 */
+  /* ACE Progress Indicators - Figma Progress Indicators 414:4109 */
   --progress-indicator-width: 23.5rem; /* 376px */
   --progress-indicator-min-height: 9.625rem; /* 154px */
   --progress-indicator-radius: 0.375rem; /* 6px */
@@ -813,7 +806,7 @@
   --progress-spinner-height: 3.4375rem; /* 55px */
   --progress-spinner-duration: 2.5s;
 
-  /* ACE Buttons — action token fills (Figma Buttons, node 2067:191) */
+  /* ACE Buttons - action token fills (Figma Buttons, node 2067:191) */
   --button-radius: var(--radius-component-button);
   --button-on-solid: var(--color-text-inverse);
   /* Brand / info scale aliases (shared chrome) → color primitives */
@@ -848,7 +841,7 @@
   --button-py-lg: var(--spacing-component-padding-padding-md);
   --button-gap-lg: var(--spacing-component-padding-gap-md);
 
-  /* ACE Descriptive Buttons — Figma ButtonDescriptive 4118:682 */
+  /* ACE Descriptive Buttons - Figma ButtonDescriptive 4118:682 */
   --button-descriptive-width: 16.5rem;
   --button-descriptive-radius: var(--radius-component-button);
   --button-descriptive-padding: var(--spacing-component-padding-padding-md);
@@ -898,15 +891,6 @@
   --ace-attachments-status: var(--attachments-status);
   --ace-attachments-surface: var(--attachments-surface);
   --ace-attachments-title: var(--attachments-title);
-  --ace-availability-available-bg: var(--availability-tag-available-bg);
-  --ace-availability-available-border: var(--availability-tag-available-border);
-  --ace-availability-available-text: var(--availability-tag-available-text);
-  --ace-availability-in-progress-bg: var(--availability-tag-in-progress-bg);
-  --ace-availability-in-progress-border: var(--availability-tag-in-progress-border);
-  --ace-availability-in-progress-text: var(--availability-tag-in-progress-text);
-  --ace-availability-planned-bg: var(--availability-tag-planned-bg);
-  --ace-availability-planned-border: var(--availability-tag-planned-border);
-  --ace-availability-planned-text: var(--availability-tag-planned-text);
   --ace-badge-tag-border: var(--badge-tag-border);
   --ace-badge-tag-gap: var(--badge-tag-gap);
   --ace-badge-tag-label: var(--badge-tag-label);
@@ -978,6 +962,7 @@
   --ace-descriptive-button-text: var(--button-descriptive-text);
   --ace-descriptive-button-text-gap: var(--button-descriptive-text-gap);
   --ace-descriptive-button-width: var(--button-descriptive-width);
+  --ace-dropdown-action: var(--dropdown-menu-action);
   --ace-dropdown-border: var(--dropdown-menu-border);
   --ace-dropdown-danger: var(--dropdown-menu-danger);
   --ace-dropdown-icon: var(--dropdown-menu-icon);
@@ -1029,8 +1014,11 @@
   --ace-filter-trigger-border: var(--filter-trigger-border);
   --ace-filter-trigger-text: var(--filter-trigger-text);
   --ace-icon-button-border: var(--icon-button-border);
+  --ace-icon-button-disabled-bg: var(--icon-button-disabled-bg);
+  --ace-icon-button-disabled-border: var(--icon-button-disabled-border);
   --ace-icon-button-hover-bg: var(--icon-button-hover-bg);
   --ace-icon-button-icon: var(--icon-button-icon);
+  --ace-icon-button-icon-disabled: var(--icon-button-icon-disabled);
   --ace-icon-button-icon-rest-ghost: var(--icon-button-icon-rest-ghost);
   --ace-icon-button-surface: var(--icon-button-surface);
   --ace-inline-drawer-body-px: var(--inline-drawer-body-px);
@@ -1368,11 +1356,12 @@
 
 [data-theme='dark'] {
   color-scheme: dark;
-  --color-background: var(--screening-surface-muted);
-  --color-surface: var(--screening-surface);
-  --color-text-muted: var(--screening-text-muted);
+  /* App aliases → Semantic Dark (color-tokens.css) */
+  --color-background: var(--color-bg-primary);
+  --color-surface: var(--color-surface-primary);
+  --color-text-muted: var(--color-text-secondary);
   --color-border: var(--color-border-default);
-  --color-accent: var(--screening-primary);
+  --color-accent: var(--color-action-primary);
   --sidebar-item-selected-text: var(--screening-chip-active-text);
   --sidebar-border-accent: var(--color-primary-300);
     /* Screening surfaces follow Semantic dark (--color-surface-* / --color-bg-*) */
@@ -1446,7 +1435,7 @@
     --screening-primary-hover-border: var(--color-action-primary-hover);
     --screening-primary-ring: color-mix(in srgb, var(--color-action-primary) 45%, transparent);
     --screening-text-on-primary: var(--color-text-inverse);
-    /* Status soft fills — Semantic dark bg / status-subtle */
+    /* Status soft fills - Semantic dark bg / status-subtle */
     --button-blue-50: var(--color-blue-900);
     /* Ace input state colors resolve via --color-* semantic tokens */
     --button-purple-500: var(--color-primary-300);
@@ -1492,7 +1481,7 @@
     --sidebar-menu-icon: var(--screening-icon-muted);
 
 
-    /* Dialog actions — follow Semantic dark action / status */
+    /* Dialog actions - follow Semantic dark action / status */
     --dialog-modal-primary: var(--color-action-primary);
     --dialog-modal-primary-hover: var(--color-action-primary-hover);
     --dialog-modal-outline-border: var(--color-border-brand);
@@ -1502,7 +1491,7 @@
     --dialog-modal-overlay: rgb(0 0 0 / 0.65);
     --dialog-modal-inline-error-border: var(--color-border-error);
 
-    /* Progress, pills, age — badges already set above from --color-badges-* */
+    /* Progress, pills, age - badges already set above from --color-badges-* */
     --screening-progress-fill: var(--screening-primary);
     --screening-pill-new-dot: var(--color-badges-purple-border);
     --screening-pill-new-label: var(--color-badges-purple-border);
@@ -1513,7 +1502,7 @@
     --screening-age-stale: var(--color-status-error);
     /* Match-string tiles inherit AceBadge dark status-pill tokens via light aliases */
 
-    /* Attachments — muted panels track dark surfaces (not light #fafafb) */
+    /* Attachments - muted panels track dark surfaces (not light #fafafb) */
     --attachments-border: var(--screening-border-strong);
     --attachments-surface: var(--screening-surface);
     --attachments-dropzone-bg: var(--ace-dark-mode-700);
@@ -1530,7 +1519,7 @@
     --scrollable-list-item-hover-bg: var(--color-bg-tertiary);
     --scrollable-list-icon: var(--color-icon-brand);
 
-    /* Cards — follow semantic dark mappings from color-tokens.css */
+    /* Cards - follow semantic dark mappings from color-tokens.css */
     --landing-page-card-surface: var(--color-surface-primary);
     --landing-page-card-footer-bg: var(--color-surface-primary);
     --landing-page-card-title-color: var(--color-text-primary);
@@ -1544,19 +1533,13 @@
     /* Date picker */
     --date-picker-weekday: var(--screening-text-secondary);
     --date-picker-day: var(--screening-text-secondary);
+    --date-picker-month-title: var(--color-text-primary);
 
     /* Sidebar, brand, pagination */
     --sidebar-shadow: 6px 0 12px rgb(0 0 0 / 0.35);
     --sidebar-border-accent: var(--color-primary-300);
     --screening-shadow-row-accent: inset 2px 0 0 0 color-mix(in srgb, var(--color-action-primary) 35%, transparent);
     --screening-pagination-page-size-border: var(--color-border-default);
-    --availability-tag-available-bg: var(--color-status-success-subtle);
-    --availability-tag-available-border: color-mix(in srgb, var(--color-status-success) 30%, transparent);
-    --availability-tag-available-text: var(--color-status-success);
-
-    --availability-tag-planned-bg: var(--color-bg-brand-hover);
-    --availability-tag-planned-border: var(--color-badges-purple-border);
-    --availability-tag-planned-text: var(--color-action-primary);
     --ace-finscan-mark-primary: var(--color-primary-200);
     --ace-finscan-wordmark-fill: var(--color-primary-200);
     --ace-guidelines-principle-title: var(--color-primary-200);
@@ -1569,7 +1552,7 @@
 
 
 
-    /* Descriptive buttons — surface + purple soft fills (Reports, etc.) */
+    /* Descriptive buttons - surface + purple soft fills (Reports, etc.) */
     --button-descriptive-bg: var(--color-surface-primary);
     --button-descriptive-border: var(--color-border-default);
     --button-descriptive-hover-bg: var(--color-primary-800);

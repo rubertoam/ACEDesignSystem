@@ -3,7 +3,7 @@ import { cn } from '../../../lib/cn'
 
 export type FinScanHashMarkProps = SVGProps<SVGSVGElement>
 
-/** Hash mark (dot grid) — Figma Icon / FinScan 2782:30 */
+/** Hash mark (dot grid) - Figma Icon / FinScan 2782:30 */
 export function FinScanHashMark({ className, ...props }: FinScanHashMarkProps) {
   return (
     <svg

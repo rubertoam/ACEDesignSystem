@@ -1,6 +1,6 @@
 import { cn } from '../../../lib/cn'
 
-/** Responsive sub-header shell — fills its parent width. */
+/** Responsive sub-header shell - fills its parent width. */
 export const subHeaderShellClass = cn(
   'flex w-full shrink-0 items-center justify-between',
   'rounded-[var(--sub-header-radius)] border border-solid border-[var(--sub-header-border)]',
@@ -48,7 +48,7 @@ export const subHeaderPaginationLabelClass = cn(
   '[letter-spacing:var(--ace-type-heading-h6-small-regular-tracking)]',
 )
 
-/** Transparent icon action — chrome-less sub-header icons. */
+/** Transparent icon action - chrome-less sub-header icons. */
 export const subHeaderIconButtonClass = cn(
   'inline-flex shrink-0 cursor-pointer items-center justify-center border-0 bg-transparent p-0',
   'text-[var(--screening-text-primary)]',

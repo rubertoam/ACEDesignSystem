@@ -20,9 +20,11 @@ import {
 } from '../components/organisms/ScreeningResultsTable/ScreeningResultsTable'
 import { ScreeningColumnsMenu } from '../components/organisms/ScreeningResultsTable/ScreeningColumnsMenu'
 import { DialogModal } from '../components/molecules/DialogModal/DialogModal'
-import { LabCheckbox, LabSelect } from '../lib/labControls'
+import { Toggle } from '../components/atoms/Toggle/Toggle'
+import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyles'
+import { LabCheckbox, LabControlField, LabSelect } from '../lib/labControls'
 import { labComponentContainerClass } from '../lib/labChrome'
-import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
+import { labSectionLabelClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import dataTableRules from './implementationRules/dataTable.md?raw'
 import { cn } from '../lib/cn'
@@ -100,11 +102,6 @@ const FILTER_TYPE_OPTIONS = [
   { value: 'triggers' as const, label: 'Filter Triggers' },
   { value: 'chips' as const, label: 'Filter Chips' },
 ]
-
-const examplesToolbarPanel = cn(
-  'w-full min-w-0 rounded-[var(--radius-lg)] border border-solid border-[var(--screening-border-strong)]',
-  'bg-[var(--screening-surface)] p-4 shadow-[var(--ace-drop-shadow-xs)] sm:p-5',
-)
 
 export function DataTableLab() {
   const [visibilityControls, setVisibilityControls] = useState<ScreeningResultsTableVisibilityControls>(() => ({ ...DEFAULT_SCREENING_TABLE_VISIBILITY_CONTROLS }))
@@ -223,107 +220,70 @@ export function DataTableLab() {
         ))
       : null
 
-  return (
-    <ComponentLabPage
-      title="Data Table"
-      description="Dense results grid with filters, sortable columns, row expansion, bulk selection (New rows only), review progress, and pagination."
-      examplesCanvas={false}
-      examples={
-        <div className="space-y-10">
-          <div className={cn('w-full', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Headers / Table / Default</p>
-            <div className={labComponentContainerClass}>
-              <div className="mb-4">
-                <LabSelect
-                  label="Filter Type"
-                  value={filterType}
-                  onChange={setFilterType}
-                  options={FILTER_TYPE_OPTIONS}
-                  size="sm"
-                />
-              </div>
-              <TableFilterHeader
-                title="Table Header"
-                actions={headerActions}
-                trailing={<ScreeningColumnsMenu />}
-                searchValue={headerSearch}
-                onSearchChange={setHeaderSearch}
-                onSearchClear={() => setHeaderSearch('')}
-                searchPlaceholder="Search"
-                chips={headerChips}
-              />
-            </div>
+  const toolbar = (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect
+          label="Filter Type"
+          value={filterType}
+          onChange={setFilterType}
+          options={FILTER_TYPE_OPTIONS}
+        />
+        <LabControlField label="Column resizing" className="shrink-0">
+          <div className="flex min-h-9 items-center gap-2">
+            <Toggle
+              size="sm"
+              checked={columnResizing}
+              onCheckedChange={setColumnResizing}
+              aria-label="Column resizing"
+            />
+            <span className={aceToggleLabelClass}>{columnResizing ? 'On' : 'Off'}</span>
           </div>
+        </LabControlField>
+        <Button type="button" variant="secondary" size="sm" onClick={openPreviewOptions}>
+          Table View Options
+        </Button>
+      </div>
 
-          <div className={cn('w-full', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Table preview</p>
-            <div className="flex flex-col gap-3">
-              <div className={examplesToolbarPanel}>
-                <div className="flex w-full flex-wrap items-center gap-4">
-                  <Button type="button" variant="secondary" size="sm" onClick={openPreviewOptions}>
-                    Table View Options
-                  </Button>
-                  <LabCheckbox
-                    label="Column Resizing"
-                    checked={columnResizing}
-                    onCheckedChange={setColumnResizing}
-                    className="min-h-8"
-                  />
-                </div>
-              </div>
-              <div className={labComponentContainerClass}>
-                <ScreeningResultsTable
-                  className="max-w-full"
-                  visibilityControls={visibilityControls}
-                  columnResizing={columnResizing}
-                  title="Watchlist Screening"
-                />
-              </div>
-            </div>
+      <div className="flex flex-col gap-8 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="flex flex-col gap-3">
+          <p className={labSectionLabelClass}>Headers / Table / Default</p>
+          <div className={labComponentContainerClass}>
+            <TableFilterHeader
+              title="Table Header"
+              actions={headerActions}
+              trailing={<ScreeningColumnsMenu />}
+              searchValue={headerSearch}
+              onSearchChange={setHeaderSearch}
+              onSearchClear={() => setHeaderSearch('')}
+              searchPlaceholder="Search"
+              chips={headerChips}
+            />
           </div>
-
-          <DialogModal
-            open={modalOpen}
-            onClose={closePreviewOptions}
-            title="Table View Options"
-            description="Toggle regions of the data table. Choose Done to apply, or Cancel to discard."
-            size="lg"
-            fitContent
-            secondaryAction={{ label: 'Cancel', onClick: closePreviewOptions }}
-            primaryAction={{ label: 'Done', onClick: applyPreviewOptions }}
-          >
-            <ul
-              className={cn(
-                'm-0 list-none space-y-1 p-0',
-                VISIBILITY_CONTROL_OPTIONS.length > 10 && PREVIEW_OPTIONS_LIST_SCROLL_CLASS,
-              )}
-            >
-              {VISIBILITY_CONTROL_OPTIONS.map(({ key, label, hint }) => (
-                <li key={key}>
-                  <div className="rounded-[var(--dialog-modal-btn-radius)] px-1 py-2 hover:bg-[var(--dialog-modal-close-hover)]">
-                    <LabCheckbox
-                      label={label}
-                      checked={draftVisibilityControls[key]}
-                      onCheckedChange={() => toggleDraftVisibilityControl(key)}
-                      className="items-start gap-3"
-                    />
-                    {hint ? (
-                      <span
-                        className={cn(
-                          aceTypography('--ace-type-caption-regular'),
-                          'mt-0.5 block pl-6 text-[var(--dialog-modal-muted)]',
-                        )}
-                      >
-                        {hint}
-                      </span>
-                    ) : null}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </DialogModal>
         </div>
-      }
+
+        <div className="flex flex-col gap-3">
+          <p className={labSectionLabelClass}>Table preview</p>
+          <div className={labComponentContainerClass}>
+            <ScreeningResultsTable
+              className="max-w-full"
+              visibilityControls={visibilityControls}
+              columnResizing={columnResizing}
+              title="Watchlist Screening"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  return (
+    <>
+      <ComponentLabPage
+        title="Data Table"
+        description="Dense results grid with filters, sortable columns, row expansion, bulk selection (New rows only), review progress, and pagination."
+        examplesCanvas={false}
+        examplesToolbar={toolbar}
       code={
         <ComponentLabCode>{`import {
   ScreeningResultsTable,
@@ -368,8 +328,8 @@ import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
           <code className="text-[var(--color-text-primary)]">title</code>,{' '}
           <code className="text-[var(--color-text-primary)]">visibilityControls</code>, or controlled selection props.
           Use <code className="text-[var(--color-text-primary)]">Filter Type</code> on the header demo to switch
-          between Filters dropdown + clearable chips and on/off filter chips. Interactive filter atoms are also
-          documented on the Filtering molecules page.
+          between Filters dropdown + clearable chips and on/off filter chips. Filter atoms are also documented on
+          the Filtering molecules page.
         </p>
       }
       variables={
@@ -392,6 +352,48 @@ import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
         </ul>
       }
       implementationRulesMarkdown={dataTableRules}
-    />
+      />
+
+      <DialogModal
+        open={modalOpen}
+        onClose={closePreviewOptions}
+        title="Table View Options"
+        description="Toggle regions of the data table. Choose Done to apply, or Cancel to discard."
+        size="lg"
+        fitContent
+        secondaryAction={{ label: 'Cancel', onClick: closePreviewOptions }}
+        primaryAction={{ label: 'Done', onClick: applyPreviewOptions }}
+      >
+        <ul
+          className={cn(
+            'm-0 list-none space-y-1 p-0',
+            VISIBILITY_CONTROL_OPTIONS.length > 10 && PREVIEW_OPTIONS_LIST_SCROLL_CLASS,
+          )}
+        >
+          {VISIBILITY_CONTROL_OPTIONS.map(({ key, label, hint }) => (
+            <li key={key}>
+              <div className="rounded-[var(--dialog-modal-btn-radius)] px-1 py-2 hover:bg-[var(--dialog-modal-close-hover)]">
+                <LabCheckbox
+                  label={label}
+                  checked={draftVisibilityControls[key]}
+                  onCheckedChange={() => toggleDraftVisibilityControl(key)}
+                  className="items-start gap-3"
+                />
+                {hint ? (
+                  <span
+                    className={cn(
+                      aceTypography('--ace-type-caption-regular'),
+                      'mt-0.5 block pl-6 text-[var(--dialog-modal-muted)]',
+                    )}
+                  >
+                    {hint}
+                  </span>
+                ) : null}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </DialogModal>
+    </>
   )
 }

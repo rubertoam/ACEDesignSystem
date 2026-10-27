@@ -2505,7 +2505,7 @@
     "none": {
       "$type": "number",
       "$value": 0,
-      "$description": "No rounding — sharp corners",
+      "$description": "No rounding - sharp corners",
       "$extensions": {
         "com.figma.variableId": "VariableID:5407:32",
         "com.figma.scopes": [
@@ -2522,7 +2522,7 @@
     "sm": {
       "$type": "number",
       "$value": 4,
-      "$description": "Subtle rounding — inputs, buttons, chips",
+      "$description": "Subtle rounding - inputs, buttons, chips",
       "$extensions": {
         "com.figma.variableId": "VariableID:5407:33",
         "com.figma.scopes": [
@@ -2539,7 +2539,7 @@
     "md": {
       "$type": "number",
       "$value": 8,
-      "$description": "Default rounding — cards, dropdowns, modals",
+      "$description": "Default rounding - cards, dropdowns, modals",
       "$extensions": {
         "com.figma.variableId": "VariableID:5407:34",
         "com.figma.scopes": [
@@ -2556,7 +2556,7 @@
     "lg": {
       "$type": "number",
       "$value": 12,
-      "$description": "Pronounced rounding — large cards, sections",
+      "$description": "Pronounced rounding - large cards, sections",
       "$extensions": {
         "com.figma.variableId": "VariableID:5407:35",
         "com.figma.scopes": [
@@ -2573,7 +2573,7 @@
     "full": {
       "$type": "number",
       "$value": 100,
-      "$description": "Pill shape — badges, tags, avatars",
+      "$description": "Pill shape - badges, tags, avatars",
       "$extensions": {
         "com.figma.variableId": "VariableID:5407:36",
         "com.figma.scopes": [

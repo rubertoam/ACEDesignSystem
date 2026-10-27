@@ -105,7 +105,7 @@ function PaginationControls({
 }
 
 /**
- * FinScan sub-header — responsive region chrome under the page header.
+ * FinScan sub-header - responsive region chrome under the page header.
  * Fills its parent width; optional statistics, paging, more menu, and drill-down.
  */
 export function SubHeader({

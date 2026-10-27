@@ -4,39 +4,41 @@ const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]
 const motionReduce = 'motion-reduce:transition-none motion-reduce:duration-0'
 
 /**
- * Iconography “No border stroke” (Figma Iconography).
- * Rest: transparent + transparent border (avoids layout shift).
- * Hover: `--icon-button-hover-bg` + `--icon-button-border` (color/bg/primary + color/border/default).
+ * Iconography “No border stroke” (Figma Iconography · NoBorder).
+ * Rest: transparent + transparent border (avoids layout shift); icon colors/text/primary.
+ * Hover: fill + border colors/icon/hover; icon colors/icon/primary. Radius md.
  */
 export const sidebarIconButtonClass = cn(
-  'relative z-[1] inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
+  'relative z-[1] inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-md)]',
   'border border-solid border-transparent',
   'text-[var(--icon-button-icon-rest-ghost)]',
   'transition-[opacity,background-color,border-color,color]',
   'duration-[var(--ace-motion-duration-medium)]',
   motionEase,
   motionReduce,
-  'hover:border-[var(--icon-button-border)] hover:bg-[var(--icon-button-hover-bg)] hover:text-[var(--icon-button-icon)]',
+  'hover:border-[var(--icon-button-hover-bg)] hover:bg-[var(--icon-button-hover-bg)] hover:text-[var(--icon-button-icon)]',
+  'disabled:cursor-not-allowed disabled:border-transparent disabled:bg-transparent disabled:text-[var(--icon-button-icon-disabled)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 
 /**
- * Iconography “Border stroke” (Figma Iconography).
- * Rest: surface + soft border + icon primary.
- * Hover: same border, `--icon-button-hover-bg`.
+ * Iconography “Border stroke” (Figma Iconography · Border).
+ * Rest: colors/icon/inverse + colors/border/default + colors/icon/primary.
+ * Hover: same border; fill colors/icon/hover. Radius md.
  */
 export const sidebarIconButtonBorderedClass = cn(
-  'relative z-[1] inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border border-solid',
+  'relative z-[1] inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-solid',
   'border-[var(--icon-button-border)] bg-[var(--icon-button-surface)] text-[var(--icon-button-icon)]',
   'transition-[opacity,background-color,border-color,color]',
   'duration-[var(--ace-motion-duration-medium)]',
   motionEase,
   motionReduce,
   'hover:border-[var(--icon-button-border)] hover:bg-[var(--icon-button-hover-bg)] hover:text-[var(--icon-button-icon)]',
+  'disabled:cursor-not-allowed disabled:border-[var(--icon-button-disabled-border)] disabled:bg-[var(--icon-button-disabled-bg)] disabled:text-[var(--icon-button-icon-disabled)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 
-/** Shared 16px row actions (plus, overflow) — revealed on row/header hover */
+/** Shared 16px row actions (plus, overflow) - revealed on row/header hover */
 export const sidebarRowActionButtonClass = cn(
   sidebarIconButtonClass,
   'opacity-0',

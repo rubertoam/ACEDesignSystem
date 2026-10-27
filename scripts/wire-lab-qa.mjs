@@ -48,7 +48,7 @@ const QA_MAP = {
   'OrganismsLab.tsx': 'overviewLabQa',
 }
 
-/** Labs that already ship QA via implementationRules — still add matrix via qa prop (overrides empty only; ComponentLabPage prefers qa). */
+/** Labs that already ship QA via implementationRules - still add matrix via qa prop (overrides empty only; ComponentLabPage prefers qa). */
 const ALSO_WIRE = new Set([
   'FilteringLab.tsx',
   'SidebarLab.tsx',
@@ -58,7 +58,7 @@ const ALSO_WIRE = new Set([
 ])
 
 // Filtering/Sidebar/DataTable keep markdown QA; skip overriding unless we want matrix supplement.
-// User asked for all tabs updated — for those with markdown QA, leave markdown as source of truth.
+// User asked for all tabs updated - for those with markdown QA, leave markdown as source of truth.
 
 function ensureImport(src, exportName) {
   if (src.includes(`from './labTabDocs'`) || src.includes(`from \"./labTabDocs\"`)) {
@@ -85,7 +85,7 @@ function ensureImport(src, exportName) {
 
 function injectQaProp(src, exportName) {
   if (/\bqa=\{/.test(src)) return src
-  // Insert before closing of ComponentLabPage — prefer before changelog= or before />
+  // Insert before closing of ComponentLabPage - prefer before changelog= or before />
   if (/changelog=\{/.test(src)) {
     return src.replace(/(\s+)(changelog=\{)/, `$1qa={${exportName}}\n$1$2`)
   }

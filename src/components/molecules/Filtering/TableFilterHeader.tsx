@@ -17,7 +17,7 @@ export type TableFilterHeaderProps = {
   actions?: ReactNode
   /** Right-aligned controls next to search (e.g. columns menu). */
   trailing?: ReactNode
-  /** Applied filter chips row — omit or pass null to hide (Headers / Table / Default). */
+  /** Applied filter chips row - omit or pass null to hide (Headers / Table / Default). */
   chips?: ReactNode
   searchValue?: string
   onSearchChange?: (value: string) => void

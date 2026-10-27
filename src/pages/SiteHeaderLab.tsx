@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Toggle } from '../components/atoms/Toggle/Toggle'
+import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyles'
 import {
   DropdownMenu,
   type DropdownMenuEntry,
@@ -13,11 +15,12 @@ import {
   getFinScanProfileAvatar,
   type FinScanProfileId,
 } from '../lib/finscanProfileAvatars'
+import { LabControlField, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-
 import { siteHeaderLabQa } from './labTabDocs'
+
 const ALL_NAV_ITEMS: { id: string; label: string }[] = [
   { id: 'home', label: 'Home' },
   { id: 'reporting', label: 'Reporting' },
@@ -81,84 +84,49 @@ export function SiteHeaderLab() {
     [navEnabled],
   )
 
-  const toolbarDropdownItems: DropdownMenuEntry[] = useMemo(
-    () => [
-      { type: 'menuHeader', label: 'Toolbar actions' },
-      ...TOOLBAR_OPTIONS.map(
-        (item): DropdownMenuEntry => ({
-          type: 'checkbox',
-          id: item.id,
-          label: item.label,
-          checked: toolbarEnabled[item.id],
-          onCheckedChange: (checked) =>
-            setToolbarEnabled((prev) => ({ ...prev, [item.id]: checked })),
-        }),
-      ),
-    ],
-    [toolbarEnabled],
-  )
-
-  const profileDropdownItems: DropdownMenuEntry[] = useMemo(
-    () => [
-      { type: 'menuHeader', label: 'Profile image' },
-      {
-        type: 'radioGroup',
-        value: profileId,
-        onValueChange: (value) => setProfileId(value as FinScanProfileId),
-        options: FINSCAN_PROFILE_AVATARS.map((avatar) => ({
-          value: avatar.id,
-          label: avatar.label,
-          imageUrl: avatar.imageUrl,
-        })),
-      },
-    ],
-    [profileId],
-  )
-
   const navEnabledCount = countEnabled(navEnabled)
-  const toolbarEnabledCount = countEnabled(toolbarEnabled)
 
   const examplesToolbar = (
-    <div className="flex flex-col gap-4">
-      <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Use the dropdowns to configure the header. Menu and toolbar items support multiple checkboxes; profile
-        images are mutually exclusive (one at a time). Figma Actions layer.
-      </p>
-      <div className="flex flex-wrap items-end gap-3">
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
         <DropdownMenu
           triggerLabel={`Menu options (${navEnabledCount}/${ALL_NAV_ITEMS.length})`}
           items={menuDropdownItems}
           panelWidth="wide"
           align="start"
         />
-        <DropdownMenu
-          triggerLabel={`Toolbar (${toolbarEnabledCount}/${TOOLBAR_OPTIONS.length})`}
-          items={toolbarDropdownItems}
-          panelWidth="wide"
-          align="start"
-        />
-        <DropdownMenu
-          triggerLabel={`Profile: ${selectedProfile.label}`}
-          items={profileDropdownItems}
-          panelWidth="wide"
-          align="start"
+        {TOOLBAR_OPTIONS.map((item) => (
+          <LabControlField key={item.id} label={item.label} className="shrink-0">
+            <div className="flex min-h-9 items-center gap-2">
+              <Toggle
+                size="sm"
+                checked={toolbarEnabled[item.id]}
+                onCheckedChange={(checked) =>
+                  setToolbarEnabled((prev) => ({ ...prev, [item.id]: checked }))
+                }
+                aria-label={item.label}
+              />
+              <span className={aceToggleLabelClass}>{toolbarEnabled[item.id] ? 'On' : 'Off'}</span>
+            </div>
+          </LabControlField>
+        ))}
+        <LabSelect
+          label="Profile image"
+          value={profileId}
+          onChange={(v) => setProfileId(v as FinScanProfileId)}
+          options={FINSCAN_PROFILE_AVATARS.map((avatar) => ({
+            value: avatar.id,
+            label: avatar.label,
+          }))}
         />
       </div>
-      {lastAction ? (
-        <p className="m-0 text-xs text-[var(--screening-text-muted)]">
-          Last menu click: <strong className="text-[var(--screening-text-primary)]">{lastAction}</strong>
-        </p>
-      ) : null}
-    </div>
-  )
 
-  return (
-    <ComponentLabPage
-      qa={siteHeaderLabQa}
-      title="Site header"
-      description="Top navigation for FinScan - brand, primary menu items with dropdown chevrons, and user toolbar actions."
-      examplesToolbar={examplesToolbar}
-      examples={
+      <div className="flex flex-col gap-3 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        {lastAction ? (
+          <p className="m-0 text-xs text-[var(--screening-text-muted)]">
+            Last menu click: <strong className="text-[var(--screening-text-primary)]">{lastAction}</strong>
+          </p>
+        ) : null}
         <div className="overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]">
           <SiteHeader
             navItems={navItems}
@@ -176,7 +144,16 @@ export function SiteHeaderLab() {
             <p className="m-0 text-sm text-[var(--screening-text-muted)]">Page content area</p>
           </div>
         </div>
-      }
+      </div>
+    </div>
+  )
+
+  return (
+    <ComponentLabPage
+      qa={siteHeaderLabQa}
+      title="Site header"
+      description="Top navigation for FinScan - brand, primary menu items with dropdown chevrons, and user toolbar actions."
+      examplesToolbar={examplesToolbar}
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">

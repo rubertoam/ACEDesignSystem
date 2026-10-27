@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { AvailabilityTag } from '../components/atoms/AvailabilityTag/AvailabilityTag'
+import { cn } from './cn'
 import { labNavSections, type LabNavSectionTitle } from '../pages/labNav'
 
 const OVERVIEW_PATHS: Record<LabNavSectionTitle, string> = {
@@ -15,26 +16,45 @@ export function LabOverviewList({ section }: { section: LabNavSectionTitle }) {
       ?.items.filter((item) => item.to !== OVERVIEW_PATHS[section]) ?? []
 
   return (
-    <ul className="m-0 list-none space-y-3 p-0">
+    <ul className="m-0 grid list-none grid-cols-1 gap-4 p-0 sm:grid-cols-2 xl:grid-cols-3">
       {items.map((item) => (
-        <li
-          key={item.to}
-          className="flex items-start justify-between gap-4 border-b border-[var(--color-border)] pb-3 last:border-0 last:pb-0"
-        >
-          <div className="min-w-0 flex-1">
-            <Link
-              className="text-[var(--color-accent)] underline underline-offset-2"
-              to={item.to}
-            >
-              {item.label}
-            </Link>
+        <li key={item.to} className="m-0 min-w-0 p-0">
+          <Link to={item.to} className="lab-overview-card">
+            <div className="flex items-start justify-between gap-3">
+              <span
+                className={cn(
+                  'lab-overview-card__title min-w-0',
+                  '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]',
+                )}
+              >
+                {item.label}
+              </span>
+              {item.availability ? (
+                <AvailabilityTag status={item.availability} className="shrink-0" />
+              ) : null}
+            </div>
             {item.overviewHint ? (
-              <p className="m-0 mt-1 text-[var(--color-text-muted)]">{item.overviewHint}</p>
-            ) : null}
-          </div>
-          {item.availability ? (
-            <AvailabilityTag status={item.availability} size="sm" className="shrink-0" />
-          ) : null}
+              <p
+                className={cn(
+                  'm-0 flex-1',
+                  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+                  'text-[var(--screening-text-muted)]',
+                )}
+              >
+                {item.overviewHint}
+              </p>
+            ) : (
+              <p
+                className={cn(
+                  'm-0 flex-1',
+                  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+                  'text-[var(--screening-text-muted)]',
+                )}
+              >
+                Open lab
+              </p>
+            )}
+          </Link>
         </li>
       ))}
     </ul>

@@ -1,5 +1,5 @@
 /**
- * ACE Colors lab — Figma Colors page (node 2:4).
+ * ACE Colors lab - Figma Colors page (node 2:4).
  * Style Sheet: FinScan Colors 2794:5 · Primitives: 5126:2 · Semantic vars: Semantic collection
  */
 
@@ -36,10 +36,14 @@ export type ColorPaletteFamily = {
 export type SemanticTokenEntry = {
   tokenPath: string
   cssVar: string
-  /** Primitive path this semantic aliases (Light, as in Figma) */
+  /** Primitive path this semantic aliases in Light mode (Figma Semantic · Light) */
   alias: string
   hex: string
   bordered?: boolean
+  /** Primitive path in Dark mode (Figma Semantic · Dark) */
+  darkAlias?: string
+  darkHex?: string
+  darkBordered?: boolean
 }
 
 export type SemanticTokenGroup = {
@@ -48,7 +52,7 @@ export type SemanticTokenGroup = {
   tokens: SemanticTokenEntry[]
 }
 
-/** FinScan Colors / Color Styles — Figma node 2794:5 (includes Notice; Style Sheet only). */
+/** FinScan Colors / Color Styles - Figma node 2794:5 (includes Notice; Style Sheet only). */
 export const COLOR_STYLE_SHEET_FAMILIES: StyleSheetFamily[] = [
   {
     id: 'neutral',
@@ -944,7 +948,7 @@ export const COLOR_PRIMITIVE_FAMILIES: ColorPaletteFamily[] = [
 
 export const COLOR_PALETTE_FAMILIES = COLOR_PRIMITIVE_FAMILIES
 
-/** Generated from Figma Semantic/Light.tokens.json */
+/** Generated from Figma Semantic Light + Dark modes (same variables, two columns) */
 export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
   {
     "id": "bg",
@@ -955,73 +959,98 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-bg-primary",
         "alias": "color/neutral/50",
         "hex": "#FAFAFB",
+        "darkAlias": "color/dark/950",
+        "darkHex": "#14171F",
         "bordered": true
       },
       {
         "tokenPath": "colors/bg/secondary",
         "cssVar": "--color-bg-secondary",
         "alias": "color/neutral/100",
-        "hex": "#EFF0F2"
+        "hex": "#EFF0F2",
+        "darkAlias": "color/dark/700",
+        "darkHex": "#22272B"
       },
       {
         "tokenPath": "colors/bg/tertiary",
         "cssVar": "--color-bg-tertiary",
         "alias": "color/neutral/200",
-        "hex": "#E4E6EA"
+        "hex": "#E4E6EA",
+        "darkAlias": "color/dark/600",
+        "darkHex": "#282E33"
       },
       {
         "tokenPath": "colors/bg/inverse",
         "cssVar": "--color-bg-inverse",
         "alias": "color/neutral/900",
-        "hex": "#121316"
+        "hex": "#121316",
+        "darkAlias": "color/neutral/50",
+        "darkHex": "#FAFAFB",
+        "darkBordered": true
       },
       {
         "tokenPath": "colors/bg/brand",
         "cssVar": "--color-bg-brand",
         "alias": "color/primary/400",
-        "hex": "#523EB9"
+        "hex": "#523EB9",
+        "darkAlias": "color/primary/500",
+        "darkHex": "#3D2E8A"
       },
       {
         "tokenPath": "colors/bg/brand-subtle",
         "cssVar": "--color-bg-brand-subtle",
         "alias": "color/primary/100",
-        "hex": "#CBC5EC"
+        "hex": "#CBC5EC",
+        "darkAlias": "color/primary/200",
+        "darkHex": "#A296DC"
       },
       {
         "tokenPath": "colors/bg/brand-hover",
         "cssVar": "--color-bg-brand-hover",
         "alias": "color/primary/50",
-        "hex": "#EFEEF9"
+        "hex": "#EFEEF9",
+        "darkAlias": "color/primary/900",
+        "darkHex": "#0F0B21"
       },
       {
         "tokenPath": "colors/bg/disabled",
         "cssVar": "--color-bg-disabled",
         "alias": "color/neutral/600",
-        "hex": "#6A7285"
+        "hex": "#6A7285",
+        "darkAlias": "color/neutral/500",
+        "darkHex": "#949BAA"
       },
       {
         "tokenPath": "colors/bg/disabled-subtle",
         "cssVar": "--color-bg-disabled-subtle",
         "alias": "color/neutral/100",
-        "hex": "#EFF0F2"
+        "hex": "#EFF0F2",
+        "darkAlias": "color/neutral/800",
+        "darkHex": "#23262C"
       },
       {
         "tokenPath": "colors/bg/success",
         "cssVar": "--color-bg-success",
         "alias": "color/success/50",
-        "hex": "#F8FBF1"
+        "hex": "#F8FBF1",
+        "darkAlias": "color/success/900",
+        "darkHex": "#111706"
       },
       {
         "tokenPath": "colors/bg/warning",
         "cssVar": "--color-bg-warning",
         "alias": "color/warning/50",
-        "hex": "#FDF3EA"
+        "hex": "#FDF3EA",
+        "darkAlias": "color/warning/900",
+        "darkHex": "#391E06"
       },
       {
         "tokenPath": "colors/bg/error",
         "cssVar": "--color-bg-error",
         "alias": "color/error/50",
-        "hex": "#FDF4F6"
+        "hex": "#FDF4F6",
+        "darkAlias": "color/error/900",
+        "darkHex": "#380912"
       }
     ]
   },
@@ -1034,6 +1063,8 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-surface-primary",
         "alias": "color/shades/0",
         "hex": "#FFFFFF",
+        "darkAlias": "color/dark/750",
+        "darkHex": "#20232A",
         "bordered": true
       },
       {
@@ -1041,6 +1072,8 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-surface-page-layout",
         "alias": "color/neutral/50",
         "hex": "#FAFAFB",
+        "darkAlias": "color/dark/950",
+        "darkHex": "#14171F",
         "bordered": true
       },
       {
@@ -1048,6 +1081,8 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-surface-elevated",
         "alias": "color/shades/0",
         "hex": "#FFFFFF",
+        "darkAlias": "color/dark/750",
+        "darkHex": "#20232A",
         "bordered": true
       }
     ]
@@ -1060,44 +1095,59 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "tokenPath": "colors/text/primary",
         "cssVar": "--color-text-primary",
         "alias": "color/neutral/800",
-        "hex": "#23262C"
+        "hex": "#23262C",
+        "darkAlias": "color/neutral/50",
+        "darkHex": "#FAFAFB",
+        "darkBordered": true
       },
       {
         "tokenPath": "colors/text/secondary",
         "cssVar": "--color-text-secondary",
         "alias": "color/neutral/700",
-        "hex": "#464C59"
+        "hex": "#464C59",
+        "darkAlias": "color/neutral/300",
+        "darkHex": "#DADCE1"
       },
       {
         "tokenPath": "colors/text/disabled",
         "cssVar": "--color-text-disabled",
         "alias": "color/neutral/600",
-        "hex": "#6A7285"
+        "hex": "#6A7285",
+        "darkAlias": "color/dark/200",
+        "darkHex": "#596773"
       },
       {
         "tokenPath": "colors/text/placeholder",
         "cssVar": "--color-text-placeholder",
         "alias": "color/neutral/400",
-        "hex": "#CFD2D9"
+        "hex": "#CFD2D9",
+        "darkAlias": "color/neutral/600",
+        "darkHex": "#6A7285"
       },
       {
         "tokenPath": "colors/text/inverse",
         "cssVar": "--color-text-inverse",
         "alias": "color/shades/0",
         "hex": "#FFFFFF",
+        "darkAlias": "color/neutral/900",
+        "darkHex": "#121316",
         "bordered": true
       },
       {
         "tokenPath": "colors/text/brand",
         "cssVar": "--color-text-brand",
         "alias": "color/primary/400",
-        "hex": "#523EB9"
+        "hex": "#523EB9",
+        "darkAlias": "color/primary/300",
+        "darkHex": "#7868CD"
       },
       {
         "tokenPath": "colors/text/link",
         "cssVar": "--color-text-link",
         "alias": "color/blue/500",
-        "hex": "#0672A3"
+        "hex": "#0672A3",
+        "darkAlias": "color/blue/300",
+        "darkHex": "#31BAF7"
       }
     ]
   },
@@ -1109,62 +1159,82 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "tokenPath": "colors/border/default",
         "cssVar": "--color-border-default",
         "alias": "color/neutral/400",
-        "hex": "#CFD2D9"
+        "hex": "#CFD2D9",
+        "darkAlias": "color/dark/400",
+        "darkHex": "#38414A"
       },
       {
         "tokenPath": "colors/border/subtle",
         "cssVar": "--color-border-subtle",
         "alias": "color/neutral/200",
-        "hex": "#E4E6EA"
+        "hex": "#E4E6EA",
+        "darkAlias": "color/dark/500",
+        "darkHex": "#2C333A"
       },
       {
         "tokenPath": "colors/border/brand",
         "cssVar": "--color-border-brand",
         "alias": "color/primary/400",
-        "hex": "#523EB9"
+        "hex": "#523EB9",
+        "darkAlias": "color/primary/300",
+        "darkHex": "#7868CD"
       },
       {
         "tokenPath": "colors/border/focus",
         "cssVar": "--color-border-focus",
         "alias": "color/primary/300",
-        "hex": "#7868CD"
+        "hex": "#7868CD",
+        "darkAlias": "color/primary/200",
+        "darkHex": "#A296DC"
       },
       {
         "tokenPath": "colors/border/disabled",
         "cssVar": "--color-border-disabled",
         "alias": "color/neutral/600",
-        "hex": "#6A7285"
+        "hex": "#6A7285",
+        "darkAlias": "color/neutral/500",
+        "darkHex": "#949BAA"
       },
       {
         "tokenPath": "colors/border/disabled-subtle",
         "cssVar": "--color-border-disabled-subtle",
         "alias": "color/neutral/300",
-        "hex": "#DADCE1"
+        "hex": "#DADCE1",
+        "darkAlias": "color/neutral/700",
+        "darkHex": "#464C59"
       },
       {
         "tokenPath": "colors/border/inverse",
         "cssVar": "--color-border-inverse",
         "alias": "color/shades/0",
         "hex": "#FFFFFF",
+        "darkAlias": "color/shades/100",
+        "darkHex": "#000000",
         "bordered": true
       },
       {
         "tokenPath": "colors/border/success",
         "cssVar": "--color-border-success",
         "alias": "color/success/500",
-        "hex": "#87B531"
+        "hex": "#87B531",
+        "darkAlias": "color/success/400",
+        "darkHex": "#A1CF4C"
       },
       {
         "tokenPath": "colors/border/warning",
         "cssVar": "--color-border-warning",
         "alias": "color/warning/500",
-        "hex": "#E67E23"
+        "hex": "#E67E23",
+        "darkAlias": "color/warning/400",
+        "darkHex": "#EB974D"
       },
       {
         "tokenPath": "colors/border/error",
         "cssVar": "--color-border-error",
         "alias": "color/error/500",
-        "hex": "#DC264B"
+        "hex": "#DC264B",
+        "darkAlias": "color/error/400",
+        "darkHex": "#EA7D93"
       }
     ]
   },
@@ -1176,115 +1246,153 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "tokenPath": "colors/action/primary",
         "cssVar": "--color-action-primary",
         "alias": "color/primary/400",
-        "hex": "#523EB9"
+        "hex": "#523EB9",
+        "darkAlias": "color/primary/300",
+        "darkHex": "#7868CD"
       },
       {
         "tokenPath": "colors/action/primary-hover",
         "cssVar": "--color-action-primary-hover",
         "alias": "color/primary/600",
-        "hex": "#312570"
+        "hex": "#312570",
+        "darkAlias": "color/primary/300",
+        "darkHex": "#7868CD"
       },
       {
         "tokenPath": "colors/action/primary - hover - subtle",
         "cssVar": "--color-action-primary-hover-subtle",
         "alias": "color/primary/100",
-        "hex": "#CBC5EC"
+        "hex": "#CBC5EC",
+        "darkAlias": "color/primary/50",
+        "darkHex": "#EFEEF9"
       },
       {
         "tokenPath": "colors/action/primary-pressed",
         "cssVar": "--color-action-primary-pressed",
         "alias": "color/primary/700",
-        "hex": "#261C55"
+        "hex": "#261C55",
+        "darkAlias": "color/primary/500",
+        "darkHex": "#3D2E8A"
       },
       {
         "tokenPath": "colors/action/primary - pressed - subtle",
         "cssVar": "--color-action-primary-pressed-subtle",
         "alias": "color/primary/300",
-        "hex": "#7868CD"
+        "hex": "#7868CD",
+        "darkAlias": "color/primary/200",
+        "darkHex": "#A296DC"
       },
       {
         "tokenPath": "colors/action/secondary",
         "cssVar": "--color-action-secondary",
         "alias": "color/secondary/500",
-        "hex": "#92278F"
+        "hex": "#92278F",
+        "darkAlias": "color/secondary/400",
+        "darkHex": "#D258CF"
       },
       {
         "tokenPath": "colors/action/secondary-hover",
         "cssVar": "--color-action-secondary-hover",
         "alias": "color/secondary/600",
-        "hex": "#6D1D6B"
+        "hex": "#6D1D6B",
+        "darkAlias": "color/secondary/300",
+        "darkHex": "#DD7FDA"
       },
       {
         "tokenPath": "colors/action/secondary-pressed",
         "cssVar": "--color-action-secondary-pressed",
         "alias": "color/secondary/700",
-        "hex": "#491447"
+        "hex": "#491447",
+        "darkAlias": "color/secondary/200",
+        "darkHex": "#E7A5E5"
       },
       {
         "tokenPath": "colors/action/success",
         "cssVar": "--color-action-success",
         "alias": "color/success/500",
-        "hex": "#87B531"
+        "hex": "#87B531",
+        "darkAlias": "color/success/400",
+        "darkHex": "#A1CF4C"
       },
       {
         "tokenPath": "colors/action/success-hover",
         "cssVar": "--color-action-success-hover",
         "alias": "color/success/600",
-        "hex": "#658825"
+        "hex": "#658825",
+        "darkAlias": "color/success/300",
+        "darkHex": "#B7DA75"
       },
       {
         "tokenPath": "colors/action/success-pressed",
         "cssVar": "--color-action-success-pressed",
         "alias": "color/success/700",
-        "hex": "#435B18"
+        "hex": "#435B18",
+        "darkAlias": "color/success/200",
+        "darkHex": "#CCE59F"
       },
       {
         "tokenPath": "colors/action/error",
         "cssVar": "--color-action-error",
         "alias": "color/error/500",
-        "hex": "#DC264B"
+        "hex": "#DC264B",
+        "darkAlias": "color/error/400",
+        "darkHex": "#EA7D93"
       },
       {
         "tokenPath": "colors/action/error-hover",
         "cssVar": "--color-action-error-hover",
         "alias": "color/error/600",
-        "hex": "#C21F40"
+        "hex": "#C21F40",
+        "darkAlias": "color/error/300",
+        "darkHex": "#EF9DAE"
       },
       {
         "tokenPath": "colors/action/error-pressed",
         "cssVar": "--color-action-error-pressed",
         "alias": "color/error/700",
-        "hex": "#8B162E"
+        "hex": "#8B162E",
+        "darkAlias": "color/error/200",
+        "darkHex": "#F5BEC9"
       },
       {
         "tokenPath": "colors/action/warning",
         "cssVar": "--color-action-warning",
         "alias": "color/warning/500",
-        "hex": "#E67E23"
+        "hex": "#E67E23",
+        "darkAlias": "color/warning/400",
+        "darkHex": "#EB974D"
       },
       {
         "tokenPath": "colors/action/warning-hover",
         "cssVar": "--color-action-warning-hover",
         "alias": "color/warning/600",
-        "hex": "#C16616"
+        "hex": "#C16616",
+        "darkAlias": "color/warning/300",
+        "darkHex": "#F0AF77"
       },
       {
         "tokenPath": "colors/action/warning-pressed",
         "cssVar": "--color-action-warning-pressed",
         "alias": "color/warning/700",
-        "hex": "#934E11"
+        "hex": "#934E11",
+        "darkAlias": "color/warning/200",
+        "darkHex": "#F4C8A1"
       },
       {
         "tokenPath": "colors/action/disabled",
         "cssVar": "--color-action-disabled",
         "alias": "color/neutral/600",
-        "hex": "#6A7285"
+        "hex": "#6A7285",
+        "darkAlias": "color/dark/300",
+        "darkHex": "#444E59"
       },
       {
         "tokenPath": "colors/action/disabled-button",
         "cssVar": "--color-action-disabled-button",
         "alias": "color/neutral/200",
-        "hex": "#E4E6EA"
+        "hex": "#E4E6EA",
+        "darkAlias": "color/dark/500",
+        "darkHex": "#2C333A"
       }
     ]
   },
@@ -1296,49 +1404,65 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "tokenPath": "colors/status/success",
         "cssVar": "--color-status-success",
         "alias": "color/success/500",
-        "hex": "#87B531"
+        "hex": "#87B531",
+        "darkAlias": "color/success/400",
+        "darkHex": "#A1CF4C"
       },
       {
         "tokenPath": "colors/status/success-subtle",
         "cssVar": "--color-status-success-subtle",
         "alias": "color/success/50",
-        "hex": "#F8FBF1"
+        "hex": "#F8FBF1",
+        "darkAlias": "color/success/900",
+        "darkHex": "#111706"
       },
       {
         "tokenPath": "colors/status/warning",
         "cssVar": "--color-status-warning",
         "alias": "color/warning/500",
-        "hex": "#E67E23"
+        "hex": "#E67E23",
+        "darkAlias": "color/warning/400",
+        "darkHex": "#EB974D"
       },
       {
         "tokenPath": "colors/status/warning-subtle",
         "cssVar": "--color-status-warning-subtle",
         "alias": "color/warning/50",
-        "hex": "#FDF3EA"
+        "hex": "#FDF3EA",
+        "darkAlias": "color/warning/900",
+        "darkHex": "#391E06"
       },
       {
         "tokenPath": "colors/status/error",
         "cssVar": "--color-status-error",
         "alias": "color/error/500",
-        "hex": "#DC264B"
+        "hex": "#DC264B",
+        "darkAlias": "color/error/400",
+        "darkHex": "#EA7D93"
       },
       {
         "tokenPath": "colors/status/error-subtle",
         "cssVar": "--color-status-error-subtle",
         "alias": "color/error/50",
-        "hex": "#FDF4F6"
+        "hex": "#FDF4F6",
+        "darkAlias": "color/error/900",
+        "darkHex": "#380912"
       },
       {
         "tokenPath": "colors/status/info",
         "cssVar": "--color-status-info",
         "alias": "color/blue/500",
-        "hex": "#0672A3"
+        "hex": "#0672A3",
+        "darkAlias": "color/blue/400",
+        "darkHex": "#089DE1"
       },
       {
         "tokenPath": "colors/status/info-subtle",
         "cssVar": "--color-status-info-subtle",
         "alias": "color/blue/50",
-        "hex": "#EAF8FE"
+        "hex": "#EAF8FE",
+        "darkAlias": "color/blue/900",
+        "darkHex": "#010E14"
       }
     ]
   },
@@ -1350,44 +1474,59 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "tokenPath": "colors/icon/primary",
         "cssVar": "--color-icon-primary",
         "alias": "color/neutral/800",
-        "hex": "#23262C"
+        "hex": "#23262C",
+        "darkAlias": "color/neutral/50",
+        "darkHex": "#FAFAFB",
+        "darkBordered": true
       },
       {
         "tokenPath": "colors/icon/secondary",
         "cssVar": "--color-icon-secondary",
         "alias": "color/neutral/600",
-        "hex": "#6A7285"
+        "hex": "#6A7285",
+        "darkAlias": "color/neutral/400",
+        "darkHex": "#CFD2D9"
       },
       {
         "tokenPath": "colors/icon/disabled",
         "cssVar": "--color-icon-disabled",
         "alias": "color/neutral/500",
-        "hex": "#949BAA"
+        "hex": "#949BAA",
+        "darkAlias": "color/error/500",
+        "darkHex": "#DC264B"
       },
       {
         "tokenPath": "colors/icon/hover",
         "cssVar": "--color-icon-hover",
         "alias": "color/primary/50",
-        "hex": "#EFEEF9"
+        "hex": "#EFEEF9",
+        "darkAlias": "color/primary/800",
+        "darkHex": "#1A143B"
       },
       {
         "tokenPath": "colors/icon/brand",
         "cssVar": "--color-icon-brand",
         "alias": "color/primary/400",
-        "hex": "#523EB9"
+        "hex": "#523EB9",
+        "darkAlias": "color/primary/300",
+        "darkHex": "#7868CD"
       },
       {
         "tokenPath": "colors/icon/inverse",
         "cssVar": "--color-icon-inverse",
         "alias": "color/shades/0",
         "hex": "#FFFFFF",
+        "darkAlias": "color/neutral/900",
+        "darkHex": "#121316",
         "bordered": true
       },
       {
         "tokenPath": "colors/icon/remove",
         "cssVar": "--color-icon-remove",
         "alias": "color/error/500",
-        "hex": "#DC264B"
+        "hex": "#DC264B",
+        "darkAlias": "color/error/400",
+        "darkHex": "#EA7D93"
       }
     ]
   },
@@ -1399,109 +1538,145 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "tokenPath": "colors/badges/purple-fill",
         "cssVar": "--color-badges-purple-fill",
         "alias": "color/primary/50",
-        "hex": "#EFEEF9"
+        "hex": "#EFEEF9",
+        "darkAlias": "color/primary/800",
+        "darkHex": "#1A143B"
       },
       {
         "tokenPath": "colors/badges/purple-border",
         "cssVar": "--color-badges-purple-border",
         "alias": "color/primary/400",
-        "hex": "#523EB9"
+        "hex": "#523EB9",
+        "darkAlias": "color/primary/200",
+        "darkHex": "#A296DC"
       },
       {
         "tokenPath": "colors/badges/orange-fill",
         "cssVar": "--color-badges-orange-fill",
         "alias": "color/warning/50",
-        "hex": "#FDF3EA"
+        "hex": "#FDF3EA",
+        "darkAlias": "color/warning/800",
+        "darkHex": "#66360C"
       },
       {
         "tokenPath": "colors/badges/orange-border",
         "cssVar": "--color-badges-orange-border",
         "alias": "color/warning/500",
-        "hex": "#E67E23"
+        "hex": "#E67E23",
+        "darkAlias": "color/warning/200",
+        "darkHex": "#F4C8A1"
       },
       {
         "tokenPath": "colors/badges/green-fill",
         "cssVar": "--color-badges-green-fill",
         "alias": "color/success/50",
-        "hex": "#F8FBF1"
+        "hex": "#F8FBF1",
+        "darkAlias": "color/success/800",
+        "darkHex": "#222D0C"
       },
       {
         "tokenPath": "colors/badges/green-border",
         "cssVar": "--color-badges-green-border",
         "alias": "color/success/500",
-        "hex": "#87B531"
+        "hex": "#87B531",
+        "darkAlias": "color/success/200",
+        "darkHex": "#CCE59F"
       },
       {
         "tokenPath": "colors/badges/gray-fill",
         "cssVar": "--color-badges-gray-fill",
         "alias": "color/neutral/200",
-        "hex": "#E4E6EA"
+        "hex": "#E4E6EA",
+        "darkAlias": "color/neutral/800",
+        "darkHex": "#23262C"
       },
       {
         "tokenPath": "colors/badges/gray-border",
         "cssVar": "--color-badges-gray-border",
         "alias": "color/neutral/700",
-        "hex": "#464C59"
+        "hex": "#464C59",
+        "darkAlias": "color/neutral/300",
+        "darkHex": "#DADCE1"
       },
       {
         "tokenPath": "colors/badges/blue-fill",
         "cssVar": "--color-badges-blue-fill",
         "alias": "color/blue/50",
-        "hex": "#EAF8FE"
+        "hex": "#EAF8FE",
+        "darkAlias": "color/blue/800",
+        "darkHex": "#021C29"
       },
       {
         "tokenPath": "colors/badges/blue-border",
         "cssVar": "--color-badges-blue-border",
         "alias": "color/blue/400",
-        "hex": "#089DE1"
+        "hex": "#089DE1",
+        "darkAlias": "color/blue/200",
+        "darkHex": "#6FCEFA"
       },
       {
         "tokenPath": "colors/badges/yellow-fill",
         "cssVar": "--color-badges-yellow-fill",
         "alias": "color/warning 2/50",
-        "hex": "#FFFCF3"
+        "hex": "#FFFCF3",
+        "darkAlias": "color/warning 2/800",
+        "darkHex": "#856200"
       },
       {
         "tokenPath": "colors/badges/yellow-border",
         "cssVar": "--color-badges-yellow-border",
         "alias": "color/warning 2/500",
-        "hex": "#FFBE0B"
+        "hex": "#FFBE0B",
+        "darkAlias": "color/warning 2/200",
+        "darkHex": "#FFE8AA"
       },
       {
         "tokenPath": "colors/badges/pink-fill",
         "cssVar": "--color-badges-pink-fill",
         "alias": "color/secondary/50",
-        "hex": "#FCF2FB"
+        "hex": "#FCF2FB",
+        "darkAlias": "color/secondary/800",
+        "darkHex": "#250A24"
       },
       {
         "tokenPath": "colors/badges/pink-border",
         "cssVar": "--color-badges-pink-border",
         "alias": "color/secondary/500",
-        "hex": "#92278F"
+        "hex": "#92278F",
+        "darkAlias": "color/secondary/200",
+        "darkHex": "#E7A5E5"
       },
       {
         "tokenPath": "colors/badges/teal-fill",
         "cssVar": "--color-badges-teal-fill",
         "alias": "color/teal/50",
-        "hex": "#F0FBFC"
+        "hex": "#F0FBFC",
+        "darkAlias": "color/teal/800",
+        "darkHex": "#092B2E"
       },
       {
         "tokenPath": "colors/badges/teal-border",
         "cssVar": "--color-badges-teal-border",
         "alias": "color/teal/500",
-        "hex": "#22ADB6"
+        "hex": "#22ADB6",
+        "darkAlias": "color/teal/200",
+        "darkHex": "#93E5EB"
       },
       {
         "tokenPath": "colors/badges/red-fill",
         "cssVar": "--color-badges-red-fill",
         "alias": "color/error/50",
-        "hex": "#FDF4F6"
+        "hex": "#FDF4F6",
+        "darkAlias": "color/error/800",
+        "darkHex": "#530D1C"
       },
       {
         "tokenPath": "colors/badges/red-border",
         "cssVar": "--color-badges-red-border",
         "alias": "color/error/500",
-        "hex": "#DC264B"
+        "hex": "#DC264B",
+        "darkAlias": "color/error/200",
+        "darkHex": "#F5BEC9"
       }
     ]
   }

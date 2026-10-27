@@ -1,6 +1,6 @@
 import { cn } from '../../../lib/cn'
 
-/** Review Assigned task bar shell — surface, border, XS drop shadow. */
+/** Review Assigned task bar shell - surface, border, XS drop shadow. */
 export const taskBarShellClass = cn(
   'flex shrink-0 items-center justify-end gap-4',
   'rounded-[var(--radius-sm)] border border-solid border-[var(--task-bar-border)]',

@@ -8,8 +8,8 @@ import {
   type ToggleVariant,
 } from '../components/atoms/Toggle/toggleFieldStyles'
 import { cn } from '../lib/cn'
-import { LabRadioGroup, LabSelect } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { LabSelect } from '../lib/labControls'
+import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 
@@ -77,18 +77,25 @@ function PreviewCell({
   )
 }
 
-function DescriptivePattern({ size }: { size: ToggleSize }) {
-  const [on, setOn] = useState(false)
+function DescriptivePattern({
+  size,
+  checked,
+  onCheckedChange,
+}: {
+  size: ToggleSize
+  checked: boolean
+  onCheckedChange: (checked: boolean) => void
+}) {
   const toggleId = useId()
   return (
     <div className="flex max-w-sm flex-wrap gap-6 rounded-[var(--radius-sm)] border border-[var(--color-border-default)] bg-[var(--color-surface-primary)] p-3 sm:flex-nowrap">
       <div className="flex shrink-0 flex-col items-center gap-3 pt-1">
-        <Toggle size={size} checked={on} onCheckedChange={setOn} id={toggleId} />
+        <Toggle size={size} checked={checked} onCheckedChange={onCheckedChange} id={toggleId} />
         <label
           htmlFor={toggleId}
           className="cursor-pointer whitespace-nowrap text-[var(--color-text-brand)] [font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]"
         >
-          {on ? 'YES' : 'NO'}
+          {checked ? 'YES' : 'NO'}
         </label>
       </div>
       <div className="min-w-0 flex-1 space-y-2 text-[var(--color-text-primary)]">
@@ -154,32 +161,55 @@ function TogglesChangelog() {
 
 type ToggleLabVariant = 'standard' | 'descriptive' | 'icon'
 
+const SIZE_OPTIONS: { value: ToggleSize; label: string }[] = [
+  { value: 'sm', label: TOGGLE_SIZE_LABELS.sm },
+  { value: 'md', label: TOGGLE_SIZE_LABELS.md },
+]
+
+const VARIANT_OPTIONS: { value: ToggleLabVariant; label: string }[] = [
+  { value: 'standard', label: 'Standard' },
+  { value: 'icon', label: 'Icon' },
+  { value: 'descriptive', label: 'Descriptive Toggle' },
+]
+
 export function TogglePlaygroundLab() {
   const [variant, setVariant] = useState<ToggleLabVariant>('standard')
   const [size, setSize] = useState<ToggleSize>('md')
   const [checked, setChecked] = useState(false)
   const toggleId = useId()
 
-  const sizes: ToggleSize[] = ['sm', 'md']
-
   const toolbar = (
-    <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-      <LabSelect
-        label="Variant"
-        value={variant}
-        onChange={(v) => setVariant(v as ToggleLabVariant)}
-        options={[
-          { value: 'standard', label: 'Standard' },
-          { value: 'icon', label: 'Icon' },
-          { value: 'descriptive', label: 'Descriptive Toggle' },
-        ]}
-      />
-      <LabRadioGroup
-        label="Size"
-        value={size}
-        onChange={setSize}
-        options={sizes.map((s) => ({ value: s, label: TOGGLE_SIZE_LABELS[s] }))}
-      />
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect
+          label="Variant"
+          value={variant}
+          onChange={(v) => setVariant(v as ToggleLabVariant)}
+          options={VARIANT_OPTIONS}
+        />
+        <LabSelect label="Size" value={size} onChange={setSize} options={SIZE_OPTIONS} />
+      </div>
+
+      <div className="flex flex-col gap-4 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="flex justify-start">
+          {variant === 'standard' ? (
+            <label className="inline-flex cursor-pointer items-center gap-2" htmlFor={toggleId}>
+              <Toggle size={size} checked={checked} onCheckedChange={setChecked} id={toggleId} />
+              <span className={aceToggleLabelClass}>{checked ? 'On' : 'Off'}</span>
+            </label>
+          ) : variant === 'icon' ? (
+            <Toggle
+              size={size}
+              variant="icon"
+              checked={checked}
+              onCheckedChange={setChecked}
+              aria-label={checked ? 'On' : 'Off'}
+            />
+          ) : (
+            <DescriptivePattern size={size} checked={checked} onCheckedChange={setChecked} />
+          )}
+        </div>
+      </div>
     </div>
   )
 
@@ -190,82 +220,55 @@ export function TogglePlaygroundLab() {
       description="ACE Design System v.3 toggles (Figma 117:1265 / set 5283:2831): Standard or Icon; Small / Large (36×20 / 44×24); with or without label; Active unselected, Hover, Active selected, Inactive unselected, Inactive selected; Descriptive Toggle pattern (4081:1009). Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examplesToolbar={toolbar}
       examples={
-        <div className="space-y-12">
-          <div
-            className={cn(
-              'rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] sm:p-8',
-              labExampleSectionClass,
-            )}
-          >
-            <p className={labSectionLabelClass}>Interactive</p>
-            {variant === 'standard' ? (
-              <label className="inline-flex cursor-pointer items-center gap-2" htmlFor={toggleId}>
-                <Toggle size={size} checked={checked} onCheckedChange={setChecked} id={toggleId} />
-                <span className={aceToggleLabelClass}>{checked ? 'On' : 'Off'}</span>
-              </label>
-            ) : variant === 'icon' ? (
-              <Toggle
-                size={size}
-                variant="icon"
-                checked={checked}
-                onCheckedChange={setChecked}
-                aria-label={checked ? 'On' : 'Off'}
-              />
-            ) : (
-              <DescriptivePattern size={size} />
-            )}
+        <section className="space-y-5">
+          <div className={cn('w-full min-w-0', labUsageSectionClass)}>
+            <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+            <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+              Matches the Figma state matrix: active vs inactive (disabled) × off vs on, plus hover (unselected
+              track with brand-hover fill). All variants share the same track padding (
+              <code className="text-[var(--color-text-primary)]">--toggle-track-padding</code>, 4px). Icon rows
+              add a white check and dark X in the track with a white thumb. Sizes: Small (
+              <code className="text-[var(--color-text-primary)]">sm</code>) and Large (
+              <code className="text-[var(--color-text-primary)]">md</code>) only.
+            </p>
           </div>
-
-          <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className={cn('max-w-3xl', labUsageSectionClass)}>
-              <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
-              <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                Matches the Figma state matrix: active vs inactive (disabled) × off vs on, plus hover (unselected
-                track with brand-hover fill). All variants share the same track padding (
-                <code className="text-[var(--color-text-primary)]">--toggle-track-padding</code>, 4px). Icon rows
-                add a white check and dark X in the track with a white thumb. Sizes: Small (
-                <code className="text-[var(--color-text-primary)]">sm</code>) and Large (
-                <code className="text-[var(--color-text-primary)]">md</code>) only.
-              </p>
-            </div>
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
-              <table className="w-full min-w-[42rem] border-collapse text-left text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-                    <th className="min-w-[12rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                      Variant
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+            <table className="w-full min-w-[42rem] border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+                  <th className="min-w-[12rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
+                    Variant
+                  </th>
+                  {COLUMNS.map((c) => (
+                    <th
+                      key={c.key}
+                      className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]"
+                    >
+                      {c.label}
                     </th>
-                    {COLUMNS.map((c) => (
-                      <th
-                        key={c.key}
-                        className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]"
-                      >
-                        {c.label}
-                      </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--color-border)] bg-[var(--color-surface)]">
+                {SECTIONS.map((section) => (
+                  <tr key={section.title}>
+                    <td className="px-4 py-4 font-medium text-[var(--color-text-primary)]">{section.title}</td>
+                    {COLUMNS.map((col) => (
+                      <td key={col.key} className="px-4 py-4 align-middle">
+                        <PreviewCell
+                          col={col.key}
+                          size={section.size}
+                          withLabel={section.withLabel}
+                          variant={section.variant}
+                        />
+                      </td>
                     ))}
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--color-border)] bg-[var(--color-surface)]">
-                  {SECTIONS.map((section) => (
-                    <tr key={section.title}>
-                      <td className="px-4 py-4 font-medium text-[var(--color-text-primary)]">{section.title}</td>
-                      {COLUMNS.map((col) => (
-                        <td key={col.key} className="px-4 py-4 align-middle">
-                          <PreviewCell
-                            col={col.key}
-                            size={section.size}
-                            withLabel={section.withLabel}
-                            variant={section.variant}
-                          />
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       }
       code={
         <ComponentLabCode>{`import { Toggle } from '../components/atoms/Toggle/Toggle'

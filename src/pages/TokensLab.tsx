@@ -20,49 +20,105 @@ const VIEW_OPTIONS: { value: TokensView; label: string }[] = [
   { value: 'component', label: `Component (${TOKEN_CATALOG_COUNTS.component})` },
 ]
 
+/** Figma Semantic color group order (Name · Light · Dark). */
+const SEMANTIC_COLOR_ORDER = [
+  'colors/bg',
+  'colors/surface',
+  'colors/text',
+  'colors/border',
+  'colors/action',
+  'colors/status',
+  'colors/icon',
+  'colors/badges',
+]
+
 function isColorToken(token: TokenCatalogEntry) {
   return token.type === 'color' || token.cssVar.startsWith('--color-')
 }
 
+/** Figma path `color/dark/950` → `--color-dark-950` for mode swatches. */
+function cssVarFromAlias(alias: string | null | undefined): string | null {
+  if (!alias) return null
+  const parts = alias
+    .replace(/^colors\//, 'color/')
+    .split('/')
+    .map((p) =>
+      p
+        .trim()
+        .replace(/\s*-\s*/g, '-')
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9_-]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, ''),
+    )
+    .filter(Boolean)
+  if (!parts.length) return null
+  return `--${parts.join('-')}`
+}
+
+function sortSemanticGroups(groups: TokenCatalogGroup[]) {
+  return [...groups].sort((a, b) => {
+    const ai = SEMANTIC_COLOR_ORDER.indexOf(a.id)
+    const bi = SEMANTIC_COLOR_ORDER.indexOf(b.id)
+    if (ai >= 0 && bi >= 0) return ai - bi
+    if (ai >= 0) return -1
+    if (bi >= 0) return 1
+    return a.id.localeCompare(b.id)
+  })
+}
+
+function ModeValue({
+  alias,
+  value,
+  color,
+}: {
+  alias?: string | null
+  value?: string | null
+  color: boolean
+}) {
+  const swatchVar = color ? cssVarFromAlias(alias) : null
+  const label = alias ? (
+    <span>
+      → <code className="text-[var(--color-text-primary)]">{alias}</code>
+    </span>
+  ) : value ? (
+    <span className="font-mono">{value}</span>
+  ) : (
+    <span className="opacity-40">—</span>
+  )
+
+  return (
+    <div className="flex min-w-0 items-center gap-2">
+      {swatchVar ? (
+        <span
+          className="inline-block h-6 w-6 shrink-0 rounded-[var(--radius-sm)] border border-solid border-[var(--color-border-subtle)]"
+          style={{ background: `var(${swatchVar})` }}
+          aria-hidden
+        />
+      ) : null}
+      <span className="min-w-0 break-all text-[11px] text-[var(--color-text-muted)]">{label}</span>
+    </div>
+  )
+}
+
 function TokenRow({ token, showDark }: { token: TokenCatalogEntry; showDark: boolean }) {
-  const swatch = isColorToken(token)
+  const color = isColorToken(token)
   return (
     <tr className="border-b border-solid border-[var(--color-border-subtle)] last:border-b-0">
-      <td className="py-2 pr-3 align-middle">
-        <div className="flex items-center gap-2">
-          {swatch ? (
-            <span
-              className="inline-block h-6 w-6 shrink-0 rounded-[var(--radius-sm)] border border-solid border-[var(--color-border-subtle)]"
-              style={{ background: `var(${token.cssVar})` }}
-              aria-hidden
-            />
-          ) : null}
+      <td className="py-2.5 pr-3 align-middle">
+        <div className="min-w-0">
           <code className="break-all text-[11px] text-[var(--color-text-primary)]">{token.path}</code>
+          <code className="mt-0.5 block break-all text-[10px] text-[var(--color-text-secondary)]">
+            {token.cssVar}
+          </code>
         </div>
       </td>
-      <td className="py-2 pr-3 align-middle">
-        <code className="break-all text-[11px] text-[var(--color-text-secondary)]">{token.cssVar}</code>
-      </td>
-      <td className="py-2 pr-3 align-middle text-[11px] text-[var(--color-text-muted)]">
-        {token.alias ? (
-          <span>
-            → <code className="text-[var(--color-text-primary)]">{token.alias}</code>
-          </span>
-        ) : (
-          <span className="font-mono">{token.value}</span>
-        )}
+      <td className="py-2.5 pr-3 align-middle">
+        <ModeValue alias={token.alias} value={token.value} color={color} />
       </td>
       {showDark ? (
-        <td className="py-2 align-middle text-[11px] text-[var(--color-text-muted)]">
-          {token.darkAlias ? (
-            <span>
-              → <code className="text-[var(--color-text-primary)]">{token.darkAlias}</code>
-            </span>
-          ) : token.darkValue ? (
-            <span className="font-mono">{token.darkValue}</span>
-          ) : (
-            <span className="opacity-40">-</span>
-          )}
+        <td className="py-2.5 align-middle">
+          <ModeValue alias={token.darkAlias} value={token.darkValue} color={color} />
         </td>
       ) : null}
     </tr>
@@ -82,11 +138,10 @@ function TokenGroupTable({ group, showDark }: { group: TokenCatalogGroup; showDa
         {group.label}
       </h3>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[40rem] border-collapse text-left">
+        <table className="w-full min-w-[32rem] border-collapse text-left">
           <thead>
             <tr className="border-b border-solid border-[var(--color-border-default)] text-[10px] uppercase tracking-wide text-[var(--color-text-secondary)]">
-              <th className="pb-2 pr-3 font-semibold">Figma path</th>
-              <th className="pb-2 pr-3 font-semibold">CSS variable</th>
+              <th className="pb-2 pr-3 font-semibold">Name</th>
               <th className="pb-2 pr-3 font-semibold">{showDark ? 'Light' : 'Value'}</th>
               {showDark ? <th className="pb-2 font-semibold">Dark</th> : null}
             </tr>
@@ -124,12 +179,12 @@ function TokensCatalog({
 }
 
 export function TokensLab() {
-  const [view, setView] = useState<TokensView>('primitive')
+  const [view, setView] = useState<TokensView>('semantic')
 
   const groups = useMemo(() => {
     if (view === 'primitive') return TOKEN_PRIMITIVE_GROUPS
     if (view === 'component') return TOKEN_COMPONENT_GROUPS
-    return TOKEN_SEMANTIC_GROUPS
+    return sortSemanticGroups(TOKEN_SEMANTIC_GROUPS)
   }, [view])
 
   return (
@@ -148,9 +203,11 @@ export function TokensLab() {
               measuring sticks. You usually don’t pick them in the product; they feed the layers below.
             </li>
             <li>
-              <strong className="text-[var(--screening-text-primary)]">Semantic</strong>: names that say what something
-              is for, like “primary button color,” “body text,” or “page background.” These can change for light and
-              dark mode. Prefer these when styling the product.
+              <strong className="text-[var(--screening-text-primary)]">Semantic</strong>: same variables as Figma’s
+              Semantic collection, with <strong className="text-[var(--screening-text-primary)]">Light</strong> and{' '}
+              <strong className="text-[var(--screening-text-primary)]">Dark</strong> mode columns (e.g.{' '}
+              <code className="text-[var(--screening-text-primary)]">colors/bg/primary</code>). Prefer these when
+              styling the product.
             </li>
             <li>
               <strong className="text-[var(--screening-text-primary)]">Component</strong>: values tied to a specific UI
@@ -181,7 +238,8 @@ export function TokensLab() {
           </li>
           <li>
             Generated data:{' '}
-            <code className="text-[var(--color-text-primary)]">src/pages/tokensLabData.ts</code>
+            <code className="text-[var(--color-text-primary)]">src/pages/tokensLabData.ts</code> (Light + Dark from{' '}
+            <code className="text-[var(--color-text-primary)]">Semantic/*.tokens.json</code>)
           </li>
           <li>
             Runtime theme:{' '}

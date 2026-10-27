@@ -24,7 +24,7 @@ import { screeningToolbarIconButtonClass } from './screeningTableToolbar'
 export type ScreeningColumnsMenuProps = {
   visibleColumns?: Set<ScreeningColumnKey>
   onVisibleColumnsChange?: (next: Set<ScreeningColumnKey>) => void
-  /** Display order only — reorder happens on table headers, not in this menu. */
+  /** Display order only - reorder happens on table headers, not in this menu. */
   columnOrder?: ScreeningColumnKey[]
   className?: string
 }

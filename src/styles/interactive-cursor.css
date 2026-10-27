@@ -1,5 +1,5 @@
 /**
- * ACE design system — pointer cursor on interactive controls (click affordance).
+ * ACE design system - pointer cursor on interactive controls (click affordance).
  * Text fields keep the text (I-beam) cursor; disabled controls use not-allowed.
  */
 @layer base {

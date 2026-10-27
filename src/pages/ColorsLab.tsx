@@ -48,7 +48,7 @@ export function ColorsLab() {
         )
       }
       code={
-        <ComponentLabCode>{`/* color-tokens.css — Figma documentation layer */
+        <ComponentLabCode>{`/* color-tokens.css - Figma documentation layer */
 --color-neutral-400: #cfd2d9;
 --color-border-default: var(--color-neutral-400);
 
@@ -68,13 +68,13 @@ border-color: var(--color-border-default);`}</ComponentLabCode>
             <code className="text-[var(--screening-text-primary)]">--color-&#123;family&#125;-&#123;shade&#125;</code>.
           </p>
           <p className="m-0 leading-relaxed">
-            <strong className="text-[var(--screening-text-primary)]">Semantic Tokens</strong> mirror Figma
-            Semantic Color Tokens (Light + Dark via{' '}
-            <code className="text-[var(--screening-text-primary)]">[data-theme=&apos;dark&apos;]</code>
-            ): intent aliases that reference primitives (
+            <strong className="text-[var(--screening-text-primary)]">Semantic Tokens</strong> mirror Figma’s
+            Semantic collection with the same{' '}
+            <strong className="text-[var(--screening-text-primary)]">Name · Light · Dark</strong> columns (
             <code className="text-[var(--screening-text-primary)]">colors/bg/*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">colors/border/*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">colors/badges/*</code>, …).
+            <code className="text-[var(--screening-text-primary)]">colors/surface/*</code>, …). Runtime theme
+            switches via{' '}
+            <code className="text-[var(--screening-text-primary)]">[data-theme=&apos;dark&apos;]</code>.
           </p>
         </div>
       }

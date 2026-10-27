@@ -152,7 +152,7 @@ function transformVariablesCss() {
     if (seenOld.has(oldName)) continue
     seenOld.add(oldName)
 
-    // Already a compat alias for the mapped name — keep
+    // Already a compat alias for the mapped name - keep
     if (value === `var(${newName})`) continue
 
     const { text: newValue } = rewriteCssVarRefs(value)
@@ -637,7 +637,7 @@ function movePath(fromAbs, toAbs) {
   try {
     fs.renameSync(fromAbs, toAbs)
   } catch (err) {
-    // Windows EPERM / locked handles — copy then remove
+    // Windows EPERM / locked handles - copy then remove
     if (fs.statSync(fromAbs).isDirectory()) {
       fs.cpSync(fromAbs, toAbs, { recursive: true })
       fs.rmSync(fromAbs, { recursive: true, force: true })
@@ -723,7 +723,7 @@ function rewriteImportPaths(text) {
   for (const [from, to] of PATH_SEGMENT_MAP) {
     const re = new RegExp(`(['"\`])([^'"\`]*?)${escapeRegExp(from)}([^'"\`]*)\\1`, 'g')
     out = out.replace(re, (full, q, pre, post) => {
-      // Don't rewrite inside stub re-export alias comments unnecessarily —
+      // Don't rewrite inside stub re-export alias comments unnecessarily -
       // but path segments should always update to new folders.
       count++
       return `${q}${pre}${to}${post}${q}`
@@ -736,7 +736,7 @@ function isAceStubPath(fileAbs) {
   const rel = path.relative(srcRoot, fileAbs).replace(/\\/g, '/')
   if (/components\/atoms\/AceButton\.tsx$/.test(rel)) return true
   if (/components\/atoms\/AceInputField\.tsx$/.test(rel)) return true
-  // Entire Ace* stub directories (compat re-exports) — do not rewrite Ace aliases
+  // Entire Ace* stub directories (compat re-exports) - do not rewrite Ace aliases
   if (/components\/[^/]+\/Ace[^/]+\//.test(rel)) {
     if (isStubDir(path.dirname(fileAbs)) || isStubFile(fileAbs)) return true
   }
@@ -768,7 +768,7 @@ function rewriteFileContent(fileAbs) {
 }
 
 function writeDeprecatedStubFile(stubAbs, modulePath, exports) {
-  const clean = ['/** @deprecated Re-export — prefer the Figma-named export. */']
+  const clean = ['/** @deprecated Re-export - prefer the Figma-named export. */']
   for (const [neu, old] of exports) {
     const asType =
       old.endsWith('Props') ||
@@ -847,7 +847,7 @@ function performMovesOnly() {
     }
 
     if (fs.existsSync(toAbs) && fs.existsSync(fromAbs) && !isStubDir(fromAbs)) {
-      // Partial: dest exists, source still has content — prefer dest, stub source
+      // Partial: dest exists, source still has content - prefer dest, stub source
       summary.warnings.push(`both exist; stubbing source ${move.from}`)
       // Rename files inside dest if needed
       for (const [fromName, toName] of move.fileRenames || []) {
@@ -918,7 +918,7 @@ function rewriteAllSrc() {
   walkFiles(srcRoot, (file) => {
     if (!/\.(tsx?|css)$/.test(file)) return
     if (path.normalize(file) === path.normalize(variablesPath)) return
-    // index.ts is owned by rewriteIndexTs — never rewrite Ace* aliases away
+    // index.ts is owned by rewriteIndexTs - never rewrite Ace* aliases away
     if (path.normalize(file) === path.normalize(indexPath)) return
     rewriteFileContent(file)
   })

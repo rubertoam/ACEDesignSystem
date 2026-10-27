@@ -51,7 +51,7 @@ export function InlineMessagesLab() {
       examples={
         <div className="space-y-10">
           <div className={cn('items-start', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Interactive - {TONE_LABELS[tone]}</p>
+            <p className={labSectionLabelClass}>{TONE_LABELS[tone]}</p>
             <InlineMessage tone={tone} className="max-w-xl">
               {TONE_COPY[tone]}
             </InlineMessage>
@@ -165,7 +165,7 @@ export function InlineMessagesLab() {
             <header className="space-y-1">
               <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">22 October 2026</h3>
               <p className="m-0 text-sm text-[var(--color-text-muted)]">
-                Figma-aligned naming — <code className="text-[var(--color-text-primary)]">AceInlineMessage</code> →{' '}
+                Figma-aligned naming - <code className="text-[var(--color-text-primary)]">AceInlineMessage</code> →{' '}
                 <code className="text-[var(--color-text-primary)]">InlineMessage</code>.
               </p>
             </header>

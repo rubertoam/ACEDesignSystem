@@ -1,6 +1,6 @@
 import { cn } from '../../../lib/cn'
 
-/** Review Assigned page header shell — sits under SiteHeader. */
+/** Review Assigned page header shell - sits under SiteHeader. */
 export const pageHeaderShellClass = cn(
   'flex w-full shrink-0 items-center',
   'border border-solid border-[var(--page-header-border)]',

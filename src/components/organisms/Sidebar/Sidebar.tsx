@@ -95,14 +95,14 @@ export type SidebarProps = {
   open?: boolean
   defaultOpen?: boolean
   onOpenChange?: (open: boolean) => void
-  /** Navigation variant — organization switcher */
+  /** Navigation variant - organization switcher */
   organizations?: SidebarOrganization[]
   selectedOrganizationId?: string
   onOrganizationChange?: (id: string) => void
   /**
-   * `switcher` — field dropdown (default);
-   * `label` — selected org name as non-interactive text;
-   * `icon` — non-bordered icon button dropdown (optionally paired with Application ID).
+   * `switcher` - field dropdown (default);
+   * `label` - selected org name as non-interactive text;
+   * `icon` - non-bordered icon button dropdown (optionally paired with Application ID).
    */
   organizationDisplay?: SidebarOrganizationDisplay
   /** Application ID options shown as a second icon dropdown when `organizationDisplay="icon"`. */
@@ -128,7 +128,7 @@ export type SidebarProps = {
   menuPortalContainer?: HTMLElement | null
   /**
    * Optional control to the right of the organization switcher / New Group CTA
-   * (Review Assigned — typically a bordered search icon via `sidebarIconButtonBorderedClass`).
+   * (Review Assigned - typically a bordered search icon via `sidebarIconButtonBorderedClass`).
    * Shrinks the org field so both fit the sidebar width.
    */
   headerTrailing?: ReactNode
@@ -140,14 +140,14 @@ export type SidebarProps = {
 
 const sidebarIconDropdownTriggerClass = cn(
   sidebarIconButtonClass,
-  'data-[state=open]:border-[var(--icon-button-border)]',
+  'data-[state=open]:border-[var(--icon-button-hover-bg)]',
   'data-[state=open]:bg-[var(--icon-button-hover-bg)]',
   'data-[state=open]:text-[var(--icon-button-icon)]',
 )
 
 /**
  * Icon + label trigger. Built from Iconography border-stroke tokens (same as
- * `sidebarIconButtonBorderedClass`) — not `size-8` — so the hover border wraps
+ * `sidebarIconButtonBorderedClass`) - not `size-8` - so the hover border wraps
  * the full control instead of the icon box.
  */
 const sidebarIconDropdownTriggerWithLabelClass = cn(

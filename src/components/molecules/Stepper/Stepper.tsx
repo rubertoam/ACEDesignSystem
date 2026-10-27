@@ -28,7 +28,7 @@ function clamp(value: number, min: number, max: number) {
 }
 
 /**
- * Numeric stepper — Horizontal (minus / plus) or Vertical (chevrons above / below).
+ * Numeric stepper - Horizontal (minus / plus) or Vertical (chevrons above / below).
  */
 export function Stepper({
   value,

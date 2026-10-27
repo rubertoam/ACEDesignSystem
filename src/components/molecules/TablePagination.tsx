@@ -1,4 +1,4 @@
-/** @deprecated Import from `Pagination` — kept for existing data table imports. */
+/** @deprecated Import from `Pagination` - kept for existing data table imports. */
 export {
   Pagination,
   Pagination as TablePagination,

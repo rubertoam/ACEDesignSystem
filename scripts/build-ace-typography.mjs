@@ -7,7 +7,7 @@ const jsonPath = new URL('ace-typography-from-figma.json', stylesDir)
 
 function writeCss(typography) {
   let css =
-    ':root {\n  /* ACE typography — generated from Figma node 2651:5 (Font variables). Pair each --ace-type-* with its *-tracking token. */\n'
+    ':root {\n  /* ACE typography - generated from Figma node 2651:5 (Font variables). Pair each --ace-type-* with its *-tracking token. */\n'
   css += '  --font-ace-noto: "Noto Sans", var(--font-sans);\n'
   css += '  --font-ace-inter: "Inter", var(--font-sans);\n'
   for (const t of typography) {

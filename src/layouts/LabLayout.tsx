@@ -77,7 +77,7 @@ function LabThemeToggle({
         '[transition-timing-function:var(--ace-motion-ease-standard)]',
       )}
     >
-      {/* Sliding thumb — pin left/right so it never overflows the track */}
+      {/* Sliding thumb - pin left/right so it never overflows the track */}
       <span
         aria-hidden
         className={cn(
@@ -86,8 +86,8 @@ function LabThemeToggle({
           'motion-reduce:transition-none',
           isDark ? 'left-[calc(50%+1px)] right-0.5' : 'left-0.5 right-[calc(50%+1px)]',
           isDark
-            ? 'bg-[linear-gradient(145deg,#0c4a6e_0%,#0369a1_52%,#0ea5e9_100%)]'
-            : 'bg-[linear-gradient(145deg,#fbbf24_0%,#f59e0b_55%,#f97316_100%)]',
+            ? 'bg-[linear-gradient(145deg,var(--color-primary-500)_0%,var(--color-blue-500)_55%,var(--color-blue-400)_100%)]'
+            : 'bg-[linear-gradient(145deg,var(--color-warning-2-300)_0%,var(--color-warning-400)_55%,var(--color-warning-500)_100%)]',
         )}
       />
 
@@ -101,7 +101,9 @@ function LabThemeToggle({
           '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
           'transition-colors duration-200',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--screening-primary-ring)]',
-          !isDark ? 'text-[#1c1917]' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
+          !isDark
+            ? 'text-[var(--color-neutral-900)]'
+            : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
         )}
       >
         <MaterialSymbol
@@ -109,7 +111,9 @@ function LabThemeToggle({
           size="sm"
           className={cn(
             'transition-transform duration-300 ease-[cubic-bezier(0.34,1.3,0.64,1)]',
-            !isDark ? 'rotate-0 scale-110 text-[#1c1917]' : 'rotate-[-20deg] scale-95 opacity-70',
+            !isDark
+              ? 'rotate-0 scale-110 text-[var(--color-neutral-900)]'
+              : 'rotate-[-20deg] scale-95 opacity-70',
           )}
         />
         <span>Light</span>
@@ -125,7 +129,9 @@ function LabThemeToggle({
           '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
           'transition-colors duration-200',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--screening-primary-ring)]',
-          isDark ? 'text-white' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
+          isDark
+            ? 'text-[var(--color-neutral-50)]'
+            : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
         )}
       >
         <MaterialSymbol
@@ -133,7 +139,9 @@ function LabThemeToggle({
           size="sm"
           className={cn(
             'transition-transform duration-300 ease-[cubic-bezier(0.34,1.3,0.64,1)]',
-            isDark ? 'rotate-0 scale-110 text-white' : 'rotate-[18deg] scale-95 opacity-70',
+            isDark
+              ? 'rotate-0 scale-110 text-[var(--color-neutral-50)]'
+              : 'rotate-[18deg] scale-95 opacity-70',
           )}
         />
         <span>Dark</span>
@@ -142,10 +150,22 @@ function LabThemeToggle({
   )
 }
 
+const LAB_THEME_STORAGE_KEY = 'ace-lab-theme'
+
+function readStoredLabTheme(): LabTheme {
+  try {
+    const stored = localStorage.getItem(LAB_THEME_STORAGE_KEY)
+    if (stored === 'dark' || stored === 'light') return stored
+  } catch {
+    /* ignore */
+  }
+  return 'light'
+}
+
 export function LabLayout() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const [theme, setTheme] = useState<LabTheme>('dark')
+  const [theme, setTheme] = useState<LabTheme>(readStoredLabTheme)
   const [navQuery, setNavQuery] = useState('')
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     Atoms: false,
@@ -209,13 +229,23 @@ export function LabLayout() {
     })
   }, [filteredSections, isFiltering])
 
-  /** Apply theme on <html> so portaled menus/modals inherit dark tokens everywhere. */
+  /**
+   * Apply Semantic theme on <html> so portaled menus/modals inherit
+   * `color-tokens.css` [data-theme='dark'] mappings everywhere.
+   * Persist choice; do not clear on effect cleanup (avoids StrictMode flash).
+   */
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    document.documentElement.style.colorScheme = theme
-    return () => {
-      document.documentElement.removeAttribute('data-theme')
-      document.documentElement.style.colorScheme = ''
+    const root = document.documentElement
+    if (theme === 'dark') {
+      root.setAttribute('data-theme', 'dark')
+    } else {
+      root.removeAttribute('data-theme')
+    }
+    root.style.colorScheme = theme
+    try {
+      localStorage.setItem(LAB_THEME_STORAGE_KEY, theme)
+    } catch {
+      /* ignore */
     }
   }, [theme])
 
@@ -254,7 +284,7 @@ export function LabLayout() {
     <LabThemeProvider theme={theme}>
     <div
       className="lab-shell flex min-h-screen flex-col"
-      data-theme={theme}
+      {...(theme === 'dark' ? { 'data-theme': 'dark' as const } : {})}
       style={{ colorScheme: theme }}
     >
       <SiteHeader

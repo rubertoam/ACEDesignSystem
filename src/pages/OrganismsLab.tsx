@@ -1,31 +1,13 @@
 import { LabOverviewList } from '../lib/labOverviewList'
 import { ComponentLabPage } from './ComponentLabPage'
-import { organismsLabCode, organismsLabUsage, overviewLabQa } from './labTabDocs'
 
 export function OrganismsLab() {
   return (
     <ComponentLabPage
-      qa={overviewLabQa}
-      title="Overview"
-      description="Nav bars, sidebars, headers, and other full patterns built from molecules and atoms."
-      examples={
-        <div className="space-y-3 text-sm text-[var(--color-text-muted)]">
-          <p className="m-0">
-            Show full organism layout; pair with <code className="text-[var(--color-text-primary)]">get_screenshot</code>{' '}
-            parity checks.
-          </p>
-          <LabOverviewList section="Organisms" />
-        </div>
-      }
-      code={organismsLabCode}
-      usage={organismsLabUsage}
-      variables={
-        <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
-          <li>
-            List organism-level tokens and which child components supply nested tokens.
-          </li>
-        </ul>
-      }
+      title="Organisms"
+      description="Full patterns built from molecules and atoms - headers, sidebars, tables, and other product shells."
+      examplesCanvas={false}
+      examples={<LabOverviewList section="Organisms" />}
     />
   )
 }

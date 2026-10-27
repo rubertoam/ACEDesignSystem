@@ -555,7 +555,7 @@ export function usePointerRowReorder({
       const rect = targetRow.getBoundingClientRect()
       const position = event.clientY < rect.top + rect.height / 2 ? 'before' : 'after'
       const next: RowDropIndicator = { targetId, position }
-      // Keep ref in sync immediately — pointerup can fire before React effects flush.
+      // Keep ref in sync immediately - pointerup can fire before React effects flush.
       dropIndicatorRef.current = next
       setRowDropIndicator((prev) =>
         prev?.targetId === next.targetId && prev.position === next.position ? prev : next,

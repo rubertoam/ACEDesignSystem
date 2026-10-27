@@ -9,8 +9,10 @@ import {
   INLINE_MESSAGE_TONES,
   type InlineMessageTone,
 } from '../components/molecules/InlineMessage/inlineMessageFieldStyles'
-import { LabCheckbox, LabSelect } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { Toggle } from '../components/atoms/Toggle/Toggle'
+import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyles'
+import { LabControlField, LabSelect } from '../lib/labControls'
+import { labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
@@ -217,27 +219,36 @@ export function DialogModalLab() {
   const [liveVariant, setLiveVariant] = useState<DialogVariantId | null>(null)
 
   const toolbar = (
-    <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-      <LabCheckbox
-        label="Inline message"
-        checked={showInlineMessage}
-        onCheckedChange={setShowInlineMessage}
-      />
-      <LabSelect
-        label="Inline message tone"
-        value={inlineTone}
-        onChange={(v) => setInlineTone(v as InlineMessageTone)}
-        options={INLINE_MESSAGE_TONES.map((value) => ({
-          value,
-          label: INLINE_TONE_LABELS[value],
-        }))}
-        disabled={!showInlineMessage}
-      />
-      <div className="flex flex-col gap-2 sm:col-span-2 lg:col-span-1">
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-start justify-start gap-x-5 gap-y-4">
+        <LabSelect
+          label="Inline message tone"
+          value={inlineTone}
+          onChange={(v) => setInlineTone(v as InlineMessageTone)}
+          options={INLINE_MESSAGE_TONES.map((value) => ({
+            value,
+            label: INLINE_TONE_LABELS[value],
+          }))}
+          disabled={!showInlineMessage}
+        />
+        <LabControlField label="Inline message" className="shrink-0">
+          <div className="flex min-h-9 items-center gap-2">
+            <Toggle
+              size="sm"
+              checked={showInlineMessage}
+              onCheckedChange={setShowInlineMessage}
+              aria-label="Inline message"
+            />
+            <span className={aceToggleLabelClass}>{showInlineMessage ? 'On' : 'Off'}</span>
+          </div>
+        </LabControlField>
+      </div>
+
+      <div className="flex flex-col gap-3 border-t border-solid border-[var(--screening-border-soft)] pt-6">
         <p className="m-0 [font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)] text-[var(--screening-text-primary)]">
           Open live
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap justify-start gap-2">
           {VARIANTS.map((id) => (
             <button key={id} type="button" className={openButtonClass} onClick={() => setLiveVariant(id)}>
               {VARIANT_SHORT[id]}
@@ -256,27 +267,20 @@ export function DialogModalLab() {
         description="ACE dialog modals for single-task decisions - Basic Action, Delete, Dropdown, Form, and Extended Form (Figma Dialog Modals 3047:2036). Optional InlineMessage strip with selectable tone."
         examplesToolbar={toolbar}
         examples={
-          <div className={cn(labExampleSectionClass, 'items-stretch')}>
-            <p className={labSectionLabelClass}>Variants</p>
-            <p className="m-0 max-w-3xl text-sm leading-relaxed text-[var(--color-text-muted)]">
-              Static panels match the Figma matrix. Use the toolbar to show or hide the inline message and pick its
-              tone; Open live for the overlay experience.
-            </p>
-            <div className="mt-6 flex flex-col gap-12">
+          <section className="space-y-5">
+            <div className={cn('w-full min-w-0', labUsageSectionClass)}>
+              <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+              <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+                Static panels match the Figma matrix. Use the toolbar to show or hide the inline message, pick its
+                tone, and open the overlay experience.
+              </p>
+            </div>
+            <div className="flex flex-col gap-12">
               {VARIANTS.map((variant) => (
                 <div key={variant} className="space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <p className="m-0 text-sm font-medium text-[var(--color-text-primary)]">
-                      {VARIANT_LABELS[variant]}
-                    </p>
-                    <button
-                      type="button"
-                      className={openButtonClass}
-                      onClick={() => setLiveVariant(variant)}
-                    >
-                      Open live
-                    </button>
-                  </div>
+                  <p className="m-0 text-sm font-medium text-[var(--color-text-primary)]">
+                    {VARIANT_LABELS[variant]}
+                  </p>
                   <ModalChrome
                     variant={variant}
                     showInlineMessage={showInlineMessage}
@@ -289,7 +293,7 @@ export function DialogModalLab() {
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         }
         code={
           <ComponentLabCode>{`import {

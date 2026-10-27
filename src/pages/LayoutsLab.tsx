@@ -78,25 +78,23 @@ function ToolbarSelect<T extends string>({
   value,
   onChange,
   options,
-  'aria-label': ariaLabel,
   className,
 }: {
   value: T
   onChange: (value: T) => void
   options: { value: T; label: string }[]
-  'aria-label': string
+  'aria-label'?: string
   className?: string
 }) {
   const selectedLabel = options.find((o) => o.value === value)?.label ?? 'Select'
   const items = useMemo<DropdownMenuEntry[]>(
-    () => [
-      {
-        type: 'radioGroup',
-        value,
-        onValueChange: (v) => onChange(v as T),
-        options: options.map((o) => ({ value: o.value, label: o.label })),
-      },
-    ],
+    () =>
+      options.map((o) => ({
+        type: 'item' as const,
+        label: o.label,
+        selected: o.value === value,
+        onSelect: () => onChange(o.value),
+      })),
     [value, onChange, options],
   )
 
@@ -104,12 +102,11 @@ function ToolbarSelect<T extends string>({
     <DropdownMenu
       triggerLabel={selectedLabel}
       triggerMode="field"
-      size="sm"
+      size="md"
       items={items}
       align="start"
-      panelWidth="hug"
-      aria-label={ariaLabel}
-      className={cn('!w-auto !max-w-none', className)}
+      panelWidth="wide"
+      className={className}
     />
   )
 }

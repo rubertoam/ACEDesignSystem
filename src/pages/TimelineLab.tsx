@@ -1,87 +1,90 @@
 import { Timeline, DEMO_TIMELINE_ITEMS } from '../components/organisms/Timeline/Timeline'
 import { TimelineItem } from '../components/organisms/Timeline/TimelineItem'
 import { labComponentContainerClass } from '../lib/labChrome'
-import { labExampleSectionClass, labSectionLabelClass, labStaticExampleGroupClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { labStaticExampleGroupClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { cn } from '../lib/cn'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-
 import { timelineLabQa } from './labTabDocs'
+
 const BREAKDOWN_VARIANT = DEMO_TIMELINE_ITEMS[0]
 
 export function TimelineLab() {
+  const toolbar = (
+    <div className={labComponentContainerClass}>
+      <Timeline items={DEMO_TIMELINE_ITEMS} />
+    </div>
+  )
+
   return (
     <ComponentLabPage
       qa={timelineLabQa}
       title="Timeline"
       description="Chronological event history for match and transaction workflows (Figma Timeline 4622:1645). Five status variants, sort control, expand-all, and per-item detail panels."
       examplesCanvas={false}
+      examplesToolbar={toolbar}
       examples={
-        <div className="space-y-10">
-          <div className={cn('w-full', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Interactive</p>
-            <div className={labComponentContainerClass}>
-              <Timeline items={DEMO_TIMELINE_ITEMS} />
-            </div>
+        <section className="space-y-5">
+          <div className={cn('w-full min-w-0', labUsageSectionClass)}>
+            <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+            <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+              Component breakdown and status variants. Use the live Timeline above for interactive expand and sort.
+            </p>
           </div>
-
-          <div className={cn('w-full', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Static examples</p>
-            <div className={labComponentContainerClass}>
-              <div className={labStaticExampleGroupClass}>
-                <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Component breakdown</p>
-                <div className="flex flex-col gap-8">
-                  <div className={labStaticExampleGroupClass}>
-                    <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Default</p>
-                    <TimelineItem
-                      variant={BREAKDOWN_VARIANT.variant}
-                      label={BREAKDOWN_VARIANT.label}
-                      timestamp={BREAKDOWN_VARIANT.timestamp}
-                      surface="default"
-                      interactive={false}
-                    />
-                  </div>
-                  <div className={labStaticExampleGroupClass}>
-                    <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Highlight</p>
-                    <TimelineItem
-                      variant={BREAKDOWN_VARIANT.variant}
-                      label={BREAKDOWN_VARIANT.label}
-                      timestamp={BREAKDOWN_VARIANT.timestamp}
-                      surface="highlight"
-                      interactive={false}
-                    />
-                  </div>
-                  <div className={labStaticExampleGroupClass}>
-                    <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Expanded</p>
-                    <TimelineItem
-                      variant={BREAKDOWN_VARIANT.variant}
-                      label={BREAKDOWN_VARIANT.label}
-                      timestamp={BREAKDOWN_VARIANT.timestamp}
-                      surface="expanded"
-                      interactive={false}
-                    />
-                  </div>
+          <div className={labComponentContainerClass}>
+            <div className={labStaticExampleGroupClass}>
+              <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Component breakdown</p>
+              <div className="flex flex-col gap-8">
+                <div className={labStaticExampleGroupClass}>
+                  <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Default</p>
+                  <TimelineItem
+                    variant={BREAKDOWN_VARIANT.variant}
+                    label={BREAKDOWN_VARIANT.label}
+                    timestamp={BREAKDOWN_VARIANT.timestamp}
+                    surface="default"
+                    interactive={false}
+                  />
                 </div>
-              </div>
-
-              <div className={labStaticExampleGroupClass}>
-                <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">All status variants</p>
-                <div className="flex flex-col gap-4">
-                  {DEMO_TIMELINE_ITEMS.map((item) => (
-                    <TimelineItem
-                      key={item.id}
-                      variant={item.variant}
-                      label={item.label}
-                      timestamp={item.timestamp}
-                      interactive={false}
-                      surface="highlight"
-                    />
-                  ))}
+                <div className={labStaticExampleGroupClass}>
+                  <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Highlight</p>
+                  <TimelineItem
+                    variant={BREAKDOWN_VARIANT.variant}
+                    label={BREAKDOWN_VARIANT.label}
+                    timestamp={BREAKDOWN_VARIANT.timestamp}
+                    surface="highlight"
+                    interactive={false}
+                  />
+                </div>
+                <div className={labStaticExampleGroupClass}>
+                  <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">Expanded</p>
+                  <TimelineItem
+                    variant={BREAKDOWN_VARIANT.variant}
+                    label={BREAKDOWN_VARIANT.label}
+                    timestamp={BREAKDOWN_VARIANT.timestamp}
+                    surface="expanded"
+                    interactive={false}
+                  />
                 </div>
               </div>
             </div>
+
+            <div className={labStaticExampleGroupClass}>
+              <p className="m-0 text-xs font-semibold text-[var(--screening-text-muted)]">All status variants</p>
+              <div className="flex flex-col gap-4">
+                {DEMO_TIMELINE_ITEMS.map((item) => (
+                  <TimelineItem
+                    key={item.id}
+                    variant={item.variant}
+                    label={item.label}
+                    timestamp={item.timestamp}
+                    interactive={false}
+                    surface="highlight"
+                  />
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       }
       code={
         <>

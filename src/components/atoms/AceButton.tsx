@@ -1,4 +1,4 @@
-/** @deprecated Re-export — prefer the Figma-named export. */
+/** @deprecated Re-export - prefer the Figma-named export. */
 export {
   Button as AceButton,
   type ButtonProps as AceButtonProps,

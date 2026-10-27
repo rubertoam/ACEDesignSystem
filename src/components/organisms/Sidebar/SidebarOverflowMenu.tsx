@@ -31,7 +31,7 @@ export function SidebarOverflowMenu({
           aria-label={ariaLabel}
           className={cn(
             sidebarRowActionButtonClass,
-            'data-[state=open]:border-[var(--icon-button-border)] data-[state=open]:bg-[var(--icon-button-hover-bg)] data-[state=open]:text-[var(--icon-button-icon)] data-[state=open]:opacity-100',
+            'data-[state=open]:border-[var(--icon-button-hover-bg)] data-[state=open]:bg-[var(--icon-button-hover-bg)] data-[state=open]:text-[var(--icon-button-icon)] data-[state=open]:opacity-100',
             className,
           )}
           onClick={(e) => e.stopPropagation()}

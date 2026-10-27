@@ -53,18 +53,18 @@ export const buttonLabUsage = (
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <strong className="text-[var(--screening-text-primary)]">variant</strong> —{' '}
+          <strong className="text-[var(--screening-text-primary)]">variant</strong> -{' '}
           <code className="text-[var(--screening-text-primary)]">primary</code> |{' '}
           <code className="text-[var(--screening-text-primary)]">secondary</code> |{' '}
           <code className="text-[var(--screening-text-primary)]">tertiary</code>
         </li>
         <li>
-          <strong className="text-[var(--screening-text-primary)]">actionTone</strong> — remaps fill tokens to{' '}
+          <strong className="text-[var(--screening-text-primary)]">actionTone</strong> - remaps fill tokens to{' '}
           primary / secondary / success / error / warning action colors (disabled always uses disabled-button)
         </li>
         <li>
-          <strong className="text-[var(--screening-text-primary)]">size</strong> — sm / md / lg;{' '}
-          <strong className="text-[var(--screening-text-primary)]">icon</strong> — none / left / right
+          <strong className="text-[var(--screening-text-primary)]">size</strong> - sm / md / lg;{' '}
+          <strong className="text-[var(--screening-text-primary)]">icon</strong> - none / left / right
         </li>
       </ul>
     </LabUsageSection>
@@ -381,12 +381,12 @@ export const badgesLabQa = (
           {
             variant: 'appearance pill',
             cover: 'Each color (purple, orange, green, gray, blue, yellow, pink, teal, red)',
-            pass: 'Fill/border/label/dot tokens match colors/badges/*',
+            pass: 'Fill/border/label/dot tokens match colors/badges/*; label is Caption Semi Bold',
           },
           {
             variant: 'appearance tag',
             cover: 'Default and warning tag',
-            pass: 'Squared radius; warning icon + colors when warning',
+            pass: 'Squared radius; Caption Semi Bold label; warning icon + colors when warning',
           },
         ]}
       />
@@ -618,25 +618,25 @@ export const sliderLabUsage = (
   <>
     <LabUsageSection title="When to use">
       <p className="m-0">
-        Use for numeric ranges where dragging is faster than typing — filters, opacity, volume, or bipolar offsets.
+        Use for numeric ranges where dragging is faster than typing - filters, opacity, volume, or bipolar offsets.
         Prefer a Stepper or Input when the value must be exact and rarely scrubbed.
       </p>
     </LabUsageSection>
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <code className="text-[var(--screening-text-primary)]">continuous</code> — free value along the track
+          <code className="text-[var(--screening-text-primary)]">continuous</code> - free value along the track
         </li>
         <li>
-          <code className="text-[var(--screening-text-primary)]">discrete</code> — snaps to{' '}
+          <code className="text-[var(--screening-text-primary)]">discrete</code> - snaps to{' '}
           <code className="text-[var(--screening-text-primary)]">discreteSteps</code> ticks
         </li>
         <li>
-          <code className="text-[var(--screening-text-primary)]">ranged</code> — two thumbs; value is{' '}
+          <code className="text-[var(--screening-text-primary)]">ranged</code> - two thumbs; value is{' '}
           <code className="text-[var(--screening-text-primary)]">[min, max]</code>
         </li>
         <li>
-          <code className="text-[var(--screening-text-primary)]">centered</code> — bipolar around zero; pair with{' '}
+          <code className="text-[var(--screening-text-primary)]">centered</code> - bipolar around zero; pair with{' '}
           <code className="text-[var(--screening-text-primary)]">showTooltip</code> for the value bubble
         </li>
       </ul>
@@ -712,11 +712,11 @@ export const stepperLabUsage = (
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <code className="text-[var(--screening-text-primary)]">variant=&quot;horizontal&quot;</code> — minus / plus
+          <code className="text-[var(--screening-text-primary)]">variant=&quot;horizontal&quot;</code> - minus / plus
           flanking the value
         </li>
         <li>
-          <code className="text-[var(--screening-text-primary)]">variant=&quot;vertical&quot;</code> — chevrons above and
+          <code className="text-[var(--screening-text-primary)]">variant=&quot;vertical&quot;</code> - chevrons above and
           below the value
         </li>
         <li>
@@ -817,8 +817,8 @@ export const progressLabUsage = (
           fill, light spinner and label
         </li>
         <li>
-          <code className="text-[var(--screening-text-primary)]">type=&quot;no-action&quot;</code> — spinner + status
-          only; <code className="text-[var(--screening-text-primary)]">type=&quot;action&quot;</code> — adds secondary
+          <code className="text-[var(--screening-text-primary)]">type=&quot;no-action&quot;</code> - spinner + status
+          only; <code className="text-[var(--screening-text-primary)]">type=&quot;action&quot;</code> - adds secondary
           Cancel
         </li>
       </ul>
@@ -900,10 +900,10 @@ export const cardsLabUsage = (
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <code className="text-[var(--screening-text-primary)]">variant=&quot;stats&quot;</code> — icon/stat row
+          <code className="text-[var(--screening-text-primary)]">variant=&quot;stats&quot;</code> - icon/stat row
         </li>
         <li>
-          <code className="text-[var(--screening-text-primary)]">variant=&quot;description&quot;</code> — body copy +
+          <code className="text-[var(--screening-text-primary)]">variant=&quot;description&quot;</code> - body copy +
           optional Badge
         </li>
       </ul>
@@ -977,15 +977,15 @@ export const attachmentsLabUsage = (
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <strong className="text-[var(--screening-text-primary)]">Files</strong> — uploading / queued / failed /
+          <strong className="text-[var(--screening-text-primary)]">Files</strong> - uploading / queued / failed /
           complete rows with remove when complete
         </li>
         <li>
-          <strong className="text-[var(--screening-text-primary)]">Links</strong> — URL list with remove; draft field +
+          <strong className="text-[var(--screening-text-primary)]">Links</strong> - URL list with remove; draft field +
           Add URL
         </li>
         <li>
-          <strong className="text-[var(--screening-text-primary)]">Dropzone</strong> — dashed brand border empty state
+          <strong className="text-[var(--screening-text-primary)]">Dropzone</strong> - dashed brand border empty state
           for file pick / drag
         </li>
       </ul>
@@ -1140,11 +1140,11 @@ export const taskBarLabUsage = (
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <strong className="text-[var(--screening-text-primary)]">With leading</strong> — selection count / deselect
+          <strong className="text-[var(--screening-text-primary)]">With leading</strong> - selection count / deselect
           beside end actions
         </li>
         <li>
-          <strong className="text-[var(--screening-text-primary)]">Actions only</strong> — omit{' '}
+          <strong className="text-[var(--screening-text-primary)]">Actions only</strong> - omit{' '}
           <code className="text-[var(--screening-text-primary)]">leading</code> for a simple CTA strip
         </li>
       </ul>
@@ -1152,7 +1152,7 @@ export const taskBarLabUsage = (
     <LabUsageSection title="Accessibility">
       <p className="m-0">
         Treat the bar as a toolbar region; keep focus order leading → actions. Deselect and action buttons need clear
-        names. Do not rely on position alone to convey selection state — keep the count text visible.
+        names. Do not rely on position alone to convey selection state - keep the count text visible.
       </p>
     </LabUsageSection>
   </>
@@ -1207,18 +1207,18 @@ export const pageHeadersLabUsage = (
       <p className="m-0">
         Place <code className="text-[var(--screening-text-primary)]">PageHeader</code> under{' '}
         <code className="text-[var(--screening-text-primary)]">SiteHeader</code> for the page title. Use{' '}
-        <code className="text-[var(--screening-text-primary)]">SubHeader</code> in content regions — it fills its parent
+        <code className="text-[var(--screening-text-primary)]">SubHeader</code> in content regions - it fills its parent
         width and supports optional statistics, paging, more menu, or drill-down.
       </p>
     </LabUsageSection>
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <code className="text-[var(--screening-text-primary)]">PageHeader</code> — title; optional sidebar toggle via{' '}
+          <code className="text-[var(--screening-text-primary)]">PageHeader</code> - title; optional sidebar toggle via{' '}
           <code className="text-[var(--screening-text-primary)]">showSidebarControl</code>
         </li>
         <li>
-          <code className="text-[var(--screening-text-primary)]">SubHeader</code> flags —{' '}
+          <code className="text-[var(--screening-text-primary)]">SubHeader</code> flags -{' '}
           <code className="text-[var(--screening-text-primary)]">statistics</code>,{' '}
           <code className="text-[var(--screening-text-primary)]">paging</code>,{' '}
           <code className="text-[var(--screening-text-primary)]">moreMenu</code>,{' '}
@@ -1257,7 +1257,7 @@ export const pageHeadersLabQa = (
 )
 
 export const dateTimeLabQa = (
-  <LabQaChecklist intro="Use the Date and Time examples separately. Time Picker also has detailed rules in the Usage tab from implementationRules/timePicker.md — still run this matrix.">
+  <LabQaChecklist intro="Use the Date and Time examples separately. Time Picker also has detailed rules in the Usage tab from implementationRules/timePicker.md - still run this matrix.">
     <LabQaSection title="DatePicker">
       <LabQaVariantTable
         rows={[
@@ -1314,7 +1314,7 @@ export const layoutsLabQa = (
   </LabQaChecklist>
 )
 
-/* Foundation labs — lighter QA */
+/* Foundation labs - lighter QA */
 export const colorsLabQa = (
   <LabQaChecklist>
     <LabQaSection title="Tasks">
@@ -1374,7 +1374,7 @@ export const dropShadowsLabUsage = (
       <p className="m-0">
         Use ACE drop shadows for product elevation (cards, menus, modals). Prefer larger steps for higher elevation;{' '}
         <code className="text-[var(--screening-text-primary)]">none</code> removes shadow. Lab shell{' '}
-        <code className="text-[var(--screening-text-primary)]">--shadow-sm</code> is separate chrome — do not substitute
+        <code className="text-[var(--screening-text-primary)]">--shadow-sm</code> is separate chrome - do not substitute
         it for product surfaces.
       </p>
     </LabUsageSection>
@@ -1396,7 +1396,7 @@ export const dropShadowsLabUsage = (
     </LabUsageSection>
     <LabUsageSection title="Accessibility">
       <p className="m-0">
-        Shadow is decorative elevation only — never the sole focus or state cue. Pair interactive elevated surfaces with
+        Shadow is decorative elevation only - never the sole focus or state cue. Pair interactive elevated surfaces with
         borders/focus rings. Dark theme bumps shadow alpha for legibility on dark surfaces.
       </p>
     </LabUsageSection>
@@ -1547,7 +1547,7 @@ export const atomsLabUsage = (
     <LabUsageSection title="When to use">
       <p className="m-0">
         Start here to browse atom labs (buttons, inputs, badges, tabs, …). Implement product UI from the child lab that
-        matches the Figma component — this overview is navigation only.
+        matches the Figma component - this overview is navigation only.
       </p>
     </LabUsageSection>
     <LabUsageSection title="Variants">

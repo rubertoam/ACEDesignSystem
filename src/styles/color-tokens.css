@@ -1,11 +1,11 @@
 /**
- * ACE color + foundation tokens — generated from Figma token JSON exports.
+ * ACE color + foundation tokens - generated from Figma token JSON exports.
  * Source: Primitives/Default.tokens.json, Semantic/Light.tokens.json, Semantic/Dark.tokens.json
  * Do not hand-edit hex/alias values here; re-run: node scripts/generate-tokens-from-figma.mjs
  */
 
 :root {
-  /* ——— Primitives · Color (Figma Primitives) ——— */
+  /* --- Primitives · Color (Figma Primitives) --- */
   /* color/neutral */
   --color-neutral-50: #fafafb;
   --color-neutral-100: #eff0f2;
@@ -132,7 +132,7 @@
   --color-shades-0: #ffffff;
   --color-shades-100: #000000;
 
-  /* ——— Primitives · Spacing / Radius / Border / Type metrics ——— */
+  /* --- Primitives · Spacing / Radius / Border / Type metrics --- */
   --border-width-default: 0.0625rem; /* border-width/default = 1 */
   --border-width-heavy: 0.25rem; /* border-width/heavy = 4 */
   --border-width-none: 0; /* border-width/none = 0 */
@@ -194,7 +194,7 @@
   --typography-size-p3: 0.875rem; /* typography/size/p3 = 14 */
   --typography-size-subheading: 1.25rem; /* typography/size/subheading = 20 */
 
-  /* ——— Semantic · Light · Color (Figma Semantic / Light) ——— */
+  /* --- Semantic · Light · Color (Figma Semantic / Light) --- */
   --color-bg-primary: var(--color-neutral-50); /* colors/bg/primary ← color/neutral/50 */
   --color-bg-secondary: var(--color-neutral-100); /* colors/bg/secondary ← color/neutral/100 */
   --color-bg-tertiary: var(--color-neutral-200); /* colors/bg/tertiary ← color/neutral/200 */
@@ -280,7 +280,7 @@
   --color-badges-red-fill: var(--color-error-50); /* colors/badges/red-fill ← color/error/50 */
   --color-badges-red-border: var(--color-error-500); /* colors/badges/red-border ← color/error/500 */
 
-  /* ——— Semantic · Light · Number tokens (non-colliding) ——— */
+  /* --- Semantic · Light · Number tokens (non-colliding) --- */
   --typography-ui-caption: var(--typography-size-caption); /* typography/ui/caption ← typography/size/caption */
   --typography-ui-footnote: var(--typography-size-footer-01); /* typography/ui/footnote ← typography/size/footer-01 */
   --typography-ui-micro: var(--typography-size-footer-02); /* typography/ui/micro ← typography/size/footer-02 */
@@ -304,11 +304,11 @@
   --spacing-layout-page-margin: var(--spacing-64); /* spacing/layout/page-margin ← spacing/64 */
   --spacing-layout-card-gap: var(--spacing-24); /* spacing/layout/card-gap ← spacing/24 */
   --spacing-layout-stack-gap: var(--spacing-16); /* spacing/layout/stack-gap ← spacing/16 */
-  /* skip --radius-none — preserves primitive; Figma radius/none ← radius/none */
-  /* skip --radius-sm — preserves primitive; Figma radius/sm ← radius/sm */
-  /* skip --radius-md — preserves primitive; Figma radius/md ← radius/lg */
-  /* skip --radius-lg — preserves primitive; Figma radius/lg ← radius/xl */
-  /* skip --radius-full — preserves primitive; Figma radius/full ← radius/pill */
+  /* skip --radius-none - preserves primitive; Figma radius/none ← radius/none */
+  /* skip --radius-sm - preserves primitive; Figma radius/sm ← radius/sm */
+  /* skip --radius-md - preserves primitive; Figma radius/md ← radius/lg */
+  /* skip --radius-lg - preserves primitive; Figma radius/lg ← radius/xl */
+  /* skip --radius-full - preserves primitive; Figma radius/full ← radius/pill */
   --radius-component-button: var(--radius-sm); /* radius/component/button ← radius/sm */
   --radius-component-input: var(--radius-md); /* radius/component/input ← radius/md */
   --radius-component-card: var(--radius-lg); /* radius/component/card ← radius/lg */
@@ -316,7 +316,7 @@
   --radius-component-modal: var(--radius-sm); /* radius/component/modal ← radius/sm */
   --radius-component-tooltip: var(--radius-sm); /* radius/component/tooltip ← radius/sm */
   --radius-component-inline-message: var(--radius-sm); /* radius/component/inline message ← radius/sm */
-  /* skip --border-width-default — preserves primitive; Figma border/width/default ← border-width/default */
+  /* skip --border-width-default - preserves primitive; Figma border/width/default ← border-width/default */
   --border-width-strong: var(--border-width-thick); /* border/width/strong ← border-width/thick */
   --border-width-subtle: var(--border-width-thin); /* border/width/subtle ← border-width/thin */
   --icon-size-sm: var(--spacing-12); /* icon/size/sm ← spacing/12 */
@@ -362,7 +362,7 @@
 }
 
 [data-theme='dark'] {
-  /* ——— Semantic · Dark (Figma Semantic / Dark) ——— */
+  /* --- Semantic · Dark (Figma Semantic / Dark) --- */
   --color-bg-primary: var(--color-dark-950); /* colors/bg/primary ← color/dark/950 */
   --color-bg-secondary: var(--color-dark-700); /* colors/bg/secondary ← color/dark/700 */
   --color-bg-tertiary: var(--color-dark-600); /* colors/bg/tertiary ← color/dark/600 */

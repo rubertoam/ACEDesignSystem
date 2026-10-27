@@ -51,7 +51,7 @@ css = css.replace(
   /(--ace-type-[a-z0-9-]+-tracking):\s*0\.02em;/g,
   '$1: var(--typography-letter-spacing-normal);',
 )
-// Keep 0 tracking as 0 (normal is often 0 in Figma) — map to token when available
+// Keep 0 tracking as 0 (normal is often 0 in Figma) - map to token when available
 css = css.replace(
   /(--ace-type-(?:paragraph|caption|subheading|heading-h2-bold|heading-h2-semi-bold)[a-z0-9-]*-tracking):\s*0;/g,
   '$1: var(--typography-letter-spacing-normal);',
@@ -60,8 +60,8 @@ css = css.replace(
 // Document the ACE ↔ Figma size mapping once near the top
 if (!css.includes('ACE paragraph p1/p2/p3 ↔ Figma')) {
   css = css.replace(
-    '/* ——— Composed --ace-type-* shorthands (pair each with *-tracking) ——— */',
-    `/* ——— Composed --ace-type-* shorthands (pair each with *-tracking) ——— */
+    '/* --- Composed --ace-type-* shorthands (pair each with *-tracking) --- */',
+    `/* --- Composed --ace-type-* shorthands (pair each with *-tracking) --- */
   /* ACE paragraph p1/p2/p3 ↔ Figma typography/size: p1→p3 (14), p2→p2 (16), p3→p1 (18). */`,
   )
 }

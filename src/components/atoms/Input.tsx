@@ -17,7 +17,7 @@ const shellSize: Record<InputSize, string> = {
 const labelClass =
   '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--color-text-primary)]'
 
-/** Body/Regular (typography/body/body-main) — 14px Noto for field value + placeholder. */
+/** Body/Regular (typography/body/body-main) - 14px Noto for field value + placeholder. */
 const fieldTypeClass =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
 

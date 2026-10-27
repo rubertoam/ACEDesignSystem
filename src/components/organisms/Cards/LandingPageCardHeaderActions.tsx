@@ -3,7 +3,7 @@ import { LANDING_PAGE_CARD_ICONS } from './landingPageCardAssets'
 
 const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]'
 
-/** Compact header glyphs (~16px) with a 24px hit target — Figma Icons strip (4212:1131). */
+/** Compact header glyphs (~16px) with a 24px hit target - Figma Icons strip (4212:1131). */
 const iconButtonClass = cn(
   'inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
   'text-[var(--landing-page-card-icon-color)]',

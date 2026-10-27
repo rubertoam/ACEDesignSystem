@@ -17,7 +17,7 @@ function FilterChipChevron() {
   )
 }
 
-/** Figma filter clear control — filled circle with cutout X (10px). */
+/** Figma filter clear control - filled circle with cutout X (10px). */
 function FilterChipClearIcon() {
   return (
     <svg className={filterChipClearIconClass} viewBox="0 0 10 10" aria-hidden>

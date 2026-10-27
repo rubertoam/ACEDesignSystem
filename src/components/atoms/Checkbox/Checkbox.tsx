@@ -13,7 +13,7 @@ export type CheckboxProps = ComponentPropsWithoutRef<typeof CheckboxPrimitive.Ro
   size?: CheckboxSize
 }
 
-/** Horizontal bar for indeterminate — Figma Active uses a white inset ring, not a checkmark. */
+/** Horizontal bar for indeterminate - Figma Active uses a white inset ring, not a checkmark. */
 function IndeterminateGlyph({ className }: { className?: string }) {
   return <span className={cn('rounded-full bg-current', className)} aria-hidden />
 }
@@ -28,7 +28,7 @@ export const Checkbox = forwardRef<ComponentRef<typeof CheckboxPrimitive.Root>, 
         {...props}
       >
         <CheckboxPrimitive.Indicator className="flex size-full items-center justify-center text-current">
-          {/* Checked: empty — purple fill + white inset ring come from root styles */}
+          {/* Checked: empty - purple fill + white inset ring come from root styles */}
           <IndeterminateGlyph
             className={cn(
               'opacity-0 transition-opacity duration-150 group-data-[state=indeterminate]:opacity-100',

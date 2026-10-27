@@ -53,7 +53,7 @@ export function TypographyLab() {
         )
       }
       code={
-        <ComponentLabCode>{`/* typography-tokens.css — Figma documentation layer */
+        <ComponentLabCode>{`/* typography-tokens.css - Figma documentation layer */
 --type-size-subheading: 1.25rem;
 --typography-heading-heading: var(--type-size-subheading);
 

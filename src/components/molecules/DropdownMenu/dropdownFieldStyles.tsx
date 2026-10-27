@@ -1,6 +1,6 @@
 import { cn } from '../../../lib/cn'
 
-/** Figma Dropdown chevron (8×5 filled) — Primary / Secondary triggers. */
+/** Figma Dropdown chevron (8×5 filled) - Primary / Secondary triggers. */
 export function AceDropdownChevron({ className }: { className?: string }) {
   return (
     <svg
@@ -14,7 +14,10 @@ export function AceDropdownChevron({ className }: { className?: string }) {
   )
 }
 
-/** Caption/Regular — Figma Dropdown trigger + field label. */
+/**
+ * Caption/Regular · typography/body/body-secondary (12).
+ * Figma Dropdown / Primary “Dropdown Label” + field label above the control.
+ */
 export const aceDropdownTriggerType = cn(
   '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
 )

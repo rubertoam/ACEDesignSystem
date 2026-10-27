@@ -12,8 +12,9 @@ import {
   BUTTON_DESCRIPTIVE_PREVIEW_STATES,
   type ButtonDescriptivePreviewState,
 } from '../components/molecules/ButtonDescriptive'
-import { labComponentContainerClass, labPanelClass, labTableSurfaceClass } from '../lib/labChrome'
-import { LabCheckbox, LabRadioGroup, LabSelect } from '../lib/labControls'
+import { Toggle } from '../components/atoms/Toggle/Toggle'
+import { labPanelClass, labTableSurfaceClass } from '../lib/labChrome'
+import { LabControlField, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
@@ -43,13 +44,31 @@ const DESCRIPTIVE_STATE_LABELS: Record<ButtonDescriptivePreviewState, string> = 
   disabled: 'Disabled',
 }
 
-type ButtonsLabView = 'standard' | 'descriptive'
+const ICON_LAYOUTS: { icon: ButtonIcon; label: string }[] = [
+  { icon: 'none', label: 'Regular' },
+  { icon: 'right', label: 'Icon right' },
+  { icon: 'left', label: 'Icon left' },
+]
 
-function StateMatrix({ variant, actionTone }: { variant: ButtonVariant; actionTone: ButtonActionTone }) {
+function StateMatrix({
+  variant,
+  actionTone,
+  icon,
+  iconLabel,
+}: {
+  variant: ButtonVariant
+  actionTone: ButtonActionTone
+  icon: ButtonIcon
+  iconLabel: string
+}) {
   return (
     <div className={cn('min-w-0', labExampleSectionClass)}>
       <p className="m-0 text-sm font-semibold capitalize tracking-tight text-[var(--color-text-primary)]">
         <span className="text-[var(--color-text-muted)]">{variant}</span>
+        <span className="mx-2 text-[var(--color-border)]" aria-hidden>
+          ·
+        </span>
+        {iconLabel}
         <span className="mx-2 text-[var(--color-border)]" aria-hidden>
           ·
         </span>
@@ -84,7 +103,7 @@ function StateMatrix({ variant, actionTone }: { variant: ButtonVariant; actionTo
                       variant={variant}
                       actionTone={actionTone}
                       size={sz}
-                      icon="right"
+                      icon={icon}
                       previewState={st}
                       className="max-w-full"
                     >
@@ -108,7 +127,7 @@ function ButtonsChangelog() {
         <header className="space-y-1">
           <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">22 October 2026</h3>
           <p className="m-0 text-sm text-[var(--color-text-muted)]">
-            Figma-aligned naming — <code className="text-[var(--color-text-primary)]">AceButton</code> →{' '}
+            Figma-aligned naming - <code className="text-[var(--color-text-primary)]">AceButton</code> →{' '}
             <code className="text-[var(--color-text-primary)]">Button</code>,{' '}
             <code className="text-[var(--color-text-primary)]">AceDescriptiveButton</code> →{' '}
             <code className="text-[var(--color-text-primary)]">ButtonDescriptive</code>.
@@ -132,7 +151,7 @@ function ButtonsChangelog() {
         <header className="space-y-1">
           <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">20 August 2026</h3>
           <p className="m-0 text-sm text-[var(--color-text-muted)]">
-            Action token swap for button color — removed Innovative Blue palette.
+            Action token swap for button color - removed Innovative Blue palette.
           </p>
         </header>
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
@@ -191,7 +210,7 @@ function ButtonsChangelog() {
             <code className="text-[var(--color-text-primary)]">colors/action/primary</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-action-primary</code>, hover{' '}
             <code className="text-[var(--color-text-primary)]">--color-action-primary-hover</code>, pressed{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-primary-pressed</code> — previously
+            <code className="text-[var(--color-text-primary)]">--color-action-primary-pressed</code> - previously
             inverted relative to the Figma Buttons matrix.
           </li>
           <li>
@@ -232,7 +251,6 @@ function ButtonsChangelog() {
 }
 
 export function ButtonPlaygroundLab() {
-  const [view, setView] = useState<ButtonsLabView>('standard')
   const [variant, setVariant] = useState<ButtonVariant>('primary')
   const [actionTone, setActionTone] = useState<ButtonActionTone>('primary')
   const [size, setSize] = useState<ButtonSize>('md')
@@ -241,61 +259,83 @@ export function ButtonPlaygroundLab() {
   const [descriptiveDisabled, setDescriptiveDisabled] = useState(false)
 
   const toolbar = (
-    <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-6">
-      <LabSelect
-        label="View"
-        value={view}
-        onChange={(v) => setView(v as ButtonsLabView)}
-        options={[
-          { value: 'standard', label: 'Standard' },
-          { value: 'descriptive', label: 'Descriptive' },
-        ]}
-      />
-      {view === 'standard' ? (
-        <>
-          <LabRadioGroup
-            label="Type"
-            value={variant}
-            onChange={setVariant}
-            options={VARIANTS.map((v) => ({ value: v, label: v }))}
-          />
-          <LabSelect
-            label="Action token"
-            value={actionTone}
-            onChange={(v) => setActionTone(v as ButtonActionTone)}
-            options={ACTION_TONES.map((t) => ({ value: t, label: ACTION_TONE_LABELS[t] }))}
-          />
-          <LabRadioGroup
-            label="Size"
-            value={size}
-            onChange={setSize}
-            options={SIZES.map((s) => ({ value: s, label: s }))}
-          />
-          <LabRadioGroup
-            label="Icon"
-            value={icon}
-            onChange={setIcon}
-            options={[
-              { value: 'none', label: 'None' },
-              { value: 'left', label: 'Left' },
-              { value: 'right', label: 'Right' },
-            ]}
-          />
-          <LabCheckbox
-            label="Disabled"
-            checked={disabled}
-            onCheckedChange={setDisabled}
-            className="min-h-[2.5rem] px-1 py-2"
-          />
-        </>
-      ) : (
-        <LabCheckbox
-          label="Disabled"
-          checked={descriptiveDisabled}
-          onCheckedChange={setDescriptiveDisabled}
-          className="min-h-[2.5rem] px-1 py-2"
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect
+          label="Type"
+          value={variant}
+          onChange={setVariant}
+          options={VARIANTS.map((v) => ({
+            value: v,
+            label: v === 'primary' ? 'Primary' : v === 'secondary' ? 'Secondary' : 'Tertiary',
+          }))}
         />
-      )}
+        <LabSelect
+          label="Action token"
+          value={actionTone}
+          onChange={(v) => setActionTone(v as ButtonActionTone)}
+          options={ACTION_TONES.map((t) => ({ value: t, label: ACTION_TONE_LABELS[t] }))}
+        />
+        <LabSelect
+          label="Size"
+          value={size}
+          onChange={setSize}
+          options={[
+            { value: 'sm', label: 'Small' },
+            { value: 'md', label: 'Medium' },
+            { value: 'lg', label: 'Large' },
+          ]}
+        />
+        <LabSelect
+          label="Icon"
+          value={icon}
+          onChange={setIcon}
+          options={[
+            { value: 'none', label: 'None' },
+            { value: 'left', label: 'Left' },
+            { value: 'right', label: 'Right' },
+          ]}
+        />
+        <LabControlField label="Disable" className="shrink-0">
+          <div className="flex min-h-9 items-center">
+            <Toggle size="sm" checked={disabled} onCheckedChange={setDisabled} aria-label="Disable" />
+          </div>
+        </LabControlField>
+      </div>
+
+      <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="shrink-0">
+          <Button variant={variant} actionTone={actionTone} size={size} icon={icon} disabled={disabled}>
+            {variant === 'primary'
+              ? 'Primary Button'
+              : variant === 'secondary'
+                ? 'Secondary Button'
+                : 'Tertiary Button'}
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+          <LabControlField label="Disable" className="shrink-0">
+            <div className="flex min-h-9 items-center">
+              <Toggle
+                size="sm"
+                checked={descriptiveDisabled}
+                onCheckedChange={setDescriptiveDisabled}
+                aria-label="Disable descriptive button"
+              />
+            </div>
+          </LabControlField>
+        </div>
+        <div className="flex min-h-24 items-center justify-start">
+          <ButtonDescriptive
+            title={DEMO_TITLE}
+            description={DEMO_DESCRIPTION}
+            disabled={descriptiveDisabled}
+          />
+        </div>
+      </div>
     </div>
   )
 
@@ -306,104 +346,68 @@ export function ButtonPlaygroundLab() {
       description="ACE Design System v.3 buttons from Figma Buttons (2067:191): primary, secondary, and tertiary fill styles; small / medium / large; default, hover, pressed, and disabled. Color for interactive states comes from Action token families (primary, secondary, success, error, warning) via actionTone. Descriptive buttons (ButtonDescriptive 4118:682) are included on this page."
       examplesToolbar={toolbar}
       examples={
-        view === 'standard' ? (
-          <div className="space-y-12">
-            <div className={cn(labPanelClass, 'p-6 sm:p-8')}>
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
-                <div className="shrink-0">
-                  <Button
-                    variant={variant}
+        <div className="space-y-12">
+          <section className="space-y-5">
+            <div className={cn('w-full min-w-0', labUsageSectionClass)}>
+              <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+              <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+                Matches the Figma matrix for each variant under the selected action token family: default, hover,
+                pressed, and disabled (disabled is not affected by the action token). Preview cells are not
+                focusable.
+              </p>
+            </div>
+            <div className="flex flex-col gap-12">
+              {VARIANTS.map((v) =>
+                ICON_LAYOUTS.map(({ icon: layoutIcon, label }) => (
+                  <StateMatrix
+                    key={`${v}-${layoutIcon}`}
+                    variant={v}
                     actionTone={actionTone}
-                    size={size}
-                    icon={icon}
-                    disabled={disabled}
-                  >
-                    {variant === 'primary'
-                      ? 'Primary Button'
-                      : variant === 'secondary'
-                        ? 'Secondary Button'
-                        : 'Tertiary Button'}
-                  </Button>
-                </div>
-                <p className="m-0 max-w-xl text-sm leading-relaxed text-[var(--color-text-muted)]">
-                  Use the controls in the toolbar above. The Action token dropdown swaps the color family for
-                  default, hover, and pressed. Disabled always uses{' '}
-                  <code className="text-[var(--color-text-primary)]">--color-action-disabled-button</code>.
-                </p>
-              </div>
-            </div>
-
-            <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-              <div className={cn('max-w-3xl', labUsageSectionClass)}>
-                <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">
-                  Static reference (icon right)
-                </h4>
-                <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                  Matches the Figma matrix for each variant under the selected action token family: default, hover,
-                  pressed, and disabled (disabled is not affected by the action token). Preview cells are not
-                  focusable.
-                </p>
-              </div>
-              <div className="flex flex-col gap-12">
-                {VARIANTS.map((v) => (
-                  <StateMatrix key={v} variant={v} actionTone={actionTone} />
-                ))}
-              </div>
-            </section>
-          </div>
-        ) : (
-          <div className="flex w-full flex-col gap-8">
-            <div className={cn('w-full', labExampleSectionClass)}>
-              <p className={labSectionLabelClass}>Interactive</p>
-              <div className={labComponentContainerClass}>
-                <div className="flex min-h-24 items-center justify-center p-6">
-                  <ButtonDescriptive
-                    title={DEMO_TITLE}
-                    description={DEMO_DESCRIPTION}
-                    disabled={descriptiveDisabled}
+                    icon={layoutIcon}
+                    iconLabel={label}
                   />
-                </div>
-              </div>
+                )),
+              )}
             </div>
+          </section>
 
-            <div className={cn('w-full', labExampleSectionClass)}>
-              <p className={labSectionLabelClass}>States (Figma ButtonDescriptive)</p>
-              <div className={cn('overflow-x-auto', labPanelClass)}>
-                <table className="w-full min-w-[20rem] border-collapse text-left text-sm">
-                  <thead>
-                    <tr className={cn('border-b border-[var(--color-border)]', labTableSurfaceClass)}>
-                      <th className="w-[7.5rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                        State
-                      </th>
-                      <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                        Preview
-                      </th>
+          <section className={cn('w-full', labExampleSectionClass)}>
+            <p className={labSectionLabelClass}>Descriptive buttons (Figma ButtonDescriptive)</p>
+            <div className={cn('overflow-x-auto', labPanelClass)}>
+              <table className="w-full min-w-[20rem] border-collapse text-left text-sm">
+                <thead>
+                  <tr className={cn('border-b border-[var(--color-border)]', labTableSurfaceClass)}>
+                    <th className="w-[7.5rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
+                      State
+                    </th>
+                    <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
+                      Preview
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className={cn('divide-y divide-[var(--color-border)]', labTableSurfaceClass)}>
+                  {BUTTON_DESCRIPTIVE_PREVIEW_STATES.map((state) => (
+                    <tr key={state}>
+                      <td className="whitespace-nowrap px-4 py-4 font-medium text-[var(--color-text-primary)]">
+                        {DESCRIPTIVE_STATE_LABELS[state]}
+                      </td>
+                      <td className="px-4 py-4 align-middle">
+                        <ButtonDescriptive
+                          title={DEMO_TITLE}
+                          description={DEMO_DESCRIPTION}
+                          previewState={state}
+                        />
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className={cn('divide-y divide-[var(--color-border)]', labTableSurfaceClass)}>
-                    {BUTTON_DESCRIPTIVE_PREVIEW_STATES.map((state) => (
-                      <tr key={state}>
-                        <td className="whitespace-nowrap px-4 py-4 font-medium text-[var(--color-text-primary)]">
-                          {DESCRIPTIVE_STATE_LABELS[state]}
-                        </td>
-                        <td className="px-4 py-4 align-middle">
-                          <ButtonDescriptive
-                            title={DEMO_TITLE}
-                            description={DEMO_DESCRIPTION}
-                            previewState={state}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          </div>
-        )
+          </section>
+        </div>
       }
       code={
-        view === 'standard' ? (
+        <div className="space-y-6">
           <ComponentLabCode>{`import { Button } from '../components/atoms/Button'
 
 <Button variant="primary" actionTone="primary" size="md" icon="right">
@@ -414,7 +418,6 @@ export function ButtonPlaygroundLab() {
 <Button variant="primary" actionTone="success">
   Confirm
 </Button>`}</ComponentLabCode>
-        ) : (
           <ComponentLabCode>{`import { ButtonDescriptive } from '../components/molecules/ButtonDescriptive'
 
 <ButtonDescriptive
@@ -422,36 +425,29 @@ export function ButtonPlaygroundLab() {
   description="This is the report description."
   onClick={() => { /* open report */ }}
 />`}</ComponentLabCode>
-        )
+        </div>
       }
       usage={
-        view === 'standard' ? (
-          <div className={cn('max-w-3xl space-y-4', labUsageSectionClass)}>
-            <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
-              Import <code className="text-[var(--color-text-primary)]">Button</code> for product UI. Keep{' '}
-              <code className="text-[var(--color-text-primary)]">variant</code> for fill style (primary / secondary /
-              tertiary) and use <code className="text-[var(--color-text-primary)]">actionTone</code> to swap the Action
-              token family for default, hover, and pressed. Use{' '}
-              <code className="text-[var(--color-text-primary)]">previewState</code> only for documentation grids.
-            </p>
-          </div>
-        ) : (
-          <div className={cn('max-w-3xl space-y-4', labUsageSectionClass)}>
-            <ul className="m-0 list-disc space-y-1 ps-5 text-sm text-[var(--color-text-muted)]">
-              <li>
-                Use for secondary actions that need a short title plus supporting context (e.g. opening a named
-                report).
-              </li>
-              <li>
-                One visual variant — states are Default, Hover, Clicked (active), and Disabled.
-              </li>
-              <li>
-                Prefer <code className="text-[var(--color-text-primary)]">Button</code> for standard CTA actions
-                without descriptive copy.
-              </li>
-            </ul>
-          </div>
-        )
+        <div className={cn('max-w-3xl space-y-6', labUsageSectionClass)}>
+          <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
+            Import <code className="text-[var(--color-text-primary)]">Button</code> for product UI. Keep{' '}
+            <code className="text-[var(--color-text-primary)]">variant</code> for fill style (primary / secondary /
+            tertiary) and use <code className="text-[var(--color-text-primary)]">actionTone</code> to swap the Action
+            token family for default, hover, and pressed. Use{' '}
+            <code className="text-[var(--color-text-primary)]">previewState</code> only for documentation grids.
+          </p>
+          <ul className="m-0 list-disc space-y-1 ps-5 text-sm text-[var(--color-text-muted)]">
+            <li>
+              Use <code className="text-[var(--color-text-primary)]">ButtonDescriptive</code> for secondary actions
+              that need a short title plus supporting context (e.g. opening a named report).
+            </li>
+            <li>Descriptive states are Default, Hover, Clicked (active), and Disabled.</li>
+            <li>
+              Prefer <code className="text-[var(--color-text-primary)]">Button</code> for standard CTA actions without
+              descriptive copy.
+            </li>
+          </ul>
+        </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">

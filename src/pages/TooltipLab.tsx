@@ -45,7 +45,6 @@ export function TooltipLab() {
           </div>
 
           <div className={labExampleSectionClass}>
-            <p className={labSectionLabelClass}>Interactive</p>
             <div className="w-fit">
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -132,7 +131,7 @@ export function TooltipLab() {
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Type — <code className="text-[var(--color-text-primary)]">typography/ui/caption</code> →{' '}
+            Type - <code className="text-[var(--color-text-primary)]">typography/ui/caption</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--typography-ui-caption</code>; leading{' '}
             <code className="text-[var(--color-text-primary)]">--typography-leading-relaxed</code>
           </li>

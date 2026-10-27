@@ -7,7 +7,9 @@ import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
 import { InlineMessage } from '../components/molecules/InlineMessage/InlineMessage'
 import { InlineDrawer } from '../components/organisms/InlineDrawer/InlineDrawer'
 import { cn } from '../lib/cn'
-import { LabCheckbox, LabRadioGroup, labControlLegendClass } from '../lib/labControls'
+import { Toggle } from '../components/atoms/Toggle/Toggle'
+import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyles'
+import { LabControlField, LabSelect } from '../lib/labControls'
 import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
@@ -155,7 +157,7 @@ function DrawerMockHeader({
 }) {
   return (
     <header className="flex shrink-0 items-center justify-between border-b-[0.5px] border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-8 py-3">
-      <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--ace-neutral-800)]')}>Header</h1>
+      <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--color-text-primary)]')}>Header</h1>
       <Button
         type="button"
         variant="primary"
@@ -177,37 +179,42 @@ export function InlineDrawerLab() {
   const [toggleChecked, setToggleChecked] = useState(false)
 
   const examplesToolbar = (
-    <div className="flex flex-wrap items-end gap-6">
-      <LabRadioGroup
-        label="Frame"
-        value={contentMode}
-        onChange={setContentMode}
-        options={[
-          { value: 'content', label: 'Content' },
-          { value: 'no-content', label: 'No content' },
-        ]}
-      />
-      <div className="flex flex-col gap-2">
-        <p className={cn(labControlLegendClass, 'm-0')}>Header</p>
-        <div className="flex flex-wrap gap-4">
-          <LabCheckbox
-            checked={showBackButton}
-            onCheckedChange={setShowBackButton}
-            label="Back button"
-          />
-          <LabCheckbox checked={showToggle} onCheckedChange={setShowToggle} label="Toggle" />
-        </div>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect
+          label="Frame"
+          value={contentMode}
+          onChange={setContentMode}
+          options={[
+            { value: 'content', label: 'Content' },
+            { value: 'no-content', label: 'No content' },
+          ]}
+        />
+        <LabControlField label="Back button" className="shrink-0">
+          <div className="flex min-h-9 items-center gap-2">
+            <Toggle
+              size="sm"
+              checked={showBackButton}
+              onCheckedChange={setShowBackButton}
+              aria-label="Back button"
+            />
+            <span className={aceToggleLabelClass}>{showBackButton ? 'On' : 'Off'}</span>
+          </div>
+        </LabControlField>
+        <LabControlField label="Toggle" className="shrink-0">
+          <div className="flex min-h-9 items-center gap-2">
+            <Toggle
+              size="sm"
+              checked={showToggle}
+              onCheckedChange={setShowToggle}
+              aria-label="Show header toggle"
+            />
+            <span className={aceToggleLabelClass}>{showToggle ? 'On' : 'Off'}</span>
+          </div>
+        </LabControlField>
       </div>
-    </div>
-  )
 
-  return (
-    <ComponentLabPage
-      qa={inlineDrawerLabQa}
-      title="Inline Drawer"
-      description="Right-side in-flow panel from Review Assigned: resizable SideDrawer shell with Review header chrome, close control, and Close / Confirm footer. Not an overlay."
-      examplesToolbar={examplesToolbar}
-      examples={
+      <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
         <div className="flex h-[min(85vh,52rem)] min-h-[40rem] flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]">
           <DrawerMockHeader open={open} onToggleDrawer={() => setOpen((v) => !v)} />
           <div className="flex min-h-0 flex-1">
@@ -233,7 +240,16 @@ export function InlineDrawerLab() {
             </InlineDrawer>
           </div>
         </div>
-      }
+      </div>
+    </div>
+  )
+
+  return (
+    <ComponentLabPage
+      qa={inlineDrawerLabQa}
+      title="Inline Drawer"
+      description="Right-side in-flow panel from Review Assigned: resizable SideDrawer shell with Review header chrome, close control, and Close / Confirm footer. Not an overlay."
+      examplesToolbar={examplesToolbar}
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">

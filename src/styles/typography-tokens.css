@@ -1,6 +1,6 @@
 :root {
   /*
-   * ACE typography — Figma Typography page (node 2:5).
+   * ACE typography - Figma Typography page (node 2:5).
    * Documentation layer: --type-* primitives + --typography-* semantics (5160:2 / 5160:154).
    * Product shorthands: --ace-type-* (legacy composed styles still used by components).
    */
@@ -13,7 +13,7 @@
    * Figma Primitives + Semantic token JSON. Composed --ace-type-* shorthands below.
    */
 
-  /* ——— Composed --ace-type-* shorthands (pair each with *-tracking) ——— */
+  /* --- Composed --ace-type-* shorthands (pair each with *-tracking) --- */
   /* ACE paragraph p1/p2/p3 ↔ Figma typography/size: p1→p3 (14), p2→p2 (16), p3→p1 (18). */
   --ace-type-display-01-regular: 400 var(--typography-size-heading)/var(--typography-line-height-relaxed) var(--font-ace-noto);
   --ace-type-display-01-regular-tracking: var(--typography-letter-spacing-tight);
@@ -131,7 +131,7 @@
   --ace-type-caption-semi-bold-tracking: var(--typography-letter-spacing-normal);
   --ace-type-caption-bold: 700 var(--typography-size-caption)/var(--typography-line-height-relaxed) var(--font-ace-noto);
   --ace-type-caption-bold-tracking: var(--typography-letter-spacing-normal);
-  /* Label Bold — dense UI / table headers (smaller than Caption; matches Footer Bold scale) */
+  /* Label Bold - dense UI / table headers (smaller than Caption; matches Footer Bold scale) */
   --ace-type-label-bold: 700 var(--typography-size-footer-01)/var(--typography-line-height-relaxed) var(--font-ace-noto);
   --ace-type-label-bold-tracking: var(--typography-letter-spacing-normal);
   --ace-type-footer-regular: 400 var(--typography-size-footer-01)/var(--typography-line-height-relaxed) var(--font-ace-noto);

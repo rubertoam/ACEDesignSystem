@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react'
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react'
 import { cn } from '../../../lib/cn'
 import {
   badgeStatusDotClass,
@@ -15,8 +15,8 @@ import {
 export type BadgeProps = {
   children: ReactNode
   /**
-   * `pill` — rounded status pill with leading dot (screening table).
-   * `tag` — squared meta tag (client profile accordion); same color variants as pills.
+   * `pill` - rounded status pill with leading dot (screening table).
+   * `tag` - squared meta tag (client profile accordion); same color variants as pills.
    */
   appearance?: BadgeAppearance
   variant?: BadgeVariant
@@ -30,7 +30,7 @@ export type BadgeProps = {
    */
   leading?: ReactNode
   className?: string
-}
+} & Omit<HTMLAttributes<HTMLSpanElement>, 'children' | 'className' | 'color'>
 
 function OverdueWarningIcon() {
   return (
@@ -48,6 +48,8 @@ export function Badge({
   showWarningIcon = false,
   leading,
   className,
+  style,
+  ...rest
 }: BadgeProps) {
   const isTag = appearance === 'tag'
   // `status` kept as a deprecated alias for `pill`
@@ -58,12 +60,14 @@ export function Badge({
   if (isTag) {
     return (
       <span
+        {...rest}
         className={cn(badgeTagShellClass, className)}
         style={
           {
             '--badge-tag-border': tokens.border,
             '--badge-tag-surface': tokens.surface,
             '--badge-tag-label': tokens.label,
+            ...style,
           } as CSSProperties
         }
       >
@@ -75,6 +79,7 @@ export function Badge({
 
   return (
     <span
+      {...rest}
       className={cn(badgeStatusShellClass, className)}
       style={
         {
@@ -82,6 +87,7 @@ export function Badge({
           '--badge-surface': tokens.surface,
           '--badge-dot': tokens.dot,
           '--badge-label': tokens.label,
+          ...style,
         } as CSSProperties
       }
     >

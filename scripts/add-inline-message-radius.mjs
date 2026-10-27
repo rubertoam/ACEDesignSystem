@@ -56,7 +56,7 @@ for (const p of [
   if (fs.existsSync(p)) patchSemantic(p)
 }
 
-// color-tokens.css — add component token next to other radius/component entries
+// color-tokens.css - add component token next to other radius/component entries
 const colorTokensPath = path.join(root, 'src/styles/color-tokens.css')
 let colorCss = fs.readFileSync(colorTokensPath, 'utf8')
 const inlineDecl =
@@ -76,7 +76,7 @@ if (!colorCss.includes('--radius-component-inline-message')) {
   fs.writeFileSync(colorTokensPath, colorCss)
 }
 
-// variables.css — point AceInlineMessage at the new component token
+// variables.css - point AceInlineMessage at the new component token
 const variablesPath = path.join(root, 'src/styles/variables.css')
 let variables = fs.readFileSync(variablesPath, 'utf8')
 variables = variables.replace(

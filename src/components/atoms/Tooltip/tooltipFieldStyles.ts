@@ -1,6 +1,6 @@
 import { cn } from '../../../lib/cn'
 
-/** Caption Regular — Figma typography/ui/caption. */
+/** Caption Regular - Figma typography/ui/caption. */
 const labelClass = cn(
   '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
 )
@@ -22,7 +22,7 @@ export const tooltipContentClass = cn(
   tooltipMotionClass,
 )
 
-/** Review Assigned screening toolbar — bordered surface, typography/ui/caption, xs shadow. */
+/** Review Assigned screening toolbar - bordered surface, typography/ui/caption, xs shadow. */
 export const aceScreeningToolbarTooltipContentClass = cn(
   'z-[300] w-fit max-w-[min(100vw-2rem,20rem)] text-balance rounded-[var(--radius-md)] border border-solid px-3 py-1.5',
   labelClass,

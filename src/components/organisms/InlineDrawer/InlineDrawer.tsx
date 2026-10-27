@@ -27,7 +27,7 @@ export type InlineDrawerProps = {
   onClose?: () => void
   /** @deprecated Prefer `onClose`. Still honored for secondary footer when `onCancel` is unset. */
   onOpenChange?: (open: boolean) => void
-  /** Drawer title — Review Assigned header uses Noto Bold 20. */
+  /** Drawer title - Review Assigned header uses Noto Bold 20. */
   title?: ReactNode
   /** Shows a back chevron before the title. */
   showBackButton?: boolean

@@ -10,7 +10,7 @@ export const TOGGLE_SIZE_LABELS: Record<ToggleSize, string> = {
 }
 
 /**
- * Track + interaction — Figma Toggle set 5283:2831 (doc 117:1265).
+ * Track + interaction - Figma Toggle set 5283:2831 (doc 117:1265).
  * Off: bg/secondary · Hover: bg/brand-hover · On: bg/brand ·
  * Inactive off: bg/disabled-subtle · Inactive on: bg/brand-subtle.
  * Motion in toggle.css.
@@ -32,7 +32,7 @@ const aceToggleRootSize: Record<ToggleSize, string> = {
 
 const thumbShadow = 'shadow-[0_1px_2px_rgb(35_38_44_/0.12)]'
 
-/** Shared thumb pill — identical for standard and icon variants. */
+/** Shared thumb pill - identical for standard and icon variants. */
 const aceToggleThumbClassBase: Record<ToggleSize, string> = {
   sm: cn(
     'ace-toggle-thumb pointer-events-none z-[1] block h-3 w-3 shrink-0 rounded-full bg-[var(--toggle-thumb)] group-disabled:bg-[var(--toggle-thumb-disabled)]',
@@ -52,7 +52,7 @@ const aceToggleThumbTranslate: Record<ToggleSize, string> = {
 
 export const aceToggleIconGlyphMotion = 'ace-toggle-icon-glyph'
 
-/** Icon glyph box — sized to sit in the track half beside the thumb (not Material Symbol metrics). */
+/** Icon glyph box - sized to sit in the track half beside the thumb (not Material Symbol metrics). */
 export const aceToggleIconCheckClass: Record<ToggleSize, string> = {
   sm: 'size-[6px] shrink-0 text-[var(--toggle-icon-glyph-on)]',
   md: 'size-2 shrink-0 text-[var(--toggle-icon-glyph-on)]',
@@ -63,7 +63,7 @@ export const aceToggleIconXClass: Record<ToggleSize, string> = {
   md: 'size-2 shrink-0 text-[var(--toggle-icon-glyph-off)]',
 }
 
-/** Label beside toggle — Caption/Regular (Figma) for Small and Large. */
+/** Label beside toggle - Caption/Regular (Figma) for Small and Large. */
 export const aceToggleLabelClass =
   '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--color-text-primary)]'
 

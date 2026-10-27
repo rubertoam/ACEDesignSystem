@@ -96,25 +96,43 @@ export function ToastMessagesLab() {
   const [visible, setVisible] = useState(true)
 
   const toolbar = (
-    <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
-      <LabSelect
-        label="Tone"
-        value={tone}
-        onChange={(v) => {
-          setTone(v as ToastMessageTone)
-          setVisible(true)
-        }}
-        options={TONES.map(({ value, label }) => ({ value, label }))}
-      />
-      <LabSelect
-        label="Layout"
-        value={layout}
-        onChange={(v) => {
-          setLayout(v as ToastMessageLayout)
-          setVisible(true)
-        }}
-        options={LAYOUTS.map(({ value, label }) => ({ value, label }))}
-      />
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect
+          label="Tone"
+          value={tone}
+          onChange={(v) => {
+            setTone(v as ToastMessageTone)
+            setVisible(true)
+          }}
+          options={TONES.map(({ value, label }) => ({ value, label }))}
+        />
+        <LabSelect
+          label="Layout"
+          value={layout}
+          onChange={(v) => {
+            setLayout(v as ToastMessageLayout)
+            setVisible(true)
+          }}
+          options={LAYOUTS.map(({ value, label }) => ({ value, label }))}
+        />
+      </div>
+
+      <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="flex justify-start">
+          {visible ? (
+            <DemoToast tone={tone} layout={layout} onDismiss={() => setVisible(false)} />
+          ) : (
+            <button
+              type="button"
+              className="text-sm text-[var(--screening-primary)] underline-offset-2 hover:underline"
+              onClick={() => setVisible(true)}
+            >
+              Show toast again
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   )
 
@@ -125,25 +143,18 @@ export function ToastMessagesLab() {
       description="Transient notification cards for success, info, warning, and error feedback (Figma Toast Messages 2783:5). Six layouts - default, action, double action, and multi-line variants - with dismiss, text actions, and confirm."
       examplesToolbar={toolbar}
       examples={
-        <div className="space-y-10">
-          <div className={cn('items-start', labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Interactive</p>
-            {visible ? (
-              <DemoToast tone={tone} layout={layout} onDismiss={() => setVisible(false)} />
-            ) : (
-              <button
-                type="button"
-                className="text-sm text-[var(--screening-primary)] underline-offset-2 hover:underline"
-                onClick={() => setVisible(true)}
-              >
-                Show toast again
-              </button>
-            )}
+        <section className="space-y-8">
+          <div className={cn('w-full min-w-0', labUsageSectionClass)}>
+            <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+            <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+              Grids of all tones for the selected layout, and all layouts for the selected tone. Use the controls
+              above for a live dismissible toast.
+            </p>
           </div>
 
           <div className={cn('items-start', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>All tones - {LAYOUTS.find((l) => l.value === layout)?.label}</p>
-            <div className="flex w-full max-w-[var(--toast-message-width)] flex-col gap-4">
+            <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
               {TONES.map((item) => (
                 <DemoToast key={item.value} tone={item.value} layout={layout} />
               ))}
@@ -152,13 +163,13 @@ export function ToastMessagesLab() {
 
           <div className={cn('items-start', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>All layouts - {TONES.find((t) => t.value === tone)?.label}</p>
-            <div className="flex w-full max-w-[var(--toast-message-width)] flex-col gap-4">
+            <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
               {LAYOUTS.map((item) => (
                 <DemoToast key={item.value} tone={tone} layout={item.value} />
               ))}
             </div>
           </div>
-        </div>
+        </section>
       }
       code={
         <>
@@ -256,7 +267,7 @@ export function ToastMessagesLab() {
             <header className="space-y-1">
               <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">22 October 2026</h3>
               <p className="m-0 text-sm text-[var(--color-text-muted)]">
-                Figma-aligned naming — <code className="text-[var(--color-text-primary)]">AceToast</code> →{' '}
+                Figma-aligned naming - <code className="text-[var(--color-text-primary)]">AceToast</code> →{' '}
                 <code className="text-[var(--color-text-primary)]">ToastMessage</code>.
               </p>
             </header>

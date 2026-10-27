@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { Input } from '../components/atoms/Input'
 import { LabControlField, LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
-
 import { paginationLabQa } from './labTabDocs'
 import { Pagination } from '../components/molecules/Pagination/Pagination'
 
@@ -26,11 +25,16 @@ const SCALE_PRESETS: ScalePreset[] = [
   { id: 'end', label: 'Near end', hint: '100 pages · last page', totalItems: 2487, pageSize: 25, startPage: 100 },
 ]
 
+const PRESET_OPTIONS = [
+  ...SCALE_PRESETS.map((p) => ({ value: p.id, label: `${p.label} · ${p.hint}` })),
+  { value: 'custom', label: 'Custom' },
+]
+
 export function PaginationLab() {
   const [totalItems, setTotalItems] = useState(487)
   const [pageSize, setPageSize] = useState(25)
   const [page, setPage] = useState(1)
-  const [activePreset, setActivePreset] = useState<string | null>('medium')
+  const [activePreset, setActivePreset] = useState<string>('medium')
 
   const totalPages = Math.max(1, Math.ceil(totalItems / pageSize))
 
@@ -38,7 +42,13 @@ export function PaginationLab() {
     setPage((p) => Math.min(Math.max(1, p), totalPages))
   }, [totalPages])
 
-  const applyPreset = (preset: ScalePreset) => {
+  const applyPreset = (presetId: string) => {
+    if (presetId === 'custom') {
+      setActivePreset('custom')
+      return
+    }
+    const preset = SCALE_PRESETS.find((p) => p.id === presetId)
+    if (!preset) return
     setActivePreset(preset.id)
     setTotalItems(preset.totalItems)
     setPageSize(preset.pageSize)
@@ -50,90 +60,64 @@ export function PaginationLab() {
     [totalItems, totalPages],
   )
 
-  return (
-    <ComponentLabPage
-      qa={paginationLabQa}
-      title="Pagination"
-      description="Table footer pagination from Review Assigned (Figma). Range label, page-size select, prev/numbered/next controls, and ellipses for long page counts."
-      examplesToolbar={
-        <div className="flex flex-col gap-4">
-          <div>
-            <p className="m-0 mb-2 text-xs font-medium text-[var(--color-text-muted)]">Scale presets</p>
-            <div className="flex flex-wrap gap-2">
-              {SCALE_PRESETS.map((preset) => (
-                <button
-                  key={preset.id}
-                  type="button"
-                  onClick={() => applyPreset(preset)}
-                  className={[
-                    'rounded-[var(--radius-md)] border px-3 py-2 text-left text-xs transition-colors',
-                    activePreset === preset.id
-                      ? 'border-[var(--screening-primary)] bg-[var(--screening-surface-muted)] text-[var(--screening-text-primary)]'
-                      : 'border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] hover:border-[var(--screening-primary)]',
-                  ].join(' ')}
-                >
-                  <span className="block font-semibold">{preset.label}</span>
-                  <span className="block text-[var(--color-text-muted)]">{preset.hint}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+  const toolbar = (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect
+          label="Scale preset"
+          value={activePreset}
+          onChange={applyPreset}
+          options={PRESET_OPTIONS}
+        />
+        <LabControlField label="Total items">
+          <Input
+            fieldSize="sm"
+            type="number"
+            min={0}
+            max={100000}
+            step={1}
+            value={totalItems}
+            onChange={(e) => {
+              setActivePreset('custom')
+              setTotalItems(Math.max(0, Number(e.target.value) || 0))
+            }}
+            aria-label="Total items"
+          />
+        </LabControlField>
+        <LabSelect
+          label="Page size"
+          value={String(pageSize)}
+          onChange={(v) => {
+            setActivePreset('custom')
+            setPageSize(Number(v))
+            setPage(1)
+          }}
+          options={PAGE_SIZE_OPTIONS.map((n) => ({ value: String(n), label: String(n) }))}
+        />
+        <LabControlField label="Current page">
+          <Input
+            fieldSize="sm"
+            type="number"
+            min={1}
+            max={totalPages}
+            value={page}
+            onChange={(e) => {
+              setActivePreset('custom')
+              setPage(Math.min(totalPages, Math.max(1, Number(e.target.value) || 1)))
+            }}
+            aria-label="Current page"
+          />
+        </LabControlField>
+        <LabControlField label="Summary">
+          <p className="m-0 flex min-h-[var(--screening-input-height-sm)] items-center rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-background)] px-2 text-sm text-[var(--color-text-primary)]">
+            {pageSummary.totalPages.toLocaleString()} pages · {pageSummary.range}
+          </p>
+        </LabControlField>
+      </div>
 
-          <div className="grid items-end gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <LabControlField label="Total items">
-              <Input
-                fieldSize="sm"
-                type="number"
-                min={0}
-                max={100000}
-                step={1}
-                value={totalItems}
-                onChange={(e) => {
-                  setActivePreset(null)
-                  setTotalItems(Math.max(0, Number(e.target.value) || 0))
-                }}
-                aria-label="Total items"
-              />
-            </LabControlField>
-            <LabSelect
-              label="Page size"
-              value={String(pageSize)}
-              onChange={(v) => {
-                setActivePreset(null)
-                setPageSize(Number(v))
-                setPage(1)
-              }}
-              options={PAGE_SIZE_OPTIONS.map((n) => ({ value: String(n), label: String(n) }))}
-            />
-            <LabControlField label="Current page">
-              <Input
-                fieldSize="sm"
-                type="number"
-                min={1}
-                max={totalPages}
-                value={page}
-                onChange={(e) => {
-                  setActivePreset(null)
-                  setPage(Math.min(totalPages, Math.max(1, Number(e.target.value) || 1)))
-                }}
-                aria-label="Current page"
-              />
-            </LabControlField>
-            <LabControlField label="Summary">
-              <p className="m-0 flex min-h-[var(--screening-input-height-sm)] items-center rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-background)] px-2 text-sm text-[var(--color-text-primary)]">
-                {pageSummary.totalPages.toLocaleString()} pages · {pageSummary.range}
-              </p>
-            </LabControlField>
-          </div>
-        </div>
-      }
-      examples={
+      <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
         <div className="w-full min-w-0 overflow-x-auto rounded-[var(--radius-md)] border border-[var(--screening-border-strong)] bg-[var(--screening-surface)] shadow-[var(--ace-drop-shadow-xs)]">
-          <div className="border-b border-[var(--screening-border-row)] px-4 py-3 text-sm text-[var(--screening-text-secondary)]">
-            Preview uses the same footer chrome as the data table. Jump to page {page} of {totalPages.toLocaleString()} to
-            exercise ellipses.
-          </div>
-          <div className="shrink-0 border-t border-[var(--screening-border-strong)] bg-[var(--screening-surface-muted)] px-[var(--space-4)] py-[var(--space-3)]">
+          <div className="shrink-0 bg-[var(--screening-surface-muted)] px-[var(--space-4)] py-[var(--space-3)]">
             <Pagination
               totalItems={totalItems}
               page={page}
@@ -141,14 +125,23 @@ export function PaginationLab() {
               pageSizeOptions={PAGE_SIZE_OPTIONS}
               onPageChange={setPage}
               onPageSizeChange={(n) => {
-                setActivePreset(null)
+                setActivePreset('custom')
                 setPageSize(n)
                 setPage(1)
               }}
             />
           </div>
         </div>
-      }
+      </div>
+    </div>
+  )
+
+  return (
+    <ComponentLabPage
+      qa={paginationLabQa}
+      title="Pagination"
+      description="Table footer pagination from Review Assigned (Figma). Range label, page-size select, prev/numbered/next controls, and ellipses for long page counts."
+      examplesToolbar={toolbar}
       code={
         <ComponentLabCode>{`import { Pagination } from '../components/molecules/Pagination/Pagination'
 

@@ -1,7 +1,7 @@
 {
   "name": "@rubertoam/ace-design-system",
   "version": "0.1.2",
-  "description": "ACE Design System — React components and design tokens",
+  "description": "ACE Design System - React components and design tokens",
   "homepage": "https://rubertoam.github.io/ACEDesignSystem/",
   "repository": {
     "type": "git",

@@ -3,7 +3,7 @@ import { cn } from '../../../lib/cn'
 
 const iconColor = 'text-[var(--site-header-toolbar-icon-color)]'
 
-/** Bell — Figma Site Menu notifications (2468:1038) */
+/** Bell - Figma Site Menu notifications (2468:1038) */
 export function SiteHeaderNotificationIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -26,7 +26,7 @@ export function SiteHeaderNotificationIcon({ className, ...props }: SVGProps<SVG
   )
 }
 
-/** Help in circle — Figma Site Menu help (2468:1044) */
+/** Help in circle - Figma Site Menu help (2468:1044) */
 export function SiteHeaderHelpIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg

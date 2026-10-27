@@ -7,11 +7,36 @@
   --lab-display-font: 'Plus Jakarta Sans', var(--font-ace-noto, 'Noto Sans'), sans-serif;
   --lab-panel-glow: 0 1px 0 color-mix(in srgb, var(--color-surface-primary) 70%, transparent),
     0 16px 40px -28px color-mix(in srgb, var(--color-action-primary) 12%, transparent);
+  /* Overview card hover wash - purple → blue */
+  --lab-wash-from: color-mix(in srgb, var(--color-bg-brand) 14%, var(--screening-surface));
+  --lab-wash-to: color-mix(in srgb, var(--color-status-info) 12%, var(--screening-surface));
+  --lab-wash-gradient: linear-gradient(135deg, var(--lab-wash-from) 0%, var(--lab-wash-to) 100%);
+  /* Thin top rule: brand purple → info blue, edge to edge */
+  --lab-accent-line: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-bg-brand) 70%, transparent) 0%,
+    color-mix(in srgb, var(--color-status-info) 65%, transparent) 100%
+  );
+  --lab-accent-gradient: linear-gradient(
+    90deg,
+    var(--color-bg-brand) 0%,
+    var(--color-status-info) 100%
+  );
+}
+
+[data-theme='dark'] {
+  --lab-wash-from: color-mix(in srgb, var(--color-bg-brand) 26%, var(--screening-surface));
+  --lab-wash-to: color-mix(in srgb, var(--color-status-info) 22%, var(--screening-surface));
+  --lab-accent-line: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-bg-brand) 85%, transparent) 0%,
+    color-mix(in srgb, var(--color-status-info) 80%, transparent) 100%
+  );
 }
 
 .lab-shell {
-  background-color: var(--screening-surface-muted);
-  /* Soft, wide washes — brand + info (+ teal badge) at low opacity */
+  background-color: var(--color-surface-page-layout);
+  /* Soft brand wash only - info/teal washes read blueish on dark page-layout */
   background-image:
     radial-gradient(
       ellipse 140% 90% at 20% 0%,
@@ -38,6 +63,12 @@
   background-attachment: fixed;
 }
 
+[data-theme='dark'] .lab-shell {
+  /* Semantic page-layout (color/dark/950) only - no blue/teal overlays */
+  background-color: var(--color-surface-page-layout);
+  background-image: none;
+}
+
 .lab-header-band {
   position: relative;
   isolation: isolate;
@@ -54,13 +85,7 @@
   position: absolute;
   inset: auto 0 0 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    color-mix(in srgb, var(--color-border-brand) 40%, transparent) 22%,
-    color-mix(in srgb, var(--color-border-brand) 18%, transparent) 52%,
-    transparent 85%
-  );
+  background: var(--lab-accent-line);
   pointer-events: none;
 }
 
@@ -111,17 +136,13 @@
   backdrop-filter: blur(8px);
 }
 
+/* Tiny top accent: purple → blue (same pairing as card hover) */
 .lab-panel::before {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
   height: 2px;
-  background: linear-gradient(
-    105deg,
-    color-mix(in srgb, var(--color-border-brand) 45%, transparent) 0%,
-    color-mix(in srgb, var(--color-border-brand) 12%, transparent) 40%,
-    transparent 75%
-  );
+  background: var(--lab-accent-line);
   pointer-events: none;
 }
 
@@ -130,46 +151,114 @@
   overflow: hidden;
   border-radius: calc(var(--radius-lg) + 4px);
   border: 1px solid color-mix(in srgb, var(--screening-border-strong) 80%, transparent);
-  background:
-    radial-gradient(
-      ellipse 120% 80% at 18% 0%,
-      color-mix(in srgb, var(--color-bg-brand) 8%, transparent),
-      transparent 74%
-    ),
-    radial-gradient(
-      ellipse 100% 75% at 88% 22%,
-      color-mix(in srgb, var(--color-status-info) 5%, transparent),
-      transparent 72%
-    ),
-    linear-gradient(
-      105deg,
-      color-mix(in srgb, var(--color-bg-brand) 3%, transparent) 0%,
-      transparent 48%,
-      color-mix(in srgb, var(--color-status-info) 2%, transparent) 100%
-    ),
-    var(--screening-surface);
+  background: color-mix(in srgb, var(--screening-surface) 97%, transparent);
   box-shadow: var(--lab-panel-glow);
+  backdrop-filter: blur(8px);
+}
+
+.lab-philosophy-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--lab-accent-line);
+  pointer-events: none;
 }
 
 .lab-philosophy-card {
+  position: relative;
+  overflow: hidden;
   border-radius: var(--radius-lg);
   border: 1px solid color-mix(in srgb, var(--screening-border-strong) 75%, transparent);
   background: color-mix(in srgb, var(--screening-surface) 94%, transparent);
   box-shadow: 0 10px 28px -22px color-mix(in srgb, var(--color-action-primary) 18%, transparent);
-  transition:
-    transform var(--ace-motion-duration-medium) var(--ace-motion-ease-standard),
-    box-shadow var(--ace-motion-duration-medium) var(--ace-motion-ease-standard);
 }
 
-.lab-philosophy-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 36px -20px color-mix(in srgb, var(--color-action-primary) 22%, transparent);
+.lab-philosophy-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--lab-accent-line);
+  pointer-events: none;
+}
+
+.lab-overview-card {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--screening-border-strong);
+  background: var(--screening-surface);
+  padding: 1.25rem;
+  text-decoration: none;
+  box-shadow: var(--ace-drop-shadow-xs);
+  transition:
+    transform var(--ace-motion-duration-medium) var(--ace-motion-ease-standard),
+    box-shadow var(--ace-motion-duration-medium) var(--ace-motion-ease-standard),
+    border-color var(--ace-motion-duration-medium) var(--ace-motion-ease-standard),
+    background var(--ace-motion-duration-medium) var(--ace-motion-ease-standard);
+}
+
+.lab-overview-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 2px;
+  background: var(--lab-accent-gradient);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--ace-motion-duration-medium) var(--ace-motion-ease-standard);
+}
+
+.lab-overview-card__title {
+  color: var(--screening-text-primary);
+  transition: color var(--ace-motion-duration-medium) var(--ace-motion-ease-standard);
+}
+
+.lab-overview-card:hover,
+.lab-overview-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--color-border-brand);
+  background: var(--lab-wash-gradient);
+  box-shadow: 0 18px 36px -18px color-mix(in srgb, var(--color-action-primary) 45%, transparent);
+}
+
+.lab-overview-card:hover::before,
+.lab-overview-card:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.lab-overview-card:hover .lab-overview-card__title,
+.lab-overview-card:focus-visible .lab-overview-card__title {
+  color: var(--color-text-brand);
+}
+
+.lab-overview-card:focus-visible {
+  outline: 2px solid var(--screening-primary-ring);
+  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lab-philosophy-card,
-  .lab-philosophy-card:hover {
+  .lab-overview-card,
+  .lab-overview-card:hover,
+  .lab-overview-card:focus-visible {
     transition: none;
     transform: none;
+  }
+
+  .lab-overview-card::before {
+    transition: none;
+    transform: none;
+    opacity: 0;
+  }
+
+  .lab-overview-card:hover::before,
+  .lab-overview-card:focus-visible::before {
+    opacity: 1;
   }
 }

@@ -53,7 +53,10 @@ export const toastMessageActionLinkClass = cn(
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 
-/** Default (purple) action — success / info. Warning & error use tone-specific classes. */
+/**
+ * Text action links. Figma keeps Cancel (and success/info Action) on brand purple
+ * (`--toast-message-action-text`). Warning / error single-action links use tone color.
+ */
 export const toastMessageActionLinkToneClass: Record<ToastMessageTone, string> = {
   success:
     'text-[var(--toast-message-action-text)] transition-colors hover:text-[var(--toast-message-action-text-hover)]',
@@ -79,7 +82,7 @@ export const toastMessageDismissButtonClass = cn(
   'duration-[var(--ace-motion-duration-medium)]',
   '[transition-timing-function:var(--ace-motion-ease-standard)]',
   'motion-reduce:transition-none motion-reduce:duration-0',
-  /* Iconography “No border stroke” — toast sits on white; hover = surface-hover + 1px ring */
+  /* Iconography “No border stroke” - toast sits on white; hover = surface-hover + 1px ring */
   'hover:bg-[var(--screening-surface-hover)] hover:shadow-[0_0_0_1px_var(--screening-border-strong)] hover:text-[var(--toast-message-dismiss-icon-hover)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )

@@ -11,12 +11,12 @@ import {
 
 export type InlineMessageProps = Omit<ComponentPropsWithoutRef<'div'>, 'children'> & {
   tone?: InlineMessageTone
-  /** Message body — Caption Regular (Figma). */
+  /** Message body - Caption Regular (Figma). */
   children: ReactNode
 }
 
 /**
- * In-page / banner alert — Figma Inline Messages 4481:275.
+ * In-page / banner alert - Figma Inline Messages 4481:275.
  * Status icons match Iconography catalog + ToastMessage (check_circle, info, warning, error).
  */
 export function InlineMessage({

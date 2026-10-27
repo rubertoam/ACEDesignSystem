@@ -1,31 +1,14 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useMemo, useState } from 'react'
+import { Toggle } from '../components/atoms/Toggle/Toggle'
+import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyles'
 import { LandingPageCard, LANDING_PAGE_CARD_ICONS } from '../components/organisms/Cards'
-import { LabCheckbox, LabControlField, LabTextInput } from '../lib/labControls'
-import { cn } from '../lib/cn'
+import { LabControlField, LabTextInput } from '../lib/labControls'
 import { ComponentLabPage } from './ComponentLabPage'
 
-
 import { cardsLabQa, cardsLabCode, cardsLabUsage } from './labTabDocs'
+
 const DEFAULT_DESCRIPTION =
   '[Description option for this card which can provide some contextual information to users about what this is.]'
-
-const labComponentContainerClass = cn(
-  'flex w-full min-w-0 flex-col gap-[var(--ace-section-label-gap)] rounded-[var(--radius-lg)]',
-  'border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]',
-  'p-4 shadow-[var(--ace-drop-shadow-xs)] sm:p-5',
-)
-
-const labControlsPanelClass =
-  'flex flex-col gap-3 rounded-[var(--radius-md)] border border-[var(--screening-border-soft)] bg-[var(--screening-surface-elevated)] p-4'
-
-function LabControlsPanel({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className={labControlsPanelClass}>
-      <h4 className="m-0 text-sm font-bold leading-[1.65] text-[var(--color-text-primary)]">{title}</h4>
-      {children}
-    </div>
-  )
-}
 
 function CardsChangelog() {
   return (
@@ -70,7 +53,7 @@ function CardsChangelog() {
           <p className="m-0 text-sm text-[var(--color-text-muted)]">
             Sync with ACE Design System v.3 Figma Landing Page Cards (
             <code className="text-[var(--color-text-primary)]">4130:1977</code> / component set{' '}
-            <code className="text-[var(--color-text-primary)]">4212:1424–1427</code>) and semantic color/typography
+            <code className="text-[var(--color-text-primary)]">4212:1424-1427</code>) and semantic color/typography
             tokens.
           </p>
         </header>
@@ -85,7 +68,7 @@ function CardsChangelog() {
             <code className="text-[var(--color-text-primary)]">action/primary</code>).
           </li>
           <li>
-            Footer no longer uses the soft purple strip — Status row is{' '}
+            Footer no longer uses the soft purple strip - Status row is{' '}
             <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> like the card body
             (Figma Status frame).
           </li>
@@ -108,6 +91,25 @@ function CardsChangelog() {
         </ul>
       </article>
     </div>
+  )
+}
+
+function VisibilityToggle({
+  label,
+  checked,
+  onCheckedChange,
+}: {
+  label: string
+  checked: boolean
+  onCheckedChange: (checked: boolean) => void
+}) {
+  return (
+    <LabControlField label={label} className="shrink-0">
+      <div className="flex min-h-9 items-center gap-2">
+        <Toggle size="sm" checked={checked} onCheckedChange={onCheckedChange} aria-label={label} />
+        <span className={aceToggleLabelClass}>{checked ? 'On' : 'Off'}</span>
+      </div>
+    </LabControlField>
   )
 }
 
@@ -156,51 +158,47 @@ export function CardsLab() {
     onFooterLinkClick: () => setLastAction('footer-link'),
   }
 
-  const landingControls = (
-    <LabControlsPanel title="Landing Page Card">
-      <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--color-text-muted)]">
-        Configure both Landing Page card variants (Figma 4130:1977). Stats icons from node 4212:1138.
-      </p>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  const toolbar = (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
         <LabTextInput label="Card title" value={title} onChange={setTitle} className="max-w-md" />
         <LabTextInput label="Description body" value={bodyText} onChange={setBodyText} className="max-w-md" />
         <LabTextInput label="Stat label" value={statLabel} onChange={setStatLabel} className="max-w-md" />
+        <VisibilityToggle label="Header badge" checked={showBadge} onCheckedChange={setShowBadge} />
+        <VisibilityToggle
+          label="Header icons"
+          checked={showHeaderActions}
+          onCheckedChange={setShowHeaderActions}
+        />
+        <VisibilityToggle
+          label="Footer data"
+          checked={showFooterStats}
+          onCheckedChange={setShowFooterStats}
+        />
+        <VisibilityToggle label="Footer link" checked={showFooterLink} onCheckedChange={setShowFooterLink} />
       </div>
-      <LabControlField label="Visibility">
-        <div className="flex flex-wrap gap-x-6 gap-y-2">
-          <LabCheckbox label="Header badge" checked={showBadge} onCheckedChange={setShowBadge} />
-          <LabCheckbox
-            label="Header icons"
-            checked={showHeaderActions}
-            onCheckedChange={setShowHeaderActions}
-          />
-          <LabCheckbox label="Footer data" checked={showFooterStats} onCheckedChange={setShowFooterStats} />
-          <LabCheckbox label="Footer link" checked={showFooterLink} onCheckedChange={setShowFooterLink} />
+
+      <div className="flex flex-col gap-4 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        {lastAction ? (
+          <p className="m-0 text-xs text-[var(--color-text-muted)]">
+            Last action: <strong className="text-[var(--color-text-primary)]">{lastAction}</strong>
+          </p>
+        ) : null}
+        <div className="flex flex-wrap gap-8">
+          <LandingPageCard variant="stats" statItems={statItems} {...cardProps} />
+          <LandingPageCard variant="description" description={bodyText} {...cardProps} />
         </div>
-      </LabControlField>
-      {lastAction ? (
-        <p className="m-0 text-xs text-[var(--color-text-muted)]">
-          Last action: <strong className="text-[var(--color-text-primary)]">{lastAction}</strong>
-        </p>
-      ) : null}
-    </LabControlsPanel>
+      </div>
+    </div>
   )
 
   return (
     <ComponentLabPage
       qa={cardsLabQa}
       title="Cards"
-      description="Landing page navigation cards (stats and description) — semantic tokens, Badge, and ACE drop shadows. Figma 4130:1977."
+      description="Landing page navigation cards (stats and description) - semantic tokens, Badge, and ACE drop shadows. Figma 4130:1977."
       examplesCanvas={false}
-      examples={
-        <div className={labComponentContainerClass}>
-          {landingControls}
-          <div className="flex flex-wrap gap-8">
-            <LandingPageCard variant="stats" statItems={statItems} {...cardProps} />
-            <LandingPageCard variant="description" description={bodyText} {...cardProps} />
-          </div>
-        </div>
-      }
+      examplesToolbar={toolbar}
       code={cardsLabCode}
       usage={cardsLabUsage}
       variables={
@@ -221,7 +219,6 @@ export function CardsLab() {
           </li>
         </ul>
       }
-
       changelog={<CardsChangelog />}
     />
   )

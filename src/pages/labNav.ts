@@ -37,11 +37,11 @@ export const labNavGuidelinesItem: LabNavItem = {
   to: '/lab',
 }
 
-/** Top-level link above Layouts (brand asset, not an atom playground). */
+/** Top-level brand asset (not an atom playground); listed below Tokens + Layouts. */
 export const labNavFinScanLogoItem: LabNavItem = component(
   'FinScan Logo',
   '/lab/atoms/finscan-logo',
-  'hash mark + wordmark lockup (Figma Icon / FinScan 2782:29).',
+  'Hash mark + wordmark lockup (Figma Icon / FinScan 2782:29).',
 )
 
 /** Top-level links below collapsible atomic-design sections. */
@@ -55,21 +55,21 @@ export const labNavTokensItem: LabNavItem = {
   to: '/lab/layouts/tokens',
 }
 
-export const labNavLayoutItems: LabNavItem[] = [labNavLayoutsItem, labNavTokensItem]
+export const labNavLayoutItems: LabNavItem[] = [labNavTokensItem, labNavLayoutsItem]
 
-/** FinScan Logo + Layouts + Tokens (rendered below Atoms / Molecules / Organisms). */
-export const labNavBottomItems: LabNavItem[] = [labNavFinScanLogoItem, ...labNavLayoutItems]
+/** Tokens + Layouts + FinScan Logo (rendered below Atoms / Molecules / Organisms). */
+export const labNavBottomItems: LabNavItem[] = [...labNavLayoutItems, labNavFinScanLogoItem]
 
 export const labNavSections: LabNavSection[] = [
   {
     title: 'Atoms',
     items: [
       { label: 'Overview', to: '/lab/atoms' },
-      component('Colors', '/lab/atoms/colors', 'tokens from variables.css with swatches.'),
+      component('Colors', '/lab/atoms/colors', 'Tokens from variables.css with swatches.'),
       component(
         'Typography',
         '/lab/atoms/typography',
-        'style sheet, typography tokens, and primitive/semantic tokens from Figma.',
+        'Style sheet, typography tokens, and primitive/semantic tokens from Figma.',
       ),
       component(
         'Iconography',
@@ -79,11 +79,11 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Animations',
         '/lab/atoms/animations',
-        'animation catalog, easing/duration tokens, and live demos for developers.',
+        'Animation catalog, easing/duration tokens, and live demos for developers.',
       ),
-      component('Shadows', '/lab/atoms/shadows', 'elevation tokens (Figma Drop Shadows 71-71).'),
-      component('Badges', '/lab/atoms/badges', 'pills and tags - shared color variants (Review Assigned).'),
-      component('Tooltips', '/lab/atoms/tooltips', 'contextual labels for icon controls - screening toolbar pattern.'),
+      component('Shadows', '/lab/atoms/shadows', 'Elevation tokens (Figma Drop Shadows 71-71).'),
+      component('Badges', '/lab/atoms/badges', 'Pills and tags - shared color variants (Review Assigned).'),
+      component('Tooltips', '/lab/atoms/tooltips', 'Contextual labels for icon controls - screening toolbar pattern.'),
       component(
         'Buttons',
         '/lab/atoms/buttons',
@@ -92,14 +92,14 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Radio buttons',
         '/lab/atoms/radios',
-        'sizes, states, field wrapper (Figma Radio Buttons 331-1755).',
+        'Sizes, states, field wrapper (Figma Radio Buttons 331-1755).',
       ),
       component(
         'Checkboxes',
         '/lab/atoms/checkboxes',
-        'with/without label, sizes, states (Figma Checkboxes 317-1492).',
+        'With/without label, sizes, states (Figma Checkboxes 317-1492).',
       ),
-      component('Toggles', '/lab/atoms/toggles', 'switch states, descriptive pattern (Figma Toggles 117-1265).'),
+      component('Toggles', '/lab/atoms/toggles', 'Switch states, descriptive pattern (Figma Toggles 117-1265).'),
     ],
   },
   {
@@ -109,7 +109,7 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Inputs',
         '/lab/molecules/inputs',
-        'text fields, sizes, states, optional search icon (Figma Input frame).',
+        'Text fields, sizes, states, optional search icon (Figma Input frame).',
       ),
       component(
         'Dropdowns',
@@ -124,27 +124,27 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Accordions',
         '/lab/molecules/accordions',
-        'expand / collapse, gray / white / XS shadow surfaces, tag + Material icons (Figma 332-1500).',
+        'Expand / collapse, gray / white / XS shadow surfaces, tag + Material icons (Figma 332-1500).',
       ),
       component(
         'Pagination',
         '/lab/molecules/pagination',
-        'range label, page size, numbered pages with ellipses (Figma Review Assigned).',
+        'Range label, page size, numbered pages with ellipses (Figma Review Assigned).',
       ),
       component(
         'Sliders',
         '/lab/molecules/sliders',
-        'horizontal value control with label, sizes, and active / inactive states (Figma 2505-47).',
+        'Horizontal value control with label, sizes, and active / inactive states (Figma 2505-47).',
       ),
       component(
         'Steppers',
         '/lab/molecules/steppers',
-        'horizontal (−/+) and vertical (chevron) numeric steppers.',
+        'Horizontal (−/+) and vertical (chevron) numeric steppers.',
       ),
       component(
         'Tabs',
         '/lab/molecules/tabs',
-        'horizontal, vertical, and Tab Cards (Figma Tabs 5196:82).',
+        'Horizontal, vertical, and Tab Cards (Figma Tabs 5196:82).',
       ),
       component(
         'Page Headers',
@@ -154,22 +154,22 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Toast messages',
         '/lab/molecules/toast-messages',
-        'success, info, warning, and error notifications with action layouts (Figma 2783-5).',
+        'Success, info, warning, and error notifications with action layouts (Figma 2783-5).',
       ),
       component(
         'Inline messages',
         '/lab/molecules/inline-messages',
-        'error, info, success, and warning in-page / banner alerts (Figma 4481-275).',
+        'Error, info, success, and warning in-page / banner alerts (Figma 4481-275).',
       ),
       component(
         'Progress Indicators',
         '/lab/molecules/progress-indicators',
-        'table review bar + processing spinner cards (Figma Progress Indicators 414:4109).',
+        'Table review bar + processing spinner cards (Figma Progress Indicators 414:4109).',
       ),
       component(
         'Task Bar',
         '/lab/molecules/task-bar',
-        'bottom action bar for app shells (Review Assigned).',
+        'Bottom action bar for app shells (Review Assigned).',
       ),
     ],
   },
@@ -185,38 +185,38 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Date and time pickers',
         '/lab/organisms/date-time-pickers',
-        'time picker prototype (scheduling controls).',
+        'Time picker prototype (scheduling controls).',
       ),
-      component('Sidebar', '/lab/organisms/sidebar', 'navigation and grouped query layouts.'),
+      component('Sidebar', '/lab/organisms/sidebar', 'Navigation and grouped query layouts.'),
       component(
         'Inline Drawer',
         '/lab/organisms/inline-drawer',
-        'right in-flow panel with sidebar open/close motion (Figma 1063-3635).',
+        'Right in-flow panel with sidebar open/close motion (Figma 1063-3635).',
       ),
       component(
         'Squeeze Box',
         '/lab/organisms/squeeze-box',
-        'filter, sort, minimize, and selectable rows (Review Assigned Case List).',
+        'Filter, sort, minimize, and selectable rows (Review Assigned Case List).',
       ),
       component(
         'Cards',
         '/lab/organisms/cards',
-        'landing page cards (Figma Landing Page Cards 4130:1977).',
+        'Landing page cards (Figma Landing Page Cards 4130:1977).',
       ),
       component(
         'Timeline',
         '/lab/organisms/timeline',
-        'match and transaction history with expandable status rows (Figma 4622-1645).',
+        'Match and transaction history with expandable status rows (Figma 4622-1645).',
       ),
       component(
         'Attachments',
         '/lab/organisms/attachments',
-        'file upload dropzone and URL linking for case evidence (Figma 3313-156).',
+        'File upload dropzone and URL linking for case evidence (Figma 3313-156).',
       ),
       component(
         'Site header',
         '/lab/organisms/site-header',
-        'top navigation, FinScan brand, and user toolbar.',
+        'Top navigation, FinScan brand, and user toolbar.',
       ),
       component('Data Table', '/lab/organisms/data-table'),
     ],
@@ -239,11 +239,14 @@ export function getLabNavFlat(): {
         availability: item.availability,
       })),
     ),
+    ...labNavLayoutItems.map((item) => ({
+      ...item,
+      section: item.to.includes('/tokens') ? 'Tokens' : 'Layouts',
+    })),
     {
       ...labNavFinScanLogoItem,
       section: 'Brand',
     },
-    ...labNavLayoutItems.map((item) => ({ ...item, section: 'Layouts' })),
   ]
 }
 

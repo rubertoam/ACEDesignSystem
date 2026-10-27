@@ -16,9 +16,9 @@ import {
 } from './descriptiveButtonFieldStyles'
 
 export type ButtonDescriptiveProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children'> & {
-  /** Primary label — Caption Bold (Figma ButtonDescriptive). */
+  /** Primary label - Caption Bold (Figma ButtonDescriptive). */
   title: string
-  /** Supporting copy — Footer Regular (Figma ButtonDescriptive). */
+  /** Supporting copy - Footer Regular (Figma ButtonDescriptive). */
   description: string
   /**
    * Material Symbols ligature from Iconography (e.g. `file_export`).
@@ -32,7 +32,7 @@ export type ButtonDescriptiveProps = Omit<ButtonHTMLAttributes<HTMLButtonElement
 }
 
 /**
- * Contextual action tile — Figma ButtonDescriptive 4118:682.
+ * Contextual action tile - Figma ButtonDescriptive 4118:682.
  * One variant with default / hover / clicked / disabled states.
  */
 export const ButtonDescriptive = forwardRef<HTMLButtonElement, ButtonDescriptiveProps>(

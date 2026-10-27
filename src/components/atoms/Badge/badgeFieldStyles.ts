@@ -22,7 +22,7 @@ type BadgeTokens = {
   label: string
 }
 
-/** Figma Badge pill shell — px 8, py 2, gap 6, rounded-full; colors via CSS vars. */
+/** Figma Badge pill shell - px 8, py 2, gap 6, rounded-full; colors via CSS vars. */
 export const badgeStatusShellClass = cn(
   'inline-flex w-fit max-w-none shrink-0 items-center gap-[var(--badge-gap)] whitespace-nowrap rounded-[var(--badge-radius,var(--radius-component-badge))]',
   'border border-solid border-[var(--badge-border)] bg-[var(--badge-surface)]',
@@ -30,7 +30,7 @@ export const badgeStatusShellClass = cn(
   'transition-colors duration-200 ease-out',
 )
 
-/** Figma Badge tag shell — same padding as pill; 4px radius; no leading dot. */
+/** Figma Badge tag shell - same padding as pill; 4px radius; no leading dot. */
 export const badgeTagShellClass = cn(
   'inline-flex w-fit max-w-none shrink-0 items-center gap-[var(--badge-tag-gap)] whitespace-nowrap',
   'rounded-[var(--badge-tag-radius)] border border-solid',
@@ -42,17 +42,17 @@ export const badgeTagShellClass = cn(
 export const badgeStatusDotClass =
   'size-[var(--badge-dot-size)] shrink-0 rounded-full bg-[var(--badge-dot)]'
 
-/** Caption Regular — Figma Badge label. */
+/** Caption Semi Bold - Figma Badge label (typography/body/body-secondary). */
 export const badgeStatusLabelClass = cn(
   'shrink-0 whitespace-nowrap',
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
   'text-[var(--badge-label)]',
 )
 
-/** Same Caption Regular treatment as pills; color from variant tokens. */
+/** Same Caption Semi Bold treatment as pills; color from variant tokens. */
 export const badgeTagLabelClass = cn(
   'shrink-0 whitespace-nowrap',
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
   'text-[var(--badge-tag-label)]',
 )
 

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Input, type InputIcon, type InputSize, type InputVisualState } from '../components/atoms/Input'
+import { Toggle } from '../components/atoms/Toggle/Toggle'
 import { cn } from '../lib/cn'
-import { LabCheckbox, LabControlField, LabRadioGroup } from '../lib/labControls'
+import { LabControlField, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
@@ -9,6 +10,18 @@ import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import { inputLabQa } from './labTabDocs'
 const SIZES: InputSize[] = ['sm', 'md', 'lg']
 const VISUAL_STATES: InputVisualState[] = ['default', 'focus', 'error', 'disabled']
+
+const SIZE_OPTIONS: { value: InputSize; label: string }[] = [
+  { value: 'sm', label: 'Small' },
+  { value: 'md', label: 'Medium' },
+  { value: 'lg', label: 'Large' },
+]
+
+const ICON_OPTIONS: { value: InputIcon; label: string }[] = [
+  { value: 'none', label: 'None' },
+  { value: 'left', label: 'Left' },
+  { value: 'right', label: 'Right' },
+]
 
 function StateMatrix({ icon }: { icon: InputIcon }) {
   const iconLabel = icon === 'none' ? 'No icon' : icon === 'left' ? 'Icon left' : 'Icon right'
@@ -99,7 +112,7 @@ function InputsChangelog() {
             Label and error helper use{' '}
             <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; field value /
             placeholder use <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>{' '}
-            (Body/Regular 14px) at all sizes — size only changes height (36 / 44 / 52px).
+            (Body/Regular 14px) at all sizes - size only changes height (36 / 44 / 52px).
           </li>
           <li>
             Dark theme input overrides removed; colors follow{' '}
@@ -126,30 +139,40 @@ export function InputPlaygroundLab() {
   const [disabled, setDisabled] = useState(false)
 
   const toolbar = (
-    <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-5">
-      <LabRadioGroup
-        label="Size"
-        value={fieldSize}
-        onChange={setFieldSize}
-        options={SIZES.map((s) => ({ value: s, label: s }))}
-      />
-      <LabRadioGroup
-        label="Icon"
-        value={icon}
-        onChange={setIcon}
-        options={[
-          { value: 'none', label: 'None' },
-          { value: 'left', label: 'Left' },
-          { value: 'right', label: 'Right' },
-        ]}
-      />
-      <LabControlField label="Options" className="sm:col-span-2 lg:col-span-3">
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          <LabCheckbox label="Label" checked={showLabel} onCheckedChange={setShowLabel} />
-          <LabCheckbox label="Error" checked={error} onCheckedChange={setError} />
-          <LabCheckbox label="Disabled" checked={disabled} onCheckedChange={setDisabled} />
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect label="Size" value={fieldSize} onChange={setFieldSize} options={SIZE_OPTIONS} />
+        <LabSelect label="Icon" value={icon} onChange={setIcon} options={ICON_OPTIONS} />
+        <LabControlField label="Label" className="shrink-0">
+          <div className="flex min-h-9 items-center">
+            <Toggle size="sm" checked={showLabel} onCheckedChange={setShowLabel} aria-label="Label" />
+          </div>
+        </LabControlField>
+        <LabControlField label="Error" className="shrink-0">
+          <div className="flex min-h-9 items-center">
+            <Toggle size="sm" checked={error} onCheckedChange={setError} aria-label="Error" />
+          </div>
+        </LabControlField>
+        <LabControlField label="Disabled" className="shrink-0">
+          <div className="flex min-h-9 items-center">
+            <Toggle size="sm" checked={disabled} onCheckedChange={setDisabled} aria-label="Disabled" />
+          </div>
+        </LabControlField>
+      </div>
+
+      <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="max-w-md">
+          <Input
+            fieldSize={fieldSize}
+            icon={icon}
+            label={showLabel ? 'Label' : undefined}
+            error={error}
+            disabled={disabled}
+            placeholder="Placeholder"
+            defaultValue=""
+          />
         </div>
-      </LabControlField>
+      </div>
     </div>
   )
 
@@ -160,39 +183,20 @@ export function InputPlaygroundLab() {
       description="ACE Design System v.3 text inputs (Figma 408:1976): sm/md/lg heights (36/44/52px); default, focus (brand border + lavender fill + focus ring), error, and disabled. Optional search icon left or right. Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examplesToolbar={toolbar}
       examples={
-        <div className="space-y-12">
-          <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] sm:p-8">
-            <div className="max-w-md">
-              <Input
-                fieldSize={fieldSize}
-                icon={icon}
-                label={showLabel ? 'Label' : undefined}
-                error={error}
-                disabled={disabled}
-                placeholder="Placeholder"
-                defaultValue=""
-              />
-              <p className="mt-4 m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                Toggle options above. Tab into the field for focus styles; enable Error for validation layout.
-              </p>
-            </div>
+        <section className="space-y-5">
+          <div className={cn('w-full min-w-0', labUsageSectionClass)}>
+            <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+            <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+              Rows match Figma states (Default, Focus, Error, Disabled); columns are sizes. Each cell uses a frozen{' '}
+              <code className="text-[var(--color-text-primary)]">visualState</code> (not focusable).
+            </p>
           </div>
-
-          <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className={cn('max-w-3xl', labUsageSectionClass)}>
-              <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
-              <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                Rows match Figma states (Default, Focus, Error, Disabled); columns are sizes. Each cell uses a frozen{' '}
-                <code className="text-[var(--color-text-primary)]">visualState</code> (not focusable).
-              </p>
-            </div>
-            <div className="flex flex-col gap-12">
-              {(['none', 'left', 'right'] as const).map((ic) => (
-                <StateMatrix key={ic} icon={ic} />
-              ))}
-            </div>
-          </section>
-        </div>
+          <div className="flex flex-col gap-12">
+            {(['none', 'left', 'right'] as const).map((ic) => (
+              <StateMatrix key={ic} icon={ic} />
+            ))}
+          </div>
+        </section>
       }
       code={
         <ComponentLabCode>{`import { Input } from '../components/atoms/Input'
@@ -212,7 +216,7 @@ export function InputPlaygroundLab() {
             <code className="text-[var(--color-text-primary)]">error</code> /{' '}
             <code className="text-[var(--color-text-primary)]">errorMessage</code> for validation;{' '}
             <code className="text-[var(--color-text-primary)]">icon</code> for optional search affordance. Reserve{' '}
-            <code className="text-[var(--color-text-primary)]">visualState</code> for spec screenshots or QA grids —
+            <code className="text-[var(--color-text-primary)]">visualState</code> for spec screenshots or QA grids -
             it freezes the shell and disables interaction.
           </p>
         </div>

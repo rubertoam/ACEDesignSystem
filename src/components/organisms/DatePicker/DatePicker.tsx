@@ -73,7 +73,7 @@ const panelBaseClass = cn(
 const p1 =
   '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
 
-/** Caption/Regular — matches Input / AceDropdown field labels. */
+/** Caption/Regular - matches Input / AceDropdown field labels. */
 const fieldLabelClass =
   '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]'
 

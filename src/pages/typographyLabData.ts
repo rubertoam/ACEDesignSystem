@@ -1,5 +1,5 @@
 /**
- * ACE Typography lab — Figma Typography page (node 2:5).
+ * ACE Typography lab - Figma Typography page (node 2:5).
  * Style Sheet: 2651:5 · Typography Tokens: 5157:46 · Primitives: 5160:2 · Semantic: 5160:154
  */
 
@@ -78,7 +78,7 @@ const WEIGHTS: Array<{ weight: TypeWeight; label: string; weightValue: number }>
   { weight: 'bold', label: 'Bold', weightValue: 700 },
 ]
 
-/** Style Sheet — Figma node 2651:5 (Noto Sans; Regular / Semi Bold / Bold). */
+/** Style Sheet - Figma node 2651:5 (Noto Sans; Regular / Semi Bold / Bold). */
 export const TYPE_STYLE_SHEET_FAMILIES: StyleSheetFamily[] = [
   {
     id: 'heading',
@@ -143,7 +143,7 @@ export const TYPE_STYLE_SHEET_FAMILIES: StyleSheetFamily[] = [
   },
 ]
 
-/** Typography Tokens — Figma node 5157:46 (product type scale with usage copy). */
+/** Typography Tokens - Figma node 5157:46 (product type scale with usage copy). */
 export const TYPE_TOKEN_GROUPS: TypographyTokenGroup[] = [
   {
     id: 'heading',
@@ -248,7 +248,7 @@ function sizeToken(name: string, px: number): PrimitiveTypeToken {
   }
 }
 
-/** Primitive Typography Tokens — Figma node 5160:2. */
+/** Primitive Typography Tokens - Figma node 5160:2. */
 export const TYPE_PRIMITIVE_GROUPS: PrimitiveTypeGroup[] = [
   {
     id: 'font-size',
@@ -324,7 +324,7 @@ export const TYPE_PRIMITIVE_GROUPS: PrimitiveTypeGroup[] = [
   },
 ]
 
-/** Semantic Typography Tokens — Figma node 5160:154. */
+/** Semantic Typography Tokens - Figma node 5160:154. */
 export const TYPE_SEMANTIC_GROUPS: SemanticTypeGroup[] = [
   {
     id: 'heading',

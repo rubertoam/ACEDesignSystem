@@ -7,7 +7,7 @@ export const FILTER_VIEW_MODES = [
 
 export type FilterViewMode = (typeof FILTER_VIEW_MODES)[number]['value']
 
-/** Primary menu list width — purple pipe + row fill (see Dropdowns → Primary). */
+/** Primary menu list width - purple pipe + row fill (see Dropdowns → Primary). */
 export const FILTER_VIEW_MODE_PANEL_WIDTH = 'wide' as const
 
 export function filterViewModeLabel(mode: FilterViewMode): string {

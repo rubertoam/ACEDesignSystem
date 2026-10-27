@@ -35,7 +35,7 @@ export const attachmentsDropzonePromptClass = cn(
   'text-[var(--attachments-label)]',
 )
 
-/** Dropzone cloud — 16px glyph in 16px box (Figma ~24×16 asset optical). */
+/** Dropzone cloud - 16px glyph in 16px box (Figma ~24×16 asset optical). */
 export const attachmentsUploadIconClass = cn(
   iconGlyphBox,
   'size-4 text-[var(--attachments-title)]',
@@ -52,7 +52,7 @@ export const attachmentsFileRowClass = 'flex w-full min-w-0 items-center justify
 
 export const attachmentsFileNameGroupClass = 'flex min-w-0 items-center gap-2'
 
-/** File / document — 12px glyph (Figma ~10×12.5). */
+/** File / document - 12px glyph (Figma ~10×12.5). */
 export const attachmentsFileIconClass = cn(
   iconGlyphBox,
   'size-3 text-[var(--attachments-muted)]',
@@ -80,7 +80,7 @@ export const attachmentsFailedStatusClass = cn(
 
 export const attachmentsStatusGroupClass = 'flex shrink-0 items-center gap-1'
 
-/** Failed indicator — 12px. */
+/** Failed indicator - 12px. */
 export const attachmentsErrorIconClass = cn(
   iconGlyphBox,
   'size-3 text-[var(--attachments-error)]',
@@ -103,13 +103,13 @@ export const attachmentsLinkTextClass = cn(
   'leading-none text-[var(--attachments-link)]',
 )
 
-/** Link chain — 12px. */
+/** Link chain - 12px. */
 export const attachmentsLinkIconClass = cn(
   iconGlyphBox,
   'size-3 text-[var(--attachments-title)]',
 )
 
-/** Trash control — fixed hit target, glyph centered. */
+/** Trash control - fixed hit target, glyph centered. */
 export const attachmentsIconButtonClass = cn(
   'inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border-0 bg-transparent p-0',
   'text-[var(--attachments-muted)] outline-none',

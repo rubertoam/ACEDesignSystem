@@ -8,7 +8,7 @@ export type FilterToggleChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>
   pressed?: boolean
 }
 
-/** Filter chip as an on/off toggle — same styling as FilterTrigger, no chevron or clear. */
+/** Filter chip as an on/off toggle - same styling as FilterTrigger, no chevron or clear. */
 export const FilterToggleChip = forwardRef<HTMLButtonElement, FilterToggleChipProps>(
   function FilterToggleChip(
     { label, pressed = false, className, type = 'button', onClick, ...rest },

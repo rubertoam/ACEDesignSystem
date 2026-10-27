@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import type { CheckedState } from '@radix-ui/react-checkbox'
+import { Button } from '../components/atoms/Button'
 import { Checkbox } from '../components/atoms/Checkbox/Checkbox'
 import {
   aceCheckboxLabelClass,
   aceCheckboxLabelDisabledClass,
   type CheckboxSize,
 } from '../components/atoms/Checkbox/checkboxFieldStyles'
-import { LabRadioGroup } from '../lib/labControls'
-import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { LabSelect } from '../lib/labControls'
+import { labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 import { checkboxLabQa } from './labTabDocs'
@@ -132,17 +133,49 @@ function CheckboxesChangelog() {
   )
 }
 
+const SIZE_OPTIONS: { value: CheckboxSize; label: string }[] = [
+  { value: 'sm', label: 'Small' },
+  { value: 'md', label: 'Medium' },
+  { value: 'lg', label: 'Large' },
+]
+
 export function CheckboxPlaygroundLab() {
   const [size, setSize] = useState<CheckboxSize>('md')
   const [a, setA] = useState(false)
   const [b, setB] = useState(true)
   const [c, setC] = useState<CheckedState>('indeterminate')
 
-  const sizes: CheckboxSize[] = ['sm', 'md', 'lg']
+  const resetAll = () => {
+    setA(false)
+    setB(true)
+    setC('indeterminate')
+  }
 
   const toolbar = (
-    <div className="grid gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-      <LabRadioGroup label="Size" value={size} onChange={setSize} options={sizes.map((s) => ({ value: s, label: s }))} />
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect label="Size" value={size} onChange={setSize} options={SIZE_OPTIONS} />
+        <Button variant="primary" actionTone="primary" size="md" onClick={resetAll}>
+          Reset states
+        </Button>
+      </div>
+
+      <div className="flex flex-col gap-4 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8">
+          <label className="flex cursor-pointer items-center gap-2">
+            <Checkbox size={size} checked={a} onCheckedChange={(v) => setA(v === true)} />
+            <span className={aceCheckboxLabelClass[size]}>Unchecked</span>
+          </label>
+          <label className="flex cursor-pointer items-center gap-2">
+            <Checkbox size={size} checked={b} onCheckedChange={(v) => setB(v === true)} />
+            <span className={aceCheckboxLabelClass[size]}>Checked</span>
+          </label>
+          <label className="flex cursor-pointer items-center gap-2">
+            <Checkbox size={size} checked={c} onCheckedChange={setC} />
+            <span className={aceCheckboxLabelClass[size]}>Indeterminate</span>
+          </label>
+        </div>
+      </div>
     </div>
   )
 
@@ -153,75 +186,46 @@ export function CheckboxPlaygroundLab() {
       description="ACE Design System v.3 checkboxes (Figma 317:1492 / set 322:1747): with or without text; small / medium / large (16 / 20 / 24); regular (brand border), hover (lavender fill), active (brand fill + white inset), disabled, disabled selected. Colors and type wired to semantic --color-* and --ace-type-* tokens."
       examplesToolbar={toolbar}
       examples={
-        <div className="space-y-12">
-          <div
-            className={cn(
-              'rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] sm:p-8',
-              labExampleSectionClass,
-            )}
-          >
-            <p className={labSectionLabelClass}>Interactive</p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8">
-              <label className="flex cursor-pointer items-center gap-2">
-                <Checkbox size={size} checked={a} onCheckedChange={(v) => setA(v === true)} />
-                <span className={aceCheckboxLabelClass[size]}>Unchecked</span>
-              </label>
-              <label className="flex cursor-pointer items-center gap-2">
-                <Checkbox size={size} checked={b} onCheckedChange={(v) => setB(v === true)} />
-                <span className={aceCheckboxLabelClass[size]}>Checked</span>
-              </label>
-              <label className="flex cursor-pointer items-center gap-2">
-                <Checkbox size={size} checked={c} onCheckedChange={setC} />
-                <span className={aceCheckboxLabelClass[size]}>Indeterminate</span>
-              </label>
-            </div>
-            <p className="mt-4 m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-              Hover an unchecked box for the brand border and lavender fill. Selected uses a filled square with a
-              white inset ring (not a checkmark). Use the size control above.
+        <section className="space-y-5">
+          <div className={cn('w-full min-w-0', labUsageSectionClass)}>
+            <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+            <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+              Matches the Figma matrix (Regular, Hover, Active, Disabled, Disabled selected). Hover freezes brand
+              hover chrome; Active is checked. Use the controls above for live hover.
             </p>
           </div>
-
-          <section className="space-y-5 border-t border-[var(--color-border)] pt-10">
-            <div className={cn('max-w-3xl', labUsageSectionClass)}>
-              <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
-              <p className="m-0 text-sm leading-relaxed text-[var(--color-text-muted)]">
-                Matches the Figma matrix (Regular, Hover, Active, Disabled, Disabled selected). Hover freezes brand
-                hover chrome; Active is checked. Use the interactive row for live hover.
-              </p>
-            </div>
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
-              <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-                    <th className="min-w-[12rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                      Variant
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+            <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
+              <thead>
+                <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+                  <th className="min-w-[12rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
+                    Variant
+                  </th>
+                  {COLUMNS.map((col) => (
+                    <th
+                      key={col.key}
+                      className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]"
+                    >
+                      {col.label}
                     </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--color-border)] bg-[var(--color-surface)]">
+                {SECTIONS.map((section) => (
+                  <tr key={section.title}>
+                    <td className="px-4 py-4 font-medium text-[var(--color-text-primary)]">{section.title}</td>
                     {COLUMNS.map((col) => (
-                      <th
-                        key={col.key}
-                        className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]"
-                      >
-                        {col.label}
-                      </th>
+                      <td key={col.key} className="px-4 py-4 align-middle">
+                        <PreviewCell col={col.key} size={section.size} withLabel={section.withLabel} />
+                      </td>
                     ))}
                   </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--color-border)] bg-[var(--color-surface)]">
-                  {SECTIONS.map((section) => (
-                    <tr key={section.title}>
-                      <td className="px-4 py-4 font-medium text-[var(--color-text-primary)]">{section.title}</td>
-                      {COLUMNS.map((col) => (
-                        <td key={col.key} className="px-4 py-4 align-middle">
-                          <PreviewCell col={col.key} size={section.size} withLabel={section.withLabel} />
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
       }
       code={
         <ComponentLabCode>{`import { Checkbox } from '../components/atoms/Checkbox/Checkbox'
@@ -240,7 +244,7 @@ import { aceCheckboxLabelClass } from '../components/atoms/Checkbox/checkboxFiel
             | <code className="text-[var(--color-text-primary)]">md</code> |{' '}
             <code className="text-[var(--color-text-primary)]">lg</code>) for hit area; pair with{' '}
             <code className="text-[var(--color-text-primary)]">aceCheckboxLabelClass</code> for “with text” variants.
-            Selected appearance is a brand fill with a white inset ring — not a checkmark glyph.
+            Selected appearance is a brand fill with a white inset ring - not a checkmark glyph.
           </p>
         </div>
       }

@@ -11,7 +11,7 @@ type MaterialSymbolProps = {
    * sm 12 · md 16 (default) · lg 20 · xl 24
    */
   size?: MaterialSymbolSize
-  /** Material Symbols FILL axis — selected favorites, lock, download, etc. */
+  /** Material Symbols FILL axis - selected favorites, lock, download, etc. */
   filled?: boolean
   /** Variable font weight (default 400). Use 300 for denser toolbar glyphs. */
   weight?: 300 | 400 | 500 | 600 | 700
@@ -27,7 +27,7 @@ const sizeVar: Record<MaterialSymbolSize, string> = {
   xl: 'var(--icon-size-xl)',
 }
 
-/** Optical size axis — match token pixel sizes for cleaner outlines. */
+/** Optical size axis - match token pixel sizes for cleaner outlines. */
 const sizeOpsz: Record<MaterialSymbolSize, number> = {
   sm: 12,
   md: 16,
@@ -39,7 +39,7 @@ const sizeOpsz: Record<MaterialSymbolSize, number> = {
  * Google Material Symbols Outlined (loaded in index.html).
  * Color inherits via currentColor.
  *
- * Size and flex centering MUST be inline — Google Fonts ships `font-size: 24px`
+ * Size and flex centering MUST be inline - Google Fonts ships `font-size: 24px`
  * and a non-flex `display` on `.material-symbols-outlined`, which beats Tailwind
  * utilities and makes glyphs look off-center in smaller icon slots.
  */

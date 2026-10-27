@@ -9,7 +9,7 @@ export const INLINE_MESSAGE_TONES: InlineMessageTone[] = [
   'warning',
 ]
 
-/** Shell — Figma Inline Messages 4481:275 */
+/** Shell - Figma Inline Messages 4481:275 */
 export const inlineMessageShellClass = cn(
   'flex w-full max-w-full items-center',
   'gap-[var(--inline-message-gap)] rounded-[var(--inline-message-radius)]',
@@ -36,7 +36,7 @@ export const inlineMessageToneClass: Record<InlineMessageTone, string> = {
   ),
 }
 
-/** Same Material Symbols as toast / Iconography catalog (#16–19). */
+/** Same Material Symbols as toast / Iconography catalog (#16-19). */
 export const inlineMessageIconName: Record<InlineMessageTone, string> = {
   error: 'error',
   success: 'check_circle',

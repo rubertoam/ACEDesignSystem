@@ -46,7 +46,7 @@ export type RadioFieldState = 'default' | 'hover' | 'active' | 'disabled'
 const aceRadioFieldShell =
   'inline-flex w-fit max-w-full min-w-0 items-center rounded-[var(--radius-md)] p-3'
 
-/** Static field shell for documentation matrices (Figma Radio Buttons 331:1755 — With background). */
+/** Static field shell for documentation matrices (Figma Radio Buttons 331:1755 - With background). */
 export function aceRadioFieldClass(state: RadioFieldState): string {
   switch (state) {
     case 'default':
@@ -68,7 +68,7 @@ export function aceRadioFieldClass(state: RadioFieldState): string {
   }
 }
 
-/** Live field wrapper — applies hover/active shells to match Figma status reference. */
+/** Live field wrapper - applies hover/active shells to match Figma status reference. */
 export function aceRadioFieldInteractiveClass(options: {
   checked?: boolean
   disabled?: boolean

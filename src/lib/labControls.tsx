@@ -190,7 +190,10 @@ export function LabRadioGroup<T extends string>({
   )
 }
 
-/** Single-choice control using ACE dropdown menu (replaces native &lt;select&gt;). */
+/**
+ * Lab chrome select - ACE Primary field trigger + Primary MenuList
+ * (`triggerMode="field"`, `size="md"`, `panelWidth="wide"`, brand-pipe rows).
+ */
 export function LabSelect<T extends string>({
   label,
   value,
@@ -198,7 +201,7 @@ export function LabSelect<T extends string>({
   options,
   className,
   size = 'md',
-  panelWidth = 'default',
+  panelWidth = 'wide',
   disabled,
 }: {
   label: string
@@ -207,25 +210,24 @@ export function LabSelect<T extends string>({
   options: { value: T; label: string }[]
   className?: string
   size?: ButtonSize
-  panelWidth?: 'default' | 'compact' | 'wide'
+  panelWidth?: 'default' | 'compact' | 'wide' | 'hug'
   disabled?: boolean
 }) {
   const selectedLabel = options.find((o) => o.value === value)?.label ?? 'Select'
 
   const items: DropdownMenuEntry[] = useMemo(
-    () => [
-      {
-        type: 'radioGroup',
-        value,
-        onValueChange: (v) => onChange(v as T),
-        options: options.map((o) => ({ value: o.value, label: o.label })),
-      },
-    ],
+    () =>
+      options.map((o) => ({
+        type: 'item' as const,
+        label: o.label,
+        selected: o.value === value,
+        onSelect: () => onChange(o.value),
+      })),
     [value, onChange, options],
   )
 
   return (
-    <fieldset className={cn('min-w-0 border-0 p-0', className)} disabled={disabled}>
+    <fieldset className={cn('w-max min-w-0 shrink-0 border-0 p-0', className)} disabled={disabled}>
       <legend className={cn(labControlLegendClass, 'mb-[var(--ace-section-label-gap)] block w-full')}>
         {label}
       </legend>
@@ -237,7 +239,81 @@ export function LabSelect<T extends string>({
         align="start"
         panelWidth={panelWidth}
         disabled={disabled}
-        className="!w-full !max-w-full"
+      />
+    </fieldset>
+  )
+}
+
+/** Primary field trigger with checkbox menu items for multi-select lab controls. */
+export function LabMultiSelect<T extends string>({
+  label,
+  values,
+  onChange,
+  options,
+  className,
+  size = 'md',
+  panelWidth = 'wide',
+  disabled,
+  emptyLabel = 'None',
+  allLabel = 'All',
+}: {
+  label: string
+  values: readonly T[]
+  onChange: (values: T[]) => void
+  options: { value: T; label: string }[]
+  className?: string
+  size?: ButtonSize
+  panelWidth?: 'default' | 'compact' | 'wide' | 'hug'
+  disabled?: boolean
+  emptyLabel?: string
+  allLabel?: string
+}) {
+  const selectedSet = useMemo(() => new Set(values), [values])
+
+  const selectedLabel = useMemo(() => {
+    if (values.length === 0) return emptyLabel
+    if (values.length === options.length) return allLabel
+    if (values.length === 1) {
+      return options.find((o) => o.value === values[0])?.label ?? emptyLabel
+    }
+    return `${values.length} selected`
+  }, [allLabel, emptyLabel, options, values])
+
+  const items: DropdownMenuEntry[] = useMemo(
+    () =>
+      options.map((o) => {
+        const checked = selectedSet.has(o.value)
+        return {
+          type: 'checkbox' as const,
+          label: o.label,
+          checked,
+          style: 'assignment' as const,
+          onCheckedChange: (next: boolean) => {
+            if (next) {
+              if (checked) return
+              onChange([...values, o.value])
+              return
+            }
+            onChange(values.filter((v) => v !== o.value))
+          },
+        }
+      }),
+    [onChange, options, selectedSet, values],
+  )
+
+  return (
+    <fieldset className={cn('w-max min-w-0 shrink-0 border-0 p-0', className)} disabled={disabled}>
+      <legend className={cn(labControlLegendClass, 'mb-[var(--ace-section-label-gap)] block w-full')}>
+        {label}
+      </legend>
+      <DropdownMenu
+        triggerLabel={selectedLabel}
+        triggerMode="field"
+        size={size}
+        items={items}
+        align="start"
+        panelWidth={panelWidth}
+        disabled={disabled}
       />
     </fieldset>
   )

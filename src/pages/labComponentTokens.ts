@@ -7,9 +7,9 @@
  * Foundation tokens (`--ace-type-*`, `--ace-motion-*`, `--ace-drop-shadow-*`, color scales) are unchanged.
  *
  * Token layers (Layouts → Tokens):
- * - Primitive — raw scales (color/*, spacing/N, radius/sm, typography/size, …)
- * - Semantic — intent aliases (colors/*, spacing/layout, …)
- * - Component — component bindings (radius/component/*, icon/size/*, --accordion-*, …)
+ * - Primitive - raw scales (color/*, spacing/N, radius/sm, typography/size, …)
+ * - Semantic - intent aliases (colors/*, spacing/layout, …)
+ * - Component - component bindings (radius/component/*, icon/size/*, --accordion-*, …)
  */
 
 export type LabTokenLevel = 'primitive' | 'semantic' | 'component'
@@ -101,7 +101,7 @@ export function inferLabTokenLevel(token: LabTokenRef): LabTokenLevel {
     cssVar.includes('--typography-body') ||
     cssVar.includes('--ace-type') ||
     cssVar.includes('--icon-button') ||
-    /--(accordion|badge|button|checkbox|toggle|radio|tooltip|tabs|tab-card|toast-message|inline-message|progress-indicator|dropdown|filter|slider|stepper|task-bar|page-header|sub-header|dialog-modal|screening|date-picker|time-picker|sidebar|inline-drawer|site-header|landing-page-card|data-card|timeline|attachments|scrollable-list|availability-tag)(-|\*|$|\/)/.test(
+    /--(accordion|badge|button|checkbox|toggle|radio|tooltip|tabs|tab-card|toast-message|inline-message|progress-indicator|dropdown|filter|slider|stepper|task-bar|page-header|sub-header|dialog-modal|screening|date-picker|time-picker|sidebar|inline-drawer|site-header|landing-page-card|data-card|timeline|attachments|scrollable-list)(-|\*|$|\/)/.test(
       cssVar,
     )
   ) {
@@ -223,7 +223,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         ...status,
         ...icons,
         ...badges.slice(0, 4),
-        css('--color-badges-*', 'full badge set — see Tokens → Semantic → colors/badges'),
+        css('--color-badges-*', 'full badge set - see Tokens → Semantic → colors/badges'),
       ],
     },
   ],
@@ -379,6 +379,8 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         css('--badge-*', 'pill layout → colors/badges/*'),
         css('--badge-tag-*', 'tag layout'),
         t('radius/component/badge', '--radius-component-badge'),
+        t('typography/body/body-secondary', '--typography-body-body-secondary', 'Caption Semi Bold label size'),
+        css('--ace-type-caption-semi-bold', 'badge label text style'),
       ],
     },
   ],
@@ -752,17 +754,17 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       title: 'Catalog layers',
       tokens: [
         css(
-          'Primitive — color|typography|spacing|radius|border-width from Default.tokens.json',
+          'Primitive - color|typography|spacing|radius|border-width from Default.tokens.json',
           undefined,
           'primitive',
         ),
         css(
-          'Semantic — colors/* + layout aliases from Light/Dark.tokens.json',
+          'Semantic - colors/* + layout aliases from Light/Dark.tokens.json',
           undefined,
           'semantic',
         ),
         css(
-          'Component — radius/component|spacing/component padding|typography/ui|heading|body|icon/size',
+          'Component - radius/component|spacing/component padding|typography/ui|heading|body|icon/size',
           undefined,
           'component',
         ),

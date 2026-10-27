@@ -30,7 +30,7 @@ export type DialogModalProps = {
   size?: 'md' | 'lg'
   /** Replaces default Cancel / primary button row */
   footer?: ReactNode
-  /** Outline button (e.g. Cancel) — right group, before primary */
+  /** Outline button (e.g. Cancel) - right group, before primary */
   secondaryAction?: { label: string; onClick: () => void }
   /** Filled primary; use `danger` for delete flows */
   primaryAction?: { label: string; onClick: () => void; variant?: 'default' | 'danger' }
@@ -40,8 +40,8 @@ export type DialogModalProps = {
   /** Grow modal height with content up to the viewport; body scrolls when content exceeds max height */
   fitContent?: boolean
   /**
-   * `overlay` (default) — portal + backdrop.
-   * `static` — inline panel for docs / variant galleries (no portal, trap, or overlay).
+   * `overlay` (default) - portal + backdrop.
+   * `static` - inline panel for docs / variant galleries (no portal, trap, or overlay).
    */
   presentation?: DialogModalPresentation
   /**
@@ -54,7 +54,7 @@ export type DialogModalProps = {
 const focusableSelector =
   'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
-/** Iconography “No border stroke” — matches toast dismiss / sidebar icon buttons. */
+/** Iconography “No border stroke” - matches toast dismiss / sidebar icon buttons. */
 const dialogCloseButtonClass = cn(
   'inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
   'text-[var(--dialog-modal-title)]',
@@ -141,7 +141,7 @@ export function DialogModal({
 
   useLayoutEffect(() => {
     if (!open || isStatic) return
-    // Only steal focus when the dialog opens — not when action props change identity
+    // Only steal focus when the dialog opens - not when action props change identity
     // (e.g. parent re-render while typing in a body field).
     const id = window.requestAnimationFrame(() => {
       if (primaryButtonRef.current) {

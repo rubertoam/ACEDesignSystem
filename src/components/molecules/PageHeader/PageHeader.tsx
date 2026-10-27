@@ -23,7 +23,7 @@ export type PageHeaderProps = Omit<HTMLAttributes<HTMLElement>, 'title'> & {
 }
 
 /**
- * Application page header under the FinScan site nav — Review Assigned title bar
+ * Application page header under the FinScan site nav - Review Assigned title bar
  * with optional sidebar panel control.
  */
 export function PageHeader({

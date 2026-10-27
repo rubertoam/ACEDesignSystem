@@ -74,7 +74,7 @@ The control column shows if expand or checkboxes are on. The toolbar shows if an
 - **History:** Starts shown. Hiding it keeps only active rows (in the demo, `New`). The control is disabled when there is no history (`"There is no history to show."`)
 - **Status chips:** Built from the unique statuses in `rows`. Multi-select. Changing filters, history, or search resets the page to `1`
 - **Search:** Case-insensitive match across searchable fields. Clear with the clear control or the empty-state action
-- **Columns menu:** Visibility only — you can’t hide the last remaining column. Reorder columns by dragging the handle on table headers
+- **Columns menu:** Visibility only - you can’t hide the last remaining column. Reorder columns by dragging the handle on table headers
 
 
 ### Table

@@ -1,37 +1,45 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useMemo, useState } from 'react'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 import { dropdownsLabQa } from './labTabDocs'
-import { DropdownMenu, type DropdownMenuEntry } from '../components/molecules/DropdownMenu/DropdownMenu'
+import {
+  DropdownMenu,
+  DropdownMenuPanel,
+  type DropdownMenuEntry,
+} from '../components/molecules/DropdownMenu/DropdownMenu'
 import { aceDropdownFieldLabelClass } from '../components/molecules/DropdownMenu/dropdownFieldStyles'
 import { cn } from '../lib/cn'
-import { labExampleSectionClass, labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
+import { LabSelect } from '../lib/labControls'
+import { labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 
-const rowClass =
-  'flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4 border-b border-[var(--color-border-default)] pb-4 last:border-0 last:pb-0'
+type TriggerMode = 'field' | 'filter'
+type MenuVariant =
+  | 'multi-select'
+  | 'primary'
+  | 'three-dot'
+  | 'switcher'
+  | 'checkbox'
+  | 'search'
 
-const rowLabelClass = 'm-0 text-sm font-normal text-[var(--color-text-primary)]'
-const rowHintClass = 'm-0 text-xs text-[var(--color-text-secondary)]'
+const TRIGGER_OPTIONS: { value: TriggerMode; label: string }[] = [
+  { value: 'field', label: 'Primary field' },
+  { value: 'filter', label: 'Secondary / Filter' },
+]
 
-function LabRow({
-  label,
-  hint,
-  children,
-}: {
-  label: string
-  hint?: string
-  children: ReactNode
-}) {
-  return (
-    <div className={rowClass}>
-      <div className="min-w-0 shrink-0 sm:w-48">
-        <p className={rowLabelClass}>{label}</p>
-        {hint ? <p className={rowHintClass}>{hint}</p> : null}
-      </div>
-      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">{children}</div>
-    </div>
-  )
-}
+const MENU_OPTIONS: { value: MenuVariant; label: string }[] = [
+  { value: 'multi-select', label: 'Multi-select' },
+  { value: 'primary', label: 'Primary items' },
+  { value: 'three-dot', label: 'Three dot' },
+  { value: 'switcher', label: 'Switcher' },
+  { value: 'checkbox', label: 'Checkbox' },
+  { value: 'search', label: 'Search' },
+]
+
+const SIZE_OPTIONS = [
+  { value: 'sm' as const, label: 'Small' },
+  { value: 'md' as const, label: 'Medium' },
+  { value: 'lg' as const, label: 'Large' },
+]
 
 function DropdownsChangelog() {
   return (
@@ -52,16 +60,7 @@ function DropdownsChangelog() {
           <li>
             Rewired Primary field trigger, Secondary / FilterChip triggers, and MenuList panel/row colors from
             screening / Neutral hex aliases to semantic <code className="text-[var(--color-text-primary)]">--color-*</code>{' '}
-            tokens (
-            <code className="text-[var(--color-text-primary)]">surface/primary</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">border/default</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">border/brand</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">bg/brand-hover</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">bg/brand</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">bg/secondary</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">text/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">icon/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">status/error</code>).
+            tokens.
           </li>
           <li>
             Primary open / LabelActive now uses brand border + brand-hover fill (like Inputs focus), not a Neutral
@@ -69,32 +68,13 @@ function DropdownsChangelog() {
           </li>
           <li>
             Secondary Active / FilterChip Selected use{' '}
-            <code className="text-[var(--color-text-primary)]">colors/bg/brand</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-brand</code> with inverse text/icons
-            (replacing the old neutral chip fill).
+            <code className="text-[var(--color-text-primary)]">colors/bg/brand</code> with inverse text/icons.
           </li>
           <li>
             MenuList elevation uses Shadow (MD) (
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>). Row hover ={' '}
-            <code className="text-[var(--color-text-primary)]">bg/secondary</code>; selected ={' '}
-            <code className="text-[var(--color-text-primary)]">bg/brand-hover</code>; pipe / actions ={' '}
-            <code className="text-[var(--color-text-primary)]">text/brand</code>.
-          </li>
-          <li>
-            Trigger type Caption/Regular (
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>); section titles
-            Caption/Bold; Select All / Reset Footer/Regular; menu items Body/Regular (
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>).
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>).
           </li>
           <li>Added this Changelog tab documenting the Dropdowns / Menus update.</li>
-          <li>
-            Usage tab documents trigger modes and MenuList patterns; token catalog lists Semantic paths for
-            Primary / Secondary / FilterChip and menu states.
-          </li>
-          <li>
-            Secondary trigger demo opens the MenuList multi-select panel (sections + Select All + checkboxes), not
-            the Primary item list.
-          </li>
         </ul>
       </article>
     </div>
@@ -104,29 +84,28 @@ function DropdownsChangelog() {
 export function DropdownsLab() {
   const [menuHost, setMenuHost] = useState<HTMLDivElement | null>(null)
   const [lastAction, setLastAction] = useState<string>(' - ')
+  const [triggerMode, setTriggerMode] = useState<TriggerMode>('field')
+  const [menuVariant, setMenuVariant] = useState<MenuVariant>('primary')
+  const [size, setSize] = useState<'sm' | 'md' | 'lg'>('md')
 
-  const [section1Item1, setSection1Item1] = useState(false)
+  const [section1Item1, setSection1Item1] = useState(true)
   const [section1Item2, setSection1Item2] = useState(false)
   const [section2Item2, setSection2Item2] = useState(false)
-  const [section2Item3, setSection2Item3] = useState(false)
+  const [section2Item3, setSection2Item3] = useState(true)
   const [section2Item4, setSection2Item4] = useState(false)
 
-  const [assignJanet, setAssignJanet] = useState(false)
+  const [assignJanet, setAssignJanet] = useState(true)
   const [assignLaura, setAssignLaura] = useState(false)
   const [assignSam, setAssignSam] = useState(false)
   const [assignLee, setAssignLee] = useState(false)
   const [assignCarol, setAssignCarol] = useState(false)
   const [assignJana, setAssignJana] = useState(false)
 
-  const [colClient, setColClient] = useState(false)
+  const [colClient, setColClient] = useState(true)
   const [colApplication, setColApplication] = useState(false)
-  const [colAssignment, setColAssignment] = useState(false)
+  const [colAssignment, setColAssignment] = useState(true)
   const [colRecord, setColRecord] = useState(false)
   const [colMatch, setColMatch] = useState(false)
-
-  const [showStatusBar, setShowStatusBar] = useState(true)
-  const [showActivityBar, setShowActivityBar] = useState(false)
-  const [layout, setLayout] = useState('editor')
 
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -174,6 +153,7 @@ export function DropdownsLab() {
 
   const section1AllSelected = section1Item1 && section1Item2
   const section2AllSelected = section2Item2 && section2Item3 && section2Item4
+  const hasColumnSelection = colClient || colApplication || colAssignment || colRecord || colMatch
 
   const multiSelectItems: DropdownMenuEntry[] = useMemo(
     () => [
@@ -255,7 +235,7 @@ export function DropdownsLab() {
   )
 
   const primaryItems: DropdownMenuEntry[] = [
-    { type: 'item', label: 'Menu Item 1', onSelect: () => setLastAction('Menu Item 1') },
+    { type: 'item', label: 'Menu Item 1', onSelect: () => setLastAction('Menu Item 1'), selected: true },
     { type: 'item', label: 'Menu Item 2', onSelect: () => setLastAction('Menu Item 2') },
   ]
 
@@ -265,8 +245,6 @@ export function DropdownsLab() {
     { type: 'item', label: 'Export', onSelect: () => setLastAction('Export') },
     { type: 'item', label: 'Delete', destructive: true, onSelect: () => setLastAction('Delete') },
   ]
-
-  const hasColumnSelection = colClient || colApplication || colAssignment || colRecord || colMatch
 
   const switcherItems: DropdownMenuEntry[] = useMemo(
     () => [
@@ -338,62 +316,140 @@ export function DropdownsLab() {
         onCheckedChange: u.setChecked,
         style: 'assignment' as const,
         matchHighlight: q,
-        emphasized: index === 0,
+        // Figma Search / Results: first match uses bg/secondary (hover), match substring Body/Bold.
+        ...(index === 0 ? { emphasized: 'hover' as const } : {}),
       })),
-      ...(hasAssignmentSelection
-        ? [{ type: 'footerAction' as const, label: 'Reset All', onSelect: resetAssignment }]
-        : []),
     ]
-  }, [assignmentUsers, filteredUsers, hasAssignmentSelection, searchQuery])
+  }, [assignmentUsers, filteredUsers, searchQuery])
 
-  const viewOptionsItems: DropdownMenuEntry[] = useMemo(
-    () => [
-      { type: 'label', label: 'Account' },
-      { type: 'item', label: 'Profile', shortcut: '⌘P', onSelect: () => setLastAction('Profile') },
-      { type: 'separator' },
-      { type: 'label', label: 'Options' },
+  const liveConfig = useMemo(() => {
+    switch (menuVariant) {
+      case 'multi-select':
+        return {
+          items: multiSelectItems,
+          triggerLabel: 'Multi-select',
+          panelWidth: 'wide' as const,
+          showChevron: true,
+        }
+      case 'three-dot':
+        return {
+          items: threeDotItems,
+          triggerLabel: 'Three dot',
+          panelWidth: 'compact' as const,
+          showChevron: false,
+        }
+      case 'switcher':
+        return {
+          items: switcherItems,
+          triggerLabel: 'Switcher',
+          panelWidth: 'default' as const,
+          showChevron: true,
+        }
+      case 'checkbox':
+        return {
+          items: checkboxItems,
+          triggerLabel: 'Checkbox',
+          panelWidth: 'default' as const,
+          showChevron: true,
+        }
+      case 'search':
+        return {
+          items: searchItems,
+          triggerLabel: 'Search',
+          panelWidth: 'default' as const,
+          showChevron: true,
+        }
+      case 'primary':
+      default:
+        return {
+          items: primaryItems,
+          triggerLabel: 'Dropdown Label',
+          panelWidth: 'primary' as const,
+          showChevron: true,
+        }
+    }
+  }, [checkboxItems, menuVariant, multiSelectItems, searchItems, switcherItems])
+
+  const staticPanels: { title: string; hint: string; panelWidth: 'default' | 'compact' | 'wide' | 'primary'; items: DropdownMenuEntry[] }[] =
+    [
+      { title: 'Multi-select', hint: 'Sections · Select All · checkboxes', panelWidth: 'wide', items: multiSelectItems },
+      { title: 'Primary', hint: 'Brand pipe + row fill on hover / selected', panelWidth: 'primary', items: primaryItems },
+      { title: 'Three dot', hint: 'Compact overflow actions', panelWidth: 'compact', items: threeDotItems },
+      { title: 'Switcher', hint: 'Toggles · Reset turns all off', panelWidth: 'default', items: switcherItems },
+      { title: 'Checkbox', hint: 'User assignment · Reset All', panelWidth: 'default', items: checkboxItems },
       {
-        type: 'checkbox',
-        label: 'Show status bar',
-        checked: showStatusBar,
-        onCheckedChange: setShowStatusBar,
-        style: 'assignment',
-      },
-      {
-        type: 'checkbox',
-        label: 'Show activity bar',
-        checked: showActivityBar,
-        onCheckedChange: setShowActivityBar,
-        style: 'assignment',
-      },
-      { type: 'separator' },
-      { type: 'label', label: 'Layout' },
-      {
-        type: 'radioGroup',
-        value: layout,
-        onValueChange: (value) => {
-          setLayout(value)
-          setLastAction(`Layout: ${value}`)
-        },
-        options: [
-          { value: 'editor', label: 'Editor' },
-          { value: 'split', label: 'Split' },
-          { value: 'preview', label: 'Preview' },
-        ],
-      },
-      { type: 'separator' },
-      {
-        type: 'sub',
-        label: 'More tools',
+        title: 'Search',
+        hint: 'Filtered results · match bold · first row hover',
+        panelWidth: 'default',
         items: [
-          { type: 'item', label: 'Command palette…', shortcut: '⌘⇧P', onSelect: () => setLastAction('Command palette') },
-          { type: 'item', label: 'Keyboard shortcuts', onSelect: () => setLastAction('Shortcuts') },
-          { type: 'separator' },
-          { type: 'item', label: 'Report issue', onSelect: () => setLastAction('Report issue') },
+          {
+            type: 'search',
+            value: 'Jan',
+            placeholder: 'Search',
+            onChange: () => {},
+            onClear: () => {},
+          },
+          {
+            type: 'checkbox',
+            label: 'Janet Analyst',
+            checked: false,
+            onCheckedChange: () => {},
+            style: 'assignment',
+            matchHighlight: 'Jan',
+            emphasized: 'hover',
+          },
+          {
+            type: 'checkbox',
+            label: 'Jana Smith',
+            checked: false,
+            onCheckedChange: () => {},
+            style: 'assignment',
+            matchHighlight: 'Jan',
+          },
         ],
       },
-    ],
-    [layout, showActivityBar, showStatusBar],
+    ]
+
+  const toolbar = (
+    <div ref={setMenuHost} className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect label="Trigger" value={triggerMode} onChange={setTriggerMode} options={TRIGGER_OPTIONS} />
+        <LabSelect label="Menu list" value={menuVariant} onChange={setMenuVariant} options={MENU_OPTIONS} />
+        <LabSelect label="Size" value={size} onChange={setSize} options={SIZE_OPTIONS} />
+      </div>
+
+      <div className="flex flex-col gap-4 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="flex flex-wrap items-end justify-start gap-4">
+          {triggerMode === 'field' ? (
+            <div className="flex flex-col gap-2">
+              <span className={aceDropdownFieldLabelClass}>Label</span>
+              <DropdownMenu
+                triggerLabel={liveConfig.triggerLabel}
+                triggerMode="field"
+                size={size}
+                panelWidth={liveConfig.panelWidth}
+                showChevron={liveConfig.showChevron}
+                items={liveConfig.items}
+                portalContainer={menuHost}
+              />
+            </div>
+          ) : (
+            <DropdownMenu
+              triggerLabel={liveConfig.triggerLabel}
+              triggerMode="filter"
+              size={size === 'lg' ? 'md' : size}
+              panelWidth={liveConfig.panelWidth}
+              showChevron={liveConfig.showChevron}
+              items={liveConfig.items}
+              portalContainer={menuHost}
+            />
+          )}
+        </div>
+        <p className="m-0 text-sm text-[var(--color-text-secondary)]">
+          Last action: <span className="font-medium text-[var(--color-text-primary)]">{lastAction}</span>
+        </p>
+      </div>
+    </div>
   )
 
   return (
@@ -401,153 +457,85 @@ export function DropdownsLab() {
       qa={dropdownsLabQa}
       title="Dropdowns"
       description="ACE Design System v.3 dropdowns (Figma 1307:3725 / set 2277:136) and menus (5318:1634 / MenuList 1541:6165): Primary field (default / LabelActive), Secondary / FilterChip triggers, and MenuList variants (MultiSelect, Primary, Three Dot, Switchers, Checkbox, Search). Colors and type wired to semantic --color-* and --ace-type-* tokens."
+      examplesToolbar={toolbar}
       examples={
-        <div ref={setMenuHost} className="relative flex flex-col gap-10">
-          <p className="m-0 text-sm text-[var(--color-text-secondary)]">
-            Open each dropdown to explore a menu list variant. Last action:{' '}
-            <span className="font-medium text-[var(--color-text-primary)]">{lastAction}</span>
-          </p>
+        <section className="space-y-10">
+          <div className={cn('w-full min-w-0 space-y-2', labUsageSectionClass)}>
+            <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
+            <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
+              Closed triggers and frozen MenuList panels. Open the control above for live menus.
+            </p>
+          </div>
 
-          <section className={cn(labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Triggers</p>
-            <div className="flex flex-col gap-4">
-              <LabRow label="Primary" hint="Field · open = LabelActive">
+          <div>
+            <p className={cn(labSectionLabelClass, 'mb-5')}>Triggers</p>
+            <div className="flex flex-wrap items-end justify-start gap-x-10 gap-y-8">
+              <div className="flex flex-col gap-3">
+                <p className="m-0 text-sm font-medium text-[var(--color-text-primary)]">Primary</p>
                 <div className="flex flex-col gap-2">
                   <span className={aceDropdownFieldLabelClass}>Label</span>
                   <DropdownMenu
                     triggerLabel="Dropdown Label"
                     triggerMode="field"
                     size="md"
-                    panelWidth="wide"
+                    panelWidth="primary"
                     items={primaryItems}
-                    portalContainer={menuHost}
+                    disabled
                   />
                 </div>
-              </LabRow>
-              <LabRow label="Secondary" hint="Compact · opens MenuList (multi-select)">
+              </div>
+              <div className="flex flex-col gap-3">
+                <p className="m-0 text-sm font-medium text-[var(--color-text-primary)]">Secondary</p>
                 <DropdownMenu
                   triggerLabel="Dropdown No Label"
                   triggerMode="filter"
                   panelWidth="wide"
                   items={multiSelectItems}
-                  portalContainer={menuHost}
+                  disabled
                 />
-              </LabRow>
+              </div>
             </div>
-          </section>
+          </div>
 
-          <section className={cn(labExampleSectionClass)}>
-            <p className={labSectionLabelClass}>Menu lists</p>
-            <div className="flex flex-col gap-4">
-              <LabRow label="Multi-select" hint="Sections · Select All · checkboxes">
-                <DropdownMenu
-                  triggerLabel="Multi-select"
-                  triggerMode="field"
-                  size="md"
-                  panelWidth="wide"
-                  items={multiSelectItems}
-                  portalContainer={menuHost}
-                />
-              </LabRow>
-
-              <LabRow label="Primary" hint="Brand pipe + row fill on hover / selected">
-                <DropdownMenu
-                  triggerLabel="Primary"
-                  triggerMode="field"
-                  size="md"
-                  panelWidth="wide"
-                  items={primaryItems}
-                  portalContainer={menuHost}
-                />
-              </LabRow>
-
-              <LabRow label="Three dot" hint="Compact overflow actions">
-                <DropdownMenu
-                  triggerLabel="Three dot"
-                  triggerMode="field"
-                  size="sm"
-                  showChevron={false}
-                  panelWidth="compact"
-                  items={threeDotItems}
-                  portalContainer={menuHost}
-                />
-              </LabRow>
-
-              <LabRow label="Switcher" hint="Toggles · Reset turns all off">
-                <DropdownMenu
-                  triggerLabel="Switcher"
-                  triggerMode="field"
-                  size="md"
-                  items={switcherItems}
-                  portalContainer={menuHost}
-                />
-              </LabRow>
-
-              <LabRow label="Checkbox" hint="User assignment · Reset All">
-                <DropdownMenu
-                  triggerLabel="Checkbox"
-                  triggerMode="field"
-                  size="md"
-                  items={checkboxItems}
-                  portalContainer={menuHost}
-                />
-              </LabRow>
-
-              <LabRow label="Search" hint="Type to filter · match highlight">
-                <DropdownMenu
-                  triggerLabel="Search"
-                  triggerMode="field"
-                  size="md"
-                  items={searchItems}
-                  portalContainer={menuHost}
-                />
-              </LabRow>
-
-              <LabRow label="View options" hint="Checkbox · radio · submenu flyout">
-                <DropdownMenu
-                  triggerLabel="View options"
-                  triggerMode="field"
-                  size="md"
-                  items={viewOptionsItems}
-                  portalContainer={menuHost}
-                />
-              </LabRow>
+          <div>
+            <p className={cn(labSectionLabelClass, 'mb-5')}>Menu lists</p>
+            <div className="grid gap-x-8 gap-y-10 lg:grid-cols-2 xl:grid-cols-3">
+              {staticPanels.map((panel) => (
+                <div key={panel.title} className="flex min-w-0 flex-col gap-4">
+                  <div className="space-y-1">
+                    <p className="m-0 text-sm font-medium text-[var(--color-text-primary)]">{panel.title}</p>
+                    <p className="m-0 text-xs text-[var(--color-text-secondary)]">{panel.hint}</p>
+                  </div>
+                  <DropdownMenuPanel
+                    items={panel.items}
+                    panelWidth={panel.panelWidth}
+                    staticDisplay
+                    aria-label={`${panel.title} static menu`}
+                  />
+                </div>
+              ))}
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       }
       code={
         <ComponentLabCode>{`import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
 
-{/* Primary field trigger */}
 <DropdownMenu
   triggerLabel="Dropdown Label"
   triggerMode="field"
-  panelWidth="wide"
+  panelWidth="primary"
   items={[
     { type: 'item', label: 'Menu Item 1', onSelect },
     { type: 'item', label: 'Menu Item 2', onSelect },
   ]}
 />
 
-{/* Secondary / FilterChip trigger — opens MenuList (sections + Select All + checkboxes) */}
 <DropdownMenu
   triggerLabel="Dropdown No Label"
   triggerMode="filter"
   panelWidth="wide"
   items={multiSelectItems}
-/>
-
-{/* MenuList with search + checkboxes */}
-<DropdownMenu
-  triggerLabel="Search"
-  triggerMode="field"
-  items={[
-    { type: 'search', value: query, onChange: setQuery, onClear: () => setQuery('') },
-    { type: 'checkbox', label: 'Janet Analyst', checked, onCheckedChange, style: 'assignment' },
-    { type: 'footerAction', label: 'Reset All', onSelect: resetAll },
-  ]}
-  portalContainer={host}
 />`}</ComponentLabCode>
       }
       usage={
@@ -557,75 +545,37 @@ export function DropdownsLab() {
             <code className="text-[var(--color-text-primary)]">items</code> array. Use{' '}
             <code className="text-[var(--color-text-primary)]">triggerMode=&quot;field&quot;</code> for Primary
             dropdowns (form fields), <code className="text-[var(--color-text-primary)]">filter</code> for Secondary /
-            FilterChip triggers, or <code className="text-[var(--color-text-primary)]">button</code> / custom{' '}
-            <code className="text-[var(--color-text-primary)]">trigger</code> for icon overflow. Secondary triggers open
-            the <strong className="font-medium text-[var(--color-text-primary)]">MenuList</strong> pattern (section
-            headers, Select All / Deselect All, assignment checkboxes) — not the Primary item list. Pass{' '}
-            <code className="text-[var(--color-text-primary)]">portalContainer</code> when the menu must mount inside a
-            scroll container; theme follows <code className="text-[var(--color-text-primary)]">color-tokens.css</code>{' '}
-            on <code className="text-[var(--color-text-primary)]">&lt;html&gt;</code>.
-          </p>
-          <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
-            Menu panels compose design-system <code className="text-[var(--color-text-primary)]">Checkbox</code> and{' '}
-            <code className="text-[var(--color-text-primary)]">Toggle</code> at{' '}
-            <code className="text-[var(--color-text-primary)]">size=&quot;sm&quot;</code>. Primary list rows show a
-            brand pipe on hover/selected; Destructive rows use{' '}
-            <code className="text-[var(--color-text-primary)]">colors/status/error</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-status-error</code>. Figma:{' '}
-            <code className="text-[var(--color-text-primary)]">414:2617</code> (Dropdowns + Menus).
+            FilterChip triggers. Pass <code className="text-[var(--color-text-primary)]">portalContainer</code> when the
+            menu must mount inside a scroll container.
           </p>
         </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Primary trigger: <code className="text-[var(--color-text-primary)]">--dropdown-menu-trigger-*</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-border-default</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-border-brand</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-text-primary</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-border-focus</code>. Width{' '}
-            <code className="text-[var(--color-text-primary)]">--dropdown-menu-trigger-width</code> (200px).
+            Primary trigger: <code className="text-[var(--color-text-primary)]">--dropdown-menu-trigger-*</code>
           </li>
           <li>
             Secondary / FilterChip: <code className="text-[var(--color-text-primary)]">--filter-trigger-*</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">--filter-chip-*</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-brand</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-text-inverse</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-icon-inverse</code>.
+            <code className="text-[var(--color-text-primary)]">--filter-chip-*</code>
           </li>
           <li>
             Menu panel: <code className="text-[var(--color-text-primary)]">--dropdown-menu-surface</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--dropdown-menu-border</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--dropdown-menu-shadow</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>.
+            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>
           </li>
           <li>
-            Rows: <code className="text-[var(--color-text-primary)]">--dropdown-menu-row-hover</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-secondary</code>;{' '}
-            <code className="text-[var(--color-text-primary)]">--dropdown-menu-row-selected</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>; pipe/actions{' '}
-            <code className="text-[var(--color-text-primary)]">--dropdown-menu-primary</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-text-brand</code>; danger{' '}
-            <code className="text-[var(--color-text-primary)]">--dropdown-menu-danger</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
+            Rows (Figma 5318:1634): hover{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-row-hover</code> (bg/secondary), selected{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-row-selected</code> (bg/brand-hover), pipe{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-primary</code> (text/brand)
           </li>
           <li>
-            Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-bold</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-footer-regular</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>.
-          </li>
-          <li>
-            Nested controls: <code className="text-[var(--color-text-primary)]">--screening-checkbox-*</code> aliases
-            map to Semantic <code className="text-[var(--color-text-primary)]">--color-*</code>; toggles use{' '}
-            <code className="text-[var(--color-text-primary)]">--toggle-*</code> (sm in menus).
+            Select All / Reset All:{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-action</code> → text/primary
           </li>
         </ul>
       }
-
       changelog={<DropdownsChangelog />}
     />
   )

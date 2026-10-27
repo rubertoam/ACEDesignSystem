@@ -103,7 +103,7 @@ function groupByFamily(tokens) {
 function emitBlock(title, tokens, { onlyTypes } = {}) {
   const filtered = onlyTypes ? tokens.filter((t) => onlyTypes.includes(t.type)) : tokens
   if (!filtered.length) return ''
-  const lines = [`  /* ——— ${title} ——— */`]
+  const lines = [`  /* --- ${title} --- */`]
   for (const t of filtered) {
     const name = cssVarFromPath(t.path)
     const value = resolveCssValue(t)
@@ -136,7 +136,7 @@ const COMPAT_LIGHT = `
 // so COMPAT is a no-op if generation is correct. Keep explicit redirects only if needed.
 
 let css = `/**
- * ACE color + foundation tokens — generated from Figma token JSON exports.
+ * ACE color + foundation tokens - generated from Figma token JSON exports.
  * Source: Primitives/Default.tokens.json, Semantic/Light.tokens.json, Semantic/Dark.tokens.json
  * Do not hand-edit hex/alias values here; re-run: node scripts/generate-tokens-from-figma.mjs
  */
@@ -159,7 +159,7 @@ const colorFamilyOrder = [
   'color/shades',
 ]
 const primByFamily = groupByFamily(primColors)
-css += `  /* ——— Primitives · Color (Figma Primitives) ——— */\n`
+css += `  /* --- Primitives · Color (Figma Primitives) --- */\n`
 for (const family of colorFamilyOrder) {
   const list = primByFamily.get(family)
   if (!list) continue
@@ -177,13 +177,13 @@ for (const [family, list] of primByFamily) {
   css += `\n`
 }
 
-css += `  /* ——— Primitives · Spacing / Radius / Border / Type metrics ——— */\n`
+css += `  /* --- Primitives · Spacing / Radius / Border / Type metrics --- */\n`
 for (const t of primNumbers.sort((a, b) => a.path.localeCompare(b.path, undefined, { numeric: true }))) {
   css += `  ${cssVarFromPath(t.path)}: ${resolveCssValue(t)}; /* ${t.path} = ${t.value} */\n`
 }
 css += `\n`
 
-/** Primitive CSS names already emitted — skip semantic tokens that would clobber them. */
+/** Primitive CSS names already emitted - skip semantic tokens that would clobber them. */
 const emittedPrimNames = new Set([
   ...primColors.map((t) => cssVarFromPath(t.path)),
   ...primNumbers.map((t) => cssVarFromPath(t.path)),
@@ -198,18 +198,18 @@ function resolveSemanticValue(token) {
   return aliasToCssVar(token.alias)
 }
 
-css += `  /* ——— Semantic · Light · Color (Figma Semantic / Light) ——— */\n`
+css += `  /* --- Semantic · Light · Color (Figma Semantic / Light) --- */\n`
 for (const t of lightColors) {
   css += `  ${cssVarFromPath(t.path)}: ${resolveSemanticValue(t)}; /* ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
 }
 css += `\n`
 
-css += `  /* ——— Semantic · Light · Number tokens (non-colliding) ——— */\n`
+css += `  /* --- Semantic · Light · Number tokens (non-colliding) --- */\n`
 for (const t of lightNonColor) {
   const name = cssVarFromPath(t.path)
   // Skip tokens that would overwrite primitive radius/spacing/border-width/type metrics
   if (emittedPrimNames.has(name) && !t.path.startsWith('radius/component') && !t.path.startsWith('spacing/component') && !t.path.startsWith('spacing/layout') && !t.path.startsWith('icon/size') && !t.path.startsWith('typography/')) {
-    css += `  /* skip ${name} — preserves primitive; Figma ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
+    css += `  /* skip ${name} - preserves primitive; Figma ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
     continue
   }
   // Component / layout / icon semantic numbers always emit (unique paths)
@@ -243,7 +243,7 @@ css += `  --space-8: var(--spacing-32); /* 32px */\n`
 css += `}\n\n`
 
 css += `[data-theme='dark'] {\n`
-css += `  /* ——— Semantic · Dark (Figma Semantic / Dark) ——— */\n`
+css += `  /* --- Semantic · Dark (Figma Semantic / Dark) --- */\n`
 for (const t of darkColors) {
   css += `  ${cssVarFromPath(t.path)}: ${resolveCssValue(t)}; /* ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
 }

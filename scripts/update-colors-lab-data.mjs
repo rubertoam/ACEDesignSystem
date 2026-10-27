@@ -54,6 +54,8 @@ for (const fam of families) {
   })
 }
 
+const darkByPath = new Map((seed.dark ?? []).map((t) => [t.tokenPath, t]))
+
 const semanticGroupsOrder = ['bg', 'surface', 'text', 'border', 'action', 'status', 'icon', 'badges']
 const semanticGroups = []
 for (const g of semanticGroupsOrder) {
@@ -61,13 +63,18 @@ for (const g of semanticGroupsOrder) {
     .filter((t) => t.tokenPath.startsWith(`colors/${g}/`))
     .map((t) => {
       const hex = t.hex.toUpperCase()
+      const dark = darkByPath.get(t.tokenPath)
+      const darkHex = dark?.hex ? String(dark.hex).toUpperCase() : ''
       const entry = {
         tokenPath: t.tokenPath,
         cssVar: t.cssVar,
         alias: t.alias ?? '',
         hex,
+        darkAlias: dark?.alias ?? '',
+        darkHex,
       }
       if (hex === '#FFFFFF' || hex === '#FAFAFB') entry.bordered = true
+      if (darkHex === '#FFFFFF' || darkHex === '#FAFAFB') entry.darkBordered = true
       return entry
     })
   if (tokens.length) {
@@ -98,7 +105,7 @@ export const COLOR_PRIMITIVE_FAMILIES: ColorPaletteFamily[] = ${JSON.stringify(p
 
 export const COLOR_PALETTE_FAMILIES = COLOR_PRIMITIVE_FAMILIES
 
-/** Generated from Figma Semantic/Light.tokens.json */
+/** Generated from Figma Semantic Light + Dark modes (same variables, two columns) */
 export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = ${JSON.stringify(semanticGroups, null, 2)}
 
 `

@@ -3,7 +3,7 @@ import { cn } from '../../../lib/cn'
 
 export type FinScanWordmarkProps = SVGProps<SVGSVGElement>
 
-/** FinScan wordmark with ® — Figma Icon / FinScan 2782:51 */
+/** FinScan wordmark with ® - Figma Icon / FinScan 2782:51 */
 export function FinScanWordmark({ className, ...props }: FinScanWordmarkProps) {
   return (
     <svg

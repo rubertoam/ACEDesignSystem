@@ -55,10 +55,10 @@ Prefer the horizontal kebab `more_horiz` for menus.
 
 | Variant | Rest | Hover |
 |---------|------|-------|
-| No border stroke | Transparent + transparent border; icon `--ace-icon-button-icon-rest-ghost` | `--ace-icon-button-hover-bg` + `--ace-icon-button-border` + `--ace-icon-button-icon` |
+| No border stroke | Transparent + transparent border; icon `--ace-icon-button-icon-rest-ghost` | Fill + border `--ace-icon-button-hover-bg`; icon `--ace-icon-button-icon` |
 | Border stroke | `--ace-icon-button-surface` + `--ace-icon-button-border` + `--ace-icon-button-icon` | Same border; fill `--ace-icon-button-hover-bg` |
 
-Figma semantic aliases: `colors/bg/primary` → `--icon-button-hover-bg` (and `--ace-icon-button-hover-bg`); `colors/border/default` → `--icon-button-border`; `colors/icon/primary` → `--icon-button-icon`; `colors/surface/primary` → `--icon-button-surface`.
+Figma semantic aliases: `colors/icon/hover` → `--icon-button-hover-bg` (and `--ace-icon-button-hover-bg`); `colors/border/default` → `--icon-button-border`; `colors/icon/primary` → `--icon-button-icon`; `colors/icon/inverse` → `--icon-button-surface`; `colors/text/primary` → `--icon-button-icon-rest-ghost`.
 
 Sidebar row actions fade in on row or header hover / focus. An open menu keeps the hover look.
 
@@ -107,7 +107,7 @@ Look up names on fonts.google.com/icons and turn spaces into underscores.
 |------|----------------|
 | Favorite selected | `--ace-error-500` |
 | Status glyphs | `--ace-toast-icon-success/info/error/warning` |
-| Ghost hover | `--ace-icon-button-hover-bg`, `--ace-icon-button-border`, `--ace-icon-button-icon` |
+| Ghost hover | `--ace-icon-button-hover-bg` (fill and border), `--ace-icon-button-icon` |
 | Stroke rest / hover | `--ace-icon-button-surface`, `--ace-icon-button-border`, `--ace-icon-button-hover-bg` |
 | Chevrons | `--screening-icon-chevron` plus `aceChevronIconClass` |
 | Size guidance | sm for accordion / dense UI, md default, lg for controls, xl for headers / toolbar |
@@ -127,4 +127,4 @@ Look up names on fonts.google.com/icons and turn spaces into underscores.
 - Font loads and ligatures render as icons, not raw text
 - Icon-only buttons have `aria-label`; decorative glyphs stay `aria-hidden`
 - Dense toolbars with `weight={300}` still hit cleanly in 32px (`size-8`) targets
-- Don’t rely on color alone for status — pair icons with visible text in messaging patterns
+- Don’t rely on color alone for status - pair icons with visible text in messaging patterns

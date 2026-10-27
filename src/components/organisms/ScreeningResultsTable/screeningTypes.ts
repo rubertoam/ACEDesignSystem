@@ -168,7 +168,7 @@ export function parseAgeForSort(label: string): number {
   return n * mult
 }
 
-/** Disabled / completed screening rows — italic body text (Review Assigned pattern). */
+/** Disabled / completed screening rows - italic body text (Review Assigned pattern). */
 export const screeningDisabledRowClass = cn(
   'bg-[var(--screening-surface-row-muted)]',
   '[&_td]:italic [&_td_*]:italic',

@@ -138,8 +138,11 @@ export function BadgesLab() {
             colors reuse the pill variant tokens
           </li>
           <li>
-            Tag type - Caption Regular (
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>)
+            Label type - Caption Semi Bold (
+            <code className="text-[var(--color-text-primary)]">--ace-type-caption-semi-bold</code>
+            ), size{' '}
+            <code className="text-[var(--color-text-primary)]">typography/body/body-secondary</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--typography-body-body-secondary</code>
           </li>
         </ul>
       }

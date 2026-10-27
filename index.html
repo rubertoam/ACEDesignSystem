@@ -1,7 +1,16 @@
 <!doctype html>
-<html lang="en" data-theme="dark" style="color-scheme: dark">
+<html lang="en" style="color-scheme: light">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      try {
+        var t = localStorage.getItem('ace-lab-theme')
+        if (t === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark')
+          document.documentElement.style.colorScheme = 'dark'
+        }
+      } catch (e) {}
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />

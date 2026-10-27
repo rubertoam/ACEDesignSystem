@@ -1,5 +1,5 @@
 /**
- * Auto-generated from tokens/figma/*.tokens.json — do not edit by hand.
+ * Auto-generated from tokens/figma/*.tokens.json - do not edit by hand.
  * Regenerate: node scripts/generate-tokens-lab-data.mjs
  */
 

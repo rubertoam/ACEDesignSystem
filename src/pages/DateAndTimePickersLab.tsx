@@ -1,5 +1,6 @@
-import { useState, type ReactNode } from 'react'
+import { useState } from 'react'
 import { Toggle } from '../components/atoms/Toggle/Toggle'
+import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyles'
 import {
   DatePicker,
   type DatePickerMode,
@@ -8,9 +9,8 @@ import {
 import { formatDateLabel, formatRangeDisplay } from '../components/organisms/DatePicker/datePickerUtils'
 import { TimePicker, type TimeFormat, type TimeValue } from '../components/organisms/TimePicker/TimePicker'
 import { formatTimeDisplay, fromHour24, toHour24 } from '../components/organisms/TimePicker/timePickerUtils'
-import { LabCheckbox, LabSelect } from '../lib/labControls'
-import { cn } from '../lib/cn'
-import { labUsageSectionClass } from '../lib/labExampleSection'
+import { LabControlField, LabSelect } from '../lib/labControls'
+import { labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 import timePickerRules from './implementationRules/timePicker.md?raw'
@@ -19,24 +19,6 @@ const DATE_MODE_OPTIONS = [
   { value: 'single' as const, label: 'Single date' },
   { value: 'range' as const, label: 'Date range' },
 ]
-
-const labComponentContainerClass = cn(
-  'flex w-full min-w-0 flex-col gap-[var(--ace-section-label-gap)] rounded-[var(--radius-lg)]',
-  'border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)]',
-  'p-4 shadow-[var(--ace-drop-shadow-xs)] sm:p-5',
-)
-
-const labControlsPanelClass =
-  'flex flex-col gap-3 rounded-[var(--radius-md)] border border-[var(--screening-border-soft)] bg-[var(--screening-surface-elevated)] p-4'
-
-function LabControlsPanel({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className={labControlsPanelClass}>
-      <h4 className="m-0 text-sm font-bold leading-[1.65] text-[var(--ace-neutral-800)]">{title}</h4>
-      {children}
-    </div>
-  )
-}
 
 export function DateAndTimePickersLab() {
   const [format, setFormat] = useState<TimeFormat>('12')
@@ -55,59 +37,87 @@ export function DateAndTimePickersLab() {
     }
   }
 
-  const timePickerControls = (
-    <LabControlsPanel title="Time picker">
-      <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Scheduling time control from node 419:3011.
-      </p>
-      <label className="flex w-fit cursor-pointer items-center gap-2.5">
-        <Toggle
-          size="sm"
-          checked={format === '24'}
-          onCheckedChange={handleFormatChange}
-          aria-label="Use 24-hour clock"
-        />
-        <span className="text-sm text-[var(--screening-text-primary)]">24-hour clock</span>
-      </label>
-      {time ? (
-        <p className="m-0 text-xs text-[var(--screening-text-muted)]">
-          Last confirmed:{' '}
-          <strong className="text-[var(--screening-text-primary)]">{formatTimeDisplay(time, format)}</strong>
-        </p>
-      ) : null}
-    </LabControlsPanel>
-  )
+  const toolbar = (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-start justify-start gap-x-5 gap-y-4">
+        <LabSelect label="Mode" value={dateMode} onChange={setDateMode} options={DATE_MODE_OPTIONS} />
+        <LabControlField label="24-hour clock" className="shrink-0">
+          <div className="flex min-h-9 items-center gap-2">
+            <Toggle
+              size="sm"
+              checked={format === '24'}
+              onCheckedChange={handleFormatChange}
+              aria-label="Use 24-hour clock"
+            />
+            <span className={aceToggleLabelClass}>{format === '24' ? 'On' : 'Off'}</span>
+          </div>
+        </LabControlField>
+        <LabControlField label="Disabled" className="shrink-0">
+          <div className="flex min-h-9 items-center gap-2">
+            <Toggle
+              size="sm"
+              checked={dateDisabled}
+              onCheckedChange={setDateDisabled}
+              aria-label="Disabled"
+            />
+            <span className={aceToggleLabelClass}>{dateDisabled ? 'On' : 'Off'}</span>
+          </div>
+        </LabControlField>
+      </div>
 
-  const datePickerControls = (
-    <LabControlsPanel title="Date picker">
-      <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Range and single-date modes from node 419:3010. Choose the mode below to switch the preview.
-      </p>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <LabSelect
-          label="Mode"
-          value={dateMode}
-          onChange={setDateMode}
-          options={DATE_MODE_OPTIONS}
-          className="max-w-xs"
-        />
-        <div className="flex items-end pb-1">
-          <LabCheckbox label="Disabled" checked={dateDisabled} onCheckedChange={setDateDisabled} />
+      <div className="flex flex-col gap-8 border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div className="flex flex-col gap-3">
+          <p className={labSectionLabelClass}>Time picker</p>
+          {time ? (
+            <p className="m-0 text-xs text-[var(--screening-text-muted)]">
+              Last confirmed:{' '}
+              <strong className="text-[var(--screening-text-primary)]">{formatTimeDisplay(time, format)}</strong>
+            </p>
+          ) : null}
+          <TimePicker
+            key={format}
+            label="Select Time"
+            format={format}
+            onChange={setTime}
+            defaultMode="general"
+          />
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <p className={labSectionLabelClass}>Date picker</p>
+          {dateMode === 'range' && dateRange ? (
+            <p className="m-0 text-xs text-[var(--screening-text-muted)]">
+              Last confirmed:{' '}
+              <strong className="text-[var(--screening-text-primary)]">{formatRangeDisplay(dateRange)}</strong>
+            </p>
+          ) : null}
+          {dateMode === 'single' && singleDate ? (
+            <p className="m-0 text-xs text-[var(--screening-text-muted)]">
+              Last confirmed:{' '}
+              <strong className="text-[var(--screening-text-primary)]">{formatDateLabel(singleDate)}</strong>
+            </p>
+          ) : null}
+          {dateMode === 'range' ? (
+            <DatePicker
+              key="range"
+              mode="range"
+              label="Select Date"
+              disabled={dateDisabled}
+              onChange={setDateRange}
+            />
+          ) : (
+            <DatePicker
+              key="single"
+              mode="single"
+              label="Select Date"
+              placeholder="Select date"
+              disabled={dateDisabled}
+              onChange={setSingleDate}
+            />
+          )}
         </div>
       </div>
-      {dateMode === 'range' && dateRange ? (
-        <p className="m-0 text-xs text-[var(--screening-text-muted)]">
-          Last confirmed:{' '}
-          <strong className="text-[var(--screening-text-primary)]">{formatRangeDisplay(dateRange)}</strong>
-        </p>
-      ) : null}
-      {dateMode === 'single' && singleDate ? (
-        <p className="m-0 text-xs text-[var(--screening-text-muted)]">
-          Last confirmed:{' '}
-          <strong className="text-[var(--screening-text-primary)]">{formatDateLabel(singleDate)}</strong>
-        </p>
-      ) : null}
-    </LabControlsPanel>
+    </div>
   )
 
   return (
@@ -115,42 +125,7 @@ export function DateAndTimePickersLab() {
       title="Date and time pickers"
       description="Organism-level scheduling controls. Time and date pickers use ACE field triggers and dropdown panels with Reset, Cancel, and Set footers."
       examplesCanvas={false}
-      examples={
-        <div className="flex flex-col gap-10">
-          <div className={labComponentContainerClass}>
-            {timePickerControls}
-            <TimePicker
-              key={format}
-              label="Select Time"
-              format={format}
-              onChange={setTime}
-              defaultMode="general"
-            />
-          </div>
-
-          <div className={labComponentContainerClass}>
-            {datePickerControls}
-            {dateMode === 'range' ? (
-              <DatePicker
-                key="range"
-                mode="range"
-                label="Select Date"
-                disabled={dateDisabled}
-                onChange={setDateRange}
-              />
-            ) : (
-              <DatePicker
-                key="single"
-                mode="single"
-                label="Select Date"
-                placeholder="Select date"
-                disabled={dateDisabled}
-                onChange={setSingleDate}
-              />
-            )}
-          </div>
-        </div>
-      }
+      examplesToolbar={toolbar}
       code={
         <>
           <p className="m-0 text-[var(--screening-text-muted)]">
@@ -202,7 +177,6 @@ import { DatePicker } from '../components/organisms/DatePicker/DatePicker'
           </section>
         </>
       }
-
       implementationRulesMarkdown={timePickerRules}
     />
   )

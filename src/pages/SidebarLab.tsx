@@ -8,8 +8,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../components/atoms/Tooltip/Tooltip'
-import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
 import { DialogModal } from '../components/molecules/DialogModal/DialogModal'
+import { Toggle } from '../components/atoms/Toggle/Toggle'
+import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyles'
 import {
   GroupFormDialog,
   type GroupFormDialogItem,
@@ -29,7 +30,7 @@ import {
 } from '../components/organisms/Sidebar/sidebarRowActions'
 import { cn } from '../lib/cn'
 import { labUsageSectionClass } from '../lib/labExampleSection'
-import { LabCheckbox, LabRadioGroup, labControlLegendClass } from '../lib/labControls'
+import { LabControlField, LabSelect } from '../lib/labControls'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 import sidebarRules from './implementationRules/sidebar.md?raw'
 
@@ -114,14 +115,14 @@ function SidebarMockHeader({
             className="text-current"
           />
         </button>
-        <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--ace-neutral-800)]')}>Header</h1>
+        <h1 className={cn(h6Bold, 'm-0 text-base text-[var(--color-text-primary)]')}>Header</h1>
       </div>
       <div className="flex items-center gap-2">
         <span
           className="size-2 shrink-0 rounded-full bg-[var(--ace-header-status-success)]"
           aria-hidden
         />
-        <span className={cn(p1, 'text-sm text-[var(--ace-neutral-800)]')}>Last updated 30 seconds ago</span>
+        <span className={cn(p1, 'text-sm text-[var(--color-text-primary)]')}>Last updated 30 seconds ago</span>
       </div>
     </header>
   )
@@ -345,61 +346,6 @@ export function SidebarLab() {
     })),
   }))
 
-  const variantLabel = variant === 'groups' ? 'Groups' : 'Navigation'
-
-  const examplesToolbar = (
-    <div className="flex flex-col gap-3">
-      <p className="m-0 max-w-xl text-xs leading-relaxed text-[var(--screening-text-muted)]">
-        Switch variants below. Open and close the sidebar from the header icon in the mock app frame.
-      </p>
-        <div className="flex flex-wrap items-end gap-4">
-        <div className="flex flex-col gap-[var(--ace-section-label-gap)]">
-          <span className={labControlLegendClass}>Sidebar variant</span>
-          <DropdownMenu
-            triggerLabel={variantLabel}
-            triggerMode="field"
-            size="md"
-            items={[
-              {
-                type: 'item',
-                label: 'Navigation',
-                onSelect: () => setVariant('navigation'),
-              },
-              {
-                type: 'item',
-                label: 'Groups',
-                onSelect: () => setVariant('groups'),
-              },
-            ]}
-          />
-        </div>
-        {variant === 'groups' ? (
-          <LabCheckbox
-            label="Show group add (+)"
-            checked={showGroupAdd}
-            onCheckedChange={setShowGroupAdd}
-          />
-        ) : (
-          <LabRadioGroup
-            label="Organization"
-            value={organizationDisplay}
-            onChange={setOrganizationDisplay}
-            options={[
-              { value: 'switcher', label: 'Switcher' },
-              { value: 'label', label: 'Label' },
-              { value: 'icon', label: 'Icon' },
-            ]}
-          />
-        )}
-        <LabCheckbox
-          label="Show trailing icon"
-          checked={showHeaderTrailing}
-          onCheckedChange={setShowHeaderTrailing}
-        />
-      </div>
-    </div>
-  )
-
   const headerTrailing = showHeaderTrailing ? (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -413,67 +359,119 @@ export function SidebarLab() {
     </Tooltip>
   ) : undefined
 
+  const examplesToolbar = (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
+        <LabSelect
+          label="Variant"
+          value={variant}
+          onChange={setVariant}
+          options={[
+            { value: 'navigation', label: 'Navigation' },
+            { value: 'groups', label: 'Groups' },
+          ]}
+        />
+        {variant === 'groups' ? (
+          <LabControlField label="Show group add (+)" className="shrink-0">
+            <div className="flex min-h-9 items-center gap-2">
+              <Toggle
+                size="sm"
+                checked={showGroupAdd}
+                onCheckedChange={setShowGroupAdd}
+                aria-label="Show group add"
+              />
+              <span className={aceToggleLabelClass}>{showGroupAdd ? 'On' : 'Off'}</span>
+            </div>
+          </LabControlField>
+        ) : (
+          <LabSelect
+            label="Organization"
+            value={organizationDisplay}
+            onChange={setOrganizationDisplay}
+            options={[
+              { value: 'switcher', label: 'Switcher' },
+              { value: 'label', label: 'Label' },
+              { value: 'icon', label: 'Icon' },
+            ]}
+          />
+        )}
+        <LabControlField label="Show trailing icon" className="shrink-0">
+          <div className="flex min-h-9 items-center gap-2">
+            <Toggle
+              size="sm"
+              checked={showHeaderTrailing}
+              onCheckedChange={setShowHeaderTrailing}
+              aria-label="Show trailing icon"
+            />
+            <span className={aceToggleLabelClass}>{showHeaderTrailing ? 'On' : 'Off'}</span>
+          </div>
+        </LabControlField>
+      </div>
+
+      <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
+        <div
+          ref={setMenuHost}
+          className="flex h-[min(85vh,52rem)] min-h-[40rem] flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]"
+        >
+          <TooltipProvider>
+            <SidebarMockHeader open={open} onToggleSidebar={() => setOpen((v) => !v)} />
+            <div className="flex min-h-0 flex-1">
+              <Sidebar
+                open={open}
+                variant={variant}
+                organizations={ORGANIZATIONS}
+                selectedOrganizationId={selectedOrg}
+                onOrganizationChange={setSelectedOrg}
+                organizationDisplay={organizationDisplay}
+                applications={
+                  organizationDisplay === 'icon'
+                    ? [
+                        { id: 'isi', label: 'ISI' },
+                        { id: 'isi-focus', label: 'ISI Focus' },
+                        { id: 'watchlist-api', label: 'Watchlist API' },
+                        { id: 'edd', label: 'EDD' },
+                      ]
+                    : undefined
+                }
+                selectedApplicationId={selectedApp}
+                onApplicationChange={setSelectedApp}
+                headerTrailing={headerTrailing}
+                navItems={navItems}
+                addLabel="New Group"
+                onNewGroup={() => {
+                  setNewGroupName('')
+                  setNewGroupOpen(true)
+                }}
+                groups={groupsWithHandlers}
+                showGroupAdd={showGroupAdd}
+                menuPortalContainer={menuHost}
+              />
+              <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-[var(--screening-surface-muted)] p-6">
+                <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Main content</p>
+                <p className="mt-2 text-sm text-[var(--screening-text-muted)]">
+                  App shell preview based on Review Assigned header. Sidebar motion is documented on the{' '}
+                  <Link
+                    to="/lab/atoms/animations"
+                    className="text-[var(--screening-primary)] underline underline-offset-2"
+                  >
+                    Animations
+                  </Link>{' '}
+                  page.
+                </p>
+              </div>
+            </div>
+          </TooltipProvider>
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <>
       <ComponentLabPage
         title="Sidebar"
         description="Application sidebar for flat navigation or grouped query lists. Uses ACE screening tokens, collapsible width, group-header overflow menus (Edit, Copy, Delete), and organization switching in the navigation variant."
         examplesToolbar={examplesToolbar}
-        examples={
-          <div
-            ref={setMenuHost}
-            className="flex h-[min(85vh,52rem)] min-h-[40rem] flex-col overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)]"
-          >
-            <TooltipProvider>
-              <SidebarMockHeader open={open} onToggleSidebar={() => setOpen((v) => !v)} />
-              <div className="flex min-h-0 flex-1">
-                <Sidebar
-                  open={open}
-                  variant={variant}
-                  organizations={ORGANIZATIONS}
-                  selectedOrganizationId={selectedOrg}
-                  onOrganizationChange={setSelectedOrg}
-                  organizationDisplay={organizationDisplay}
-                  applications={
-                    organizationDisplay === 'icon'
-                      ? [
-                          { id: 'isi', label: 'ISI' },
-                          { id: 'isi-focus', label: 'ISI Focus' },
-                          { id: 'watchlist-api', label: 'Watchlist API' },
-                          { id: 'edd', label: 'EDD' },
-                        ]
-                      : undefined
-                  }
-                  selectedApplicationId={selectedApp}
-                  onApplicationChange={setSelectedApp}
-                  headerTrailing={headerTrailing}
-                  navItems={navItems}
-                  addLabel="New Group"
-                  onNewGroup={() => {
-                    setNewGroupName('')
-                    setNewGroupOpen(true)
-                  }}
-                  groups={groupsWithHandlers}
-                  showGroupAdd={showGroupAdd}
-                  menuPortalContainer={menuHost}
-                />
-                <div className="flex min-h-0 min-w-0 flex-1 flex-col bg-[var(--screening-surface-muted)] p-6">
-                  <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Main content</p>
-                  <p className="mt-2 text-sm text-[var(--screening-text-muted)]">
-                    App shell preview based on Review Assigned header. Sidebar motion is documented on the{' '}
-                    <Link
-                      to="/lab/atoms/animations"
-                      className="text-[var(--screening-primary)] underline underline-offset-2"
-                    >
-                      Animations
-                    </Link>{' '}
-                    page.
-                  </p>
-                </div>
-              </div>
-            </TooltipProvider>
-          </div>
-        }
         code={
           <>
             <p className="m-0 text-[var(--screening-text-muted)]">
