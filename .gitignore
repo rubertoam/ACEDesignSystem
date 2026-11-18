@@ -13,6 +13,9 @@ lib
 dist-ssr
 *.local
 
+# Local script caches (not source)
+scripts/.token-cache/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
