@@ -53,18 +53,23 @@ export function TypographyLab() {
         )
       }
       code={
-        <ComponentLabCode>{`/* typography-tokens.css - Figma documentation layer */
---type-size-subheading: 1.25rem;
---typography-heading-heading: var(--type-size-subheading);
+        <ComponentLabCode>{`/* color-tokens.css — Semantic ← Primitive (Desktop JSON) */
+--typography-size-subheading: 1.25rem; /* typography/size/subheading */
+--typography-heading-heading: var(--typography-size-subheading);
 
-/* Semantic aliases resolve to primitives */
-font-size: var(--typography-heading-heading);`}</ComponentLabCode>
+/* typography-tokens.css — composed style sheet */
+--type-heading-bold: 700 var(--typography-heading-heading)/var(--typography-leading-relaxed) var(--font-noto);
+--type-heading-bold-tracking: var(--typography-letter-spacing-tight);`}</ComponentLabCode>
       }
       usage={
         <div className="space-y-3 text-[var(--color-text-muted)]">
           <p className="m-0 leading-relaxed">
             <strong className="text-[var(--screening-text-primary)]">Style Sheet</strong> mirrors Figma
-            Typography (2651:5): Heading → Micro in Noto Sans (Regular, Semi Bold, Bold).
+            Typography (2651:5): Heading → Micro in Noto Sans (Regular, Semi Bold, Bold), sized from
+            semantic tokens (
+            <code className="text-[var(--screening-text-primary)]">typography/heading/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">typography/body/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">typography/ui/*</code>).
           </p>
           <p className="m-0 leading-relaxed">
             <strong className="text-[var(--screening-text-primary)]">Typography Tokens</strong> mirrors
@@ -72,33 +77,34 @@ font-size: var(--typography-heading-heading);`}</ComponentLabCode>
           </p>
           <p className="m-0 leading-relaxed">
             <strong className="text-[var(--screening-text-primary)]">Primitive Tokens</strong> mirror Figma
-            Primitive Typography Tokens as{' '}
-            <code className="text-[var(--screening-text-primary)]">type/size/*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">type/line-height/*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">type/letter-spacing/*</code>.
+            Primitives JSON as{' '}
+            <code className="text-[var(--screening-text-primary)]">typography/size/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">typography/line-height/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">typography/letter-spacing/*</code>.
           </p>
           <p className="m-0 leading-relaxed">
             <strong className="text-[var(--screening-text-primary)]">Semantic Tokens</strong> mirror Figma
-            Semantic Typography Tokens: role aliases (
-            <code className="text-[var(--screening-text-primary)]">typography/heading/*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">typography/body/*</code>, …) that
-            reference primitives.
+            Semantic JSON role aliases that reference those primitives (including{' '}
+            <code className="text-[var(--screening-text-primary)]">typography/leading/*</code>).
           </p>
         </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
           <li>
-            Documentation source:{' '}
-            <code className="text-[var(--screening-text-primary)]">src/styles/typography-tokens.css</code> +{' '}
-            <code className="text-[var(--screening-text-primary)]">src/pages/typographyLabData.ts</code>.
+            Source of truth:{' '}
+            <code className="text-[var(--screening-text-primary)]">tokens/figma/Primitives/Default.tokens.json</code>{' '}
+            +{' '}
+            <code className="text-[var(--screening-text-primary)]">tokens/figma/Semantic/Light.tokens.json</code>{' '}
+            →{' '}
+            <code className="text-[var(--screening-text-primary)]">src/styles/color-tokens.css</code>.
           </li>
           <li>
-            Existing composed{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-type-*</code> shorthands remain for
-            product components; new Figma paths use{' '}
-            <code className="text-[var(--screening-text-primary)]">--type-*</code> /{' '}
-            <code className="text-[var(--screening-text-primary)]">--typography-*</code>.
+            Composed style-sheet shorthands{' '}
+            <code className="text-[var(--screening-text-primary)]">--type-{'{heading|subheading|body|caption|footnote|micro}'}-*</code>{' '}
+            in{' '}
+            <code className="text-[var(--screening-text-primary)]">typography-tokens.css</code> reference
+            those semantic size / leading / letter-spacing vars.
           </li>
         </ul>
       }

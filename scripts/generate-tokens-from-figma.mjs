@@ -56,8 +56,24 @@ function cssVarFromPath(tokenPath) {
   return `--${parts.join('-')}`
 }
 
+/**
+ * Primitive paths that collide with semantic `colors/*` after normalization
+ * (e.g. color/input/placeholder vs colors/input/placeholder → both --color-input-*).
+ * Emit primitives under --primitive-* so semantic aliases can bind without circular refs.
+ */
+function primitiveCssVarFromPath(tokenPath) {
+  const name = cssVarFromPath(tokenPath)
+  if (tokenPath.startsWith('color/input/')) {
+    return `--primitive-${name.slice(2)}`
+  }
+  return name
+}
+
 function aliasToCssVar(aliasName) {
   if (!aliasName) return null
+  if (aliasName.startsWith('color/input/')) {
+    return `var(${primitiveCssVarFromPath(aliasName)})`
+  }
   return `var(${cssVarFromPath(aliasName)})`
 }
 
@@ -156,6 +172,7 @@ const colorFamilyOrder = [
   'color/warning 2',
   'color/error',
   'color/dark',
+  'color/input',
   'color/shades',
 ]
 const primByFamily = groupByFamily(primColors)
@@ -165,7 +182,7 @@ for (const family of colorFamilyOrder) {
   if (!list) continue
   css += `  /* ${family} */\n`
   for (const t of list.sort((a, b) => a.path.localeCompare(b.path, undefined, { numeric: true }))) {
-    css += `  ${cssVarFromPath(t.path)}: ${resolveCssValue(t)};\n`
+    css += `  ${primitiveCssVarFromPath(t.path)}: ${resolveCssValue(t)};\n`
   }
   css += `\n`
 }
@@ -173,7 +190,7 @@ for (const family of colorFamilyOrder) {
 for (const [family, list] of primByFamily) {
   if (colorFamilyOrder.includes(family)) continue
   css += `  /* ${family} */\n`
-  for (const t of list) css += `  ${cssVarFromPath(t.path)}: ${resolveCssValue(t)};\n`
+  for (const t of list) css += `  ${primitiveCssVarFromPath(t.path)}: ${resolveCssValue(t)};\n`
   css += `\n`
 }
 
@@ -185,9 +202,13 @@ css += `\n`
 
 /** Primitive CSS names already emitted - skip semantic tokens that would clobber them. */
 const emittedPrimNames = new Set([
-  ...primColors.map((t) => cssVarFromPath(t.path)),
+  ...primColors.map((t) => primitiveCssVarFromPath(t.path)),
   ...primNumbers.map((t) => cssVarFromPath(t.path)),
 ])
+/** Semantic names that would previously collide with primitives (now free for aliases). */
+const remappedPrimitiveSemanticNames = new Set(
+  primColors.filter((t) => primitiveCssVarFromPath(t.path) !== cssVarFromPath(t.path)).map((t) => cssVarFromPath(t.path)),
+)
 
 /**
  * Resolve alias to a CSS var. Prefer the primitive target name; if semantic path
@@ -200,9 +221,30 @@ function resolveSemanticValue(token) {
 
 css += `  /* --- Semantic · Light · Color (Figma Semantic / Light) --- */\n`
 for (const t of lightColors) {
-  css += `  ${cssVarFromPath(t.path)}: ${resolveSemanticValue(t)}; /* ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
+  const name = cssVarFromPath(t.path)
+  // Skip when semantic path collides with a primitive of the same CSS name
+  // (unless that primitive was remapped under --primitive-* so semantic can alias cleanly).
+  if (emittedPrimNames.has(name) && !remappedPrimitiveSemanticNames.has(name)) {
+    css += `  /* skip ${name} - preserves primitive; Figma ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
+    continue
+  }
+  css += `  ${name}: ${resolveSemanticValue(t)}; /* ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
 }
 css += `\n`
+
+// Short aliases for the renamed badges group (colors/badges → colors/badges & inline messages)
+const badgeColors = lightColors.filter((t) => t.path.startsWith('colors/badges & inline messages/'))
+if (badgeColors.length) {
+  css += `  /* Compat: --color-badges-* → colors/badges & inline messages */\n`
+  for (const t of badgeColors) {
+    const longName = cssVarFromPath(t.path)
+    const shortName = longName.replace('--color-badges-inline-messages-', '--color-badges-')
+    if (shortName !== longName) {
+      css += `  ${shortName}: var(${longName}); /* → ${t.path} */\n`
+    }
+  }
+  css += `\n`
+}
 
 css += `  /* --- Semantic · Light · Number tokens (non-colliding) --- */\n`
 for (const t of lightNonColor) {
@@ -217,21 +259,6 @@ for (const t of lightNonColor) {
 }
 css += `\n`
 
-// Bridge legacy --type-* names used by typography-tokens.css / labs
-css += `  /* Bridge: typography primitive sizes → --type-size-* (lab + composed styles) */\n`
-for (const t of primNumbers.filter((x) => x.path.startsWith('typography/size/'))) {
-  const shade = t.path.split('/').pop()
-  css += `  --type-size-${shade}: var(${cssVarFromPath(t.path)});\n`
-}
-for (const key of ['tight', 'normal', 'relaxed']) {
-  const prim = primNumbers.find((x) => x.path === `typography/line-height/${key}`)
-  if (prim) css += `  --type-line-height-${key}: var(${cssVarFromPath(prim.path)});\n`
-}
-for (const key of ['tight', 'normal']) {
-  const prim = primNumbers.find((x) => x.path === `typography/letter-spacing/${key}`)
-  if (prim) css += `  --type-letter-spacing-${key}: var(${cssVarFromPath(prim.path)});\n`
-}
-
 /* Legacy spacing aliases used across the lab (--space-*) */
 css += `\n  /* Bridge: common --space-* aliases → Figma spacing primitives */\n`
 css += `  --space-1: var(--spacing-4); /* 4px */\n`
@@ -245,7 +272,13 @@ css += `}\n\n`
 css += `[data-theme='dark'] {\n`
 css += `  /* --- Semantic · Dark (Figma Semantic / Dark) --- */\n`
 for (const t of darkColors) {
-  css += `  ${cssVarFromPath(t.path)}: ${resolveCssValue(t)}; /* ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
+  const name = cssVarFromPath(t.path)
+  if (emittedPrimNames.has(name) && !remappedPrimitiveSemanticNames.has(name)) {
+    css += `  /* skip ${name} - preserves primitive; Figma ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
+    continue
+  }
+  // Prefer alias resolution so remapped primitives stay the source of truth.
+  css += `  ${name}: ${resolveSemanticValue(t)}; /* ${t.path}${t.alias ? ` ← ${t.alias}` : ''} */\n`
 }
 css += `\n`
 css += `  /* Dark number semantics (when they differ) */\n`
@@ -275,7 +308,7 @@ console.log('Copied token JSON → tokens/figma/')
 const labSeed = {
   primitives: primColors.map((t) => ({
     tokenPath: t.path.replace(/ /g, ' '),
-    cssVar: cssVarFromPath(t.path),
+    cssVar: primitiveCssVarFromPath(t.path),
     hex: String(t.value).toLowerCase(),
   })),
   light: lightColors.map((t) => ({

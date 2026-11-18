@@ -2,23 +2,23 @@ import type { ReactNode } from 'react'
 import { cn } from '../lib/cn'
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
 const h3Class = cn(
   'm-0 mt-8 first:mt-0',
-  '[font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]',
+  '[font:var(--type-heading-bold)] [letter-spacing:var(--type-heading-bold-tracking)]',
   'text-base text-[var(--screening-text-primary)]',
 )
 
 const h4Class = cn(
   'm-0 mt-6',
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
   'text-sm text-[var(--screening-text-primary)]',
 )
 
 const h5Class = cn(
   'm-0 mt-4',
-  '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]',
+  '[font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)]',
   'text-sm text-[var(--screening-text-primary)]',
 )
 
@@ -27,8 +27,8 @@ const codeClass =
   'rounded-[var(--radius-sm)] bg-[var(--screening-surface-muted)] px-1 py-0.5 text-[0.8125rem] text-[var(--screening-text-primary)]'
 
 const wipTagClass = cn(
-  'inline-flex items-center rounded-[var(--radius-sm)] border border-solid border-[var(--ace-notice-400)]',
-  'bg-[var(--ace-notice-50)] px-2 py-0.5 text-[11px] font-semibold leading-snug text-[var(--ace-notice-800)]',
+  'inline-flex items-center rounded-[var(--radius-sm)] border border-solid border-[var(--color-warning-2-400)]',
+  'bg-[var(--color-warning-2-50)] px-2 py-0.5 text-[11px] font-semibold leading-snug text-[var(--color-warning-2-800)]',
 )
 
 function inlineFormat(text: string): ReactNode[] {
@@ -81,7 +81,7 @@ function parseTable(rows: string[]): ReactNode {
                 key={cell}
                 className={cn(
                   'border-b border-[var(--screening-border-soft)] px-3 py-2',
-                  '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]',
+                  '[font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)]',
                   'text-[var(--screening-text-primary)]',
                 )}
               >

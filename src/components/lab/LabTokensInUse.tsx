@@ -11,9 +11,9 @@ import {
 } from '../../pages/labComponentTokens'
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 const p1Semi =
-  '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]'
+  '[font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)]'
 
 function TokenListItem({ token }: { token: LabTokenRef }) {
   return (

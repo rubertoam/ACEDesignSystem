@@ -5,11 +5,11 @@ import { cn } from '../../../lib/cn'
 import { FinScanLogo } from './FinScanLogo'
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 const captionBold =
-  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]'
+  '[font:var(--type-caption-bold)] [letter-spacing:var(--type-caption-bold-tracking)]'
 
-const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]'
+const motionEase = '[transition-timing-function:var(--motion-ease-standard)]'
 
 export type SiteHeaderNavItem = {
   id: string
@@ -47,7 +47,7 @@ function SiteHeaderNavButton({
   const className = cn(
     p1,
     'inline-flex h-full min-h-[2rem] items-center gap-2 rounded-[var(--radius-sm)] px-3 py-1.5 text-[var(--color-text-primary)]',
-    'transition-colors duration-[var(--ace-motion-duration-fast)]',
+    'transition-colors duration-[var(--motion-duration-fast)]',
     motionEase,
     'hover:bg-[var(--site-header-nav-hover)]',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
@@ -93,7 +93,7 @@ function ToolbarIconButton({
       onClick={onClick}
       className={cn(
         'inline-flex size-[1.5rem] shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-[var(--screening-text-primary)]',
-        'transition-colors duration-[var(--ace-motion-duration-fast)]',
+        'transition-colors duration-[var(--motion-duration-fast)]',
         motionEase,
         'hover:bg-[var(--site-header-nav-hover)]',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
@@ -195,7 +195,7 @@ export function SiteHeader({
               aria-label="User profile"
               onClick={onProfileClick}
               className={cn(
-                'inline-flex shrink-0 rounded-full p-1 transition-colors duration-[var(--ace-motion-duration-fast)]',
+                'inline-flex shrink-0 rounded-full p-1 transition-colors duration-[var(--motion-duration-fast)]',
                 motionEase,
                 'hover:bg-[var(--site-header-nav-hover)]',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',

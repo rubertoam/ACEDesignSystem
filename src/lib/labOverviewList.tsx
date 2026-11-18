@@ -24,7 +24,7 @@ export function LabOverviewList({ section }: { section: LabNavSectionTitle }) {
               <span
                 className={cn(
                   'lab-overview-card__title min-w-0',
-                  '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]',
+                  '[font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)]',
                 )}
               >
                 {item.label}
@@ -37,7 +37,7 @@ export function LabOverviewList({ section }: { section: LabNavSectionTitle }) {
               <p
                 className={cn(
                   'm-0 flex-1',
-                  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+                  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
                   'text-[var(--screening-text-muted)]',
                 )}
               >
@@ -47,7 +47,7 @@ export function LabOverviewList({ section }: { section: LabNavSectionTitle }) {
               <p
                 className={cn(
                   'm-0 flex-1',
-                  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+                  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
                   'text-[var(--screening-text-muted)]',
                 )}
               >

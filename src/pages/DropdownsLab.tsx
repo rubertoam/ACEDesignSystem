@@ -7,7 +7,10 @@ import {
   DropdownMenuPanel,
   type DropdownMenuEntry,
 } from '../components/molecules/DropdownMenu/DropdownMenu'
-import { aceDropdownFieldLabelClass } from '../components/molecules/DropdownMenu/dropdownFieldStyles'
+import {
+  aceDropdownFieldLabelClass,
+  aceDropdownFieldStackClass,
+} from '../components/molecules/DropdownMenu/dropdownFieldStyles'
 import { cn } from '../lib/cn'
 import { LabSelect } from '../lib/labControls'
 import { labSectionLabelClass, labUsageSectionClass } from '../lib/labExampleSection'
@@ -46,35 +49,77 @@ function DropdownsChangelog() {
     <div className="space-y-8">
       <article className="space-y-3">
         <header className="space-y-1">
-          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">20 August 2026</h3>
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">17 November 2026</h3>
           <p className="m-0 text-sm text-[var(--color-text-muted)]">
-            Sync with ACE Design System v.3 Figma Dropdowns (
-            <code className="text-[var(--color-text-primary)]">1307:3725</code> / set{' '}
-            <code className="text-[var(--color-text-primary)]">2277:136</code>) and Dropdown Menus (
-            <code className="text-[var(--color-text-primary)]">5318:1634</code> / MenuList{' '}
-            <code className="text-[var(--color-text-primary)]">1541:6165</code>) plus semantic color/typography
-            tokens. Doc canvas <code className="text-[var(--color-text-primary)]">414:2617</code>.
+            Menu row padding + Secondary Label spacing aligned to Figma set{' '}
+            <code className="text-[var(--color-text-primary)]">2277:136</code>.
           </p>
         </header>
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Rewired Primary field trigger, Secondary / FilterChip triggers, and MenuList panel/row colors from
-            screening / Neutral hex aliases to semantic <code className="text-[var(--color-text-primary)]">--color-*</code>{' '}
-            tokens.
+            Menu item / section row pad →{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/8</code> (
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-item-*</code>).
           </li>
           <li>
-            Primary open / LabelActive now uses brand border + brand-hover fill (like Inputs focus), not a Neutral
-            gray hover + focus ring only.
+            Confirmed Secondary Label (Figma{' '}
+            <code className="text-[var(--color-text-primary)]">5278:2</code>) uses{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/12</code> x ·{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/4</code> y; compact Secondary / FilterChip stay
+            at <code className="text-[var(--color-text-primary)]">spacing/8</code> x.
+          </li>
+        </ul>
+      </article>
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">17 November 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Re-sync Dropdowns / Menus to hand-built Figma bindings on page{' '}
+            <code className="text-[var(--color-text-primary)]">414:2617</code> (frames{' '}
+            <code className="text-[var(--color-text-primary)]">1307:3725</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">5318:1634</code>; set{' '}
+            <code className="text-[var(--color-text-primary)]">2277:136</code>).
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>
+            Secondary Active / FilterChip Selected →{' '}
+            <code className="text-[var(--color-text-primary)]">colors/bg/brand-subtle</code> +{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/primary</code> +{' '}
+            <code className="text-[var(--color-text-primary)]">colors/action/icon</code> (no longer solid brand +
+            inverse).
           </li>
           <li>
-            Secondary Active / FilterChip Selected use{' '}
-            <code className="text-[var(--color-text-primary)]">colors/bg/brand</code> with inverse text/icons.
+            Select All / Reset actions →{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/brand</code> (
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-action</code>).
           </li>
           <li>
-            MenuList elevation uses Shadow (MD) (
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>).
+            Wired spacing / border tokens: trigger{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/12</code> ·{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/8</code> · gap{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/16</code>; menu stroke{' '}
+            <code className="text-[var(--color-text-primary)]">border/width/subtle</code>; elevation remains{' '}
+            <code className="text-[var(--color-text-primary)]">--shadow-md</code>.
           </li>
-          <li>Added this Changelog tab documenting the Dropdowns / Menus update.</li>
+        </ul>
+      </article>
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">20 August 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Initial semantic token sync for Dropdowns / Menus (doc canvas{' '}
+            <code className="text-[var(--color-text-primary)]">414:2617</code>).
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>
+            Rewired Primary field, Secondary / FilterChip, and MenuList panel/row colors to semantic{' '}
+            <code className="text-[var(--color-text-primary)]">--color-*</code> tokens.
+          </li>
+          <li>
+            Primary open / LabelActive uses brand border + brand-hover fill.
+          </li>
         </ul>
       </article>
     </div>
@@ -421,7 +466,7 @@ export function DropdownsLab() {
       <div className="flex flex-col gap-4 border-t border-solid border-[var(--screening-border-soft)] pt-6">
         <div className="flex flex-wrap items-end justify-start gap-4">
           {triggerMode === 'field' ? (
-            <div className="flex flex-col gap-2">
+            <div className={aceDropdownFieldStackClass}>
               <span className={aceDropdownFieldLabelClass}>Label</span>
               <DropdownMenu
                 triggerLabel={liveConfig.triggerLabel}
@@ -456,7 +501,7 @@ export function DropdownsLab() {
     <ComponentLabPage
       qa={dropdownsLabQa}
       title="Dropdowns"
-      description="ACE Design System v.3 dropdowns (Figma 1307:3725 / set 2277:136) and menus (5318:1634 / MenuList 1541:6165): Primary field (default / LabelActive), Secondary / FilterChip triggers, and MenuList variants (MultiSelect, Primary, Three Dot, Switchers, Checkbox, Search). Colors and type wired to semantic --color-* and --ace-type-* tokens."
+      description="ACE Design System v.3 dropdowns (Figma 1307:3725 / set 2277:136) and menus (5318:1634): Primary field (default / LabelActive), Secondary / FilterChip triggers, and MenuList variants (MultiSelect, Primary, Three Dot, Switchers, Checkbox, Search). Tokens follow applied Figma bindings (--color-*, --spacing-*, --radius-*, --border-width-*, --shadow-*, --type-*)."
       examplesToolbar={toolbar}
       examples={
         <section className="space-y-10">
@@ -472,7 +517,7 @@ export function DropdownsLab() {
             <div className="flex flex-wrap items-end justify-start gap-x-10 gap-y-8">
               <div className="flex flex-col gap-3">
                 <p className="m-0 text-sm font-medium text-[var(--color-text-primary)]">Primary</p>
-                <div className="flex flex-col gap-2">
+                <div className={aceDropdownFieldStackClass}>
                   <span className={aceDropdownFieldLabelClass}>Label</span>
                   <DropdownMenu
                     triggerLabel="Dropdown Label"
@@ -548,21 +593,40 @@ export function DropdownsLab() {
             FilterChip triggers. Pass <code className="text-[var(--color-text-primary)]">portalContainer</code> when the
             menu must mount inside a scroll container.
           </p>
+          <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
+            Tokens (Figma set <code className="text-[var(--color-text-primary)]">2277:136</code> / Menus{' '}
+            <code className="text-[var(--color-text-primary)]">5318:1634</code>): Primary open →{' '}
+            <code className="text-[var(--color-text-primary)]">colors/border/brand</code> +{' '}
+            <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code>; Secondary / FilterChip
+            active → <code className="text-[var(--color-text-primary)]">colors/bg/brand-subtle</code> +{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/primary</code> +{' '}
+            <code className="text-[var(--color-text-primary)]">colors/action/icon</code>; menu actions →{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/brand</code>; type →{' '}
+            <code className="text-[var(--color-text-primary)]">typography/body/body-secondary</code> on triggers,{' '}
+            <code className="text-[var(--color-text-primary)]">body-main</code> on menu items.
+          </p>
         </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Primary trigger: <code className="text-[var(--color-text-primary)]">--dropdown-menu-trigger-*</code>
+            Primary trigger: <code className="text-[var(--color-text-primary)]">--dropdown-menu-trigger-*</code> (
+            <code className="text-[var(--color-text-primary)]">spacing/12</code> ·{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/8</code> · gap{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/16</code> ·{' '}
+            <code className="text-[var(--color-text-primary)]">radius/sm</code>)
           </li>
           <li>
             Secondary / FilterChip: <code className="text-[var(--color-text-primary)]">--filter-trigger-*</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">--filter-chip-*</code>
+            <code className="text-[var(--color-text-primary)]">--filter-chip-*</code> → brand-subtle active (not
+            inverse)
           </li>
           <li>
             Menu panel: <code className="text-[var(--color-text-primary)]">--dropdown-menu-surface</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-border-width</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--border-width-subtle</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--dropdown-menu-shadow</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>
+            <code className="text-[var(--color-text-primary)]">--shadow-md</code>
           </li>
           <li>
             Rows (Figma 5318:1634): hover{' '}
@@ -572,7 +636,7 @@ export function DropdownsLab() {
           </li>
           <li>
             Select All / Reset All:{' '}
-            <code className="text-[var(--color-text-primary)]">--dropdown-menu-action</code> → text/primary
+            <code className="text-[var(--color-text-primary)]">--dropdown-menu-action</code> → text/brand
           </li>
         </ul>
       }

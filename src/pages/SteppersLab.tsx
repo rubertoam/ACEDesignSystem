@@ -30,7 +30,7 @@ export function SteppersLab() {
         </LabControlField>
       </div>
 
-      <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
+      <div className="border-t border-solid border-[var(--color-border-subtle)] pt-6">
         <div className="flex justify-start">
           <Stepper
             variant={variant}
@@ -60,7 +60,7 @@ export function SteppersLab() {
           </div>
           <div className="flex flex-wrap items-end justify-start gap-10">
             <div className="flex flex-col items-center gap-2">
-              <span className="text-xs text-[var(--screening-text-muted)]">Horizontal</span>
+              <span className="text-xs text-[var(--color-text-secondary)]">Horizontal</span>
               <Stepper
                 variant="horizontal"
                 value={STATIC_VALUE}
@@ -70,7 +70,7 @@ export function SteppersLab() {
               />
             </div>
             <div className="flex flex-col items-center gap-2">
-              <span className="text-xs text-[var(--screening-text-muted)]">Vertical</span>
+              <span className="text-xs text-[var(--color-text-secondary)]">Vertical</span>
               <Stepper
                 variant="vertical"
                 value={STATIC_VALUE}

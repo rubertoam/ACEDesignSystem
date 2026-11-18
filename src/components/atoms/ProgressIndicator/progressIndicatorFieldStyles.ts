@@ -32,7 +32,7 @@ export const progressIndicatorContentClass = cn(
 
 export const progressIndicatorLabelClass = cn(
   'm-0 text-center',
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
 )
 
 export const progressIndicatorLabelToneClass: Record<ProgressIndicatorTone, string> = {

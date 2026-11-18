@@ -20,23 +20,23 @@ export const subHeaderDrilldownPaddingClass = 'pl-[var(--sub-header-drilldown-pl
 
 export const subHeaderHeadlineClass = cn(
   'm-0 whitespace-nowrap text-[var(--screening-text-primary)]',
-  '[font:var(--ace-type-heading-h6-small-regular)]',
-  '[letter-spacing:var(--ace-type-heading-h6-small-regular-tracking)]',
+  '[font:var(--type-subheading-regular)]',
+  '[letter-spacing:var(--type-subheading-regular-tracking)]',
 )
 
 export const subHeaderBackClass = cn(
   'inline-flex shrink-0 cursor-pointer items-center gap-3 border-0 bg-transparent p-0',
   'text-[var(--sub-header-back)]',
-  '[font:var(--ace-type-heading-h6-small-semi-bold)]',
-  '[letter-spacing:var(--ace-type-heading-h6-small-semi-bold-tracking)]',
+  '[font:var(--type-subheading-semi-bold)]',
+  '[letter-spacing:var(--type-subheading-semi-bold-tracking)]',
   'transition-opacity hover:opacity-80',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2',
 )
 
 export const subHeaderStatClass = cn(
   'm-0 whitespace-nowrap text-[var(--screening-text-primary)]',
-  '[font:var(--ace-type-heading-h6-small-regular)]',
-  '[letter-spacing:var(--ace-type-heading-h6-small-regular-tracking)]',
+  '[font:var(--type-subheading-regular)]',
+  '[letter-spacing:var(--type-subheading-regular-tracking)]',
 )
 
 export const subHeaderStatSeparatorClass =
@@ -44,8 +44,8 @@ export const subHeaderStatSeparatorClass =
 
 export const subHeaderPaginationLabelClass = cn(
   'm-0 whitespace-nowrap text-[var(--screening-text-primary)]',
-  '[font:var(--ace-type-heading-h6-small-regular)]',
-  '[letter-spacing:var(--ace-type-heading-h6-small-regular-tracking)]',
+  '[font:var(--type-subheading-regular)]',
+  '[letter-spacing:var(--type-subheading-regular-tracking)]',
 )
 
 /** Transparent icon action - chrome-less sub-header icons. */

@@ -69,7 +69,7 @@ export function PageHeadersLab() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
         <fieldset className="w-max min-w-0 shrink-0 border-0 p-0">
-          <legend className={cn(labControlLegendClass, 'mb-[var(--ace-section-label-gap)] block w-full')}>
+          <legend className={cn(labControlLegendClass, 'mb-[var(--section-label-gap)] block w-full')}>
             Options
           </legend>
           <DropdownMenu

@@ -8,7 +8,7 @@ alwaysApply: false
 
 Whenever you **add or change** animation on a component (transitions, transforms, grid expand/collapse, opacity fades, etc.):
 
-1. **Tokens** - Prefer existing motion tokens in `src/styles/variables.css` (`--ace-motion-ease-standard`, `--ace-motion-duration-*`, component-specific aliases). Add new tokens only when the motion spec requires a distinct duration or curve.
+1. **Tokens** - Prefer existing motion tokens in `src/styles/variables.css` (`--motion-ease-standard`, `--motion-duration-*`, component-specific aliases). Add new tokens only when the motion spec requires a distinct duration or curve.
 
 2. **Catalog** - Append or update an entry in `src/lib/aceAnimations.ts` (`ACE_ANIMATIONS` array). Each entry needs: stable `id`, `name`, `component`, `properties`, `duration`, `easing`, `tokens[]`, and optional `notes`.
 

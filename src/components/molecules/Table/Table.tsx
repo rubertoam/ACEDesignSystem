@@ -6,12 +6,12 @@ function aceTypography(token: string) {
 }
 
 const columnHeaderClass = cn(
-  aceTypography('--ace-type-label-bold'),
+  aceTypography('--type-footnote-bold'),
   'uppercase text-[var(--screening-text-muted)]',
 )
 
 const cellTextClass = cn(
-  aceTypography('--ace-type-paragraph-p1-regular'),
+  aceTypography('--type-body-regular'),
   'text-[var(--screening-text-primary)]',
 )
 

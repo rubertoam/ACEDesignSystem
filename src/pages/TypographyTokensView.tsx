@@ -3,10 +3,10 @@ import type { TypographyTokenGroup, TypographyTokenStyle } from './typographyLab
 
 function stylePreview(style: TypographyTokenStyle, weightValue: number): CSSProperties {
   return {
-    fontFamily: 'var(--font-ace-noto)',
-    fontSize: style.sizeRem,
+    fontFamily: 'var(--font-noto)',
+    fontSize: `var(${style.sizeCssVar}, ${style.sizeRem})`,
     fontWeight: weightValue,
-    lineHeight: 1.65,
+    lineHeight: 'var(--typography-leading-relaxed)',
     letterSpacing: style.trackingCss,
   }
 }
@@ -48,7 +48,7 @@ function TokenGroupSection({ group }: { group: TypographyTokenGroup }) {
 
 export function TypographyTokensView({ groups }: { groups: TypographyTokenGroup[] }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--shadow-sm)] sm:px-8">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--lab-shadow-sm)] sm:px-8">
       {groups.map((group) => (
         <TokenGroupSection key={group.id} group={group} />
       ))}

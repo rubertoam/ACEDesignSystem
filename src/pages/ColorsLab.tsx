@@ -72,7 +72,10 @@ border-color: var(--color-border-default);`}</ComponentLabCode>
             Semantic collection with the same{' '}
             <strong className="text-[var(--screening-text-primary)]">Name · Light · Dark</strong> columns (
             <code className="text-[var(--screening-text-primary)]">colors/bg/*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">colors/surface/*</code>, …). Runtime theme
+            <code className="text-[var(--screening-text-primary)]">colors/surface/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">colors/badges &amp; inline messages/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">colors/input/*</code>,{' '}
+            <code className="text-[var(--screening-text-primary)]">colors/progress/*</code>, …). Runtime theme
             switches via{' '}
             <code className="text-[var(--screening-text-primary)]">[data-theme=&apos;dark&apos;]</code>.
           </p>

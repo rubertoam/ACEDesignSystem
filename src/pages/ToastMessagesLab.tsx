@@ -245,7 +245,7 @@ export function ToastMessagesLab() {
             Surface - <code className="text-[var(--color-text-primary)]">--toast-message-bg</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--toast-message-border</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--toast-message-shadow</code> (aliases{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-md</code>)
+            <code className="text-[var(--color-text-primary)]">--shadow-md</code>)
           </li>
           <li>
             Layout - <code className="text-[var(--color-text-primary)]">--toast-message-width</code>, padding, gap, body
@@ -277,7 +277,7 @@ export function ToastMessagesLab() {
               </li>
               <li>
                 Temporary compat: <code className="text-[var(--color-text-primary)]">AceToast</code> export and{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-toast-*</code> aliases still resolve.
+                <code className="text-[var(--color-text-primary)]">--toast-message-*</code> aliases still resolve.
               </li>
             </ul>
           </article>

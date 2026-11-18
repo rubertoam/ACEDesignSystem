@@ -60,7 +60,7 @@ const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'] as const
 
 const fieldTriggerClass = cn(
   'inline-flex w-[var(--date-picker-trigger-width)] max-w-[var(--date-picker-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-3 py-2 text-[var(--color-text-primary)] outline-none transition-colors',
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
   'hover:bg-[var(--screening-surface-hover)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
   'data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:ring-2 data-[state=open]:ring-[var(--screening-primary-ring)] data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-[var(--screening-primary-ring-offset)]',
   'disabled:pointer-events-none disabled:opacity-50',
@@ -71,20 +71,20 @@ const panelBaseClass = cn(
 )
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
 /** Caption/Regular - matches Input / AceDropdown field labels. */
 const fieldLabelClass =
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]'
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]'
 
 const monthTitleClass = cn(
   'text-center uppercase text-[var(--date-picker-month-title)]',
-  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]',
+  '[font:var(--type-caption-bold)] [letter-spacing:var(--type-caption-bold-tracking)]',
 )
 
 const weekdayClass = cn(
   'text-center text-[var(--date-picker-weekday)]',
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
 )
 
 type DraftRange = {
@@ -127,7 +127,7 @@ function CalendarDayButton({
       onFocus={onHover}
       className={cn(
         'relative flex size-[var(--date-picker-day-size)] shrink-0 items-center justify-center rounded-full transition-colors',
-        '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+        '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
         inMonth ? 'text-[var(--date-picker-day)]' : 'text-[var(--date-picker-day-muted)]',
         inRange && !selected && 'bg-[var(--date-picker-range-fill)]',

@@ -109,15 +109,15 @@ export function PaginationLab() {
           />
         </LabControlField>
         <LabControlField label="Summary">
-          <p className="m-0 flex min-h-[var(--screening-input-height-sm)] items-center rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-background)] px-2 text-sm text-[var(--color-text-primary)]">
+          <p className="m-0 flex min-h-[var(--screening-input-height-sm)] items-center rounded-[var(--radius-sm)] border border-[var(--color-border-default)] bg-[var(--color-bg-primary)] px-[var(--spacing-8)] text-sm text-[var(--color-text-primary)]">
             {pageSummary.totalPages.toLocaleString()} pages · {pageSummary.range}
           </p>
         </LabControlField>
       </div>
 
-      <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
-        <div className="w-full min-w-0 overflow-x-auto rounded-[var(--radius-md)] border border-[var(--screening-border-strong)] bg-[var(--screening-surface)] shadow-[var(--ace-drop-shadow-xs)]">
-          <div className="shrink-0 bg-[var(--screening-surface-muted)] px-[var(--space-4)] py-[var(--space-3)]">
+      <div className="border-t border-solid border-[var(--color-border-subtle)] pt-6">
+        <div className="w-full min-w-0 overflow-x-auto rounded-[var(--radius-md)] border border-[var(--color-border-default)] bg-[var(--color-surface-primary)] shadow-[var(--shadow-xs)]">
+          <div className="shrink-0 bg-[var(--color-bg-primary)] px-[var(--spacing-16)] py-[var(--spacing-12)]">
             <Pagination
               totalItems={totalItems}
               page={page}
@@ -186,7 +186,7 @@ const totalItems = 2487
             <code className="text-[var(--color-text-primary)]">--color-text-inverse</code>
           </li>
           <li>
-            Meta text: <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>
+            Meta text: <code className="text-[var(--color-text-primary)]">--type-body-regular</code>
           </li>
           <li>
             Footer shell (in table): <code className="text-[var(--color-text-primary)]">--screening-surface-muted</code>{' '}

@@ -25,6 +25,7 @@ const families = [
   'warning 2',
   'error',
   'dark',
+  'input',
   'shades',
 ]
 const paletteFamilies = []
@@ -56,7 +57,19 @@ for (const fam of families) {
 
 const darkByPath = new Map((seed.dark ?? []).map((t) => [t.tokenPath, t]))
 
-const semanticGroupsOrder = ['bg', 'surface', 'text', 'border', 'action', 'status', 'icon', 'badges']
+/** Figma Semantic color groups (Light + Dark modes), Name · Light · Dark order. */
+const semanticGroupsOrder = [
+  'bg',
+  'surface',
+  'text',
+  'border',
+  'action',
+  'status',
+  'icon',
+  'badges & inline messages',
+  'input',
+  'progress',
+]
 const semanticGroups = []
 for (const g of semanticGroupsOrder) {
   const tokens = seed.light
@@ -78,9 +91,13 @@ for (const g of semanticGroupsOrder) {
       return entry
     })
   if (tokens.length) {
+    const title =
+      g === 'badges & inline messages'
+        ? 'Badges & inline messages'
+        : g.charAt(0).toUpperCase() + g.slice(1)
     semanticGroups.push({
       id: g,
-      title: g.charAt(0).toUpperCase() + g.slice(1),
+      title,
       tokens,
     })
   }

@@ -382,7 +382,7 @@ import { DropdownMenu } from '../components/molecules/DropdownMenu/DropdownMenu'
                 {hint ? (
                   <span
                     className={cn(
-                      aceTypography('--ace-type-caption-regular'),
+                      aceTypography('--type-caption-regular'),
                       'mt-0.5 block pl-6 text-[var(--dialog-modal-muted)]',
                     )}
                   >

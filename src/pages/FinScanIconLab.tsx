@@ -75,36 +75,36 @@ export function FinScanIconLab() {
           </li>
           <li>
             Hash mark rows map to{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-finscan-mark-green</code>, blue, magenta, and
+            <code className="text-[var(--screening-text-primary)]">--color-success-400</code>, blue, magenta, and
             primary.
           </li>
           <li>
-            Wordmark fill: <code className="text-[var(--screening-text-primary)]">--ace-finscan-wordmark-fill</code> →{' '}
+            Wordmark fill: <code className="text-[var(--screening-text-primary)]">--color-primary-500</code> →{' '}
             <code className="text-[var(--screening-text-primary)]">color/primary/500</code> →{' '}
             <code className="text-[var(--screening-text-primary)]">--color-primary-500</code>.
           </li>
-          <li>Lockup gap: <code className="text-[var(--screening-text-primary)]">--ace-finscan-icon-gap</code> (12px).</li>
+          <li>Lockup gap: <code className="text-[var(--screening-text-primary)]">--finscan-icon-gap</code> (12px).</li>
         </ul>
       }
       variables={
         <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-finscan-icon-gap</code>
+            <code className="text-[var(--screening-text-primary)]">--finscan-icon-gap</code>
           </li>
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-finscan-mark-green</code>
+            <code className="text-[var(--screening-text-primary)]">--color-success-400</code>
           </li>
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-finscan-mark-blue</code>
+            <code className="text-[var(--screening-text-primary)]">--color-blue-500</code>
           </li>
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-finscan-mark-magenta</code>
+            <code className="text-[var(--screening-text-primary)]">--color-secondary-500</code>
           </li>
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-finscan-mark-primary</code>
+            <code className="text-[var(--screening-text-primary)]">--color-primary-500</code>
           </li>
           <li>
-            <code className="text-[var(--screening-text-primary)]">--ace-finscan-wordmark-fill</code>
+            <code className="text-[var(--screening-text-primary)]">--color-primary-500</code>
           </li>
         </ul>
       }

@@ -22,9 +22,9 @@ import {
 } from './sidebarRowActions'
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
-const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]'
+const motionEase = '[transition-timing-function:var(--motion-ease-standard)]'
 const motionReduce = 'motion-reduce:transition-none motion-reduce:duration-0'
 
 const panelMotion = cn(
@@ -154,7 +154,7 @@ const sidebarIconDropdownTriggerWithLabelClass = cn(
   'relative z-[1] inline-flex h-8 w-auto max-w-full min-w-0 shrink cursor-pointer items-center justify-start gap-1 rounded-[var(--radius-sm)] border border-solid px-1.5',
   'border-transparent bg-transparent text-[var(--icon-button-icon-rest-ghost)]',
   'transition-[opacity,background-color,border-color,color]',
-  'duration-[var(--ace-motion-duration-medium)]',
+  'duration-[var(--motion-duration-medium)]',
   motionEase,
   motionReduce,
   // Border-stroke hover (matches `sidebarIconButtonBorderedClass`)
@@ -292,7 +292,7 @@ function SidebarRowButton({
       aria-expanded={ariaExpanded}
       className={cn(
         'flex w-full items-center gap-3 rounded-[var(--sidebar-item-radius)] border-0 bg-transparent p-0 text-left outline-none',
-        'transition-colors duration-[var(--ace-motion-duration-fast)]',
+        'transition-colors duration-[var(--motion-duration-fast)]',
         motionEase,
         motionReduce,
         'focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
@@ -372,7 +372,7 @@ function SidebarGroupBlock({
       <div data-sidebar-section-id={group.id} className="px-1.5 pt-1 first:pt-0">
         <p
           className={cn(
-            '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+            '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
             'm-0 truncate text-[var(--color-text-primary)]',
           )}
         >
@@ -394,7 +394,7 @@ function SidebarGroupBlock({
           'border-[0.5px] border-solid border-[var(--sidebar-group-expanded-border)]',
           'before:pointer-events-none before:absolute before:inset-0 before:z-0 before:rounded-[inherit]',
           'before:bg-[var(--sidebar-group-hover-bg)] before:opacity-0',
-          'before:transition-opacity before:duration-[var(--ace-motion-duration-fast)]',
+          'before:transition-opacity before:duration-[var(--motion-duration-fast)]',
           motionEase,
           motionReduce,
           'has-[[data-sidebar-group-header]:hover]:before:opacity-100',
@@ -456,7 +456,7 @@ function SidebarGroupBlock({
           {expanded && !hasItems ? (
             <p
               className={cn(
-                '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+                '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
                 'm-0 px-3 py-4 text-center text-[var(--color-text-muted)]',
               )}
             >
@@ -642,7 +642,7 @@ export function Sidebar({
     ) : organizationDisplay === 'label' ? (
       <p
         className={cn(
-          '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+          '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
           'm-0 truncate px-3 py-2 text-[var(--screening-text-primary)]',
           headerTrailing
             ? 'w-full min-w-0'
@@ -672,7 +672,7 @@ export function Sidebar({
         className={cn(
           'inline-flex items-center justify-center gap-3 rounded-[var(--radius-sm)] border border-solid',
           'border-[var(--sidebar-heading-border)] bg-[var(--sidebar-heading-bg)] px-3 py-2',
-          'text-[var(--screening-text-primary)] transition-colors duration-[var(--ace-motion-duration-fast)]',
+          'text-[var(--screening-text-primary)] transition-colors duration-[var(--motion-duration-fast)]',
           motionEase,
           motionReduce,
           'hover:bg-[var(--screening-surface-hover)]',

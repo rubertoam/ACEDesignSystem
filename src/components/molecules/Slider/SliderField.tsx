@@ -3,7 +3,7 @@ import { cn } from '../../../lib/cn'
 import { Slider, type SliderProps } from './Slider'
 
 const labelClass =
-  '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)] text-[var(--color-text-primary)]'
+  '[font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)] text-[var(--color-text-primary)]'
 
 export type SliderFieldProps = SliderProps & {
   label?: string
@@ -45,7 +45,7 @@ export function SliderField({
           {label}
         </label>
         {showValue ? (
-          <span className="shrink-0 tabular-nums [font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--color-text-muted)]">{display}</span>
+          <span className="shrink-0 tabular-nums [font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-[var(--color-text-muted)]">{display}</span>
         ) : null}
       </div>
       <Slider id={id} value={value} defaultValue={defaultValue} className={className} {...sliderProps} />

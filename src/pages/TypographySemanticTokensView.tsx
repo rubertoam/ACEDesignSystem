@@ -4,10 +4,10 @@ import type { SemanticTypeGroup, SemanticTypeToken } from './typographyLabData'
 function sizePreview(token: SemanticTypeToken): CSSProperties | undefined {
   if (token.sizePx == null) return undefined
   return {
-    fontFamily: 'var(--font-ace-noto)',
+    fontFamily: 'var(--font-noto)',
     fontSize: `var(${token.cssVar}, ${token.sizePx / 16}rem)`,
     fontWeight: 400,
-    lineHeight: 1.65,
+    lineHeight: 'var(--typography-leading-relaxed)',
   }
 }
 
@@ -58,7 +58,7 @@ function SemanticGroupSection({ group }: { group: SemanticTypeGroup }) {
 
 export function TypographySemanticTokensView({ groups }: { groups: SemanticTypeGroup[] }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--shadow-sm)] sm:px-8">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--lab-shadow-sm)] sm:px-8">
       {groups.map((group) => (
         <SemanticGroupSection key={group.id} group={group} />
       ))}

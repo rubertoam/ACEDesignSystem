@@ -16,19 +16,19 @@ import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
 import { inlineDrawerLabQa } from './labTabDocs'
 const h6Bold =
-  '[font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]'
+  '[font:var(--type-heading-bold)] [letter-spacing:var(--type-heading-bold-tracking)]'
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 const sectionHeaderClass = cn(
-  'm-0 [font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]',
+  'm-0 [font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)]',
   'text-sm text-[var(--screening-primary)]',
 )
 const captionClass = cn(
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
   'm-0 text-[var(--screening-text-primary)]',
 )
 const fieldLabelClass = cn(
-  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]',
+  '[font:var(--type-caption-bold)] [letter-spacing:var(--type-caption-bold-tracking)]',
   'text-[var(--screening-text-primary)]',
 )
 
@@ -120,7 +120,7 @@ function InlineDrawerDemoContent() {
                   setChecks((prev) => ({ ...prev, [key]: next === true }))
                 }
               />
-              <span className={cn(p1, 'text-sm text-[var(--ace-neutral-700)]')}>Checkbox</span>
+              <span className={cn(p1, 'text-sm text-[var(--color-neutral-700)]')}>Checkbox</span>
             </label>
           ))}
         </div>

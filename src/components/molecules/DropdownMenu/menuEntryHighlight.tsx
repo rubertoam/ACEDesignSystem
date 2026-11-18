@@ -20,7 +20,7 @@ export function highlightMenuLabel(label: string, query: string): ReactNode {
   return (
     <>
       {before}
-      <span className="[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]">
+      <span className="[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]">
         {match}
       </span>
       {after}

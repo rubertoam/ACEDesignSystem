@@ -19,7 +19,7 @@ export function AceDropdownChevron({ className }: { className?: string }) {
  * Figma Dropdown / Primary “Dropdown Label” + field label above the control.
  */
 export const aceDropdownTriggerType = cn(
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
 )
 
 export const aceDropdownFieldLabelClass = cn(
@@ -30,8 +30,8 @@ export const aceDropdownFieldLabelClass = cn(
 /** Primary field trigger (default / open = LabelActive). */
 export const aceDropdownFieldTriggerClass = cn(
   aceDropdownTriggerType,
-  'inline-flex w-[var(--dropdown-menu-trigger-width)] max-w-[var(--dropdown-menu-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)]',
-  'rounded-[var(--dropdown-menu-trigger-radius)] border border-solid border-[var(--dropdown-menu-trigger-border)]',
+  'inline-flex w-[var(--dropdown-menu-trigger-width)] max-w-[var(--dropdown-menu-trigger-width)] shrink-0 items-center justify-between gap-[var(--dropdown-menu-trigger-gap)]',
+  'rounded-[var(--dropdown-menu-trigger-radius)] border-[length:var(--dropdown-menu-trigger-border-width)] border-solid border-[var(--dropdown-menu-trigger-border)]',
   'bg-[var(--dropdown-menu-trigger-bg)] px-[var(--dropdown-menu-trigger-px)] py-[var(--dropdown-menu-trigger-py)]',
   'text-[var(--dropdown-menu-trigger-text)] outline-none transition-colors duration-150 ease-out',
   'hover:bg-[var(--dropdown-menu-trigger-active-bg)]',
@@ -40,5 +40,8 @@ export const aceDropdownFieldTriggerClass = cn(
   'data-[state=open]:border-[var(--dropdown-menu-trigger-active-border)] data-[state=open]:bg-[var(--dropdown-menu-trigger-active-bg)]',
   'disabled:pointer-events-none disabled:opacity-50',
 )
+
+/** External label stack gap (Figma Label / LabelActive → spacing/6). */
+export const aceDropdownFieldStackClass = 'flex flex-col items-start gap-[var(--dropdown-menu-label-gap)]'
 
 export const aceDropdownFieldChevronClass = 'shrink-0 text-[var(--dropdown-menu-trigger-icon)]'

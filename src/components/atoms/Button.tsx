@@ -9,12 +9,20 @@ import { cn } from '../../lib/cn'
 import { MaterialSymbol } from '../molecules/Accordion/MaterialSymbol'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary'
-/** Action token family for default / hover / pressed fills. Disabled always uses disabled-button. */
-export type ButtonActionTone = 'primary' | 'secondary' | 'success' | 'error' | 'warning'
+/** Action token family for default / hover / pressed fills. Disabled always uses colors/action/disabled. */
+export type ButtonActionTone = 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'warning2'
+/** @deprecated Size is typography-driven (label typography + spacing/8 · spacing/12). Kept for API compatibility. */
 export type ButtonSize = 'sm' | 'md' | 'lg'
 export type ButtonIcon = 'none' | 'left' | 'right'
 /** Frozen appearance for documentation grids (no hover/active transitions). */
 export type ButtonPreviewState = 'default' | 'hover' | 'active' | 'disabled'
+
+/**
+ * Typography token applied to the button label.
+ * Drives button height (hug = type line-height + spacing/8 vertical padding).
+ * Default matches Figma Buttons: Body/Semi Bold → typography/body/body-main.
+ */
+export type ButtonTypography = 'body-secondary' | 'body-main'
 
 const ACTION_TONE_FILL: Record<
   ButtonActionTone,
@@ -23,7 +31,7 @@ const ACTION_TONE_FILL: Record<
   primary: {
     fill: 'var(--color-action-primary)',
     hover: 'var(--color-action-primary-hover)',
-    pressed: 'var(--color-action-primary-pressed)',
+    pressed: 'var(--color-action-primary-pressed-subtle)',
   },
   secondary: {
     fill: 'var(--color-action-secondary)',
@@ -45,6 +53,11 @@ const ACTION_TONE_FILL: Record<
     hover: 'var(--color-action-warning-hover)',
     pressed: 'var(--color-action-warning-pressed)',
   },
+  warning2: {
+    fill: 'var(--color-action-warning-2)',
+    hover: 'var(--color-action-warning-2-hover)',
+    pressed: 'var(--color-action-warning-2-pressed)',
+  },
 }
 
 function actionToneStyle(tone: ButtonActionTone): CSSProperties {
@@ -56,35 +69,31 @@ function actionToneStyle(tone: ButtonActionTone): CSSProperties {
   } as CSSProperties
 }
 
-const sizeLayout: Record<ButtonSize, { root: string; iconWrap: string }> = {
-  sm: {
-    root: cn(
-      'px-[var(--button-px-sm)] py-[var(--button-py-sm)] gap-[var(--button-gap-sm)]',
-      '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]',
-    ),
-    iconWrap: aceChevronIconClass,
-  },
-  md: {
-    root: cn(
-      'px-[var(--button-px-md)] py-[var(--button-py-md)] gap-[var(--button-gap-md)]',
-      '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
-    ),
-    iconWrap: aceChevronIconClass,
-  },
-  lg: {
-    root: cn(
-      'px-[var(--button-px-lg)] py-[var(--button-py-lg)] gap-[var(--button-gap-lg)]',
-      '[font:var(--ace-type-paragraph-p2-bold)] [letter-spacing:var(--ace-type-paragraph-p2-bold-tracking)]',
-    ),
-    iconWrap: aceChevronIconClass,
-  },
+/** Body/Semi Bold — typography/body/body-main (Figma baseline) */
+const typeClassByTypography: Record<ButtonTypography, string> = {
+  'body-secondary':
+    '[font:var(--type-caption-semi-bold)] [letter-spacing:var(--type-caption-semi-bold-tracking)]',
+  'body-main':
+    '[font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)]',
 }
+
+/**
+ * Figma Button: hug height from label typography + spacing/8 py / spacing/12 px
+ * (no fixed sm/md/lg heights). Gap spacing/8; radius/component/button.
+ */
+const layoutClass = cn(
+  'gap-[var(--button-gap)] px-[var(--button-px)] py-[var(--button-py)]',
+)
 
 const focusRing =
   'rounded-[var(--button-radius)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--button-focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)]'
 
 const baseFlex =
   'inline-flex cursor-pointer items-center justify-center border border-solid transition-colors disabled:cursor-not-allowed'
+
+const disabledSolid = cn(
+  'border-transparent bg-[var(--button-disabled-primary-bg)] text-[var(--button-disabled-primary-text)]',
+)
 
 const interactivePrimary = cn(
   baseFlex,
@@ -97,28 +106,24 @@ const interactivePrimary = cn(
 const interactiveSecondary = cn(
   baseFlex,
   focusRing,
-  'bg-[var(--color-surface-primary)] border-[var(--button-fill)] text-[var(--button-fill)]',
+  'bg-[var(--color-surface-primary)] border-[var(--button-fill)] text-[var(--button-label-alt)]',
   'hover:border-transparent hover:text-[var(--button-on-solid)] hover:bg-[var(--button-fill-hover)]',
-  'active:border-[var(--button-on-solid)] active:text-[var(--button-on-solid)] active:bg-[var(--button-fill-pressed)]',
-  'disabled:border-[var(--button-neutral-600)] disabled:bg-[var(--color-surface-primary)] disabled:text-[var(--button-neutral-600)]',
+  'active:border-transparent active:text-[var(--button-on-solid)] active:bg-[var(--button-fill-pressed)]',
+  'disabled:border-transparent disabled:bg-[var(--button-disabled-primary-bg)] disabled:text-[var(--button-disabled-primary-text)]',
 )
 
 const interactiveTertiary = cn(
   baseFlex,
   focusRing,
-  'border-transparent bg-transparent text-[var(--button-fill)]',
+  'border-transparent bg-[var(--color-surface-primary)] text-[var(--button-label-alt)]',
   'hover:text-[var(--button-on-solid)] hover:bg-[var(--button-fill-hover)]',
   'active:text-[var(--button-on-solid)] active:bg-[var(--button-fill-pressed)]',
-  'disabled:bg-[var(--color-surface-primary)] disabled:text-[var(--button-neutral-500)]',
+  'disabled:bg-[var(--button-disabled-primary-bg)] disabled:text-[var(--button-disabled-primary-text)]',
 )
 
 function lockedPrimary(state: ButtonPreviewState): string {
   if (state === 'disabled') {
-    return cn(
-      baseFlex,
-      focusRing,
-      'border-transparent bg-[var(--button-disabled-primary-bg)] text-[var(--button-disabled-primary-text)]',
-    )
+    return cn(baseFlex, focusRing, disabledSolid)
   }
   if (state === 'default') {
     return cn(baseFlex, focusRing, 'border-transparent bg-[var(--button-fill)] text-[var(--button-on-solid)]')
@@ -139,17 +144,13 @@ function lockedPrimary(state: ButtonPreviewState): string {
 
 function lockedSecondary(state: ButtonPreviewState): string {
   if (state === 'disabled') {
-    return cn(
-      baseFlex,
-      focusRing,
-      'bg-[var(--color-surface-primary)] border-[var(--button-neutral-600)] text-[var(--button-neutral-600)]',
-    )
+    return cn(baseFlex, focusRing, disabledSolid)
   }
   if (state === 'default') {
     return cn(
       baseFlex,
       focusRing,
-      'bg-[var(--color-surface-primary)] border-[var(--button-fill)] text-[var(--button-fill)]',
+      'bg-[var(--color-surface-primary)] border-[var(--button-fill)] text-[var(--button-label-alt)]',
     )
   }
   if (state === 'hover') {
@@ -162,23 +163,19 @@ function lockedSecondary(state: ButtonPreviewState): string {
   return cn(
     baseFlex,
     focusRing,
-    'border-[var(--button-on-solid)] bg-[var(--button-fill-pressed)] text-[var(--button-on-solid)]',
+    'border-transparent bg-[var(--button-fill-pressed)] text-[var(--button-on-solid)]',
   )
 }
 
 function lockedTertiary(state: ButtonPreviewState): string {
   if (state === 'disabled') {
-    return cn(
-      baseFlex,
-      focusRing,
-      'border-transparent bg-[var(--color-surface-primary)] text-[var(--button-neutral-500)]',
-    )
+    return cn(baseFlex, focusRing, disabledSolid)
   }
   if (state === 'default') {
     return cn(
       baseFlex,
       focusRing,
-      'border-transparent bg-[var(--color-surface-primary)] text-[var(--button-fill)]',
+      'border-transparent bg-[var(--color-surface-primary)] text-[var(--button-label-alt)]',
     )
   }
   if (state === 'hover') {
@@ -218,7 +215,13 @@ export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disable
   variant?: ButtonVariant
   /** Swaps `--button-fill*` to the matching `--color-action-{tone}*` tokens. */
   actionTone?: ButtonActionTone
+  /** @deprecated Ignored — height hugs `buttonTypography` + spacing/8. */
   size?: ButtonSize
+  /**
+   * Typography token for the label.
+   * Drives button height together with spacing/8 padding. Default: body-main (Figma baseline).
+   */
+  buttonTypography?: ButtonTypography
   icon?: ButtonIcon
   previewState?: ButtonPreviewState
   disabled?: boolean
@@ -233,7 +236,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   {
     variant = 'primary',
     actionTone = 'primary',
-    size = 'md',
+    size: _size = 'md',
+    buttonTypography = 'body-main',
     icon = 'none',
     previewState,
     disabled,
@@ -245,9 +249,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
   },
   ref,
 ) {
+  void _size
   const rootClass = cn(
     rootClassName(variant, previewState, disabled),
-    sizeLayout[size].root,
+    layoutClass,
+    typeClassByTypography[buttonTypography],
     previewState != null ? 'pointer-events-none select-none' : null,
     className,
   )
@@ -266,9 +272,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       style={{ ...actionToneStyle(actionTone), ...style }}
       {...rest}
     >
-      {showLeft ? <span className={cn(sizeLayout[size].iconWrap, 'scale-x-[-1]')}>{icn}</span> : null}
+      {showLeft ? <span className={cn(aceChevronIconClass, 'scale-x-[-1]')}>{icn}</span> : null}
       <span className="whitespace-nowrap">{children}</span>
-      {showRight ? <span className={sizeLayout[size].iconWrap}>{icn}</span> : null}
+      {showRight ? <span className={aceChevronIconClass}>{icn}</span> : null}
     </button>
   )
 })

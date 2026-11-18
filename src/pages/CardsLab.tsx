@@ -80,8 +80,8 @@ function CardsChangelog() {
           </li>
           <li>
             Default → Hover shadow now uses ACE Drop Shadow XS → XL (
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code>) instead of a hardcoded
+            <code className="text-[var(--color-text-primary)]">--shadow-xs</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">--shadow-xl</code>) instead of a hardcoded
             12px blur.
           </li>
           <li>
@@ -210,8 +210,8 @@ export function CardsLab() {
             <code className="text-[var(--color-text-primary)]">--color-text-primary</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-action-primary</code>; shadows{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xl</code>.
+            <code className="text-[var(--color-text-primary)]">--shadow-xs</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">--shadow-xl</code>.
           </li>
           <li>
             Badge: <code className="text-[var(--color-text-primary)]">--badge-purple-*</code> (Figma{' '}

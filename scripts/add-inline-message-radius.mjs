@@ -80,11 +80,11 @@ if (!colorCss.includes('--radius-component-inline-message')) {
 const variablesPath = path.join(root, 'src/styles/variables.css')
 let variables = fs.readFileSync(variablesPath, 'utf8')
 variables = variables.replace(
-  /--ace-inline-message-radius:\s*[^;]+;/,
-  '--ace-inline-message-radius: var(--radius-component-inline-message);',
+  /--inline-message-radius:\s*[^;]+;/,
+  '--inline-message-radius: var(--radius-component-inline-message);',
 )
 fs.writeFileSync(variablesPath, variables)
-console.log('updated variables.css --ace-inline-message-radius')
+console.log('updated variables.css --inline-message-radius')
 
 const gen = spawnSync(process.execPath, ['scripts/generate-tokens-lab-data.mjs'], {
   cwd: root,

@@ -119,9 +119,11 @@ export function InlineMessagesLab() {
             Text - <code className="text-[var(--color-text-primary)]">--inline-message-text</code> (Caption Regular)
           </li>
           <li>
-            Tones - <code className="text-[var(--color-text-primary)]">--inline-message-*-bg</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">*-border</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">*-icon</code> for error, success, info, warning
+            Tones - <code className="text-[var(--color-text-primary)]">--inline-message-*-bg/border/icon</code>{' '}
+            map to{' '}
+            <code className="text-[var(--color-text-primary)]">
+              colors/badges &amp; inline messages/&#123;red|green|purple|orange&#125;-*
+            </code>
           </li>
           <li>
             Icons - Material Symbols <code className="text-[var(--color-text-primary)]">error</code>,{' '}
@@ -148,7 +150,7 @@ export function InlineMessagesLab() {
               </li>
               <li>
                 Temporary compat: <code className="text-[var(--color-text-primary)]">AceInlineMessage</code> export and{' '}
-                <code className="text-[var(--color-text-primary)]">--ace-inline-message-*</code> aliases still resolve.
+                <code className="text-[var(--color-text-primary)]">--inline-message-*</code> aliases still resolve.
               </li>
             </ul>
           </article>

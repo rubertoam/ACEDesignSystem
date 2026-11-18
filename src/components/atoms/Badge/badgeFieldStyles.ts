@@ -45,21 +45,21 @@ export const badgeStatusDotClass =
 /** Caption Semi Bold - Figma Badge label (typography/body/body-secondary). */
 export const badgeStatusLabelClass = cn(
   'shrink-0 whitespace-nowrap',
-  '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+  '[font:var(--type-caption-semi-bold)] [letter-spacing:var(--type-caption-semi-bold-tracking)]',
   'text-[var(--badge-label)]',
 )
 
 /** Same Caption Semi Bold treatment as pills; color from variant tokens. */
 export const badgeTagLabelClass = cn(
   'shrink-0 whitespace-nowrap',
-  '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+  '[font:var(--type-caption-semi-bold)] [letter-spacing:var(--type-caption-semi-bold-tracking)]',
   'text-[var(--badge-tag-label)]',
 )
 
 export const badgeWarningIconClass = cn(
   'inline-flex size-[var(--badge-tag-warning-icon-size)] shrink-0 items-center justify-center rounded-full',
   'bg-[var(--badge-tag-warning-icon-bg)]',
-  '[font:var(--ace-type-footer-02-bold)] [letter-spacing:var(--ace-type-footer-02-bold-tracking)]',
+  '[font:var(--type-micro-bold)] [letter-spacing:var(--type-micro-bold-tracking)]',
   'text-[var(--badge-tag-warning-icon-fg)]',
 )
 

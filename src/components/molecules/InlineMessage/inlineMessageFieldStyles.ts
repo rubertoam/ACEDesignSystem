@@ -17,7 +17,7 @@ export const inlineMessageShellClass = cn(
 )
 
 export const inlineMessageTextClass = cn(
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
   'min-w-0 text-[var(--inline-message-text)]',
 )
 

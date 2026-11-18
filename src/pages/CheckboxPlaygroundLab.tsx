@@ -112,9 +112,9 @@ function CheckboxesChangelog() {
           </li>
           <li>
             Label type: Caption/Regular (
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>) at Small; Body
+            <code className="text-[var(--color-text-primary)]">--type-caption-regular</code>) at Small; Body
             / Regular (
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>) at Medium and
+            <code className="text-[var(--color-text-primary)]">--type-body-regular</code>) at Medium and
             Large. Box sizes 16 / 20 / 24; Large stroke 1.5px and radius{' '}
             <code className="text-[var(--color-text-primary)]">--radius-sm</code>.
           </li>
@@ -183,7 +183,7 @@ export function CheckboxPlaygroundLab() {
     <ComponentLabPage
       qa={checkboxLabQa}
       title="Checkboxes"
-      description="ACE Design System v.3 checkboxes (Figma 317:1492 / set 322:1747): with or without text; small / medium / large (16 / 20 / 24); regular (brand border), hover (lavender fill), active (brand fill + white inset), disabled, disabled selected. Colors and type wired to semantic --color-* and --ace-type-* tokens."
+      description="ACE Design System v.3 checkboxes (Figma 317:1492 / set 322:1747): with or without text; small / medium / large (16 / 20 / 24); regular (brand border), hover (lavender fill), active (brand fill + white inset), disabled, disabled selected. Colors and type wired to semantic --color-* and --type-* tokens."
       examplesToolbar={toolbar}
       examples={
         <section className="space-y-5">
@@ -194,7 +194,7 @@ export function CheckboxPlaygroundLab() {
               hover chrome; Active is checked. Use the controls above for live hover.
             </p>
           </div>
-          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--lab-shadow-sm)]">
             <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
@@ -282,8 +282,8 @@ import { aceCheckboxLabelClass } from '../components/atoms/Checkbox/checkboxFiel
             <code className="text-[var(--color-text-primary)]">--radius-sm</code> (lg).
           </li>
           <li>
-            Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code> (sm);{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code> (md/lg).
+            Type: <code className="text-[var(--color-text-primary)]">--type-caption-regular</code> (sm);{' '}
+            <code className="text-[var(--color-text-primary)]">--type-body-regular</code> (md/lg).
           </li>
         </ul>
       }

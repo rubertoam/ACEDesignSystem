@@ -34,7 +34,7 @@ function PrimitiveFamilySection({ family }: { family: ColorPaletteFamily }) {
 
 export function ColorPaletteView({ families }: { families: ColorPaletteFamily[] }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--shadow-sm)] sm:px-8">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--lab-shadow-sm)] sm:px-8">
       {families.map((family) => (
         <PrimitiveFamilySection key={family.id} family={family} />
       ))}

@@ -2,9 +2,9 @@ import { useId, type ReactNode } from 'react'
 import { cn } from '../../../lib/cn'
 
 const tabLabelActive =
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]'
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]'
 const tabLabelInactive =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
 export type TabItem = {
   id: string
@@ -69,8 +69,8 @@ export function Tabs({
             onClick={() => onValueChange(item.id)}
             className={cn(
               'border-0 bg-transparent p-0 outline-none transition-colors',
-              'focus-visible:rounded-[var(--radius-sm)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
-              'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+              'focus-visible:rounded-[var(--radius-sm)] focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]',
+              'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)]',
               'disabled:cursor-not-allowed disabled:opacity-50',
               isVertical
                 ? cn(
@@ -84,7 +84,7 @@ export function Tabs({
               <>
                 {selected ? (
                   <span
-                    className="h-[var(--tabs-vertical-indicator-height)] w-[var(--tabs-vertical-indicator-width)] shrink-0 rounded-t-[var(--tabs-indicator-radius)] bg-[var(--tabs-indicator-bg)]"
+                    className="h-[var(--tabs-vertical-indicator-height)] w-[var(--tabs-vertical-indicator-width)] shrink-0 rounded-t-[var(--tabs-indicator-radius)] bg-[var(--tabs-vertical-indicator-bg)]"
                     aria-hidden
                   />
                 ) : null}
@@ -94,7 +94,7 @@ export function Tabs({
                     selected ? tabLabelActive : tabLabelInactive,
                     selected
                       ? 'text-[var(--tabs-text-active)]'
-                      : 'text-[var(--tabs-text-inactive)] hover:text-[var(--screening-text-primary)]',
+                      : 'text-[var(--tabs-text-inactive)] hover:text-[var(--color-text-primary)]',
                   )}
                 >
                   {item.label}
@@ -108,7 +108,7 @@ export function Tabs({
                     selected ? tabLabelActive : tabLabelInactive,
                     selected
                       ? 'text-[var(--tabs-text-active)]'
-                      : 'text-[var(--tabs-text-inactive)] hover:text-[var(--screening-text-primary)]',
+                      : 'text-[var(--tabs-text-inactive)] hover:text-[var(--color-text-primary)]',
                   )}
                 >
                   {item.label}

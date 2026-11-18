@@ -12,7 +12,7 @@ import { cn } from './cn'
 
 /** Matches ACE field labels above controls (e.g. Data Table “Context”). */
 export const labControlLegendClass = cn(
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
   'text-[var(--screening-text-primary)]',
 )
 
@@ -29,14 +29,14 @@ export function LabControlField({
     <fieldset className={cn('min-w-0 border-0 p-0', className)}>
       {/* Legend margin is unreliable in fieldsets - space the control group instead. */}
       <legend className={cn(labControlLegendClass, 'p-0')}>{label}</legend>
-      <div className="mt-[var(--ace-section-label-gap)]">{children}</div>
+      <div className="mt-[var(--section-label-gap)]">{children}</div>
     </fieldset>
   )
 }
 
 const labSegmentedEase =
-  'ease-[var(--ace-motion-ease-standard)] motion-reduce:transition-none motion-reduce:duration-0'
-const labSegmentedDuration = 'duration-[var(--ace-motion-duration-medium)]'
+  'ease-[var(--motion-ease-standard)] motion-reduce:transition-none motion-reduce:duration-0'
+const labSegmentedDuration = 'duration-[var(--motion-duration-medium)]'
 
 /** Segmented control with sliding selection pill (lab theme toggle and similar). */
 export function LabSegmentedToggle<T extends string>({
@@ -59,7 +59,7 @@ export function LabSegmentedToggle<T extends string>({
     options.findIndex((opt) => opt.value === value),
   )
   const segmentCount = options.length
-  const inset = 'var(--ace-lab-segmented-padding)'
+  const inset = 'var(--lab-segmented-padding)'
   const segmentWidth = `calc((100% - (${inset} * 2)) / ${segmentCount})`
 
   return (
@@ -69,15 +69,15 @@ export function LabSegmentedToggle<T extends string>({
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
         className={cn(
-          'relative inline-grid w-fit max-w-full overflow-visible rounded-[var(--radius-md)] border border-solid border-[var(--ace-lab-segmented-track-border)] bg-[var(--ace-lab-segmented-track-bg)]',
-          'p-[var(--ace-lab-segmented-padding)]',
+          'relative inline-grid w-fit max-w-full overflow-visible rounded-[var(--radius-md)] border border-solid border-[var(--lab-segmented-track-border)] bg-[var(--lab-segmented-track-bg)]',
+          'p-[var(--lab-segmented-padding)]',
         )}
         style={{ gridTemplateColumns: `repeat(${segmentCount}, minmax(0, 1fr))` }}
       >
         <div
           aria-hidden
           className={cn(
-            'pointer-events-none absolute z-0 rounded-[var(--radius-sm)] bg-[var(--ace-lab-segmented-indicator-bg)] shadow-[var(--ace-lab-segmented-indicator-shadow)]',
+            'pointer-events-none absolute z-0 rounded-[var(--radius-sm)] bg-[var(--lab-segmented-indicator-bg)] shadow-[var(--lab-segmented-indicator-shadow)]',
             'transition-transform will-change-transform',
             labSegmentedDuration,
             labSegmentedEase,
@@ -228,7 +228,7 @@ export function LabSelect<T extends string>({
 
   return (
     <fieldset className={cn('w-max min-w-0 shrink-0 border-0 p-0', className)} disabled={disabled}>
-      <legend className={cn(labControlLegendClass, 'mb-[var(--ace-section-label-gap)] block w-full')}>
+      <legend className={cn(labControlLegendClass, 'mb-[var(--section-label-gap)] block w-full')}>
         {label}
       </legend>
       <DropdownMenu
@@ -303,7 +303,7 @@ export function LabMultiSelect<T extends string>({
 
   return (
     <fieldset className={cn('w-max min-w-0 shrink-0 border-0 p-0', className)} disabled={disabled}>
-      <legend className={cn(labControlLegendClass, 'mb-[var(--ace-section-label-gap)] block w-full')}>
+      <legend className={cn(labControlLegendClass, 'mb-[var(--section-label-gap)] block w-full')}>
         {label}
       </legend>
       <DropdownMenu

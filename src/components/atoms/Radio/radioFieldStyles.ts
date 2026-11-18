@@ -23,7 +23,7 @@ const aceRadioIndicatorSize: Record<RadioSize, string> = {
 /** Circular control (inner span inside the item button). */
 export function aceRadioControlClass(size: RadioSize = 'md'): string {
   return cn(
-    'relative box-border shrink-0 rounded-full border border-solid bg-[var(--radio-bg-inner)] p-0 leading-[0] transition-colors duration-200 ease-out',
+    'relative box-border shrink-0 rounded-[var(--radio-radius-inner,9999px)] border border-solid bg-[var(--radio-bg-inner)] p-0 leading-[0] transition-colors duration-200 ease-out',
     aceRadioControlSize[size],
     'border-[var(--radio-border-default)]',
     'group-data-[state=unchecked]:group-hover:border-[var(--radio-border-hover)] group-data-[state=unchecked]:group-hover:bg-[var(--radio-surface-hover)]',
@@ -44,7 +44,7 @@ export function aceRadioIndicatorClass(size: RadioSize = 'md'): string {
 export type RadioFieldState = 'default' | 'hover' | 'active' | 'disabled'
 
 const aceRadioFieldShell =
-  'inline-flex w-fit max-w-full min-w-0 items-center rounded-[var(--radius-md)] p-3'
+  'inline-flex w-fit max-w-full min-w-0 items-center rounded-[var(--radio-radius-container,var(--radius-md))] p-[var(--radio-inset,0.75rem)]'
 
 /** Static field shell for documentation matrices (Figma Radio Buttons 331:1755 - With background). */
 export function aceRadioFieldClass(state: RadioFieldState): string {

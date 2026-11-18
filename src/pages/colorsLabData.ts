@@ -926,6 +926,30 @@ export const COLOR_PRIMITIVE_FAMILIES: ColorPaletteFamily[] = [
     ]
   },
   {
+    "id": "input",
+    "title": "Input",
+    "swatches": [
+      {
+        "shade": "error",
+        "hex": "#EF4444",
+        "tokenPath": "color/input/error",
+        "cssVar": "--primitive-color-input-error"
+      },
+      {
+        "shade": "placeholder",
+        "hex": "#BCBCCA",
+        "tokenPath": "color/input/placeholder",
+        "cssVar": "--primitive-color-input-placeholder"
+      },
+      {
+        "shade": "value",
+        "hex": "#22222B",
+        "tokenPath": "color/input/value",
+        "cssVar": "--primitive-color-input-value"
+      }
+    ]
+  },
+  {
     "id": "shades",
     "title": "Shades",
     "swatches": [
@@ -976,8 +1000,8 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-bg-tertiary",
         "alias": "color/neutral/200",
         "hex": "#E4E6EA",
-        "darkAlias": "color/dark/600",
-        "darkHex": "#282E33"
+        "darkAlias": "color/dark/200",
+        "darkHex": "#596773"
       },
       {
         "tokenPath": "colors/bg/inverse",
@@ -1009,8 +1033,8 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-bg-brand-hover",
         "alias": "color/primary/50",
         "hex": "#EFEEF9",
-        "darkAlias": "color/primary/900",
-        "darkHex": "#0F0B21"
+        "darkAlias": "color/primary/400",
+        "darkHex": "#523EB9"
       },
       {
         "tokenPath": "colors/bg/disabled",
@@ -1025,8 +1049,8 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-bg-disabled-subtle",
         "alias": "color/neutral/100",
         "hex": "#EFF0F2",
-        "darkAlias": "color/neutral/800",
-        "darkHex": "#23262C"
+        "darkAlias": "color/dark/600",
+        "darkHex": "#282E33"
       },
       {
         "tokenPath": "colors/bg/success",
@@ -1043,6 +1067,14 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "hex": "#FDF3EA",
         "darkAlias": "color/warning/900",
         "darkHex": "#391E06"
+      },
+      {
+        "tokenPath": "colors/bg/warning-alternate",
+        "cssVar": "--color-bg-warning-alternate",
+        "alias": "color/warning 2/50",
+        "hex": "#FFFCF3",
+        "darkAlias": "color/warning 2/800",
+        "darkHex": "#856200"
       },
       {
         "tokenPath": "colors/bg/error",
@@ -1084,6 +1116,22 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "darkAlias": "color/dark/750",
         "darkHex": "#20232A",
         "bordered": true
+      },
+      {
+        "tokenPath": "colors/surface/focused",
+        "cssVar": "--color-surface-focused",
+        "alias": "color/primary/50",
+        "hex": "#EFEEF9",
+        "darkAlias": "color/primary/50",
+        "darkHex": "#EFEEF9"
+      },
+      {
+        "tokenPath": "colors/surface/disabled",
+        "cssVar": "--color-surface-disabled",
+        "alias": "color/neutral/100",
+        "hex": "#EFF0F2",
+        "darkAlias": "color/dark/600",
+        "darkHex": "#282E33"
       }
     ]
   },
@@ -1148,6 +1196,31 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "hex": "#0672A3",
         "darkAlias": "color/blue/300",
         "darkHex": "#31BAF7"
+      },
+      {
+        "tokenPath": "colors/text/button label",
+        "cssVar": "--color-text-button-label",
+        "alias": "color/shades/0",
+        "hex": "#FFFFFF",
+        "darkAlias": "color/neutral/100",
+        "darkHex": "#EFF0F2",
+        "bordered": true
+      },
+      {
+        "tokenPath": "colors/text/button label - alt",
+        "cssVar": "--color-text-button-label-alt",
+        "alias": "color/primary/400",
+        "hex": "#523EB9",
+        "darkAlias": "color/primary/300",
+        "darkHex": "#7868CD"
+      },
+      {
+        "tokenPath": "colors/text/error message",
+        "cssVar": "--color-text-error-message",
+        "alias": "color/error/500",
+        "hex": "#DC264B",
+        "darkAlias": "color/error/400",
+        "darkHex": "#EA7D93"
       }
     ]
   },
@@ -1255,8 +1328,8 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-action-primary-hover",
         "alias": "color/primary/600",
         "hex": "#312570",
-        "darkAlias": "color/primary/300",
-        "darkHex": "#7868CD"
+        "darkAlias": "color/primary/600",
+        "darkHex": "#312570"
       },
       {
         "tokenPath": "colors/action/primary - hover - subtle",
@@ -1311,16 +1384,16 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-action-success",
         "alias": "color/success/500",
         "hex": "#87B531",
-        "darkAlias": "color/success/400",
-        "darkHex": "#A1CF4C"
+        "darkAlias": "color/success/700",
+        "darkHex": "#435B18"
       },
       {
         "tokenPath": "colors/action/success-hover",
         "cssVar": "--color-action-success-hover",
         "alias": "color/success/600",
         "hex": "#658825",
-        "darkAlias": "color/success/300",
-        "darkHex": "#B7DA75"
+        "darkAlias": "color/success/400",
+        "darkHex": "#A1CF4C"
       },
       {
         "tokenPath": "colors/action/success-pressed",
@@ -1335,16 +1408,16 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-action-error",
         "alias": "color/error/500",
         "hex": "#DC264B",
-        "darkAlias": "color/error/400",
-        "darkHex": "#EA7D93"
+        "darkAlias": "color/error/700",
+        "darkHex": "#8B162E"
       },
       {
         "tokenPath": "colors/action/error-hover",
         "cssVar": "--color-action-error-hover",
         "alias": "color/error/600",
         "hex": "#C21F40",
-        "darkAlias": "color/error/300",
-        "darkHex": "#EF9DAE"
+        "darkAlias": "color/error/400",
+        "darkHex": "#EA7D93"
       },
       {
         "tokenPath": "colors/action/error-pressed",
@@ -1359,16 +1432,16 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-action-warning",
         "alias": "color/warning/500",
         "hex": "#E67E23",
-        "darkAlias": "color/warning/400",
-        "darkHex": "#EB974D"
+        "darkAlias": "color/warning/700",
+        "darkHex": "#934E11"
       },
       {
         "tokenPath": "colors/action/warning-hover",
         "cssVar": "--color-action-warning-hover",
         "alias": "color/warning/600",
         "hex": "#C16616",
-        "darkAlias": "color/warning/300",
-        "darkHex": "#F0AF77"
+        "darkAlias": "color/warning/400",
+        "darkHex": "#EB974D"
       },
       {
         "tokenPath": "colors/action/warning-pressed",
@@ -1377,6 +1450,30 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "hex": "#934E11",
         "darkAlias": "color/warning/200",
         "darkHex": "#F4C8A1"
+      },
+      {
+        "tokenPath": "colors/action/warning 2",
+        "cssVar": "--color-action-warning-2",
+        "alias": "color/warning 2/500",
+        "hex": "#FFBE0B",
+        "darkAlias": "color/warning 2/700",
+        "darkHex": "#C89200"
+      },
+      {
+        "tokenPath": "colors/action/warning 2-hover",
+        "cssVar": "--color-action-warning-2-hover",
+        "alias": "color/warning 2/600",
+        "hex": "#C89200",
+        "darkAlias": "color/warning 2/500",
+        "darkHex": "#FFBE0B"
+      },
+      {
+        "tokenPath": "colors/action/warning 2-pressed",
+        "cssVar": "--color-action-warning-2-pressed",
+        "alias": "color/warning 2/700",
+        "hex": "#C89200",
+        "darkAlias": "color/warning 2/200",
+        "darkHex": "#FFE8AA"
       },
       {
         "tokenPath": "colors/action/disabled",
@@ -1393,6 +1490,14 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "hex": "#E4E6EA",
         "darkAlias": "color/dark/500",
         "darkHex": "#2C333A"
+      },
+      {
+        "tokenPath": "colors/action/icon",
+        "cssVar": "--color-action-icon",
+        "alias": "color/neutral/900",
+        "hex": "#121316",
+        "darkAlias": "color/neutral/200",
+        "darkHex": "#E4E6EA"
       }
     ]
   },
@@ -1492,16 +1597,16 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
         "cssVar": "--color-icon-disabled",
         "alias": "color/neutral/500",
         "hex": "#949BAA",
-        "darkAlias": "color/error/500",
-        "darkHex": "#DC264B"
+        "darkAlias": "color/dark/200",
+        "darkHex": "#596773"
       },
       {
         "tokenPath": "colors/icon/hover",
         "cssVar": "--color-icon-hover",
         "alias": "color/primary/50",
         "hex": "#EFEEF9",
-        "darkAlias": "color/primary/800",
-        "darkHex": "#1A143B"
+        "darkAlias": "color/primary/700",
+        "darkHex": "#261C55"
       },
       {
         "tokenPath": "colors/icon/brand",
@@ -1531,152 +1636,198 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
     ]
   },
   {
-    "id": "badges",
-    "title": "Badges",
+    "id": "badges & inline messages",
+    "title": "Badges & inline messages",
     "tokens": [
       {
-        "tokenPath": "colors/badges/purple-fill",
-        "cssVar": "--color-badges-purple-fill",
+        "tokenPath": "colors/badges & inline messages/purple-fill",
+        "cssVar": "--color-badges-inline-messages-purple-fill",
         "alias": "color/primary/50",
         "hex": "#EFEEF9",
         "darkAlias": "color/primary/800",
         "darkHex": "#1A143B"
       },
       {
-        "tokenPath": "colors/badges/purple-border",
-        "cssVar": "--color-badges-purple-border",
+        "tokenPath": "colors/badges & inline messages/purple-border",
+        "cssVar": "--color-badges-inline-messages-purple-border",
         "alias": "color/primary/400",
         "hex": "#523EB9",
         "darkAlias": "color/primary/200",
         "darkHex": "#A296DC"
       },
       {
-        "tokenPath": "colors/badges/orange-fill",
-        "cssVar": "--color-badges-orange-fill",
+        "tokenPath": "colors/badges & inline messages/orange-fill",
+        "cssVar": "--color-badges-inline-messages-orange-fill",
         "alias": "color/warning/50",
         "hex": "#FDF3EA",
         "darkAlias": "color/warning/800",
         "darkHex": "#66360C"
       },
       {
-        "tokenPath": "colors/badges/orange-border",
-        "cssVar": "--color-badges-orange-border",
+        "tokenPath": "colors/badges & inline messages/orange-border",
+        "cssVar": "--color-badges-inline-messages-orange-border",
         "alias": "color/warning/500",
         "hex": "#E67E23",
         "darkAlias": "color/warning/200",
         "darkHex": "#F4C8A1"
       },
       {
-        "tokenPath": "colors/badges/green-fill",
-        "cssVar": "--color-badges-green-fill",
+        "tokenPath": "colors/badges & inline messages/green-fill",
+        "cssVar": "--color-badges-inline-messages-green-fill",
         "alias": "color/success/50",
         "hex": "#F8FBF1",
         "darkAlias": "color/success/800",
         "darkHex": "#222D0C"
       },
       {
-        "tokenPath": "colors/badges/green-border",
-        "cssVar": "--color-badges-green-border",
+        "tokenPath": "colors/badges & inline messages/green-border",
+        "cssVar": "--color-badges-inline-messages-green-border",
         "alias": "color/success/500",
         "hex": "#87B531",
         "darkAlias": "color/success/200",
         "darkHex": "#CCE59F"
       },
       {
-        "tokenPath": "colors/badges/gray-fill",
-        "cssVar": "--color-badges-gray-fill",
+        "tokenPath": "colors/badges & inline messages/gray-fill",
+        "cssVar": "--color-badges-inline-messages-gray-fill",
         "alias": "color/neutral/200",
         "hex": "#E4E6EA",
         "darkAlias": "color/neutral/800",
         "darkHex": "#23262C"
       },
       {
-        "tokenPath": "colors/badges/gray-border",
-        "cssVar": "--color-badges-gray-border",
+        "tokenPath": "colors/badges & inline messages/gray-border",
+        "cssVar": "--color-badges-inline-messages-gray-border",
         "alias": "color/neutral/700",
         "hex": "#464C59",
         "darkAlias": "color/neutral/300",
         "darkHex": "#DADCE1"
       },
       {
-        "tokenPath": "colors/badges/blue-fill",
-        "cssVar": "--color-badges-blue-fill",
+        "tokenPath": "colors/badges & inline messages/blue-fill",
+        "cssVar": "--color-badges-inline-messages-blue-fill",
         "alias": "color/blue/50",
         "hex": "#EAF8FE",
         "darkAlias": "color/blue/800",
         "darkHex": "#021C29"
       },
       {
-        "tokenPath": "colors/badges/blue-border",
-        "cssVar": "--color-badges-blue-border",
+        "tokenPath": "colors/badges & inline messages/blue-border",
+        "cssVar": "--color-badges-inline-messages-blue-border",
         "alias": "color/blue/400",
         "hex": "#089DE1",
         "darkAlias": "color/blue/200",
         "darkHex": "#6FCEFA"
       },
       {
-        "tokenPath": "colors/badges/yellow-fill",
-        "cssVar": "--color-badges-yellow-fill",
+        "tokenPath": "colors/badges & inline messages/yellow-fill",
+        "cssVar": "--color-badges-inline-messages-yellow-fill",
         "alias": "color/warning 2/50",
         "hex": "#FFFCF3",
         "darkAlias": "color/warning 2/800",
         "darkHex": "#856200"
       },
       {
-        "tokenPath": "colors/badges/yellow-border",
-        "cssVar": "--color-badges-yellow-border",
+        "tokenPath": "colors/badges & inline messages/yellow-border",
+        "cssVar": "--color-badges-inline-messages-yellow-border",
         "alias": "color/warning 2/500",
         "hex": "#FFBE0B",
         "darkAlias": "color/warning 2/200",
         "darkHex": "#FFE8AA"
       },
       {
-        "tokenPath": "colors/badges/pink-fill",
-        "cssVar": "--color-badges-pink-fill",
+        "tokenPath": "colors/badges & inline messages/pink-fill",
+        "cssVar": "--color-badges-inline-messages-pink-fill",
         "alias": "color/secondary/50",
         "hex": "#FCF2FB",
         "darkAlias": "color/secondary/800",
         "darkHex": "#250A24"
       },
       {
-        "tokenPath": "colors/badges/pink-border",
-        "cssVar": "--color-badges-pink-border",
+        "tokenPath": "colors/badges & inline messages/pink-border",
+        "cssVar": "--color-badges-inline-messages-pink-border",
         "alias": "color/secondary/500",
         "hex": "#92278F",
         "darkAlias": "color/secondary/200",
         "darkHex": "#E7A5E5"
       },
       {
-        "tokenPath": "colors/badges/teal-fill",
-        "cssVar": "--color-badges-teal-fill",
+        "tokenPath": "colors/badges & inline messages/teal-fill",
+        "cssVar": "--color-badges-inline-messages-teal-fill",
         "alias": "color/teal/50",
         "hex": "#F0FBFC",
         "darkAlias": "color/teal/800",
         "darkHex": "#092B2E"
       },
       {
-        "tokenPath": "colors/badges/teal-border",
-        "cssVar": "--color-badges-teal-border",
+        "tokenPath": "colors/badges & inline messages/teal-border",
+        "cssVar": "--color-badges-inline-messages-teal-border",
         "alias": "color/teal/500",
         "hex": "#22ADB6",
         "darkAlias": "color/teal/200",
         "darkHex": "#93E5EB"
       },
       {
-        "tokenPath": "colors/badges/red-fill",
-        "cssVar": "--color-badges-red-fill",
+        "tokenPath": "colors/badges & inline messages/red-fill",
+        "cssVar": "--color-badges-inline-messages-red-fill",
         "alias": "color/error/50",
         "hex": "#FDF4F6",
         "darkAlias": "color/error/800",
         "darkHex": "#530D1C"
       },
       {
-        "tokenPath": "colors/badges/red-border",
-        "cssVar": "--color-badges-red-border",
+        "tokenPath": "colors/badges & inline messages/red-border",
+        "cssVar": "--color-badges-inline-messages-red-border",
         "alias": "color/error/500",
         "hex": "#DC264B",
         "darkAlias": "color/error/200",
         "darkHex": "#F5BEC9"
+      }
+    ]
+  },
+  {
+    "id": "input",
+    "title": "Input",
+    "tokens": [
+      {
+        "tokenPath": "colors/input/placeholder",
+        "cssVar": "--color-input-placeholder",
+        "alias": "color/input/placeholder",
+        "hex": "#BCBCCA",
+        "darkAlias": "color/input/placeholder",
+        "darkHex": "#BCBCCA"
+      },
+      {
+        "tokenPath": "colors/input/value",
+        "cssVar": "--color-input-value",
+        "alias": "color/input/value",
+        "hex": "#22222B",
+        "darkAlias": "color/input/value",
+        "darkHex": "#22222B"
+      },
+      {
+        "tokenPath": "colors/input/error",
+        "cssVar": "--color-input-error",
+        "alias": "color/input/error",
+        "hex": "#EF4444",
+        "darkAlias": "color/input/error",
+        "darkHex": "#EF4444"
+      }
+    ]
+  },
+  {
+    "id": "progress",
+    "title": "Progress",
+    "tokens": [
+      {
+        "tokenPath": "colors/progress/foreground",
+        "cssVar": "--color-progress-foreground",
+        "alias": "color/neutral/50",
+        "hex": "#FAFAFB",
+        "darkAlias": "color/neutral/50",
+        "darkHex": "#FAFAFB",
+        "bordered": true,
+        "darkBordered": true
       }
     ]
   }

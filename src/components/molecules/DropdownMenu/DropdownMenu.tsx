@@ -57,7 +57,7 @@ export type DropdownMenuSubItem =
       matchHighlight?: string
       /**
        * Soft row fill - `true` / selected → bg/brand-hover; `hover` → bg/secondary (Search Results);
-       * `warning` → `--ace-warning-50`.
+       * `warning` → `--color-warning-50`.
        */
       emphasized?: boolean | 'warning' | 'hover'
     }
@@ -145,40 +145,40 @@ export type DropdownMenuPanelProps = {
 
 /** Body/Regular · typography/body/body-main (14) - menu item + search field labels */
 const itemType = cn(
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
 )
 
 const labelType = cn(
-  'px-[var(--space-3)] py-[var(--space-2)]',
-  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  'px-[var(--dropdown-menu-item-px)] py-[var(--dropdown-menu-item-py)]',
+  '[font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)]',
   'text-[var(--color-text-muted)]',
 )
 
 const menuHeaderClass = cn(
   itemType,
-  'px-[var(--space-3)] pb-[var(--space-2)] pt-[var(--space-3)] text-[var(--color-text-primary)]',
+  'px-[var(--dropdown-menu-item-px)] pb-[var(--dropdown-menu-item-py)] pt-[var(--dropdown-menu-item-px)] text-[var(--color-text-primary)]',
 )
 
 const sectionHeaderClass = cn(
   'uppercase text-[var(--color-text-primary)]',
-  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]',
+  '[font:var(--type-caption-bold)] [letter-spacing:var(--type-caption-bold-tracking)]',
 )
 
 /** Figma Select All / Deselect All - Footnote/Regular · colors/text/primary */
 const sectionActionClass = cn(
   'text-[var(--dropdown-menu-action,var(--color-text-primary))] hover:underline',
-  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  '[font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)]',
 )
 
 /** Figma Reset / Reset All - Caption/Regular · colors/text/primary */
 const footerActionClass = cn(
   'text-[var(--dropdown-menu-action,var(--color-text-primary))] hover:underline',
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
 )
 
 export const dropdownMenuPanelClass = cn(
   /* Above dialog overlay (z-200) so menus open on top of modals */
-  'z-[300] overflow-hidden rounded-[var(--radius-sm)] border border-solid border-[var(--dropdown-menu-border)] bg-[var(--dropdown-menu-surface,var(--color-surface-primary,#ffffff))]',
+  'z-[300] overflow-hidden rounded-[var(--radius-sm)] border-[length:var(--dropdown-menu-border-width)] border-solid border-[var(--dropdown-menu-border)] bg-[var(--dropdown-menu-surface,var(--color-surface-primary,#ffffff))]',
   'shadow-[var(--dropdown-menu-shadow)]',
 )
 
@@ -204,7 +204,10 @@ const itemClass = cn(
 
 const primaryItemClass = cn(itemClass, 'group gap-0 px-0')
 
-const paddedIndicatorItem = cn(itemClass, 'px-[var(--space-3)] py-[var(--space-2)] pl-8')
+const paddedIndicatorItem = cn(
+  itemClass,
+  'px-[var(--dropdown-menu-item-px)] py-[var(--dropdown-menu-item-py)] pl-8',
+)
 
 const assignmentCheckboxRow = cn(
   itemType,
@@ -228,21 +231,21 @@ function MenuRowPipe({ active }: { active?: boolean }) {
 
 const fieldSizeClass: Record<ButtonSize, string> = {
   sm: cn(
-    'min-h-9 gap-[var(--space-2)] px-[var(--dropdown-menu-trigger-px)] py-[var(--dropdown-menu-trigger-py)]',
-    '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+    'min-h-9 gap-[var(--dropdown-menu-trigger-gap)] px-[var(--dropdown-menu-trigger-px)] py-[var(--dropdown-menu-trigger-py)]',
+    '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
   ),
   md: cn(
-    'min-h-11 gap-[var(--space-2)] px-[var(--dropdown-menu-trigger-px)] py-[var(--dropdown-menu-trigger-py)]',
-    '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+    'min-h-11 gap-[var(--dropdown-menu-trigger-gap)] px-[var(--dropdown-menu-trigger-px)] py-[var(--dropdown-menu-trigger-py)]',
+    '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
   ),
   lg: cn(
-    'min-h-13 gap-[var(--space-2)] px-[var(--dropdown-menu-trigger-px)] py-3',
-    '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+    'min-h-13 gap-[var(--dropdown-menu-trigger-gap)] px-[var(--dropdown-menu-trigger-px)] py-3',
+    '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
   ),
 }
 
 const shortcutClass =
-  'ml-auto shrink-0 pl-4 [font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)] text-[var(--color-text-muted)]'
+  'ml-auto shrink-0 pl-4 [font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)] text-[var(--color-text-muted)]'
 
 function entryKey(entry: { id?: string; type: string }, i: number, extra?: string) {
   return entry.id ?? `${entry.type}-${i}-${extra ?? ''}`
@@ -253,7 +256,7 @@ function panelShellClass(panelWidth: DropdownMenuPanelWidth, className?: string)
 }
 
 function checkboxEmphasizedClass(emphasized?: boolean | 'warning' | 'hover') {
-  if (emphasized === 'warning') return 'bg-[var(--ace-warning-50)]'
+  if (emphasized === 'warning') return 'bg-[var(--color-warning-50)]'
   if (emphasized === 'hover') return 'bg-[var(--dropdown-menu-row-hover)]'
   if (emphasized) return 'bg-[var(--dropdown-menu-row-selected)]'
   return null
@@ -296,7 +299,14 @@ function MenuCheckboxRow({
       }}
     >
       {withPipe ? <MenuRowPipe active={isSelected} /> : null}
-      <span className={cn('flex min-w-0 flex-1 items-center gap-2', withPipe ? 'gap-3 p-2' : 'px-3 py-1')}>
+      <span
+        className={cn(
+          'flex min-w-0 flex-1 items-center gap-[var(--spacing-8)]',
+          withPipe
+            ? 'gap-[var(--spacing-12)] p-[var(--dropdown-menu-item-px)]'
+            : 'px-[var(--dropdown-menu-item-px)] py-[var(--spacing-4)]',
+        )}
+      >
         <Checkbox size="sm" checked={checked} disabled={disabled} tabIndex={-1} className="pointer-events-none" aria-hidden />
         <span className="min-w-0 flex-1 truncate text-left">
           {matchHighlight ? highlightMenuLabel(label, matchHighlight) : label}
@@ -330,7 +340,7 @@ function MenuToggleRow({
         if (!disabled) onCheckedChange(!checked)
       }}
     >
-      <span className="flex min-w-0 flex-1 items-center gap-2 px-3 py-1">
+      <span className="flex min-w-0 flex-1 items-center gap-[var(--spacing-8)] px-[var(--dropdown-menu-item-px)] py-[var(--spacing-4)]">
         <Toggle size="sm" checked={checked} disabled={disabled} tabIndex={-1} className="pointer-events-none" aria-hidden />
         <span className="min-w-0 flex-1 truncate text-left">{label}</span>
       </span>
@@ -362,12 +372,14 @@ function PrimaryMenuItem({
       <MenuRowPipe active={isSelected} />
       <span
         className={cn(
-          'flex min-w-0 flex-1 items-center gap-[var(--space-2)]',
-          compact ? 'px-3 py-1' : 'p-2',
-          (entry.shortcut || Icon) && 'justify-between gap-[var(--space-3)]',
+          'flex min-w-0 flex-1 items-center gap-[var(--spacing-8)]',
+          compact
+            ? 'px-[var(--dropdown-menu-item-px)] py-[var(--spacing-4)]'
+            : 'p-[var(--dropdown-menu-item-px)]',
+          (entry.shortcut || Icon) && 'justify-between gap-[var(--spacing-12)]',
         )}
       >
-        <span className="flex min-w-0 flex-1 items-center gap-[var(--space-2)]">
+        <span className="flex min-w-0 flex-1 items-center gap-[var(--spacing-8)]">
           {Icon ? <Icon className="size-4 shrink-0 text-[var(--dropdown-menu-icon)]" aria-hidden /> : null}
           <span className="min-w-0 truncate">{entry.label}</span>
         </span>
@@ -462,7 +474,10 @@ function MenuEntries({
 
     if (entry.type === 'footerAction') {
       return staticDisplay ? (
-        <div key={entryKey(entry, i)} className="flex justify-end px-[var(--space-3)] py-2">
+        <div
+          key={entryKey(entry, i)}
+          className="flex justify-end px-[var(--dropdown-menu-item-px)] py-[var(--dropdown-menu-item-py)]"
+        >
           <button type="button" className={footerActionClass} onClick={() => entry.onSelect?.()}>
             {entry.label}
           </button>
@@ -470,7 +485,10 @@ function MenuEntries({
       ) : (
         <DropdownMenuPrimitive.Item
           key={entryKey(entry, i)}
-          className={cn(footerActionClass, 'flex cursor-pointer justify-end px-[var(--space-3)] py-2 outline-none')}
+          className={cn(
+            footerActionClass,
+            'flex cursor-pointer justify-end px-[var(--dropdown-menu-item-px)] py-[var(--dropdown-menu-item-py)] outline-none',
+          )}
           onSelect={(e) => {
             preventMenuClose(e)
             entry.onSelect?.()
@@ -485,7 +503,7 @@ function MenuEntries({
       return (
         <div
           key={entryKey(entry, i)}
-          className="flex items-center justify-between gap-2 px-[var(--space-3)] py-2"
+          className="flex items-center justify-between gap-[var(--spacing-8)] px-[var(--dropdown-menu-item-px)] py-[var(--dropdown-menu-item-py)]"
           onPointerDown={preventMenuClose}
           onKeyDown={(e) => e.stopPropagation()}
         >
@@ -528,7 +546,7 @@ function MenuEntries({
             key={entryKey(entry, i)}
             className={cn(assignmentCheckboxRow, entry.disabled && 'cursor-not-allowed opacity-50')}
           >
-            <span className="flex min-w-0 flex-1 items-center gap-2 px-3 py-1">
+            <span className="flex min-w-0 flex-1 items-center gap-[var(--spacing-8)] px-[var(--dropdown-menu-item-px)] py-[var(--spacing-4)]">
               <Toggle size="sm" checked={entry.checked} disabled={entry.disabled} onCheckedChange={entry.onCheckedChange} />
               <span className="min-w-0 truncate">{entry.label}</span>
             </span>
@@ -572,7 +590,7 @@ function MenuEntries({
                   aria-disabled={opt.disabled || undefined}
                   className={cn(
                     paddedIndicatorItem,
-                    opt.imageUrl && 'gap-[var(--space-2)] pl-9',
+                    opt.imageUrl && 'gap-[var(--spacing-8)] pl-9',
                     opt.disabled && 'pointer-events-none opacity-50',
                     selected && 'bg-[var(--dropdown-menu-row-selected)]',
                   )}
@@ -616,7 +634,7 @@ function MenuEntries({
               disabled={opt.disabled}
               className={cn(
                 paddedIndicatorItem,
-                opt.imageUrl && 'gap-[var(--space-2)] pl-9',
+                opt.imageUrl && 'gap-[var(--spacing-8)] pl-9',
               )}
             >
               <span className="absolute left-2 top-1/2 size-4 -translate-y-1/2">
@@ -659,7 +677,14 @@ function MenuEntries({
             )}
           >
             {withPipe ? <MenuRowPipe active={isSelected} /> : null}
-            <span className={cn('flex min-w-0 flex-1 items-center gap-2', withPipe ? 'gap-3 p-2' : 'px-3 py-1')}>
+            <span
+              className={cn(
+                'flex min-w-0 flex-1 items-center gap-[var(--spacing-8)]',
+                withPipe
+                  ? 'gap-[var(--spacing-12)] p-[var(--dropdown-menu-item-px)]'
+                  : 'px-[var(--dropdown-menu-item-px)] py-[var(--spacing-4)]',
+              )}
+            >
               <Checkbox
                 size="sm"
                 checked={entry.checked}
@@ -696,7 +721,7 @@ function MenuEntries({
             <div
               className={cn(
                 itemClass,
-                'justify-between gap-[var(--space-2)] px-[var(--space-3)] py-[var(--space-2)] pr-[var(--space-2)]',
+                'justify-between gap-[var(--spacing-8)] px-[var(--dropdown-menu-item-px)] py-[var(--dropdown-menu-item-py)] pr-[var(--spacing-8)]',
                 entry.disabled && 'pointer-events-none opacity-50',
               )}
             >
@@ -718,7 +743,10 @@ function MenuEntries({
         <DropdownMenuPrimitive.Sub key={entryKey(entry, i)}>
           <DropdownMenuPrimitive.SubTrigger
             disabled={entry.disabled}
-            className={cn(itemClass, 'justify-between gap-[var(--space-2)] px-[var(--space-3)] py-[var(--space-2)] pr-[var(--space-2)]')}
+            className={cn(
+              itemClass,
+              'justify-between gap-[var(--spacing-8)] px-[var(--dropdown-menu-item-px)] py-[var(--dropdown-menu-item-py)] pr-[var(--spacing-8)]',
+            )}
           >
             <span className="min-w-0 truncate">{entry.label}</span>
             <MaterialSymbol name="keyboard_arrow_right" size="md" className={cn(aceChevronIconClass, 'opacity-70')} />

@@ -1,6 +1,9 @@
 /**
  * ACE Typography lab - Figma Typography page (node 2:5).
  * Style Sheet: 2651:5 · Typography Tokens: 5157:46 · Primitives: 5160:2 · Semantic: 5160:154
+ *
+ * Paths / aliases match tokens/figma Desktop JSON (Primitives + Semantic Light/Dark).
+ * Composed style-sheet shorthands live in typography-tokens.css as --type-{family}-*.
  */
 
 export type TypeWeight = 'regular' | 'semiBold' | 'bold'
@@ -9,7 +12,7 @@ export type StyleSheetSpecimen = {
   weight: TypeWeight
   label: string
   weightValue: number
-  /** Letter spacing as shown on the Style Sheet frame */
+  /** Letter spacing from JSON primitives (tight | normal) */
   trackingCss: string
 }
 
@@ -18,6 +21,10 @@ export type StyleSheetFamily = {
   title: string
   sizePx: number
   sizeRem: string
+  /** Semantic size token path used by composed --type-* styles */
+  semanticPath: string
+  /** CSS var for the semantic size */
+  sizeCssVar: string
   specimens: StyleSheetSpecimen[]
 }
 
@@ -28,6 +35,8 @@ export type TypographyTokenStyle = {
   metaLabel: string
   sizePx: number
   sizeRem: string
+  /** Semantic size CSS var from Desktop JSON */
+  sizeCssVar: string
   trackingCss: string
   weights: Array<{ weight: TypeWeight; label: string; weightValue: number }>
 }
@@ -78,68 +87,73 @@ const WEIGHTS: Array<{ weight: TypeWeight; label: string; weightValue: number }>
   { weight: 'bold', label: 'Bold', weightValue: 700 },
 ]
 
-/** Style Sheet - Figma node 2651:5 (Noto Sans; Regular / Semi Bold / Bold). */
+/** JSON letter-spacing primitives: tight = -4%, normal = 0% */
+const TRACKING_TIGHT = 'var(--typography-letter-spacing-tight)'
+const TRACKING_NORMAL = 'var(--typography-letter-spacing-normal)'
+
+function specimens(trackingCss: string): StyleSheetSpecimen[] {
+  return WEIGHTS.map((w) => ({ ...w, trackingCss }))
+}
+
+/**
+ * Style Sheet - Figma node 2651:5 (Noto Sans; Regular / Semi Bold / Bold).
+ * Sizes map 1:1 to Semantic typography/* aliases from Desktop JSON.
+ * Tracking uses only JSON letter-spacing tokens (tight on heading, normal elsewhere).
+ */
 export const TYPE_STYLE_SHEET_FAMILIES: StyleSheetFamily[] = [
   {
     id: 'heading',
     title: 'Heading',
     sizePx: 20,
     sizeRem: '1.25rem',
-    specimens: WEIGHTS.map((w) => ({
-      ...w,
-      trackingCss: '-0.04em',
-    })),
+    semanticPath: 'typography/heading/heading',
+    sizeCssVar: '--typography-heading-heading',
+    specimens: specimens(TRACKING_TIGHT),
   },
   {
     id: 'subheading',
     title: 'Subheading',
     sizePx: 16,
     sizeRem: '1rem',
-    specimens: WEIGHTS.map((w) => ({
-      ...w,
-      trackingCss: '-0.04em',
-    })),
+    semanticPath: 'typography/heading/subheading',
+    sizeCssVar: '--typography-heading-subheading',
+    specimens: specimens(TRACKING_NORMAL),
   },
   {
     id: 'body',
     title: 'Body',
     sizePx: 14,
     sizeRem: '0.875rem',
-    specimens: WEIGHTS.map((w) => ({
-      ...w,
-      trackingCss: '-0.04em',
-    })),
+    semanticPath: 'typography/body/body-main',
+    sizeCssVar: '--typography-body-body-main',
+    specimens: specimens(TRACKING_NORMAL),
   },
   {
     id: 'caption',
     title: 'Caption',
     sizePx: 12,
     sizeRem: '0.75rem',
-    specimens: WEIGHTS.map((w) => ({
-      ...w,
-      // Style Sheet: Regular uses −0.24px (−2%); Semi Bold / Bold have no tracking
-      trackingCss: w.weight === 'regular' ? '-0.02em' : '0',
-    })),
+    semanticPath: 'typography/body/body-secondary',
+    sizeCssVar: '--typography-body-body-secondary',
+    specimens: specimens(TRACKING_NORMAL),
   },
   {
     id: 'footnote',
     title: 'Footnote',
     sizePx: 10,
     sizeRem: '0.625rem',
-    specimens: WEIGHTS.map((w) => ({
-      ...w,
-      trackingCss: '-0.02em',
-    })),
+    semanticPath: 'typography/ui/footnote',
+    sizeCssVar: '--typography-ui-footnote',
+    specimens: specimens(TRACKING_NORMAL),
   },
   {
     id: 'micro',
     title: 'Micro',
     sizePx: 8,
     sizeRem: '0.5rem',
-    specimens: WEIGHTS.map((w) => ({
-      ...w,
-      trackingCss: '-0.02em',
-    })),
+    semanticPath: 'typography/ui/micro',
+    sizeCssVar: '--typography-ui-micro',
+    specimens: specimens(TRACKING_NORMAL),
   },
 ]
 
@@ -153,10 +167,11 @@ export const TYPE_TOKEN_GROUPS: TypographyTokenGroup[] = [
         id: 'heading',
         title: 'Heading',
         description: 'Primary heading style at 20px for section titles and content hierarchy.',
-        metaLabel: 'Heading  |  20px  |  Noto Sans',
+        metaLabel: 'Heading  |  20px  |  Noto Sans  |  typography/heading/heading',
         sizePx: 20,
         sizeRem: '1.25rem',
-        trackingCss: '-0.04em',
+        sizeCssVar: '--typography-heading-heading',
+        trackingCss: TRACKING_TIGHT,
         weights: WEIGHTS,
       },
     ],
@@ -169,10 +184,11 @@ export const TYPE_TOKEN_GROUPS: TypographyTokenGroup[] = [
         id: 'subheading',
         title: 'Subheading',
         description: 'Secondary heading style at 16px for subsections and supporting labels.',
-        metaLabel: 'Subheading  |  16px  |  Noto Sans',
+        metaLabel: 'Subheading  |  16px  |  Noto Sans  |  typography/heading/subheading',
         sizePx: 16,
         sizeRem: '1rem',
-        trackingCss: '0',
+        sizeCssVar: '--typography-heading-subheading',
+        trackingCss: TRACKING_NORMAL,
         weights: WEIGHTS,
       },
     ],
@@ -185,10 +201,11 @@ export const TYPE_TOKEN_GROUPS: TypographyTokenGroup[] = [
         id: 'body',
         title: 'Body',
         description: 'Primary body text style at 14px for readable content blocks.',
-        metaLabel: 'Body  |  14px  |  Noto Sans',
+        metaLabel: 'Body  |  14px  |  Noto Sans  |  typography/body/body-main',
         sizePx: 14,
         sizeRem: '0.875rem',
-        trackingCss: '0',
+        sizeCssVar: '--typography-body-body-main',
+        trackingCss: TRACKING_NORMAL,
         weights: WEIGHTS,
       },
     ],
@@ -201,10 +218,11 @@ export const TYPE_TOKEN_GROUPS: TypographyTokenGroup[] = [
         id: 'caption',
         title: 'Caption',
         description: 'Small text at 12px for labels, form hints, and metadata.',
-        metaLabel: 'Caption  |  12px  |  Noto Sans',
+        metaLabel: 'Caption  |  12px  |  Noto Sans  |  typography/body/body-secondary',
         sizePx: 12,
         sizeRem: '0.75rem',
-        trackingCss: '0',
+        sizeCssVar: '--typography-body-body-secondary',
+        trackingCss: TRACKING_NORMAL,
         weights: WEIGHTS,
       },
     ],
@@ -218,20 +236,22 @@ export const TYPE_TOKEN_GROUPS: TypographyTokenGroup[] = [
         id: 'footnote',
         title: 'Footnote',
         description: 'Smallest text sizes for footnotes (10px) and micro text (8px).',
-        metaLabel: 'Footnote  |  10px  |  Noto Sans',
+        metaLabel: 'Footnote  |  10px  |  Noto Sans  |  typography/ui/footnote',
         sizePx: 10,
         sizeRem: '0.625rem',
-        trackingCss: '0.02em',
+        sizeCssVar: '--typography-ui-footnote',
+        trackingCss: TRACKING_NORMAL,
         weights: WEIGHTS,
       },
       {
         id: 'micro',
         title: 'Micro',
         description: 'Smallest text sizes for footnotes (10px) and micro text (8px).',
-        metaLabel: 'Micro  |  8px  |  Noto Sans',
+        metaLabel: 'Micro  |  8px  |  Noto Sans  |  typography/ui/micro',
         sizePx: 8,
         sizeRem: '0.5rem',
-        trackingCss: '0.02em',
+        sizeCssVar: '--typography-ui-micro',
+        trackingCss: TRACKING_NORMAL,
         weights: WEIGHTS,
       },
     ],
@@ -240,20 +260,20 @@ export const TYPE_TOKEN_GROUPS: TypographyTokenGroup[] = [
 
 function sizeToken(name: string, px: number): PrimitiveTypeToken {
   return {
-    tokenPath: `type/size/${name}`,
-    cssVar: `--type-size-${name}`,
+    tokenPath: `typography/size/${name}`,
+    cssVar: `--typography-size-${name}`,
     value: `${px}px`,
     sizePx: px,
     cssValue: `${px / 16}rem`,
   }
 }
 
-/** Primitive Typography Tokens - Figma node 5160:2. */
+/** Primitive Typography Tokens - Figma Primitives/Default.tokens.json. */
 export const TYPE_PRIMITIVE_GROUPS: PrimitiveTypeGroup[] = [
   {
     id: 'font-size',
     title: 'Font Size',
-    description: 'Raw pixel values for the type scale, from Heading (72px) down to Footer (8px).',
+    description: 'Raw pixel values for the type scale (typography/size/*), from Heading (72px) down to Footer (8px).',
     tokens: [
       sizeToken('heading', 72),
       sizeToken('display-02', 60),
@@ -281,23 +301,23 @@ export const TYPE_PRIMITIVE_GROUPS: PrimitiveTypeGroup[] = [
   {
     id: 'line-height',
     title: 'Line Height',
-    description: 'Percentage-based line height values for controlling vertical rhythm.',
+    description: 'Percentage-based line height values (typography/line-height/*).',
     tokens: [
       {
-        tokenPath: 'type/line-height/tight',
-        cssVar: '--type-line-height-tight',
+        tokenPath: 'typography/line-height/tight',
+        cssVar: '--typography-line-height-tight',
         value: '120%',
         cssValue: '1.2',
       },
       {
-        tokenPath: 'type/line-height/normal',
-        cssVar: '--type-line-height-normal',
+        tokenPath: 'typography/line-height/normal',
+        cssVar: '--typography-line-height-normal',
         value: '150%',
         cssValue: '1.5',
       },
       {
-        tokenPath: 'type/line-height/relaxed',
-        cssVar: '--type-line-height-relaxed',
+        tokenPath: 'typography/line-height/relaxed',
+        cssVar: '--typography-line-height-relaxed',
         value: '165%',
         cssValue: '1.65',
       },
@@ -306,25 +326,25 @@ export const TYPE_PRIMITIVE_GROUPS: PrimitiveTypeGroup[] = [
   {
     id: 'letter-spacing',
     title: 'Letter Spacing',
-    description: 'Percentage-based letter spacing values for fine-tuning character spacing.',
+    description: 'Percentage-based letter spacing values (typography/letter-spacing/*).',
     tokens: [
       {
-        tokenPath: 'type/letter-spacing/tight',
-        cssVar: '--type-letter-spacing-tight',
+        tokenPath: 'typography/letter-spacing/tight',
+        cssVar: '--typography-letter-spacing-tight',
         value: '-4%',
         cssValue: '-0.04em',
       },
       {
-        tokenPath: 'type/letter-spacing/normal',
-        cssVar: '--type-letter-spacing-normal',
+        tokenPath: 'typography/letter-spacing/normal',
+        cssVar: '--typography-letter-spacing-normal',
         value: '0%',
-        cssValue: '0',
+        cssValue: '0em',
       },
     ],
   },
 ]
 
-/** Semantic Typography Tokens - Figma node 5160:154. */
+/** Semantic Typography Tokens - Figma Semantic Light/Dark.tokens.json. */
 export const TYPE_SEMANTIC_GROUPS: SemanticTypeGroup[] = [
   {
     id: 'heading',
@@ -334,14 +354,14 @@ export const TYPE_SEMANTIC_GROUPS: SemanticTypeGroup[] = [
       {
         tokenPath: 'typography/heading/heading',
         cssVar: '--typography-heading-heading',
-        alias: 'type/size/subheading',
+        alias: 'typography/size/subheading',
         value: '20px',
         sizePx: 20,
       },
       {
         tokenPath: 'typography/heading/subheading',
         cssVar: '--typography-heading-subheading',
-        alias: 'type/size/p2',
+        alias: 'typography/size/p2',
         value: '16px',
         sizePx: 16,
       },
@@ -355,14 +375,14 @@ export const TYPE_SEMANTIC_GROUPS: SemanticTypeGroup[] = [
       {
         tokenPath: 'typography/body/body-main',
         cssVar: '--typography-body-body-main',
-        alias: 'type/size/p3',
+        alias: 'typography/size/p3',
         value: '14px',
         sizePx: 14,
       },
       {
         tokenPath: 'typography/body/body-secondary',
         cssVar: '--typography-body-body-secondary',
-        alias: 'type/size/caption',
+        alias: 'typography/size/caption',
         value: '12px',
         sizePx: 12,
       },
@@ -376,21 +396,21 @@ export const TYPE_SEMANTIC_GROUPS: SemanticTypeGroup[] = [
       {
         tokenPath: 'typography/ui/caption',
         cssVar: '--typography-ui-caption',
-        alias: 'type/size/caption',
+        alias: 'typography/size/caption',
         value: '12px',
         sizePx: 12,
       },
       {
         tokenPath: 'typography/ui/footnote',
         cssVar: '--typography-ui-footnote',
-        alias: 'type/size/footer-01',
+        alias: 'typography/size/footer-01',
         value: '10px',
         sizePx: 10,
       },
       {
         tokenPath: 'typography/ui/micro',
         cssVar: '--typography-ui-micro',
-        alias: 'type/size/footer-02',
+        alias: 'typography/size/footer-02',
         value: '8px',
         sizePx: 8,
       },
@@ -404,21 +424,21 @@ export const TYPE_SEMANTIC_GROUPS: SemanticTypeGroup[] = [
       {
         tokenPath: 'typography/leading/relaxed',
         cssVar: '--typography-leading-relaxed',
-        alias: 'type/line-height/relaxed',
+        alias: 'typography/line-height/relaxed',
         value: '165%',
         cssValue: '1.65',
       },
       {
         tokenPath: 'typography/leading/normal',
         cssVar: '--typography-leading-normal',
-        alias: 'type/line-height/normal',
+        alias: 'typography/line-height/normal',
         value: '150%',
         cssValue: '1.5',
       },
       {
         tokenPath: 'typography/leading/tight',
         cssVar: '--typography-leading-tight',
-        alias: 'type/line-height/tight',
+        alias: 'typography/line-height/tight',
         value: '120%',
         cssValue: '1.2',
       },

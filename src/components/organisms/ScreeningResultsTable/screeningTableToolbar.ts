@@ -28,14 +28,14 @@ export const screeningRowActionsMenuIconClass = 'text-current'
 /** Review Assigned screening table - “Filter by” label. */
 export const screeningStatusFilterLabelClass = cn(
   'shrink-0',
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
   'text-[var(--color-text-primary)]',
 )
 
 /** Review Assigned screening table - status filter chip base. */
 export const screeningStatusFilterChipClass = cn(
   'inline-flex w-fit shrink-0 cursor-pointer whitespace-nowrap rounded-[4px] border border-solid px-3.5 py-1.5 transition-all duration-200 ease-out',
-  '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+  '[font:var(--type-caption-semi-bold)] [letter-spacing:var(--type-caption-semi-bold-tracking)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(82_62_185/0.4)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
 

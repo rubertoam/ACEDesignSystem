@@ -14,7 +14,7 @@ const shellBase = cn(
   'inline-flex w-[var(--button-descriptive-width)] items-start text-left',
   'gap-[var(--button-descriptive-gap)] rounded-[var(--button-descriptive-radius)]',
   'border border-solid p-[var(--button-descriptive-padding)]',
-  'font-[family-name:var(--font-ace-noto)] outline-none',
+  'font-[family-name:var(--font-noto)] outline-none',
   'focus-visible:ring-2 focus-visible:ring-[var(--button-descriptive-focus-ring)]',
   'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)]',
 )
@@ -72,11 +72,11 @@ export const buttonDescriptiveTextClass = cn(
 )
 
 export const buttonDescriptiveTitleClass = cn(
-  'm-0 w-full [font:var(--ace-type-caption-bold)]',
-  '[letter-spacing:var(--ace-type-caption-bold-tracking)]',
+  'm-0 w-full [font:var(--type-caption-bold)]',
+  '[letter-spacing:var(--type-caption-bold-tracking)]',
 )
 
 export const buttonDescriptiveDescriptionClass = cn(
-  'm-0 w-full [font:var(--ace-type-footer-regular)]',
-  '[letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  'm-0 w-full [font:var(--type-footnote-regular)]',
+  '[letter-spacing:var(--type-footnote-regular-tracking)]',
 )

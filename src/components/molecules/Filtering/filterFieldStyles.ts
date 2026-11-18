@@ -2,10 +2,10 @@ import { cn } from '../../../lib/cn'
 
 /** Caption/Regular - Figma Secondary / FilterChip trigger text. */
 const filterType = cn(
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
 )
 
-/** Default = surface; open / hover = brand fill + inverse text (Secondary Active / FilterChip Selected). */
+/** Default = surface; open / hover = brand-subtle + primary text (Secondary Active / FilterChip Selected). */
 export const filterTriggerClass = cn(
   filterType,
   'inline-flex shrink-0 cursor-pointer items-center gap-[var(--filter-gap)] rounded-[var(--filter-radius)] px-[var(--filter-px)] py-[var(--filter-py)]',
@@ -25,7 +25,7 @@ export const filterToggleChipPressedClass = cn(
   'hover:border-transparent hover:bg-[var(--filter-trigger-active-bg)] hover:text-[var(--filter-trigger-active-text)]',
 )
 
-/** Shade 0 resting; brand fill + inverse text/icons on hover / selected (FilterChip). */
+/** Surface resting; brand-subtle + primary text / action icons on hover / selected (FilterChip). */
 export const filterChipClass = cn(
   'group',
   filterType,
@@ -54,7 +54,7 @@ export const filterChipClearIconClass =
   'size-2.5 shrink-0 fill-[var(--filter-chip-clear)] transition-colors duration-150 ease-out group-hover:fill-[var(--filter-chip-selected-icon)]'
 
 export const filterHeaderTitleClass = cn(
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
   'shrink-0 pr-[var(--filter-gap)] py-[var(--filter-py)] text-[var(--filter-header-title)]',
 )
 

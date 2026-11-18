@@ -4,7 +4,7 @@ import {
   type ButtonActionTone,
   type ButtonIcon,
   type ButtonPreviewState,
-  type ButtonSize,
+  type ButtonTypography,
   type ButtonVariant,
 } from '../components/atoms/Button'
 import {
@@ -22,9 +22,13 @@ import { buttonLabQa } from './labTabDocs'
 import { cn } from '../lib/cn'
 
 const VARIANTS: ButtonVariant[] = ['primary', 'secondary', 'tertiary']
-const ACTION_TONES: ButtonActionTone[] = ['primary', 'secondary', 'success', 'error', 'warning']
-const SIZES: ButtonSize[] = ['sm', 'md', 'lg']
-const PREVIEW_STATES: ButtonPreviewState[] = ['default', 'hover', 'active', 'disabled']
+const ACTION_TONES: ButtonActionTone[] = ['primary', 'secondary', 'success', 'error', 'warning', 'warning2']
+const PREVIEW_STATES: { state: ButtonPreviewState; label: string }[] = [
+  { state: 'default', label: 'Default' },
+  { state: 'hover', label: 'Hover' },
+  { state: 'active', label: 'Pressed' },
+  { state: 'disabled', label: 'Disabled' },
+]
 
 const ACTION_TONE_LABELS: Record<ButtonActionTone, string> = {
   primary: 'Primary',
@@ -32,6 +36,13 @@ const ACTION_TONE_LABELS: Record<ButtonActionTone, string> = {
   success: 'Success',
   error: 'Error',
   warning: 'Warning',
+  warning2: 'Warning 2',
+}
+
+const VARIANT_LABELS: Record<ButtonVariant, string> = {
+  primary: 'Primary',
+  secondary: 'Secondary',
+  tertiary: 'Tertiary',
 }
 
 const DEMO_TITLE = '[Report Name]'
@@ -44,77 +55,63 @@ const DESCRIPTIVE_STATE_LABELS: Record<ButtonDescriptivePreviewState, string> = 
   disabled: 'Disabled',
 }
 
-const ICON_LAYOUTS: { icon: ButtonIcon; label: string }[] = [
-  { icon: 'none', label: 'Regular' },
-  { icon: 'right', label: 'Icon right' },
-  { icon: 'left', label: 'Icon left' },
+const ICON_OPTIONS: { value: ButtonIcon; label: string }[] = [
+  { value: 'none', label: 'None' },
+  { value: 'left', label: 'Left' },
+  { value: 'right', label: 'Right' },
 ]
 
-function StateMatrix({
-  variant,
-  actionTone,
-  icon,
-  iconLabel,
-}: {
-  variant: ButtonVariant
-  actionTone: ButtonActionTone
-  icon: ButtonIcon
-  iconLabel: string
-}) {
+/** Typography options — Figma semantic body tokens; selected token drives button height. */
+const BUTTON_TYPOGRAPHY_OPTIONS: { value: ButtonTypography; label: string }[] = [
+  {
+    value: 'body-secondary',
+    label: 'Body secondary · typography/body/body-secondary',
+  },
+  {
+    value: 'body-main',
+    label: 'Body main · typography/body/body-main',
+  },
+]
+
+function StateReference({ actionTone }: { actionTone: ButtonActionTone }) {
   return (
     <div className={cn('min-w-0', labExampleSectionClass)}>
-      <p className="m-0 text-sm font-semibold capitalize tracking-tight text-[var(--color-text-primary)]">
-        <span className="text-[var(--color-text-muted)]">{variant}</span>
-        <span className="mx-2 text-[var(--color-border)]" aria-hidden>
-          ·
-        </span>
-        {iconLabel}
-        <span className="mx-2 text-[var(--color-border)]" aria-hidden>
-          ·
-        </span>
-        Action · {ACTION_TONE_LABELS[actionTone]}
-      </p>
-      <div className={cn('overflow-x-auto', labPanelClass)}>
-        <table className="w-full min-w-[32rem] border-collapse text-left text-sm">
-          <thead>
-            <tr className={cn('border-b border-[var(--color-border)]', labTableSurfaceClass)}>
-              <th className="w-[7.5rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                State
-              </th>
-              {SIZES.map((s) => (
-                <th
-                  key={s}
-                  className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]"
-                >
-                  {s}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className={cn('divide-y divide-[var(--color-border)]', labTableSurfaceClass)}>
-            {PREVIEW_STATES.map((st) => (
-              <tr key={st}>
-                <td className="whitespace-nowrap px-4 py-4 font-medium capitalize text-[var(--color-text-primary)]">
-                  {st === 'active' ? 'pressed' : st}
-                </td>
-                {SIZES.map((sz) => (
-                  <td key={sz} className="px-4 py-4 align-middle">
-                    <Button
-                      variant={variant}
-                      actionTone={actionTone}
-                      size={sz}
-                      icon={icon}
-                      previewState={st}
-                      className="max-w-full"
-                    >
-                      {variant === 'primary' ? 'Primary' : variant === 'secondary' ? 'Secondary' : 'Tertiary'}
-                    </Button>
-                  </td>
-                ))}
-              </tr>
+      <div className="overflow-x-auto">
+        <div className="flex min-w-[40rem] flex-col gap-6">
+          <div className="grid grid-cols-[7.5rem_repeat(3,minmax(0,1fr))] items-end gap-x-6 gap-y-2">
+            <div aria-hidden />
+            {VARIANTS.map((v) => (
+              <p
+                key={v}
+                className="m-0 [font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)] text-[var(--color-text-primary)]"
+              >
+                {VARIANT_LABELS[v]}
+              </p>
             ))}
-          </tbody>
-        </table>
+          </div>
+          {PREVIEW_STATES.map(({ state, label }) => (
+            <div
+              key={state}
+              className="grid grid-cols-[7.5rem_repeat(3,minmax(0,1fr))] items-center gap-x-6 gap-y-2"
+            >
+              <p className="m-0 [font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)] text-[var(--color-text-primary)]">
+                {label}
+              </p>
+              {VARIANTS.map((v) => (
+                <div key={`${v}-${state}`} className="flex items-center">
+                  <Button
+                    variant={v}
+                    actionTone={actionTone}
+                    previewState={state}
+                    buttonTypography="body-main"
+                  >
+                    {VARIANT_LABELS[v]} Button
+                  </Button>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -123,6 +120,44 @@ function StateMatrix({
 function ButtonsChangelog() {
   return (
     <div className="space-y-8">
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">17 November 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Sync with simplified Figma Buttons (
+            <code className="text-[var(--color-text-primary)]">5996:605</code> / component set{' '}
+            <code className="text-[var(--color-text-primary)]">5998:27889</code>).
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>
+            Button height hugs the label typography token (default{' '}
+            <code className="text-[var(--color-text-primary)]">typography/body/body-main</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">Body/Semi Bold</code>) +{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/8</code> vertical /{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/12</code> horizontal padding (removed fixed
+            sm/md/lg heights). Playground{' '}
+            <code className="text-[var(--color-text-primary)]">buttonTypography</code> swaps body-secondary /
+            body-main to demo that relationship.
+          </li>
+          <li>
+            Static reference matches Figma: Variant (Primary / Secondary / Tertiary) × State (Default / Hover /
+            Pressed / Disabled) only — no size or icon-position matrices. Icon left/right is a playground toggle.
+          </li>
+          <li>
+            Pressed fill uses{' '}
+            <code className="text-[var(--color-text-primary)]">colors/action/primary - pressed - subtle</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-action-primary-pressed-subtle</code>; disabled
+            uses <code className="text-[var(--color-text-primary)]">colors/action/disabled</code> with{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/button label</code> (all variants solid).
+          </li>
+          <li>
+            Secondary/tertiary default labels use{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/button label - alt</code>;{' '}
+            <code className="text-[var(--color-text-primary)]">size</code> prop kept as a deprecated no-op shim.
+          </li>
+        </ul>
+      </article>
       <article className="space-y-3">
         <header className="space-y-1">
           <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">22 October 2026</h3>
@@ -143,7 +178,7 @@ function ButtonsChangelog() {
           <li>
             Temporary compat: <code className="text-[var(--color-text-primary)]">AceButton</code> /{' '}
             <code className="text-[var(--color-text-primary)]">AceDescriptiveButton</code> re-exports and{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-button-*</code> aliases still resolve.
+            <code className="text-[var(--color-text-primary)]">--button-*</code> aliases still resolve.
           </li>
         </ul>
       </article>
@@ -156,93 +191,9 @@ function ButtonsChangelog() {
         </header>
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Removed FinScan / Innovative Blue <code className="text-[var(--color-text-primary)]">palette</code> prop
-            and <code className="text-[var(--color-text-primary)]">--button-blue-fill*</code> variables.
-          </li>
-          <li>
-            Added <code className="text-[var(--color-text-primary)]">actionTone</code> (
-            <code className="text-[var(--color-text-primary)]">primary</code> |{' '}
-            <code className="text-[var(--color-text-primary)]">secondary</code> |{' '}
-            <code className="text-[var(--color-text-primary)]">success</code> |{' '}
-            <code className="text-[var(--color-text-primary)]">error</code> |{' '}
-            <code className="text-[var(--color-text-primary)]">warning</code>) which remaps{' '}
+            Added <code className="text-[var(--color-text-primary)]">actionTone</code> which remaps{' '}
             <code className="text-[var(--color-text-primary)]">--button-fill*</code> to the matching{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-{'{tone}'}*</code> tokens for default,
-            hover, and pressed.
-          </li>
-          <li>
-            Disabled primary fill always uses{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-disabled-button</code> (not selectable
-            via the action tone control).
-          </li>
-          <li>
-            Lab Color control replaced with an Action token dropdown; static matrices show all three variants under
-            the selected family.
-          </li>
-          <li>
-            Usage tab updated to list the Action / disabled / surface / type tokens actually consumed by{' '}
-            <code className="text-[var(--color-text-primary)]">Button</code> (and Descriptive tokens on the
-            Descriptive view).
-          </li>
-        </ul>
-      </article>
-
-      <article className="space-y-3">
-        <header className="space-y-1">
-          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">20 August 2026</h3>
-          <p className="m-0 text-sm text-[var(--color-text-muted)]">
-            Sync with ACE Design System v.3 Figma Buttons (<code className="text-[var(--color-text-primary)]">2067:191</code>)
-            and ButtonDescriptive (<code className="text-[var(--color-text-primary)]">4118:682</code>).
-          </p>
-        </header>
-        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
-          <li>
-            Removed the standalone Descriptive Buttons lab page and route; demos now live on this Buttons page under
-            the Descriptive view.
-          </li>
-          <li>
-            Rewired button fills to Figma action tokens via{' '}
-            <code className="text-[var(--color-text-primary)]">--button-fill*</code>, resolving to{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-primary*</code> by default.
-          </li>
-          <li>
-            Corrected state mapping: default{' '}
-            <code className="text-[var(--color-text-primary)]">colors/action/primary</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-primary</code>, hover{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-primary-hover</code>, pressed{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-primary-pressed</code> - previously
-            inverted relative to the Figma Buttons matrix.
-          </li>
-          <li>
-            Disabled primary uses{' '}
-            <code className="text-[var(--color-text-primary)]">colors/action/disabled-button</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-disabled-button</code> fill and{' '}
-            <code className="text-[var(--color-text-primary)]">--color-text-secondary</code> label.
-          </li>
-          <li>
-            Label typography now uses{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-bold</code> (sm),{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-bold</code> (md), and{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p2-bold</code> (lg).
-          </li>
-          <li>
-            Legacy brand aliases (e.g. <code className="text-[var(--color-text-primary)]">--button-purple-*</code>)
-            now resolve to primitive <code className="text-[var(--color-text-primary)]">--color-primary-*</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">--color-secondary-*</code>; product fills prefer Semantic{' '}
-            <code className="text-[var(--color-text-primary)]">colors/action/*</code>.
-          </li>
-          <li>
-            Descriptive button states aligned to Figma: hover{' '}
-            <code className="text-[var(--color-text-primary)]">color/primary/100</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-primary-100</code> +{' '}
-            <code className="text-[var(--color-text-primary)]">color/primary/400</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-primary-400</code> border; clicked{' '}
-            <code className="text-[var(--color-text-primary)]">--color-primary-300</code> (no border); disabled{' '}
-            <code className="text-[var(--color-text-primary)]">--color-neutral-100</code> /{' '}
-            <code className="text-[var(--color-text-primary)]">--color-neutral-600</code>; title Caption Bold.
-          </li>
-          <li>
-            Added this Changelog tab on ComponentLabPage for documenting component evolution going forward.
+            <code className="text-[var(--color-text-primary)]">--color-action-{'{tone}'}*</code> tokens.
           </li>
         </ul>
       </article>
@@ -253,7 +204,7 @@ function ButtonsChangelog() {
 export function ButtonPlaygroundLab() {
   const [variant, setVariant] = useState<ButtonVariant>('primary')
   const [actionTone, setActionTone] = useState<ButtonActionTone>('primary')
-  const [size, setSize] = useState<ButtonSize>('md')
+  const [buttonTypography, setButtonTypography] = useState<ButtonTypography>('body-main')
   const [icon, setIcon] = useState<ButtonIcon>('none')
   const [disabled, setDisabled] = useState(false)
   const [descriptiveDisabled, setDescriptiveDisabled] = useState(false)
@@ -267,7 +218,7 @@ export function ButtonPlaygroundLab() {
           onChange={setVariant}
           options={VARIANTS.map((v) => ({
             value: v,
-            label: v === 'primary' ? 'Primary' : v === 'secondary' ? 'Secondary' : 'Tertiary',
+            label: VARIANT_LABELS[v],
           }))}
         />
         <LabSelect
@@ -277,25 +228,12 @@ export function ButtonPlaygroundLab() {
           options={ACTION_TONES.map((t) => ({ value: t, label: ACTION_TONE_LABELS[t] }))}
         />
         <LabSelect
-          label="Size"
-          value={size}
-          onChange={setSize}
-          options={[
-            { value: 'sm', label: 'Small' },
-            { value: 'md', label: 'Medium' },
-            { value: 'lg', label: 'Large' },
-          ]}
+          label="Label typography (drives size)"
+          value={buttonTypography}
+          onChange={setButtonTypography}
+          options={BUTTON_TYPOGRAPHY_OPTIONS}
         />
-        <LabSelect
-          label="Icon"
-          value={icon}
-          onChange={setIcon}
-          options={[
-            { value: 'none', label: 'None' },
-            { value: 'left', label: 'Left' },
-            { value: 'right', label: 'Right' },
-          ]}
-        />
+        <LabSelect label="Icon" value={icon} onChange={setIcon} options={ICON_OPTIONS} />
         <LabControlField label="Disable" className="shrink-0">
           <div className="flex min-h-9 items-center">
             <Toggle size="sm" checked={disabled} onCheckedChange={setDisabled} aria-label="Disable" />
@@ -305,7 +243,13 @@ export function ButtonPlaygroundLab() {
 
       <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
         <div className="shrink-0">
-          <Button variant={variant} actionTone={actionTone} size={size} icon={icon} disabled={disabled}>
+          <Button
+            variant={variant}
+            actionTone={actionTone}
+            buttonTypography={buttonTypography}
+            icon={icon}
+            disabled={disabled}
+          >
             {variant === 'primary'
               ? 'Primary Button'
               : variant === 'secondary'
@@ -343,7 +287,7 @@ export function ButtonPlaygroundLab() {
     <ComponentLabPage
       qa={buttonLabQa}
       title="Buttons"
-      description="ACE Design System v.3 buttons from Figma Buttons (2067:191): primary, secondary, and tertiary fill styles; small / medium / large; default, hover, pressed, and disabled. Color for interactive states comes from Action token families (primary, secondary, success, error, warning) via actionTone. Descriptive buttons (ButtonDescriptive 4118:682) are included on this page."
+      description="ACE Design System v.3 buttons (Figma Buttons): the typography token on the label drives button size (type + spacing/8 · spacing/12 padding; default body-main / Body Semi Bold). Primary, secondary, and tertiary; default, hover, pressed, and disabled. Optional icon is a toggleable layer. Descriptive tiles remain on this page."
       examplesToolbar={toolbar}
       examples={
         <div className="space-y-12">
@@ -351,24 +295,14 @@ export function ButtonPlaygroundLab() {
             <div className={cn('w-full min-w-0', labUsageSectionClass)}>
               <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
               <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
-                Matches the Figma matrix for each variant under the selected action token family: default, hover,
-                pressed, and disabled (disabled is not affected by the action token). Preview cells are not
-                focusable.
+                Matches the Figma matrix under the selected action token family: Primary / Secondary / Tertiary ×
+                Default / Hover / Pressed / Disabled at the body-main baseline. Preview cells use a frozen{' '}
+                <code className="text-[var(--color-text-primary)]">previewState</code> (not focusable). Change size
+                via the Label typography control in the playground above — the typography token drives height. Icon
+                left/right is a playground toggle, not a matrix column.
               </p>
             </div>
-            <div className="flex flex-col gap-12">
-              {VARIANTS.map((v) =>
-                ICON_LAYOUTS.map(({ icon: layoutIcon, label }) => (
-                  <StateMatrix
-                    key={`${v}-${layoutIcon}`}
-                    variant={v}
-                    actionTone={actionTone}
-                    icon={layoutIcon}
-                    iconLabel={label}
-                  />
-                )),
-              )}
-            </div>
+            <StateReference actionTone={actionTone} />
           </section>
 
           <section className={cn('w-full', labExampleSectionClass)}>
@@ -410,7 +344,7 @@ export function ButtonPlaygroundLab() {
         <div className="space-y-6">
           <ComponentLabCode>{`import { Button } from '../components/atoms/Button'
 
-<Button variant="primary" actionTone="primary" size="md" icon="right">
+<Button variant="primary" actionTone="primary" buttonTypography="body-main" icon="right">
   Save
 </Button>
 
@@ -430,11 +364,17 @@ export function ButtonPlaygroundLab() {
       usage={
         <div className={cn('max-w-3xl space-y-6', labUsageSectionClass)}>
           <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
-            Import <code className="text-[var(--color-text-primary)]">Button</code> for product UI. Keep{' '}
-            <code className="text-[var(--color-text-primary)]">variant</code> for fill style (primary / secondary /
-            tertiary) and use <code className="text-[var(--color-text-primary)]">actionTone</code> to swap the Action
-            token family for default, hover, and pressed. Use{' '}
-            <code className="text-[var(--color-text-primary)]">previewState</code> only for documentation grids.
+            Import <code className="text-[var(--color-text-primary)]">Button</code> for product UI. The typography
+            token on the label drives button size: height hugs{' '}
+            <code className="text-[var(--color-text-primary)]">buttonTypography</code> (default{' '}
+            <code className="text-[var(--color-text-primary)]">typography/body/body-main</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--type-body-semi-bold</code>) plus{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/8</code> /{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/12</code> padding — not fixed sm/md/lg
+            heights. Keep <code className="text-[var(--color-text-primary)]">variant</code> for fill style and{' '}
+            <code className="text-[var(--color-text-primary)]">actionTone</code> to swap the Action token family.
+            Toggle <code className="text-[var(--color-text-primary)]">icon</code> for an optional left/right layer.
+            Reserve <code className="text-[var(--color-text-primary)]">previewState</code> for documentation grids.
           </p>
           <ul className="m-0 list-disc space-y-1 ps-5 text-sm text-[var(--color-text-muted)]">
             <li>
@@ -456,28 +396,27 @@ export function ButtonPlaygroundLab() {
             <code className="text-[var(--color-text-primary)]">-hover</code> /{' '}
             <code className="text-[var(--color-text-primary)]">-pressed</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-action-{'{tone}'}*</code> via{' '}
-            <code className="text-[var(--color-text-primary)]">actionTone</code> (primary, secondary, success, error,
-            warning).
+            <code className="text-[var(--color-text-primary)]">actionTone</code> (primary pressed →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-action-primary-pressed-subtle</code>).
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--button-disabled-primary-bg</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-action-disabled-button</code>; disabled text →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-text-secondary</code>.
+            Disabled: <code className="text-[var(--color-text-primary)]">--color-action-disabled</code> fill +{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-button-label</code> (all variants).
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--button-on-solid</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-text-inverse</code>; secondary/tertiary surface →{' '}
+            Labels: <code className="text-[var(--color-text-primary)]">--color-text-button-label</code> on solid fills;{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-button-label-alt</code> on secondary /
+            tertiary default. Surface →{' '}
             <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>.
           </li>
           <li>
-            Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-bold</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-bold</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p2-bold</code>.
-          </li>
-          <li>
-            Layout: <code className="text-[var(--color-text-primary)]">--button-px-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--button-py-*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--button-gap-*</code>.
+            Geometry: typography drives size — hug from{' '}
+            <code className="text-[var(--color-text-primary)]">buttonTypography</code> (default{' '}
+            <code className="text-[var(--color-text-primary)]">--type-body-semi-bold</code> / body-main; also
+            body-secondary → <code className="text-[var(--color-text-primary)]">--type-caption-semi-bold</code>) +{' '}
+            <code className="text-[var(--color-text-primary)]">--spacing-8</code> py /{' '}
+            <code className="text-[var(--color-text-primary)]">--spacing-12</code> px / gap; radius{' '}
+            <code className="text-[var(--color-text-primary)]">--radius-component-button</code>.
           </li>
           <li>
             Descriptive: <code className="text-[var(--color-text-primary)]">--button-descriptive-*</code> →{' '}

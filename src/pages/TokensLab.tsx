@@ -29,7 +29,9 @@ const SEMANTIC_COLOR_ORDER = [
   'colors/action',
   'colors/status',
   'colors/icon',
-  'colors/badges',
+  'colors/badges & inline messages',
+  'colors/input',
+  'colors/progress',
 ]
 
 function isColorToken(token: TokenCatalogEntry) {
@@ -131,7 +133,7 @@ function TokenGroupTable({ group, showDark }: { group: TokenCatalogGroup; showDa
       <h3
         className={cn(
           'm-0',
-          '[font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]',
+          '[font:var(--type-heading-bold)] [letter-spacing:var(--type-heading-bold-tracking)]',
           'text-[var(--color-text-primary)]',
         )}
       >
@@ -168,7 +170,7 @@ function TokensCatalog({
     <div
       className={cn(
         'rounded-[var(--radius-lg)] border border-solid border-[var(--color-border-default)]',
-        'bg-[var(--color-surface-primary)] px-6 py-2 shadow-[var(--ace-drop-shadow-xs)] sm:px-8',
+        'bg-[var(--color-surface-primary)] px-6 py-2 shadow-[var(--shadow-xs)] sm:px-8',
       )}
     >
       {groups.map((group) => (

@@ -4,12 +4,12 @@ import type { ScreeningColumnKey } from './screeningTableColumns'
 export const SCREENING_COLUMN_DRAG_MIME = 'text/screening-column-key'
 
 export const screeningColumnMenuLabelClass = cn(
-  '[font:var(--ace-type-label-bold)] [letter-spacing:var(--ace-type-label-bold-tracking)]',
+  '[font:var(--type-footnote-bold)] [letter-spacing:var(--type-footnote-bold-tracking)]',
   'px-[var(--space-3)] py-[var(--space-2)] text-[var(--screening-text-muted)]',
 )
 
 export const screeningColumnMenuRowClass = cn(
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
   'flex w-full cursor-pointer select-none items-center gap-2 px-[var(--space-3)] py-[var(--space-2)] text-[var(--screening-text-primary)] outline-none',
   'data-[highlighted]:bg-[var(--screening-surface-hover)]',
 )

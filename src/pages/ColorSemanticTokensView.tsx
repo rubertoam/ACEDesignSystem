@@ -42,7 +42,7 @@ function SemanticGroupTable({ group }: { group: SemanticTokenGroup }) {
       <h3
         className={cn(
           'm-0',
-          '[font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]',
+          '[font:var(--type-heading-bold)] [letter-spacing:var(--type-heading-bold-tracking)]',
           'text-[var(--color-text-primary)]',
         )}
       >
@@ -98,7 +98,7 @@ export function ColorSemanticTokensView({ groups }: { groups: SemanticTokenGroup
     <div
       className={cn(
         'rounded-[var(--radius-lg)] border border-solid border-[var(--color-border-default)]',
-        'bg-[var(--color-surface-primary)] px-6 py-2 shadow-[var(--ace-drop-shadow-xs)] sm:px-8',
+        'bg-[var(--color-surface-primary)] px-6 py-2 shadow-[var(--shadow-xs)] sm:px-8',
       )}
     >
       {groups.map((group) => (

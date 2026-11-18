@@ -87,7 +87,7 @@ export const labNavSections: LabNavSection[] = [
       component(
         'Buttons',
         '/lab/atoms/buttons',
-        'ACE button variants, sizes, states, and descriptive tiles (Figma Buttons 2067:191, ButtonDescriptive 4118:682).',
+        'Typography-driven ACE buttons — hierarchy × state; optional icon layer (Figma Buttons 5996:605). Descriptive tiles included.',
       ),
       component(
         'Radio buttons',
@@ -107,7 +107,7 @@ export const labNavSections: LabNavSection[] = [
     items: [
       { label: 'Overview', to: '/lab/molecules' },
       component(
-        'Inputs',
+        'Input fields',
         '/lab/molecules/inputs',
         'Text fields, sizes, states, optional search icon (Figma Input frame).',
       ),

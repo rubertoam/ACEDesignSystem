@@ -5,13 +5,13 @@ import { DialogModal } from '../../molecules/DialogModal/DialogModal'
 import { cn } from '../../../lib/cn'
 
 const p1Bold =
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]'
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]'
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 const captionBold =
-  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]'
+  '[font:var(--type-caption-bold)] [letter-spacing:var(--type-caption-bold-tracking)]'
 
-/** Visible rows before the items list scrolls (row height matches --ace-edit-group-item-row-height) */
+/** Visible rows before the items list scrolls (row height matches --edit-group-item-row-height) */
 const MAX_ITEMS_WITHOUT_LIST_SCROLL = 5
 
 export type GroupFormDialogMode = 'edit' | 'copy'
@@ -143,7 +143,7 @@ export function GroupFormDialog({
           <div
             className={cn(
               'flex flex-col gap-1 rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] p-2',
-              listScrolls && 'max-h-[var(--ace-edit-group-items-list-max-height)] overflow-y-auto',
+              listScrolls && 'max-h-[var(--edit-group-items-list-max-height)] overflow-y-auto',
             )}
           >
             {items.length === 0 ? (
@@ -156,7 +156,7 @@ export function GroupFormDialog({
                   <label
                     key={item.id}
                     className={cn(
-                      'flex h-[var(--ace-edit-group-item-row-height)] cursor-pointer items-center gap-2 rounded-[var(--radius-sm)] px-2',
+                      'flex h-[var(--edit-group-item-row-height)] cursor-pointer items-center gap-2 rounded-[var(--radius-sm)] px-2',
                       item.markedForRemoval && 'opacity-60',
                     )}
                   >
@@ -183,7 +183,7 @@ export function GroupFormDialog({
                 ) : (
                   <div
                     key={item.id}
-                    className="flex h-[var(--ace-edit-group-item-row-height)] items-center justify-between gap-2 rounded-[var(--radius-sm)] pl-2 pr-1"
+                    className="flex h-[var(--edit-group-item-row-height)] items-center justify-between gap-2 rounded-[var(--radius-sm)] pl-2 pr-1"
                   >
                     <span
                       className={cn(
@@ -206,19 +206,19 @@ export function GroupFormDialog({
                       onClick={() => onToggleItemRemoval(item.id)}
                       className={cn(
                         'inline-flex size-6 shrink-0 items-center justify-center rounded-[var(--radius-sm)]',
-                        'transition-colors duration-[var(--ace-motion-duration-fast)]',
+                        'transition-colors duration-[var(--motion-duration-fast)]',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)]',
                         item.markedForRemoval
-                          ? 'hover:bg-[var(--ace-edit-group-restore-hover-bg)]'
+                          ? 'hover:bg-[var(--edit-group-restore-hover-bg)]'
                           : cn(
                               'text-[var(--dialog-modal-danger)]',
-                              'hover:bg-[var(--ace-edit-group-trash-hover-bg)]',
+                              'hover:bg-[var(--edit-group-trash-hover-bg)]',
                             ),
                       )}
                     >
                       {item.markedForRemoval ? (
                         <span
-                          className="inline-flex size-4 items-center justify-center rounded-full bg-[var(--ace-edit-group-restore-bg)]"
+                          className="inline-flex size-4 items-center justify-center rounded-full bg-[var(--edit-group-restore-bg)]"
                           aria-hidden
                         >
                           <MaterialSymbol

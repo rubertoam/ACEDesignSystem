@@ -5,7 +5,7 @@ import { aceChevronIconClass } from '../../../lib/aceChevron'
 import { cn } from '../../../lib/cn'
 
 const metaText =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--color-text-primary)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-[var(--color-text-primary)]'
 
 export type PaginationProps = {
   totalItems: number
@@ -92,7 +92,7 @@ export function Pagination({
         onClick={() => onPageChange(p)}
         className={cn(
           'inline-flex size-[var(--screening-pagination-btn-size)] shrink-0 items-center justify-center rounded-[var(--screening-pagination-btn-radius)] border border-solid transition-colors',
-          '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]',
+          '[font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)]',
           active
             ? 'border-[var(--color-action-primary)] bg-[var(--color-action-primary)] text-[var(--screening-text-on-primary)]'
             : 'border-[var(--color-action-primary)] bg-[var(--screening-surface)] text-[var(--color-text-primary)] hover:bg-[var(--screening-surface-hover)]',
@@ -133,7 +133,7 @@ export function Pagination({
         item === 'ellipsis' ? (
           <span
             key={`e-${i}`}
-            className="inline-flex min-w-[1.75rem] items-center justify-center px-1 [font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--color-text-primary)]"
+            className="inline-flex min-w-[1.75rem] items-center justify-center px-1 [font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-[var(--color-text-primary)]"
             aria-hidden
           >
             …

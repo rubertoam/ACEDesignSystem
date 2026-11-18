@@ -225,12 +225,12 @@ Controlled: pass `value` and `onChange`. Uncontrolled: leave `value` off; you ca
 | Area | Tokens / components |
 |------|---------------------|
 | Trigger | Dropdown field (`--screening-border-strong`, `--font-screening`, primary focus ring) |
-| Panel | `--ace-dropdown-menu-*`, `--ace-drop-shadow-xs` |
-| Widths | `--ace-time-picker-trigger-width` (240px), `--ace-time-picker-panel-width` (240px) |
-| Type | `--ace-type-paragraph-p1-regular`, `--ace-type-paragraph-p1-bold` |
+| Panel | `--dropdown-menu-*`, `--shadow-xs` |
+| Widths | `--time-picker-trigger-width` (240px), `--time-picker-panel-width` (240px) |
+| Type | `--type-body-regular`, `--type-body-bold` |
 | Steppers | `--screening-primary`, `--screening-primary-soft-bg` |
 | Footer | `Button` secondary Cancel and primary Set, size `sm` |
-| Correction | `--ace-input-error-message` |
+| Correction | `--input-error-message` |
 
 ---
 

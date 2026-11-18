@@ -12,10 +12,10 @@ export type TimelineSort = 'past-to-present' | 'present-to-past'
 export type TimelineItemSurface = 'default' | 'highlight' | 'expanded'
 
 const titleClass =
-  '[font:var(--ace-type-paragraph-p2-regular)] [letter-spacing:var(--ace-type-paragraph-p2-regular-tracking)] text-[var(--timeline-title)]'
+  '[font:var(--type-subheading-regular)] [letter-spacing:var(--type-subheading-regular-tracking)] text-[var(--timeline-title)]'
 
 const subtitleClass =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--timeline-subtitle)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-[var(--timeline-subtitle)]'
 
 export const timelineShellClass = cn(
   'flex w-full min-w-0 flex-col gap-[var(--timeline-section-gap)]',
@@ -26,10 +26,10 @@ export const timelineShellClass = cn(
 export const timelineHeaderClass = 'flex w-full items-center justify-between gap-4'
 
 export const timelineSortTriggerClass =
-  'w-[var(--timeline-sort-width)] shrink-0 [font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]'
+  'w-[var(--timeline-sort-width)] shrink-0 [font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]'
 
 export const timelineExpandAllClass = cn(
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
   'rounded-[var(--timeline-radius)] text-[var(--timeline-link)]',
   'transition-colors hover:text-[var(--timeline-link-hover)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',

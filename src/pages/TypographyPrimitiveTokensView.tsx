@@ -4,10 +4,10 @@ import type { PrimitiveTypeGroup, PrimitiveTypeToken } from './typographyLabData
 function sizePreview(token: PrimitiveTypeToken): CSSProperties | undefined {
   if (token.sizePx == null) return undefined
   return {
-    fontFamily: 'var(--font-ace-noto)',
+    fontFamily: 'var(--font-noto)',
     fontSize: `var(${token.cssVar}, ${token.cssValue ?? `${token.sizePx / 16}rem`})`,
     fontWeight: 400,
-    lineHeight: 1.65,
+    lineHeight: 'var(--typography-leading-relaxed)',
   }
 }
 
@@ -56,7 +56,7 @@ function PrimitiveGroupSection({ group }: { group: PrimitiveTypeGroup }) {
 
 export function TypographyPrimitiveTokensView({ groups }: { groups: PrimitiveTypeGroup[] }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--shadow-sm)] sm:px-8">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--lab-shadow-sm)] sm:px-8">
       {groups.map((group) => (
         <PrimitiveGroupSection key={group.id} group={group} />
       ))}

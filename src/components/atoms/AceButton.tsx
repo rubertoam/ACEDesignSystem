@@ -5,6 +5,7 @@ export {
   type ButtonVariant as AceButtonVariant,
   type ButtonActionTone as AceButtonActionTone,
   type ButtonSize as AceButtonSize,
+  type ButtonTypography as AceButtonTypography,
   type ButtonIcon as AceButtonIcon,
   type ButtonPreviewState as AceButtonPreviewState,
 } from './Button'

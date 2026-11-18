@@ -11,11 +11,11 @@ function aceTypography(token: string) {
 }
 
 const ACE = {
-  title: '--ace-type-heading-h6-bold',
-  body: '--ace-type-paragraph-p1-regular',
-  bodyBold: '--ace-type-paragraph-p1-bold',
-  captionBold: '--ace-type-caption-bold',
-  captionRegular: '--ace-type-caption-regular',
+  title: '--type-heading-bold',
+  body: '--type-body-regular',
+  bodyBold: '--type-body-bold',
+  captionBold: '--type-caption-bold',
+  captionRegular: '--type-caption-regular',
 } as const
 
 export type DialogModalPresentation = 'overlay' | 'static'
@@ -59,8 +59,8 @@ const dialogCloseButtonClass = cn(
   'inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
   'text-[var(--dialog-modal-title)]',
   'transition-[background-color,box-shadow,color]',
-  'duration-[var(--ace-motion-duration-medium)]',
-  '[transition-timing-function:var(--ace-motion-ease-standard)]',
+  'duration-[var(--motion-duration-medium)]',
+  '[transition-timing-function:var(--motion-ease-standard)]',
   'motion-reduce:transition-none motion-reduce:duration-0',
   'hover:bg-[var(--screening-surface-hover)] hover:shadow-[0_0_0_1px_var(--screening-border-strong)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',

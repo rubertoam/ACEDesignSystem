@@ -2,7 +2,7 @@ import { cn } from '../../../lib/cn'
 
 /** Caption Regular - Figma typography/ui/caption. */
 const labelClass = cn(
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
 )
 
 /** Review Assigned / tw-animate-css enter-exit (same as FinScan ui/tooltip). */
@@ -26,7 +26,7 @@ export const tooltipContentClass = cn(
 export const aceScreeningToolbarTooltipContentClass = cn(
   'z-[300] w-fit max-w-[min(100vw-2rem,20rem)] text-balance rounded-[var(--radius-md)] border border-solid px-3 py-1.5',
   labelClass,
-  'border-[var(--screening-border-strong)] bg-[var(--screening-surface)] text-[var(--color-text-primary)] shadow-[var(--ace-drop-shadow-xs)]',
+  'border-[var(--screening-border-strong)] bg-[var(--screening-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-xs)]',
   tooltipMotionClass,
 )
 

@@ -1,6 +1,6 @@
 import { cn } from '../../../lib/cn'
 
-const motionEase = '[transition-timing-function:var(--ace-motion-ease-standard)]'
+const motionEase = '[transition-timing-function:var(--motion-ease-standard)]'
 const motionReduce = 'motion-reduce:transition-none motion-reduce:duration-0'
 
 /**
@@ -13,7 +13,7 @@ export const sidebarIconButtonClass = cn(
   'border border-solid border-transparent',
   'text-[var(--icon-button-icon-rest-ghost)]',
   'transition-[opacity,background-color,border-color,color]',
-  'duration-[var(--ace-motion-duration-medium)]',
+  'duration-[var(--motion-duration-medium)]',
   motionEase,
   motionReduce,
   'hover:border-[var(--icon-button-hover-bg)] hover:bg-[var(--icon-button-hover-bg)] hover:text-[var(--icon-button-icon)]',
@@ -30,7 +30,7 @@ export const sidebarIconButtonBorderedClass = cn(
   'relative z-[1] inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-md)] border border-solid',
   'border-[var(--icon-button-border)] bg-[var(--icon-button-surface)] text-[var(--icon-button-icon)]',
   'transition-[opacity,background-color,border-color,color]',
-  'duration-[var(--ace-motion-duration-medium)]',
+  'duration-[var(--motion-duration-medium)]',
   motionEase,
   motionReduce,
   'hover:border-[var(--icon-button-border)] hover:bg-[var(--icon-button-hover-bg)] hover:text-[var(--icon-button-icon)]',

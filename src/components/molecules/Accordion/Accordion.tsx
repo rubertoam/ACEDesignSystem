@@ -17,7 +17,7 @@ export type AccordionProps = {
   /** Badge pill color when `showTag` is on. Defaults to `purple` (Figma Accordion). */
   tagVariant?: BadgeVariant
   surface?: AccordionSurface
-  /** Applies --ace-drop-shadow-xs independently of surface color. */
+  /** Applies --shadow-xs independently of surface color. */
   dropShadow?: boolean
   showAddIcon?: boolean
   showDeleteIcon?: boolean
@@ -58,7 +58,7 @@ function surfaceBgClass(surface: AccordionSurface) {
 }
 
 const titleClass =
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)] text-[var(--accordion-title)]'
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)] text-[var(--accordion-title)]'
 
 function ActionButton({
   label,
@@ -176,7 +176,7 @@ export function Accordion({
         durationAccordion,
         easeAccordion,
         surfaceBg,
-        dropShadow && 'shadow-[var(--ace-drop-shadow-xs)]',
+        dropShadow && 'shadow-[var(--shadow-xs)]',
         className,
       )}
     >

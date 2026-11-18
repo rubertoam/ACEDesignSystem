@@ -8,11 +8,11 @@ import {
 import { LANDING_PAGE_CARD_ICONS } from './landingPageCardAssets'
 
 const p1Bold =
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]'
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]'
 const caption =
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]'
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]'
 const footerBold =
-  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]'
+  '[font:var(--type-caption-bold)] [letter-spacing:var(--type-caption-bold-tracking)]'
 
 export type LandingPageCardVariant = 'stats' | 'description'
 
@@ -118,8 +118,8 @@ export function LandingPageCard({
   const footerLinkClass = cn(
     footerBold,
     'text-[0.625rem] tracking-[0.0125rem] text-[var(--landing-page-card-link-color)]',
-    'rounded-[var(--radius-sm)] transition-colors duration-[var(--ace-motion-duration-fast)]',
-    '[transition-timing-function:var(--ace-motion-ease-standard)]',
+    'rounded-[var(--radius-sm)] transition-colors duration-[var(--motion-duration-fast)]',
+    '[transition-timing-function:var(--motion-ease-standard)]',
     'hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]',
   )
 
@@ -142,7 +142,7 @@ export function LandingPageCard({
         'border-[var(--landing-page-card-border)] bg-[var(--landing-page-card-surface)]',
         'shadow-[var(--landing-page-card-shadow)]',
         elevateOnHover &&
-          'transition-[box-shadow] duration-[var(--ace-motion-duration-fast)] [transition-timing-function:var(--ace-motion-ease-standard)] hover:shadow-[var(--landing-page-card-shadow-hover)]',
+          'transition-[box-shadow] duration-[var(--motion-duration-fast)] [transition-timing-function:var(--motion-ease-standard)] hover:shadow-[var(--landing-page-card-shadow-hover)]',
         className,
       )}
     >

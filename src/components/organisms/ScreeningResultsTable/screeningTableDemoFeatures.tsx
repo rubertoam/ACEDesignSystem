@@ -259,7 +259,7 @@ export function ColumnResizeHandle({
 }
 
 const demoHeaderLabelClass = cn(
-  '[font:var(--ace-type-label-bold)] [letter-spacing:var(--ace-type-label-bold-tracking)]',
+  '[font:var(--type-footnote-bold)] [letter-spacing:var(--type-footnote-bold-tracking)]',
   'inline-flex items-center leading-none uppercase tracking-wide',
   'text-[var(--screening-text-muted)] text-[length:var(--screening-table-header-font-size)]',
 )

@@ -59,7 +59,7 @@ export function FinScanIcon({
   return (
     <span
       className={cn(
-        'inline-flex shrink-0 items-center gap-[var(--ace-finscan-icon-gap)]',
+        'inline-flex shrink-0 items-center gap-[var(--finscan-icon-gap)]',
         className,
       )}
       aria-hidden={decorative ? true : undefined}

@@ -58,8 +58,8 @@ export function Stepper({
       className={cn(
         stepperShellClass,
         isVertical
-          ? 'h-auto w-[var(--input-height-md)] flex-col gap-0.5 px-0.5 py-0.5'
-          : 'h-[var(--input-height-md)] flex-row gap-0.5 px-1',
+          ? 'h-auto w-[var(--stepper-vertical-width)] flex-col gap-[var(--stepper-gap)] p-[var(--stepper-vertical-pad)]'
+          : 'h-[var(--stepper-horizontal-height)] w-auto flex-row gap-[var(--stepper-gap)] px-[var(--stepper-horizontal-px)] py-0',
         disabled && 'opacity-50',
         className,
       )}

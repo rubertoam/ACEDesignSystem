@@ -84,8 +84,8 @@ function SidebarMotionDemo() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-3 py-1.5 text-sm text-[var(--screening-text-primary)] transition-colors duration-[var(--ace-motion-duration-fast)] hover:bg-[var(--screening-surface-hover)]"
-        style={{ transitionTimingFunction: 'var(--ace-motion-ease-standard)' }}
+        className="rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-3 py-1.5 text-sm text-[var(--screening-text-primary)] transition-colors duration-[var(--motion-duration-fast)] hover:bg-[var(--screening-surface-hover)]"
+        style={{ transitionTimingFunction: 'var(--motion-ease-standard)' }}
       >
         {open ? 'Close sidebar' : 'Open sidebar'}
       </button>
@@ -124,14 +124,14 @@ export function AnimationsLab() {
             <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-[var(--screening-text-muted)]">
               <li>
                 Standard ease:{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-motion-ease-standard</code> (
+                <code className="text-[var(--screening-text-primary)]">--motion-ease-standard</code> (
                 {ACE_MOTION_EASE_STANDARD})
               </li>
               <li>
                 Durations:{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-motion-duration-fast</code> (150ms),{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-motion-duration-medium</code> (300ms),{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-motion-duration-slow</code> (420ms)
+                <code className="text-[var(--screening-text-primary)]">--motion-duration-fast</code> (150ms),{' '}
+                <code className="text-[var(--screening-text-primary)]">--motion-duration-medium</code> (300ms),{' '}
+                <code className="text-[var(--screening-text-primary)]">--motion-duration-slow</code> (420ms)
               </li>
             </ul>
           </section>
@@ -164,17 +164,17 @@ export const ACE_ANIMATIONS = [
     name: 'Row hover',
     component: 'MyComponent',
     properties: 'background-color',
-    duration: 'var(--ace-motion-duration-fast)',
-    easing: 'var(--ace-motion-ease-standard)',
-    tokens: ['--ace-motion-duration-fast', '--ace-motion-ease-standard'],
+    duration: 'var(--motion-duration-fast)',
+    easing: 'var(--motion-ease-standard)',
+    tokens: ['--motion-duration-fast', '--motion-ease-standard'],
   },
   // ...
 ]
 
 // Component (Tailwind + tokens)
 className={cn(
-  'transition-colors duration-[var(--ace-motion-duration-fast)]',
-  '[transition-timing-function:var(--ace-motion-ease-standard)]',
+  'transition-colors duration-[var(--motion-duration-fast)]',
+  '[transition-timing-function:var(--motion-ease-standard)]',
   'motion-reduce:transition-none',
 )}`}</ComponentLabCode>
         </>

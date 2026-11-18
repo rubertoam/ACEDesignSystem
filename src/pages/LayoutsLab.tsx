@@ -67,7 +67,7 @@ function ToolbarGroup({
   className?: string
 }) {
   return (
-    <div className={cn('flex min-w-0 flex-col gap-[var(--ace-section-label-gap)]', className)}>
+    <div className={cn('flex min-w-0 flex-col gap-[var(--section-label-gap)]', className)}>
       <p className={cn(labControlLegendClass, 'm-0 flex h-5 items-center')}>{label}</p>
       <div className="flex h-9 items-center">{children}</div>
     </div>

@@ -119,7 +119,7 @@ export function ScrollableListLab() {
                     ).
                   </p>
                 </div>
-                <div className="max-w-sm rounded-[var(--radius-sm)] border border-solid border-[var(--scrollable-list-border)] bg-[var(--scrollable-list-surface)] py-1 shadow-[var(--ace-drop-shadow-xs)]">
+                <div className="max-w-sm rounded-[var(--radius-sm)] border border-solid border-[var(--scrollable-list-border)] bg-[var(--scrollable-list-surface)] py-1 shadow-[var(--shadow-xs)]">
                   <ScrollableListItemRow
                     title={ITEM_DEMO?.label ?? 'List Item'}
                     icon={ITEM_DEMO?.icon}

@@ -51,7 +51,7 @@ export type TimePickerProps = {
 
 const fieldTriggerClass = cn(
   'inline-flex w-[var(--time-picker-trigger-width)] max-w-[var(--time-picker-trigger-width)] shrink-0 items-center justify-between gap-[var(--space-2)] rounded-[var(--radius-sm)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] px-3 py-2 text-[var(--color-text-primary)] outline-none transition-colors',
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
   'hover:bg-[var(--screening-surface-hover)] focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
   'data-[state=open]:bg-[var(--screening-surface-hover)] data-[state=open]:ring-2 data-[state=open]:ring-[var(--screening-primary-ring)] data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-[var(--screening-primary-ring-offset)]',
   'disabled:pointer-events-none disabled:opacity-50',
@@ -63,10 +63,10 @@ const panelClass = cn(
 )
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
 const labelBold =
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]'
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]'
 
 function focusInputSelect(el: HTMLInputElement | null | undefined) {
   if (!el) return
@@ -613,7 +613,7 @@ export function TimePicker({
 
               {minuteCorrected ? (
                 <p
-                  className="mt-2 text-center [font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--input-error-message)]"
+                  className="mt-2 text-center [font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)] text-[var(--input-error-message)]"
                   role="status"
                 >
                   Minutes adjusted to the nearest valid value (0-59).

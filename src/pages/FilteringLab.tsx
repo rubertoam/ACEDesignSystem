@@ -160,11 +160,13 @@ import { FilterChip, FilterToggleChip } from '../components/molecules/Filtering'
               <code className="text-[var(--screening-text-primary)]">colors/surface/primary</code> →{' '}
               <code className="text-[var(--screening-text-primary)]">--color-surface-primary</code> with{' '}
               <code className="text-[var(--screening-text-primary)]">colors/border/default</code> →{' '}
-              <code className="text-[var(--screening-text-primary)]">--color-border-default</code> at rest. Hover and
-              pressed toggle chips fill <code className="text-[var(--screening-text-primary)]">colors/bg/brand</code>{' '}
-              → <code className="text-[var(--screening-text-primary)]">--color-bg-brand</code> with{' '}
-              <code className="text-[var(--screening-text-primary)]">colors/text/inverse</code> →{' '}
-              <code className="text-[var(--screening-text-primary)]">--color-text-inverse</code>.
+              <code className="text-[var(--screening-text-primary)]">--color-border-default</code> at rest. Hover /
+              pressed / selected fill{' '}
+              <code className="text-[var(--screening-text-primary)]">colors/bg/brand-subtle</code> →{' '}
+              <code className="text-[var(--screening-text-primary)]">--color-bg-brand-subtle</code> with{' '}
+              <code className="text-[var(--screening-text-primary)]">colors/text/primary</code> and{' '}
+              <code className="text-[var(--screening-text-primary)]">colors/action/icon</code> (Figma Dropdown set{' '}
+              <code className="text-[var(--screening-text-primary)]">2277:136</code>).
             </p>
           </section>
           <section className={labUsageSectionClass}>

@@ -4,7 +4,7 @@
  */
 
 :root {
-  --lab-display-font: 'Plus Jakarta Sans', var(--font-ace-noto, 'Noto Sans'), sans-serif;
+  --lab-display-font: 'Plus Jakarta Sans', var(--font-noto, 'Noto Sans'), sans-serif;
   --lab-panel-glow: 0 1px 0 color-mix(in srgb, var(--color-surface-primary) 70%, transparent),
     0 16px 40px -28px color-mix(in srgb, var(--color-action-primary) 12%, transparent);
   /* Overview card hover wash - purple → blue */
@@ -50,7 +50,7 @@
     ),
     radial-gradient(
       ellipse 110% 70% at 48% 100%,
-      color-mix(in srgb, var(--color-badges-teal-border) 4%, transparent),
+      color-mix(in srgb, var(--color-badges-inline-messages-teal-border) 4%, transparent),
       transparent 70%
     ),
     linear-gradient(
@@ -195,12 +195,12 @@
   background: var(--screening-surface);
   padding: 1.25rem;
   text-decoration: none;
-  box-shadow: var(--ace-drop-shadow-xs);
+  box-shadow: var(--shadow-xs);
   transition:
-    transform var(--ace-motion-duration-medium) var(--ace-motion-ease-standard),
-    box-shadow var(--ace-motion-duration-medium) var(--ace-motion-ease-standard),
-    border-color var(--ace-motion-duration-medium) var(--ace-motion-ease-standard),
-    background var(--ace-motion-duration-medium) var(--ace-motion-ease-standard);
+    transform var(--motion-duration-medium) var(--motion-ease-standard),
+    box-shadow var(--motion-duration-medium) var(--motion-ease-standard),
+    border-color var(--motion-duration-medium) var(--motion-ease-standard),
+    background var(--motion-duration-medium) var(--motion-ease-standard);
 }
 
 .lab-overview-card::before {
@@ -212,12 +212,12 @@
   background: var(--lab-accent-gradient);
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform var(--ace-motion-duration-medium) var(--ace-motion-ease-standard);
+  transition: transform var(--motion-duration-medium) var(--motion-ease-standard);
 }
 
 .lab-overview-card__title {
   color: var(--screening-text-primary);
-  transition: color var(--ace-motion-duration-medium) var(--ace-motion-ease-standard);
+  transition: color var(--motion-duration-medium) var(--motion-ease-standard);
 }
 
 .lab-overview-card:hover,

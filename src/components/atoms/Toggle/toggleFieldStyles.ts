@@ -16,7 +16,7 @@ export const TOGGLE_SIZE_LABELS: Record<ToggleSize, string> = {
  * Motion in toggle.css.
  */
 export const aceToggleTrackClass = cn(
-  'ace-toggle-track group relative inline-flex shrink-0 cursor-pointer items-center rounded-full border-0 p-[var(--toggle-track-padding)] outline-none',
+  'ace-toggle-track group relative inline-flex shrink-0 cursor-pointer items-center rounded-[var(--toggle-track-radius,9999px)] border-0 p-[var(--toggle-track-padding)] outline-none',
   'disabled:cursor-not-allowed',
   'data-[state=unchecked]:bg-[var(--toggle-track-off)] data-[state=checked]:bg-[var(--toggle-track-on)]',
   'disabled:data-[state=unchecked]:bg-[var(--toggle-track-disabled-off)] disabled:data-[state=checked]:bg-[var(--toggle-track-disabled-on)]',
@@ -65,7 +65,7 @@ export const aceToggleIconXClass: Record<ToggleSize, string> = {
 
 /** Label beside toggle - Caption/Regular (Figma) for Small and Large. */
 export const aceToggleLabelClass =
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--color-text-primary)]'
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)] text-[var(--color-text-primary)]'
 
 export const aceToggleLabelDisabledClass = 'text-[var(--color-text-disabled)]'
 

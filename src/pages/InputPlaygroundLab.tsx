@@ -1,20 +1,23 @@
 import { useState } from 'react'
-import { Input, type InputIcon, type InputSize, type InputVisualState } from '../components/atoms/Input'
+import {
+  Input,
+  type InputFieldTypography,
+  type InputIcon,
+  type InputVisualState,
+} from '../components/atoms/Input'
 import { Toggle } from '../components/atoms/Toggle/Toggle'
 import { cn } from '../lib/cn'
 import { LabControlField, LabSelect } from '../lib/labControls'
 import { labExampleSectionClass, labUsageSectionClass } from '../lib/labExampleSection'
 import { ComponentLabCode, ComponentLabPage } from './ComponentLabPage'
 
-
 import { inputLabQa } from './labTabDocs'
-const SIZES: InputSize[] = ['sm', 'md', 'lg']
-const VISUAL_STATES: InputVisualState[] = ['default', 'focus', 'error', 'disabled']
 
-const SIZE_OPTIONS: { value: InputSize; label: string }[] = [
-  { value: 'sm', label: 'Small' },
-  { value: 'md', label: 'Medium' },
-  { value: 'lg', label: 'Large' },
+const VISUAL_STATES: { state: InputVisualState; label: string }[] = [
+  { state: 'default', label: 'Input / Default' },
+  { state: 'focus', label: 'Input / Focused' },
+  { state: 'error', label: 'Input / Error' },
+  { state: 'disabled', label: 'Input / Disabled' },
 ]
 
 const ICON_OPTIONS: { value: InputIcon; label: string }[] = [
@@ -23,48 +26,37 @@ const ICON_OPTIONS: { value: InputIcon; label: string }[] = [
   { value: 'right', label: 'Right' },
 ]
 
-function StateMatrix({ icon }: { icon: InputIcon }) {
-  const iconLabel = icon === 'none' ? 'No icon' : icon === 'left' ? 'Icon left' : 'Icon right'
+/** Typography options — Figma semantic body tokens only; selected token drives field height. */
+const FIELD_TYPOGRAPHY_OPTIONS: { value: InputFieldTypography; label: string }[] = [
+  {
+    value: 'body-secondary',
+    label: 'Body secondary · typography/body/body-secondary',
+  },
+  {
+    value: 'body-main',
+    label: 'Body main · typography/body/body-main',
+  },
+]
+
+function StateReference() {
   return (
     <div className={cn('min-w-0', labExampleSectionClass)}>
-      <p className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">{iconLabel}</p>
-      <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
-        <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
-          <thead>
-            <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-              <th className="w-[8rem] px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-                State
-              </th>
-              {SIZES.map((s) => (
-                <th
-                  key={s}
-                  className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]"
-                >
-                  {s}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[var(--color-border)] bg-[var(--color-surface)]">
-            {VISUAL_STATES.map((st) => (
-              <tr key={st}>
-                <td className="whitespace-nowrap px-4 py-4 font-medium capitalize text-[var(--color-text-primary)]">{st}</td>
-                {SIZES.map((sz) => (
-                  <td key={sz} className="max-w-[14rem] px-4 py-4 align-top">
-                    <Input
-                      fieldSize={sz}
-                      icon={icon}
-                      visualState={st}
-                      placeholder="Placeholder"
-                      label="Label"
-                      aria-label={`${st} ${sz} ${icon}`}
-                    />
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="overflow-x-auto">
+        <div className="flex min-w-[48rem] items-start justify-between gap-8">
+          {VISUAL_STATES.map(({ state, label }) => (
+            <div key={state} className="flex w-[16rem] shrink-0 flex-col gap-3">
+              <p className="m-0 [font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)] text-[var(--color-text-primary)]">
+                {label}
+              </p>
+              <Input
+                visualState={state}
+                label="Input Label"
+                defaultValue="[Sample text]"
+                aria-label={label}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -75,55 +67,53 @@ function InputsChangelog() {
     <div className="space-y-8">
       <article className="space-y-3">
         <header className="space-y-1">
-          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">20 August 2026</h3>
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">17 November 2026</h3>
           <p className="m-0 text-sm text-[var(--color-text-muted)]">
-            Sync with ACE Design System v.3 Figma Inputs (
-            <code className="text-[var(--color-text-primary)]">408:1976</code>) and semantic color/typography tokens.
+            Sync with simplified Figma Input Fields (
+            <code className="text-[var(--color-text-primary)]">6003:1009</code> / component set{' '}
+            <code className="text-[var(--color-text-primary)]">6004:2722</code>).
           </p>
         </header>
         <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Rewired input borders, fills, text, and icons from hard-coded hex / screening aliases to semantic{' '}
-            <code className="text-[var(--color-text-primary)]">--color-*</code> tokens (
-            <code className="text-[var(--color-text-primary)]">border/default</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">border/brand</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">border/focus</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">bg/brand-hover</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">bg/error</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">border/error</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">bg/disabled-subtle</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">text/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">icon/*</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">surface/primary</code>).
+            Field height hugs the field typography token (default{' '}
+            <code className="text-[var(--color-text-primary)]">typography/body/body-main</code>) +{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/8</code> padding (removed fixed sm/md/lg
+            heights). Playground{' '}
+            <code className="text-[var(--color-text-primary)]">fieldTypography</code> swaps body-secondary /
+            body-main to demo that relationship.
           </li>
           <li>
-            Corrected focus chrome: 1px inner{' '}
-            <code className="text-[var(--color-text-primary)]">--color-border-brand</code> + lavender{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code> fill + 2px outer ring{' '}
-            <code className="text-[var(--color-text-primary)]">--color-border-focus</code> (was inverted / outdated
-            neutrals).
+            Static reference matches Figma: Default / Focused / Error / Disabled only (body-main baseline). Icon
+            left/right is a playground toggle, not a matrix row.
           </li>
           <li>
-            Removed Figma-absent <code className="text-[var(--color-text-primary)]">active</code> visual state from{' '}
-            <code className="text-[var(--color-text-primary)]">InputVisualState</code>; matrix now matches Default /
-            Focus / Error / Disabled.
+            Error helper uses{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/error message</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-error-message</code> and{' '}
+            <code className="text-[var(--color-text-primary)]">typography/ui/footnote</code>.
           </li>
           <li>
-            Label and error helper use{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; field value /
-            placeholder use <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>{' '}
-            (Body/Regular 14px) at all sizes - size only changes height (36 / 44 / 52px).
+            Stack gap label → field → message uses{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/8</code>.
+          </li>
+        </ul>
+      </article>
+      <article className="space-y-3">
+        <header className="space-y-1">
+          <h3 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">20 August 2026</h3>
+          <p className="m-0 text-sm text-[var(--color-text-muted)]">
+            Sync with ACE Design System v.3 Figma Input Fields and semantic color/typography tokens.
+          </p>
+        </header>
+        <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
+          <li>
+            Rewired input borders, fills, text, and icons to semantic{' '}
+            <code className="text-[var(--color-text-primary)]">--color-*</code> tokens.
           </li>
           <li>
-            Dark theme input overrides removed; colors follow{' '}
-            <code className="text-[var(--color-text-primary)]">color-tokens.css</code> semantic dark mappings.
-          </li>
-          <li>
-            Added this Changelog tab documenting the Inputs update.
-          </li>
-          <li>
-            Usage tab updated to record the semantic color and type tokens used per state (default, focus, error,
-            disabled).
+            Focus chrome: <code className="text-[var(--color-text-primary)]">--color-border-focus</code> +{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>.
           </li>
         </ul>
       </article>
@@ -132,8 +122,8 @@ function InputsChangelog() {
 }
 
 export function InputPlaygroundLab() {
-  const [fieldSize, setFieldSize] = useState<InputSize>('md')
   const [icon, setIcon] = useState<InputIcon>('none')
+  const [fieldTypography, setFieldTypography] = useState<InputFieldTypography>('body-main')
   const [showLabel, setShowLabel] = useState(true)
   const [error, setError] = useState(false)
   const [disabled, setDisabled] = useState(false)
@@ -141,7 +131,12 @@ export function InputPlaygroundLab() {
   const toolbar = (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-start gap-x-5 gap-y-4">
-        <LabSelect label="Size" value={fieldSize} onChange={setFieldSize} options={SIZE_OPTIONS} />
+        <LabSelect
+          label="Field typography (drives size)"
+          value={fieldTypography}
+          onChange={setFieldTypography}
+          options={FIELD_TYPOGRAPHY_OPTIONS}
+        />
         <LabSelect label="Icon" value={icon} onChange={setIcon} options={ICON_OPTIONS} />
         <LabControlField label="Label" className="shrink-0">
           <div className="flex min-h-9 items-center">
@@ -163,9 +158,9 @@ export function InputPlaygroundLab() {
       <div className="border-t border-solid border-[var(--screening-border-soft)] pt-6">
         <div className="max-w-md">
           <Input
-            fieldSize={fieldSize}
+            fieldTypography={fieldTypography}
             icon={icon}
-            label={showLabel ? 'Label' : undefined}
+            label={showLabel ? 'Input Label' : undefined}
             error={error}
             disabled={disabled}
             placeholder="Placeholder"
@@ -180,31 +175,29 @@ export function InputPlaygroundLab() {
     <ComponentLabPage
       qa={inputLabQa}
       title="Input fields"
-      description="ACE Design System v.3 text inputs (Figma 408:1976): sm/md/lg heights (36/44/52px); default, focus (brand border + lavender fill + focus ring), error, and disabled. Optional search icon left or right. Colors and type wired to semantic --color-* and --ace-type-* tokens."
+      description="ACE Design System v.3 text inputs (Figma Input Fields): the typography token on the field value drives input size (type + spacing/8 padding; default body-main). Default, Focused, Error, and Disabled. Optional search icon is a toggleable layer."
       examplesToolbar={toolbar}
       examples={
         <section className="space-y-5">
           <div className={cn('w-full min-w-0', labUsageSectionClass)}>
             <h4 className="m-0 text-base font-semibold text-[var(--color-text-primary)]">Static reference</h4>
             <p className="m-0 w-full text-sm leading-relaxed text-[var(--color-text-muted)]">
-              Rows match Figma states (Default, Focus, Error, Disabled); columns are sizes. Each cell uses a frozen{' '}
-              <code className="text-[var(--color-text-primary)]">visualState</code> (not focusable).
+              Matches Figma states (Default, Focused, Error, Disabled) at the body-main baseline. Each field uses a
+              frozen <code className="text-[var(--color-text-primary)]">visualState</code> (not focusable). Change
+              field size via the Field typography control in the playground above — the typography token drives
+              height.
             </p>
           </div>
-          <div className="flex flex-col gap-12">
-            {(['none', 'left', 'right'] as const).map((ic) => (
-              <StateMatrix key={ic} icon={ic} />
-            ))}
-          </div>
+          <StateReference />
         </section>
       }
       code={
         <ComponentLabCode>{`import { Input } from '../components/atoms/Input'
 
 <Input
-  fieldSize="md"
   label="Email"
   placeholder="you@example.com"
+  fieldTypography="body-main"
   error={!valid}
   errorMessage="Enter a valid email"
 />`}</ComponentLabCode>
@@ -212,48 +205,57 @@ export function InputPlaygroundLab() {
       usage={
         <div className={cn('max-w-3xl space-y-4', labUsageSectionClass)}>
           <p className="m-0 leading-relaxed text-[var(--color-text-muted)]">
-            Use <code className="text-[var(--color-text-primary)]">Input</code> for product forms. Pass{' '}
-            <code className="text-[var(--color-text-primary)]">error</code> /{' '}
+            Use <code className="text-[var(--color-text-primary)]">Input</code> for product forms. The typography
+            token on the field value drives input size: height hugs{' '}
+            <code className="text-[var(--color-text-primary)]">fieldTypography</code> (default{' '}
+            <code className="text-[var(--color-text-primary)]">typography/body/body-main</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--type-body-regular</code>) plus{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/8</code> padding — not fixed sm/md/lg
+            heights. Pass <code className="text-[var(--color-text-primary)]">error</code> /{' '}
             <code className="text-[var(--color-text-primary)]">errorMessage</code> for validation;{' '}
-            <code className="text-[var(--color-text-primary)]">icon</code> for optional search affordance. Reserve{' '}
-            <code className="text-[var(--color-text-primary)]">visualState</code> for spec screenshots or QA grids -
-            it freezes the shell and disables interaction.
+            <code className="text-[var(--color-text-primary)]">icon</code> toggles an optional search layer. Reserve{' '}
+            <code className="text-[var(--color-text-primary)]">visualState</code> for spec screenshots or QA grids.
           </p>
         </div>
       }
       variables={
         <ul className="m-0 list-disc space-y-3 pl-5 leading-relaxed text-[var(--color-text-muted)]">
           <li>
-            Default: <code className="text-[var(--color-text-primary)]">--screening-input-border</code> →{' '}
-            <code className="text-[var(--color-text-primary)]">--color-border-default</code>; surface{' '}
-            <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; placeholder{' '}
-            <code className="text-[var(--color-text-primary)]">--color-text-placeholder</code>; icon{' '}
-            <code className="text-[var(--color-text-primary)]">--color-icon-primary</code>.
+            Default: <code className="text-[var(--color-text-primary)]">--color-border-default</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>; value{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-primary</code>; placeholder{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-placeholder</code>.
           </li>
           <li>
-            Focus: <code className="text-[var(--color-text-primary)]">--color-border-brand</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>, ring{' '}
-            <code className="text-[var(--color-text-primary)]">--color-border-focus</code>.
+            Focus: <code className="text-[var(--color-text-primary)]">--color-border-focus</code>,{' '}
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>.
+          </li>
+          <li>
+            Geometry: the typography token drives field size — hug height from{' '}
+            <code className="text-[var(--color-text-primary)]">fieldTypography</code> (default{' '}
+            <code className="text-[var(--color-text-primary)]">--type-body-regular</code> /
+            body-main; also body-secondary →{' '}
+            <code className="text-[var(--color-text-primary)]">--type-caption-regular</code>) +{' '}
+            <code className="text-[var(--color-text-primary)]">--spacing-8</code>; radius{' '}
+            <code className="text-[var(--color-text-primary)]">--radius-sm</code>.
           </li>
           <li>
             Error: <code className="text-[var(--color-text-primary)]">--color-bg-error</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-border-error</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-status-error</code>.
+            <code className="text-[var(--color-text-primary)]">--color-border-error</code>; helper{' '}
+            <code className="text-[var(--color-text-primary)]">--color-text-error-message</code> +{' '}
+            <code className="text-[var(--color-text-primary)]">--type-footnote-regular</code>.
           </li>
           <li>
             Disabled: <code className="text-[var(--color-text-primary)]">--color-bg-disabled-subtle</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--color-border-disabled-subtle</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-text-disabled</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-icon-disabled</code>.
+            <code className="text-[var(--color-text-primary)]">--color-text-disabled</code>.
           </li>
           <li>
-            Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>; field{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-type-paragraph-p1-regular</code>. Heights{' '}
-            <code className="text-[var(--color-text-primary)]">--input-height-*</code> (36 / 44 / 52).
+            Label: <code className="text-[var(--color-text-primary)]">--type-caption-regular</code>{' '}
+            (body-secondary). Stack gap: <code className="text-[var(--color-text-primary)]">--spacing-8</code>.
           </li>
         </ul>
       }
-
       changelog={<InputsChangelog />}
     />
   )

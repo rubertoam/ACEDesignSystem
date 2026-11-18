@@ -88,9 +88,9 @@ type GroupFormState = {
 }
 
 const h6Bold =
-  '[font:var(--ace-type-heading-h6-bold)] [letter-spacing:var(--ace-type-heading-h6-bold-tracking)]'
+  '[font:var(--type-heading-bold)] [letter-spacing:var(--type-heading-bold-tracking)]'
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
 function SidebarMockHeader({
   open,
@@ -119,7 +119,7 @@ function SidebarMockHeader({
       </div>
       <div className="flex items-center gap-2">
         <span
-          className="size-2 shrink-0 rounded-full bg-[var(--ace-header-status-success)]"
+          className="size-2 shrink-0 rounded-full bg-[var(--color-success-500)]"
           aria-hidden
         />
         <span className={cn(p1, 'text-sm text-[var(--color-text-primary)]')}>Last updated 30 seconds ago</span>
@@ -560,7 +560,7 @@ const [open, setOpen] = useState(true)
                   <strong className="text-[var(--screening-text-primary)]">Edit</strong>: trash marks an item for removal;
                   restore uses <code className="text-[var(--screening-text-primary)]">color/success/500</code> →{' '}
                   <code className="text-[var(--screening-text-primary)]">--color-success-500</code> (via{' '}
-                  <code className="text-[var(--screening-text-primary)]">--ace-success-500</code>) with a white plus.
+                  <code className="text-[var(--screening-text-primary)]">--color-success-500</code>) with a white plus.
                 </li>
                 <li>
                   <strong className="text-[var(--screening-text-primary)]">Dimming</strong>: only the item label is dimmed (
@@ -570,10 +570,10 @@ const [open, setOpen] = useState(true)
                 <li>
                   Action hover washes: trash → <code className="text-[var(--screening-text-primary)]">color/error/50</code>{' '}
                   → <code className="text-[var(--screening-text-primary)]">--color-error-50</code> (via{' '}
-                  <code className="text-[var(--screening-text-primary)]">--ace-error-50</code>), restore →{' '}
+                  <code className="text-[var(--screening-text-primary)]">--color-error-50</code>), restore →{' '}
                   <code className="text-[var(--screening-text-primary)]">color/success/50</code> →{' '}
                   <code className="text-[var(--screening-text-primary)]">--color-success-50</code> (via{' '}
-                  <code className="text-[var(--screening-text-primary)]">--ace-success-50</code>).
+                  <code className="text-[var(--screening-text-primary)]">--color-success-50</code>).
                 </li>
                 <li>
                   <strong className="text-[var(--screening-text-primary)]">Copy</strong>: checkboxes include/exclude items;
@@ -587,7 +587,7 @@ const [open, setOpen] = useState(true)
               <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Animations</h4>
               <p className="m-0 text-[var(--screening-text-muted)]">
                 Panel width, group expand/collapse, chevron rotation, row hover, and action opacity use{' '}
-                <code className="text-[var(--screening-text-primary)]">--ace-motion-ease-standard</code>. See the{' '}
+                <code className="text-[var(--screening-text-primary)]">--motion-ease-standard</code>. See the{' '}
                 <Link to="/lab/atoms/animations" className="text-[var(--screening-primary)] underline underline-offset-2">
                   Animations
                 </Link>{' '}

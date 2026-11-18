@@ -49,6 +49,6 @@ export const sliderTickClass = {
 export const sliderTooltipClass = cn(
   'pointer-events-none absolute bottom-[calc(100%+0.5rem)] left-1/2 z-10 flex -translate-x-1/2 items-center justify-center',
   'size-[var(--slider-tooltip-size)] shrink-0 rounded-full bg-[var(--slider-tooltip-bg)]',
-  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  '[font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)]',
   'text-[0.625rem] leading-none tracking-[0.0125rem] text-[var(--slider-tooltip-text)]',
 )

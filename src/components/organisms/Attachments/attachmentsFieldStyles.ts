@@ -3,7 +3,7 @@ import { cn } from '../../../lib/cn'
 export type AttachmentFileStatus = 'uploading' | 'queued' | 'failed' | 'complete'
 
 const sectionLabelClass = cn(
-  'm-0 [font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  'm-0 [font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)]',
   'text-[var(--attachments-label)]',
 )
 
@@ -17,7 +17,7 @@ export const attachmentsShellClass = cn(
 )
 
 export const attachmentsTitleClass = cn(
-  'm-0 [font:var(--ace-type-heading-h6-small-bold)] [letter-spacing:var(--ace-type-heading-h6-small-bold-tracking)]',
+  'm-0 [font:var(--type-subheading-bold)] [letter-spacing:var(--type-subheading-bold-tracking)]',
   'text-[var(--attachments-title)]',
 )
 
@@ -31,7 +31,7 @@ export const attachmentsDropzoneClass = cn(
 
 export const attachmentsDropzonePromptClass = cn(
   'flex min-w-0 flex-1 items-center gap-2',
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
   'text-[var(--attachments-label)]',
 )
 
@@ -42,7 +42,7 @@ export const attachmentsUploadIconClass = cn(
 )
 
 export const attachmentsUploadedHeaderClass = cn(
-  'm-0 [font:var(--ace-type-footer-semi-bold)] [letter-spacing:var(--ace-type-footer-semi-bold-tracking)]',
+  'm-0 [font:var(--type-footnote-semi-bold)] [letter-spacing:var(--type-footnote-semi-bold-tracking)]',
   'text-[var(--attachments-label)]',
 )
 
@@ -59,17 +59,17 @@ export const attachmentsFileIconClass = cn(
 )
 
 export const attachmentsFileNameClass = cn(
-  'truncate [font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]',
+  'truncate [font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]',
   'leading-none text-[var(--attachments-link)]',
 )
 
 export const attachmentsFileMetaClass = cn(
-  'shrink-0 [font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  'shrink-0 [font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)]',
   'leading-none text-[var(--attachments-muted)]',
 )
 
 export const attachmentsStatusClass = cn(
-  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  '[font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)]',
   'leading-none text-[var(--attachments-status)]',
 )
 
@@ -99,7 +99,7 @@ export const attachmentsLinkRowClass = cn(
 )
 
 export const attachmentsLinkTextClass = cn(
-  'min-w-0 truncate [font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  'min-w-0 truncate [font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)]',
   'leading-none text-[var(--attachments-link)]',
 )
 
@@ -113,8 +113,8 @@ export const attachmentsLinkIconClass = cn(
 export const attachmentsIconButtonClass = cn(
   'inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border-0 bg-transparent p-0',
   'text-[var(--attachments-muted)] outline-none',
-  'transition-[color,background-color,box-shadow] duration-[var(--ace-motion-duration-medium)]',
-  '[transition-timing-function:var(--ace-motion-ease-standard)]',
+  'transition-[color,background-color,box-shadow] duration-[var(--motion-duration-medium)]',
+  '[transition-timing-function:var(--motion-ease-standard)]',
   'motion-reduce:transition-none motion-reduce:duration-0',
   'hover:bg-[var(--screening-surface-hover)] hover:text-[var(--attachments-error)]',
   'hover:shadow-[0_0_0_1px_var(--screening-border-strong)]',

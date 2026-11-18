@@ -55,10 +55,10 @@ Prefer the horizontal kebab `more_horiz` for menus.
 
 | Variant | Rest | Hover |
 |---------|------|-------|
-| No border stroke | Transparent + transparent border; icon `--ace-icon-button-icon-rest-ghost` | Fill + border `--ace-icon-button-hover-bg`; icon `--ace-icon-button-icon` |
-| Border stroke | `--ace-icon-button-surface` + `--ace-icon-button-border` + `--ace-icon-button-icon` | Same border; fill `--ace-icon-button-hover-bg` |
+| No border stroke | Transparent + transparent border; icon `--icon-button-icon-rest-ghost` | Fill + border `--icon-button-hover-bg`; icon `--icon-button-icon` |
+| Border stroke | `--icon-button-surface` + `--icon-button-border` + `--icon-button-icon` | Same border; fill `--icon-button-hover-bg` |
 
-Figma semantic aliases: `colors/icon/hover` → `--icon-button-hover-bg` (and `--ace-icon-button-hover-bg`); `colors/border/default` → `--icon-button-border`; `colors/icon/primary` → `--icon-button-icon`; `colors/icon/inverse` → `--icon-button-surface`; `colors/text/primary` → `--icon-button-icon-rest-ghost`.
+Figma semantic aliases: `colors/icon/hover` → `--icon-button-hover-bg` (and `--icon-button-hover-bg`); `colors/border/default` → `--icon-button-border`; `colors/icon/primary` → `--icon-button-icon`; `colors/icon/inverse` → `--icon-button-surface`; `colors/text/primary` → `--icon-button-icon-rest-ghost`.
 
 Sidebar row actions fade in on row or header hover / focus. An open menu keeps the hover look.
 
@@ -81,7 +81,7 @@ Sidebar row actions fade in on row or header hover / focus. An open menu keeps t
 
 ```
 <MaterialSymbol name="search" size="md" />
-<MaterialSymbol name="favorite" filled className="text-[var(--ace-error-500)]" />
+<MaterialSymbol name="favorite" filled className="text-[var(--color-error-500)]" />
 
 <button type="button" aria-label="…" className={sidebarIconButtonClass}>
   <MaterialSymbol name="more_horiz" size="md" className="text-current" />
@@ -105,10 +105,10 @@ Look up names on fonts.google.com/icons and turn spaces into underscores.
 
 | Area | Tokens / notes |
 |------|----------------|
-| Favorite selected | `--ace-error-500` |
-| Status glyphs | `--ace-toast-icon-success/info/error/warning` |
-| Ghost hover | `--ace-icon-button-hover-bg` (fill and border), `--ace-icon-button-icon` |
-| Stroke rest / hover | `--ace-icon-button-surface`, `--ace-icon-button-border`, `--ace-icon-button-hover-bg` |
+| Favorite selected | `--color-error-500` |
+| Status glyphs | `--toast-message-icon-success/info/error/warning` |
+| Ghost hover | `--icon-button-hover-bg` (fill and border), `--icon-button-icon` |
+| Stroke rest / hover | `--icon-button-surface`, `--icon-button-border`, `--icon-button-hover-bg` |
 | Chevrons | `--screening-icon-chevron` plus `aceChevronIconClass` |
 | Size guidance | sm for accordion / dense UI, md default, lg for controls, xl for headers / toolbar |
 

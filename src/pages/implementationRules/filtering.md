@@ -61,10 +61,10 @@ These pieces are UI only. The host owns the actual filter logic.
 
 | State | Appearance |
 |-------|------------|
-| Rest | Shade 0 surface, Neutral/400 border |
-| Hover / pressed toggle | Transparent border, Neutral/700 fill, Neutral/100 text |
-| Clear icon at rest | Neutral/500 fill; follows the selected icon color when the chip is hovered |
-| Search width | `--ace-filter-search-width` (12.5rem) |
+| Rest | `colors/surface/primary` + `colors/border/default` |
+| Hover / pressed / selected | Transparent border, `colors/bg/brand-subtle`, `colors/text/primary`, icons `colors/action/icon` |
+| Clear icon at rest | `colors/icon/primary`; follows selected icon color on chip hover |
+| Search width | `--filter-search-width` (12.5rem) |
 
 ---
 
@@ -96,10 +96,10 @@ Helpers include `FILTER_VIEW_MODES`, `filterViewModeLabel`, `filterViewModeMenuI
 
 | Area | Tokens |
 |------|--------|
-| Geometry | `--ace-filter-radius` (4px), `-gap`, `-px`, `-py` |
-| Trigger / toggle | `--ace-filter-trigger-*`, `-active-*` |
-| Chips | `--ace-filter-chip-*`, `-selected-*`, `-clear` |
-| Header | `--ace-filter-header-title`, `-header-gap`, `-search-width` |
+| Geometry | `--filter-radius` (4px), `-gap`, `-px`, `-py` |
+| Trigger / toggle | `--filter-trigger-*`, `-active-*` |
+| Chips | `--filter-chip-*`, `-selected-*`, `-clear` |
+| Header | `--filter-header-title`, `-header-gap`, `-search-width` |
 | Motion | About 150ms ease-out on color changes |
 
 ---

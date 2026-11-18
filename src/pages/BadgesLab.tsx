@@ -139,7 +139,7 @@ export function BadgesLab() {
           </li>
           <li>
             Label type - Caption Semi Bold (
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-semi-bold</code>
+            <code className="text-[var(--color-text-primary)]">--type-caption-semi-bold</code>
             ), size{' '}
             <code className="text-[var(--color-text-primary)]">typography/body/body-secondary</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--typography-body-body-secondary</code>

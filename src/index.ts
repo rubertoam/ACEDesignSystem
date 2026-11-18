@@ -5,8 +5,15 @@ export { badgeStatusDotClass, badgeStatusLabelClass, badgeStatusShellClass, badg
 export { Tooltip, TooltipContent, TooltipIconWrap, TooltipProvider, TooltipTrigger, type TooltipContentProps, type TooltipProps, type TooltipProviderProps, type TooltipTriggerProps } from './components/atoms/Tooltip/Tooltip'
 export { tooltipContentClass } from './components/atoms/Tooltip/tooltipFieldStyles'
 export { AvailabilityTag, type AvailabilityTagProps } from './components/atoms/AvailabilityTag/AvailabilityTag'
-export { Button, type ButtonActionTone, type ButtonIcon, type ButtonPreviewState, type ButtonProps, type ButtonSize, type ButtonVariant } from './components/atoms/Button'
-export { Input, type InputIcon, type InputProps, type InputSize, type InputVisualState } from './components/atoms/Input'
+export { Button, type ButtonActionTone, type ButtonIcon, type ButtonPreviewState, type ButtonProps, type ButtonSize, type ButtonTypography, type ButtonVariant } from './components/atoms/Button'
+export {
+  Input,
+  type InputFieldTypography,
+  type InputIcon,
+  type InputProps,
+  type InputSize,
+  type InputVisualState,
+} from './components/atoms/Input'
 export { Tabs, tabButtonId, type TabItem, type TabsOrientation, type TabsProps } from './components/atoms/Tabs/Tabs'
 export { TabCards, type TabCardItem, type TabCardsProps } from './components/atoms/Tabs/TabCards'
 export { Checkbox, type CheckboxProps } from './components/atoms/Checkbox/Checkbox'

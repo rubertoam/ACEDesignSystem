@@ -8,7 +8,7 @@ export const scrollableListNotoVar = {
 export const scrollableListShellClass = cn(
   'flex h-full min-h-0 flex-col overflow-hidden outline-none',
   'rounded-[var(--radius-sm)] border border-solid border-[var(--scrollable-list-border)]',
-  'bg-[var(--scrollable-list-surface)] shadow-[var(--ace-drop-shadow-xs)]',
+  'bg-[var(--scrollable-list-surface)] shadow-[var(--shadow-xs)]',
   'transition-[width] duration-200 ease-out',
 )
 
@@ -21,7 +21,7 @@ export const scrollableListHeaderClass =
 /** List title - Paragraph P1 Bold. */
 export const scrollableListTitleClass = cn(
   'm-0 min-w-0 truncate',
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
   'text-[var(--scrollable-list-title)]',
 )
 
@@ -37,7 +37,7 @@ export const scrollableListSectionHeaderClass = cn(
 
 /** Section title - Caption SemiBold. */
 export const scrollableListSectionTitleClass = cn(
-  '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+  '[font:var(--type-caption-semi-bold)] [letter-spacing:var(--type-caption-semi-bold-tracking)]',
   'text-[var(--color-text-secondary)]',
 )
 
@@ -46,8 +46,8 @@ export const scrollableListItemsClass = 'm-0 flex list-none flex-col p-0'
 export const scrollableListItemClass = cn(
   'group relative w-full cursor-pointer border-0 px-4 pb-2.5 pt-1 text-left',
   'bg-transparent text-[var(--scrollable-list-item-text)]',
-  'transition-colors duration-[var(--ace-motion-duration-fast)]',
-  '[transition-timing-function:var(--ace-motion-ease-standard)]',
+  'transition-colors duration-[var(--motion-duration-fast)]',
+  '[transition-timing-function:var(--motion-ease-standard)]',
   'motion-reduce:transition-none',
   'hover:bg-[var(--scrollable-list-item-hover-bg)]',
   'focus-visible:outline-none',
@@ -62,14 +62,14 @@ export const scrollableListItemFocusRingClass =
 /** Primary row label - Paragraph P1 Regular. */
 export const scrollableListItemLabelClass = cn(
   'm-0 w-full truncate',
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
   'text-[var(--scrollable-list-item-text)]',
 )
 
 /** Secondary row line - Footer Regular. */
 export const scrollableListItemDescriptionClass = cn(
   'm-0 w-full truncate',
-  '[font:var(--ace-type-footer-regular)] [letter-spacing:var(--ace-type-footer-regular-tracking)]',
+  '[font:var(--type-footnote-regular)] [letter-spacing:var(--type-footnote-regular-tracking)]',
   'text-[var(--scrollable-list-item-text)]',
 )
 
@@ -79,6 +79,6 @@ export const scrollableListMinimizedClass =
 /** Minimized vertical title - Caption Bold. */
 export const scrollableListMinimizedTitleClass = cn(
   'max-h-full truncate',
-  '[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)]',
+  '[font:var(--type-caption-bold)] [letter-spacing:var(--type-caption-bold-tracking)]',
   'text-[var(--color-text-secondary)]',
 )

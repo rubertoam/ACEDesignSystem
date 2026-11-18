@@ -65,7 +65,7 @@ const DROPDOWN_ITEMS = [
 ]
 
 const openButtonClass = cn(
-  'rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-background)]',
+  'rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text-primary)] shadow-[var(--lab-shadow-sm)] transition-colors hover:bg-[var(--color-background)]',
 )
 
 function noop() {}
@@ -78,7 +78,7 @@ function InlineStrip({ show, tone }: { show: boolean; tone: InlineMessageTone })
 function LabeledDropdown({ label, triggerLabel }: { label: string; triggerLabel: string }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="[font:var(--ace-type-caption-bold)] [letter-spacing:var(--ace-type-caption-bold-tracking)] text-[var(--dialog-modal-title)]">
+      <span className="[font:var(--type-caption-bold)] [letter-spacing:var(--type-caption-bold-tracking)] text-[var(--dialog-modal-title)]">
         {label}
       </span>
       <DropdownMenu
@@ -245,7 +245,7 @@ export function DialogModalLab() {
       </div>
 
       <div className="flex flex-col gap-3 border-t border-solid border-[var(--screening-border-soft)] pt-6">
-        <p className="m-0 [font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)] text-[var(--screening-text-primary)]">
+        <p className="m-0 [font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)] text-[var(--screening-text-primary)]">
           Open live
         </p>
         <div className="flex flex-wrap justify-start gap-2">
@@ -321,26 +321,26 @@ export function DialogModalLab() {
         usage={
           <>
             <section className={labUsageSectionClass}>
-              <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">When to use</h4>
-              <p className="m-0 text-[var(--screening-text-muted)]">
+              <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">When to use</h4>
+              <p className="m-0 text-[var(--color-text-secondary)]">
                 Use dialog modals when the user must complete a single high-risk or focused task - confirm delete, add
                 content, or submit a short form. Prefer inline messages over toasts for validation that stays with the
                 dialog.
               </p>
             </section>
             <section className={labUsageSectionClass}>
-              <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Variants</h4>
-              <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
+              <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Variants</h4>
+              <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--color-text-secondary)]">
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Action / Delete</strong>: copy + optional
+                  <strong className="text-[var(--color-text-primary)]">Action / Delete</strong>: copy + optional
                   inline message; Delete uses the danger primary.
                 </li>
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Dropdown / Form</strong>: one control, then
+                  <strong className="text-[var(--color-text-primary)]">Dropdown / Form</strong>: one control, then
                   optional inline message.
                 </li>
                 <li>
-                  <strong className="text-[var(--screening-text-primary)]">Extended Form</strong>: labeled picklists +
+                  <strong className="text-[var(--color-text-primary)]">Extended Form</strong>: labeled picklists +
                   fields, then optional inline message.
                 </li>
               </ul>
@@ -350,12 +350,18 @@ export function DialogModalLab() {
         variables={
           <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-muted)]">
             <li>
-              Modal chrome - <code className="text-[var(--color-text-primary)]">--dialog-modal-*</code> (surface, XL
-              shadow, FinScan primary, danger).
+              Modal chrome - border{' '}
+              <code className="text-[var(--color-text-primary)]">colors/bg/secondary</code>, pad/gap{' '}
+              <code className="text-[var(--color-text-primary)]">spacing/24</code>, footer gap{' '}
+              <code className="text-[var(--color-text-primary)]">spacing/12</code> via{' '}
+              <code className="text-[var(--color-text-primary)]">--dialog-modal-*</code>.
             </li>
             <li>
-              Inline strip - <code className="text-[var(--color-text-primary)]">DialogModalInlineMessage</code> with{' '}
-              <code className="text-[var(--color-text-primary)]">--inline-message-*</code>.
+              Inline strip -{' '}
+              <code className="text-[var(--color-text-primary)]">DialogModalInlineMessage</code> /{' '}
+              <code className="text-[var(--color-text-primary)]">--dialog-modal-inline-error-*</code> →{' '}
+              <code className="text-[var(--color-text-primary)]">colors/badges &amp; inline messages/red-fill</code> +{' '}
+              <code className="text-[var(--color-text-primary)]">red-border</code>.
             </li>
             <li>
               Static gallery - <code className="text-[var(--color-text-primary)]">presentation=&quot;static&quot;</code>

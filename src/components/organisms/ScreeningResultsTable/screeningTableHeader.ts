@@ -6,7 +6,7 @@ function aceTypography(token: string) {
 
 /** Review Assigned `ExpandableFinScanTable` column header label. */
 export const screeningTableHeaderLabelClass = cn(
-  aceTypography('--ace-type-label-bold'),
+  aceTypography('--type-footnote-bold'),
   'inline-flex items-center leading-none uppercase tracking-wide',
   'text-[var(--screening-text-muted)] text-[length:var(--screening-table-header-font-size)]',
 )

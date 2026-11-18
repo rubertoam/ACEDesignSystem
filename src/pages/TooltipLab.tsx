@@ -140,7 +140,7 @@ export function TooltipLab() {
             <code className="text-[var(--color-text-primary)]">--tooltip-border</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--tooltip-text</code>,{' '}
             <code className="text-[var(--color-text-primary)]">--tooltip-shadow</code> (aliases{' '}
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code>)
+            <code className="text-[var(--color-text-primary)]">--shadow-xs</code>)
           </li>
           <li>
             Layout - <code className="text-[var(--color-text-primary)]">--tooltip-radius</code>,{' '}
@@ -167,7 +167,7 @@ export function TooltipLab() {
             </header>
             <ul className="m-0 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[var(--color-text-muted)]">
               <li>
-                Replaced <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code> with{' '}
+                Replaced <code className="text-[var(--color-text-primary)]">--type-caption-regular</code> with{' '}
                 <code className="text-[var(--color-text-primary)]">--typography-ui-caption</code> (+{' '}
                 <code className="text-[var(--color-text-primary)]">--typography-leading-relaxed</code>, Noto Sans
                 Regular) for default and screening-toolbar tooltip content.

@@ -3,9 +3,9 @@ import { publicAsset } from '../lib/publicAsset'
 
 const text = 'text-[var(--screening-text-primary)]'
 const body =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-sm leading-[1.65]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-sm leading-[1.65]'
 const bodyBold =
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)] text-sm leading-[1.65]'
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)] text-sm leading-[1.65]'
 const display =
   '[font-family:var(--lab-display-font)] font-extrabold tracking-[-0.03em] text-[var(--screening-text-primary)]'
 

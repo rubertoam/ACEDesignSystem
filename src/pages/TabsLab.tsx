@@ -162,19 +162,29 @@ import { TabCards } from '../components/atoms/Tabs/TabCards'
             </p>
           </section>
           <section className={labUsageSectionClass}>
-            <h4 className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Tab Card anatomy</h4>
-            <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--screening-text-muted)]">
+            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tokens</h4>
+            <p className="m-0 text-[var(--color-text-secondary)]">
+              Active label <code className="text-[var(--color-text-primary)]">colors/text/brand</code>, inactive{' '}
+              <code className="text-[var(--color-text-primary)]">colors/text/secondary</code>, horizontal indicator{' '}
+              <code className="text-[var(--color-text-primary)]">colors/bg/brand</code>, list gap{' '}
+              <code className="text-[var(--color-text-primary)]">spacing/12</code> (Figma set{' '}
+              <code className="text-[var(--color-text-primary)]">5190:1219</code>).
+            </p>
+          </section>
+          <section className={labUsageSectionClass}>
+            <h4 className="m-0 text-sm font-semibold text-[var(--color-text-primary)]">Tab Card anatomy</h4>
+            <ul className="m-0 list-disc space-y-1 pl-5 text-[var(--color-text-secondary)]">
               <li>Title - Paragraph/P1 Bold (14)</li>
               <li>Header icons - Figma Earthquake + History + Tune cluster (68×16)</li>
               <li>Subtitle - Caption Regular (12, optional)</li>
               <li>Description - Caption Regular (12)</li>
               <li>
-                States - default (<code className="text-[var(--screening-text-primary)]">colors/surface/primary</code>{' '}
-                + <code className="text-[var(--screening-text-primary)]">colors/border/default</code>), hover (
-                <code className="text-[var(--screening-text-primary)]">colors/bg/brand-hover</code> →{' '}
-                <code className="text-[var(--screening-text-primary)]">--color-bg-brand-hover</code> + XL drop shadow),
-                selected (brand-hover fill + <code className="text-[var(--screening-text-primary)]">colors/border/brand</code>{' '}
-                → <code className="text-[var(--screening-text-primary)]">--color-border-brand</code>)
+                States - default (<code className="text-[var(--color-text-primary)]">colors/surface/primary</code>{' '}
+                + <code className="text-[var(--color-text-primary)]">colors/border/default</code>), hover (
+                <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code> →{' '}
+                <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code> + XL drop shadow),
+                selected (brand-hover fill + <code className="text-[var(--color-text-primary)]">colors/border/brand</code>{' '}
+                → <code className="text-[var(--color-text-primary)]">--color-border-brand</code>)
               </li>
             </ul>
           </section>
@@ -192,19 +202,21 @@ import { TabCards } from '../components/atoms/Tabs/TabCards'
         </>
       }
       variables={
-        <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--screening-text-muted)]">
+        <ul className="m-0 list-disc space-y-2 pl-5 text-[var(--color-text-secondary)]">
           <li>
-            Standard - <code className="text-[var(--screening-text-primary)]">--tabs-text-*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--tabs-indicator-*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--tabs-vertical-*</code>
+            Standard - active{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/brand</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--tabs-text-active</code>; inactive{' '}
+            <code className="text-[var(--color-text-primary)]">colors/text/secondary</code>; indicator{' '}
+            <code className="text-[var(--color-text-primary)]">colors/bg/brand</code>; gap{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/12</code>
           </li>
           <li>
-            Tab Card - <code className="text-[var(--screening-text-primary)]">--tab-card-surface-*</code>,{' '}
-            <code className="text-[var(--screening-text-primary)]">--tab-card-border-*</code>, hover elevation{' '}
-            <code className="text-[var(--screening-text-primary)]">--ace-drop-shadow-xl</code>, emphasis fill{' '}
-            <code className="text-[var(--screening-text-primary)]">--screening-primary-soft-bg</code> →{' '}
-            <code className="text-[var(--screening-text-primary)]">colors/bg/brand-hover</code> →{' '}
-            <code className="text-[var(--screening-text-primary)]">--color-bg-brand-hover</code>
+            Tab Card - radius{' '}
+            <code className="text-[var(--color-text-primary)]">radius/md</code>, pad/gap{' '}
+            <code className="text-[var(--color-text-primary)]">spacing/12</code>; hover/selected fill{' '}
+            <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code>; selected stroke{' '}
+            <code className="text-[var(--color-text-primary)]">colors/border/brand</code>
           </li>
         </ul>
       }

@@ -12,6 +12,6 @@ export const pageHeaderLeadingClass = 'flex min-w-0 items-center gap-5'
 
 export const pageHeaderTitleClass = cn(
   'm-0 text-[var(--color-text-primary)]',
-  '[font:var(--ace-type-heading-h6-bold)]',
-  '[letter-spacing:var(--ace-type-heading-h6-bold-tracking)]',
+  '[font:var(--type-heading-bold)]',
+  '[letter-spacing:var(--type-heading-bold-tracking)]',
 )

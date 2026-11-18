@@ -5,10 +5,10 @@ import { tabButtonId } from './Tabs'
 
 /** Figma Cards/Tab: title = Paragraph/P1/Bold (14). */
 const titleClass =
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]'
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]'
 /** Figma Cards/Tab: subtitle + description = Caption/Regular (12). */
 const captionClass =
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]'
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]'
 
 export type TabCardItem = {
   id: string
@@ -60,18 +60,18 @@ export function TabCards({
             className={cn(
               'flex w-full max-w-[var(--tab-card-max-width)] flex-col items-stretch rounded-[var(--tab-card-radius)]',
               'border border-solid p-[var(--tab-card-padding)] text-left outline-none transition-[background-color,border-color,box-shadow] duration-200 ease-out',
-              'focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
+              'focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-primary)]',
               'disabled:cursor-not-allowed disabled:opacity-50',
               selected
-                ? 'border-[var(--tab-card-border-active)] bg-[var(--screening-primary-soft-bg)] shadow-none'
+                ? 'border-[var(--tab-card-border-active)] bg-[var(--tab-card-surface-emphasis)] shadow-none'
                 : cn(
                     'border-[var(--tab-card-border-default)] bg-[var(--tab-card-surface-default)]',
-                    'hover:border-[var(--tab-card-border-default)] hover:bg-[var(--screening-primary-soft-bg)] hover:shadow-[var(--ace-drop-shadow-xl)]',
+                    'hover:border-[var(--tab-card-border-default)] hover:bg-[var(--tab-card-surface-emphasis)] hover:shadow-[var(--shadow-xl)]',
                   ),
             )}
           >
-            <div className="flex w-full flex-col gap-2">
-              <div className="flex items-center justify-between gap-3">
+            <div className="flex w-full flex-col gap-[var(--spacing-8)]">
+              <div className="flex items-center justify-between gap-[var(--spacing-12)]">
                 <p className={cn('m-0 whitespace-nowrap text-[var(--tab-card-title-color)]', titleClass)}>
                   {item.title}
                 </p>

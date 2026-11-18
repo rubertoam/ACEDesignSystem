@@ -1,13 +1,16 @@
 import type { CSSProperties } from 'react'
 import type { StyleSheetFamily, StyleSheetSpecimen } from './typographyLabData'
 
+function weightSlug(weight: StyleSheetSpecimen['weight']): string {
+  if (weight === 'semiBold') return 'semi-bold'
+  return weight
+}
+
 function specimenStyle(family: StyleSheetFamily, specimen: StyleSheetSpecimen): CSSProperties {
+  const composed = `--type-${family.id}-${weightSlug(specimen.weight)}`
   return {
-    fontFamily: 'var(--font-ace-noto)',
-    fontSize: family.sizeRem,
-    fontWeight: specimen.weightValue,
-    lineHeight: 1.65,
-    letterSpacing: specimen.trackingCss,
+    font: `var(${composed})`,
+    letterSpacing: `var(${composed}-tracking)`,
   }
 }
 
@@ -24,6 +27,7 @@ function StyleSheetSpecimenColumn({
       <p className="m-0">
         {specimen.label} ({family.sizePx}px/{family.sizeRem})
       </p>
+      <p className="m-0 mt-1 text-[9px] text-[var(--screening-text-secondary)]">{family.semanticPath}</p>
     </div>
   )
 }
@@ -47,9 +51,11 @@ function StyleSheetFamilySection({ family }: { family: StyleSheetFamily }) {
 
 export function TypographyStyleSheetView({ families }: { families: StyleSheetFamily[] }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--shadow-sm)] sm:px-8">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--lab-shadow-sm)] sm:px-8">
       <p className="m-0 border-b border-[var(--color-border)] py-6 text-sm text-[var(--screening-text-muted)]">
-        Manage all your typefaces in here. All typefaces are in Noto Sans.
+        Manage all your typefaces in here. All typefaces are in Noto Sans. Specimens use composed{' '}
+        <code className="text-[var(--screening-text-primary)]">--type-*</code> styles backed by semantic
+        Desktop JSON tokens.
       </p>
       {families.map((family) => (
         <StyleSheetFamilySection key={family.id} family={family} />

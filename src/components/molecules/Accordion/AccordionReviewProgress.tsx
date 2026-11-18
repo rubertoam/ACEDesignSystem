@@ -25,7 +25,7 @@ export function AccordionReviewProgress({
       <span
         className={cn(
           'hidden whitespace-nowrap text-[var(--screening-text-secondary)] sm:inline',
-          '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+          '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
         )}
       >
         {reviewed} of {total} Reviewed

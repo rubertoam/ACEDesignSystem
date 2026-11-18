@@ -296,6 +296,36 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     ]
   },
   {
+    "id": "color/input",
+    "label": "color/input",
+    "tokens": [
+      {
+        "path": "color/input/error",
+        "cssVar": "--primitive-color-input-error",
+        "type": "color",
+        "value": "#EF4444",
+        "alias": null,
+        "group": "color/input"
+      },
+      {
+        "path": "color/input/placeholder",
+        "cssVar": "--primitive-color-input-placeholder",
+        "type": "color",
+        "value": "#BCBCCA",
+        "alias": null,
+        "group": "color/input"
+      },
+      {
+        "path": "color/input/value",
+        "cssVar": "--primitive-color-input-value",
+        "type": "color",
+        "value": "#22222B",
+        "alias": null,
+        "group": "color/input"
+      }
+    ]
+  },
+  {
     "id": "color/neutral",
     "label": "color/neutral",
     "tokens": [
@@ -940,6 +970,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "group": "border-width"
       },
       {
+        "path": "border-width/medium",
+        "cssVar": "--border-width-medium",
+        "type": "number",
+        "value": "1.5",
+        "alias": null,
+        "group": "border-width"
+      },
+      {
         "path": "border-width/none",
         "cssVar": "--border-width-none",
         "type": "number",
@@ -962,6 +1000,22 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "value": "0.5",
         "alias": null,
         "group": "border-width"
+      },
+      {
+        "path": "border-width/toggle-icon-medium",
+        "cssVar": "--border-width-toggle-icon-medium",
+        "type": "number",
+        "value": "1.1666667461395264",
+        "alias": null,
+        "group": "border-width"
+      },
+      {
+        "path": "border-width/toggle-icon-small",
+        "cssVar": "--border-width-toggle-icon-small",
+        "type": "number",
+        "value": "0.875",
+        "alias": null,
+        "group": "border-width"
       }
     ]
   },
@@ -969,6 +1023,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
     "id": "radius",
     "label": "radius",
     "tokens": [
+      {
+        "path": "radius/2-5",
+        "cssVar": "--radius-2-5",
+        "type": "number",
+        "value": "2.5",
+        "alias": null,
+        "group": "radius"
+      },
       {
         "path": "radius/2xl",
         "cssVar": "--radius-2xl",
@@ -978,10 +1040,58 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "group": "radius"
       },
       {
+        "path": "radius/3",
+        "cssVar": "--radius-3",
+        "type": "number",
+        "value": "3",
+        "alias": null,
+        "group": "radius"
+      },
+      {
         "path": "radius/3xl",
         "cssVar": "--radius-3xl",
         "type": "number",
         "value": "24",
+        "alias": null,
+        "group": "radius"
+      },
+      {
+        "path": "radius/10",
+        "cssVar": "--radius-10",
+        "type": "number",
+        "value": "10",
+        "alias": null,
+        "group": "radius"
+      },
+      {
+        "path": "radius/13",
+        "cssVar": "--radius-13",
+        "type": "number",
+        "value": "13",
+        "alias": null,
+        "group": "radius"
+      },
+      {
+        "path": "radius/15",
+        "cssVar": "--radius-15",
+        "type": "number",
+        "value": "15",
+        "alias": null,
+        "group": "radius"
+      },
+      {
+        "path": "radius/27",
+        "cssVar": "--radius-27",
+        "type": "number",
+        "value": "27",
+        "alias": null,
+        "group": "radius"
+      },
+      {
+        "path": "radius/30",
+        "cssVar": "--radius-30",
+        "type": "number",
+        "value": "30",
         "alias": null,
         "group": "radius"
       },
@@ -1080,6 +1190,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "group": "spacing"
       },
       {
+        "path": "spacing/3",
+        "cssVar": "--spacing-3",
+        "type": "number",
+        "value": "3",
+        "alias": null,
+        "group": "spacing"
+      },
+      {
         "path": "spacing/4",
         "cssVar": "--spacing-4",
         "type": "number",
@@ -1148,6 +1266,14 @@ export const TOKEN_PRIMITIVE_GROUPS: TokenCatalogGroup[] = [
         "cssVar": "--spacing-32",
         "type": "number",
         "value": "32",
+        "alias": null,
+        "group": "spacing"
+      },
+      {
+        "path": "spacing/36",
+        "cssVar": "--spacing-36",
+        "type": "number",
+        "value": "36",
         "alias": null,
         "group": "spacing"
       },
@@ -1459,6 +1585,26 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "group": "border",
         "darkValue": "→ border-width/thin",
         "darkAlias": "border-width/thin"
+      },
+      {
+        "path": "border/width/toggle-icon-medium",
+        "cssVar": "--border-width-toggle-icon-medium",
+        "type": "number",
+        "value": "→ border-width/toggle-icon-medium",
+        "alias": "border-width/toggle-icon-medium",
+        "group": "border",
+        "darkValue": "→ border-width/toggle-icon-medium",
+        "darkAlias": "border-width/toggle-icon-medium"
+      },
+      {
+        "path": "border/width/toggle-icon-small",
+        "cssVar": "--border-width-toggle-icon-small",
+        "type": "number",
+        "value": "→ border-width/toggle-icon-small",
+        "alias": "border-width/toggle-icon-small",
+        "group": "border",
+        "darkValue": "→ border-width/toggle-icon-small",
+        "darkAlias": "border-width/toggle-icon-small"
       }
     ]
   },
@@ -1493,8 +1639,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/error/500",
         "alias": "color/error/500",
         "group": "colors/action",
-        "darkValue": "→ color/error/400",
-        "darkAlias": "color/error/400"
+        "darkValue": "→ color/error/700",
+        "darkAlias": "color/error/700"
       },
       {
         "path": "colors/action/error-hover",
@@ -1503,8 +1649,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/error/600",
         "alias": "color/error/600",
         "group": "colors/action",
-        "darkValue": "→ color/error/300",
-        "darkAlias": "color/error/300"
+        "darkValue": "→ color/error/400",
+        "darkAlias": "color/error/400"
       },
       {
         "path": "colors/action/error-pressed",
@@ -1515,6 +1661,16 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "group": "colors/action",
         "darkValue": "→ color/error/200",
         "darkAlias": "color/error/200"
+      },
+      {
+        "path": "colors/action/icon",
+        "cssVar": "--color-action-icon",
+        "type": "color",
+        "value": "→ color/neutral/900",
+        "alias": "color/neutral/900",
+        "group": "colors/action",
+        "darkValue": "→ color/neutral/200",
+        "darkAlias": "color/neutral/200"
       },
       {
         "path": "colors/action/primary",
@@ -1553,8 +1709,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/primary/600",
         "alias": "color/primary/600",
         "group": "colors/action",
-        "darkValue": "→ color/primary/300",
-        "darkAlias": "color/primary/300"
+        "darkValue": "→ color/primary/600",
+        "darkAlias": "color/primary/600"
       },
       {
         "path": "colors/action/primary-pressed",
@@ -1603,8 +1759,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/success/500",
         "alias": "color/success/500",
         "group": "colors/action",
-        "darkValue": "→ color/success/400",
-        "darkAlias": "color/success/400"
+        "darkValue": "→ color/success/700",
+        "darkAlias": "color/success/700"
       },
       {
         "path": "colors/action/success-hover",
@@ -1613,8 +1769,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/success/600",
         "alias": "color/success/600",
         "group": "colors/action",
-        "darkValue": "→ color/success/300",
-        "darkAlias": "color/success/300"
+        "darkValue": "→ color/success/400",
+        "darkAlias": "color/success/400"
       },
       {
         "path": "colors/action/success-pressed",
@@ -1633,8 +1789,38 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/warning/500",
         "alias": "color/warning/500",
         "group": "colors/action",
-        "darkValue": "→ color/warning/400",
-        "darkAlias": "color/warning/400"
+        "darkValue": "→ color/warning/700",
+        "darkAlias": "color/warning/700"
+      },
+      {
+        "path": "colors/action/warning 2",
+        "cssVar": "--color-action-warning-2",
+        "type": "color",
+        "value": "→ color/warning 2/500",
+        "alias": "color/warning 2/500",
+        "group": "colors/action",
+        "darkValue": "→ color/warning 2/700",
+        "darkAlias": "color/warning 2/700"
+      },
+      {
+        "path": "colors/action/warning 2-hover",
+        "cssVar": "--color-action-warning-2-hover",
+        "type": "color",
+        "value": "→ color/warning 2/600",
+        "alias": "color/warning 2/600",
+        "group": "colors/action",
+        "darkValue": "→ color/warning 2/500",
+        "darkAlias": "color/warning 2/500"
+      },
+      {
+        "path": "colors/action/warning 2-pressed",
+        "cssVar": "--color-action-warning-2-pressed",
+        "type": "color",
+        "value": "→ color/warning 2/700",
+        "alias": "color/warning 2/700",
+        "group": "colors/action",
+        "darkValue": "→ color/warning 2/200",
+        "darkAlias": "color/warning 2/200"
       },
       {
         "path": "colors/action/warning-hover",
@@ -1643,8 +1829,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/warning/600",
         "alias": "color/warning/600",
         "group": "colors/action",
-        "darkValue": "→ color/warning/300",
-        "darkAlias": "color/warning/300"
+        "darkValue": "→ color/warning/400",
+        "darkAlias": "color/warning/400"
       },
       {
         "path": "colors/action/warning-pressed",
@@ -1659,186 +1845,186 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
     ]
   },
   {
-    "id": "colors/badges",
-    "label": "colors/badges",
+    "id": "colors/badges & inline messages",
+    "label": "colors/badges & inline messages",
     "tokens": [
       {
-        "path": "colors/badges/blue-border",
-        "cssVar": "--color-badges-blue-border",
+        "path": "colors/badges & inline messages/blue-border",
+        "cssVar": "--color-badges-inline-messages-blue-border",
         "type": "color",
         "value": "→ color/blue/400",
         "alias": "color/blue/400",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/blue/200",
         "darkAlias": "color/blue/200"
       },
       {
-        "path": "colors/badges/blue-fill",
-        "cssVar": "--color-badges-blue-fill",
+        "path": "colors/badges & inline messages/blue-fill",
+        "cssVar": "--color-badges-inline-messages-blue-fill",
         "type": "color",
         "value": "→ color/blue/50",
         "alias": "color/blue/50",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/blue/800",
         "darkAlias": "color/blue/800"
       },
       {
-        "path": "colors/badges/gray-border",
-        "cssVar": "--color-badges-gray-border",
+        "path": "colors/badges & inline messages/gray-border",
+        "cssVar": "--color-badges-inline-messages-gray-border",
         "type": "color",
         "value": "→ color/neutral/700",
         "alias": "color/neutral/700",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/neutral/300",
         "darkAlias": "color/neutral/300"
       },
       {
-        "path": "colors/badges/gray-fill",
-        "cssVar": "--color-badges-gray-fill",
+        "path": "colors/badges & inline messages/gray-fill",
+        "cssVar": "--color-badges-inline-messages-gray-fill",
         "type": "color",
         "value": "→ color/neutral/200",
         "alias": "color/neutral/200",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/neutral/800",
         "darkAlias": "color/neutral/800"
       },
       {
-        "path": "colors/badges/green-border",
-        "cssVar": "--color-badges-green-border",
+        "path": "colors/badges & inline messages/green-border",
+        "cssVar": "--color-badges-inline-messages-green-border",
         "type": "color",
         "value": "→ color/success/500",
         "alias": "color/success/500",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/success/200",
         "darkAlias": "color/success/200"
       },
       {
-        "path": "colors/badges/green-fill",
-        "cssVar": "--color-badges-green-fill",
+        "path": "colors/badges & inline messages/green-fill",
+        "cssVar": "--color-badges-inline-messages-green-fill",
         "type": "color",
         "value": "→ color/success/50",
         "alias": "color/success/50",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/success/800",
         "darkAlias": "color/success/800"
       },
       {
-        "path": "colors/badges/orange-border",
-        "cssVar": "--color-badges-orange-border",
+        "path": "colors/badges & inline messages/orange-border",
+        "cssVar": "--color-badges-inline-messages-orange-border",
         "type": "color",
         "value": "→ color/warning/500",
         "alias": "color/warning/500",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/warning/200",
         "darkAlias": "color/warning/200"
       },
       {
-        "path": "colors/badges/orange-fill",
-        "cssVar": "--color-badges-orange-fill",
+        "path": "colors/badges & inline messages/orange-fill",
+        "cssVar": "--color-badges-inline-messages-orange-fill",
         "type": "color",
         "value": "→ color/warning/50",
         "alias": "color/warning/50",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/warning/800",
         "darkAlias": "color/warning/800"
       },
       {
-        "path": "colors/badges/pink-border",
-        "cssVar": "--color-badges-pink-border",
+        "path": "colors/badges & inline messages/pink-border",
+        "cssVar": "--color-badges-inline-messages-pink-border",
         "type": "color",
         "value": "→ color/secondary/500",
         "alias": "color/secondary/500",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/secondary/200",
         "darkAlias": "color/secondary/200"
       },
       {
-        "path": "colors/badges/pink-fill",
-        "cssVar": "--color-badges-pink-fill",
+        "path": "colors/badges & inline messages/pink-fill",
+        "cssVar": "--color-badges-inline-messages-pink-fill",
         "type": "color",
         "value": "→ color/secondary/50",
         "alias": "color/secondary/50",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/secondary/800",
         "darkAlias": "color/secondary/800"
       },
       {
-        "path": "colors/badges/purple-border",
-        "cssVar": "--color-badges-purple-border",
+        "path": "colors/badges & inline messages/purple-border",
+        "cssVar": "--color-badges-inline-messages-purple-border",
         "type": "color",
         "value": "→ color/primary/400",
         "alias": "color/primary/400",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/primary/200",
         "darkAlias": "color/primary/200"
       },
       {
-        "path": "colors/badges/purple-fill",
-        "cssVar": "--color-badges-purple-fill",
+        "path": "colors/badges & inline messages/purple-fill",
+        "cssVar": "--color-badges-inline-messages-purple-fill",
         "type": "color",
         "value": "→ color/primary/50",
         "alias": "color/primary/50",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/primary/800",
         "darkAlias": "color/primary/800"
       },
       {
-        "path": "colors/badges/red-border",
-        "cssVar": "--color-badges-red-border",
+        "path": "colors/badges & inline messages/red-border",
+        "cssVar": "--color-badges-inline-messages-red-border",
         "type": "color",
         "value": "→ color/error/500",
         "alias": "color/error/500",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/error/200",
         "darkAlias": "color/error/200"
       },
       {
-        "path": "colors/badges/red-fill",
-        "cssVar": "--color-badges-red-fill",
+        "path": "colors/badges & inline messages/red-fill",
+        "cssVar": "--color-badges-inline-messages-red-fill",
         "type": "color",
         "value": "→ color/error/50",
         "alias": "color/error/50",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/error/800",
         "darkAlias": "color/error/800"
       },
       {
-        "path": "colors/badges/teal-border",
-        "cssVar": "--color-badges-teal-border",
+        "path": "colors/badges & inline messages/teal-border",
+        "cssVar": "--color-badges-inline-messages-teal-border",
         "type": "color",
         "value": "→ color/teal/500",
         "alias": "color/teal/500",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/teal/200",
         "darkAlias": "color/teal/200"
       },
       {
-        "path": "colors/badges/teal-fill",
-        "cssVar": "--color-badges-teal-fill",
+        "path": "colors/badges & inline messages/teal-fill",
+        "cssVar": "--color-badges-inline-messages-teal-fill",
         "type": "color",
         "value": "→ color/teal/50",
         "alias": "color/teal/50",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/teal/800",
         "darkAlias": "color/teal/800"
       },
       {
-        "path": "colors/badges/yellow-border",
-        "cssVar": "--color-badges-yellow-border",
+        "path": "colors/badges & inline messages/yellow-border",
+        "cssVar": "--color-badges-inline-messages-yellow-border",
         "type": "color",
         "value": "→ color/warning 2/500",
         "alias": "color/warning 2/500",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/warning 2/200",
         "darkAlias": "color/warning 2/200"
       },
       {
-        "path": "colors/badges/yellow-fill",
-        "cssVar": "--color-badges-yellow-fill",
+        "path": "colors/badges & inline messages/yellow-fill",
+        "cssVar": "--color-badges-inline-messages-yellow-fill",
         "type": "color",
         "value": "→ color/warning 2/50",
         "alias": "color/warning 2/50",
-        "group": "colors/badges",
+        "group": "colors/badges & inline messages",
         "darkValue": "→ color/warning 2/800",
         "darkAlias": "color/warning 2/800"
       }
@@ -1865,8 +2051,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/primary/50",
         "alias": "color/primary/50",
         "group": "colors/bg",
-        "darkValue": "→ color/primary/900",
-        "darkAlias": "color/primary/900"
+        "darkValue": "→ color/primary/400",
+        "darkAlias": "color/primary/400"
       },
       {
         "path": "colors/bg/brand-subtle",
@@ -1895,8 +2081,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/neutral/100",
         "alias": "color/neutral/100",
         "group": "colors/bg",
-        "darkValue": "→ color/neutral/800",
-        "darkAlias": "color/neutral/800"
+        "darkValue": "→ color/dark/600",
+        "darkAlias": "color/dark/600"
       },
       {
         "path": "colors/bg/error",
@@ -1955,8 +2141,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/neutral/200",
         "alias": "color/neutral/200",
         "group": "colors/bg",
-        "darkValue": "→ color/dark/600",
-        "darkAlias": "color/dark/600"
+        "darkValue": "→ color/dark/200",
+        "darkAlias": "color/dark/200"
       },
       {
         "path": "colors/bg/warning",
@@ -1967,6 +2153,16 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "group": "colors/bg",
         "darkValue": "→ color/warning/900",
         "darkAlias": "color/warning/900"
+      },
+      {
+        "path": "colors/bg/warning-alternate",
+        "cssVar": "--color-bg-warning-alternate",
+        "type": "color",
+        "value": "→ color/warning 2/50",
+        "alias": "color/warning 2/50",
+        "group": "colors/bg",
+        "darkValue": "→ color/warning 2/800",
+        "darkAlias": "color/warning 2/800"
       }
     ]
   },
@@ -2097,8 +2293,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/neutral/500",
         "alias": "color/neutral/500",
         "group": "colors/icon",
-        "darkValue": "→ color/error/500",
-        "darkAlias": "color/error/500"
+        "darkValue": "→ color/dark/200",
+        "darkAlias": "color/dark/200"
       },
       {
         "path": "colors/icon/hover",
@@ -2107,8 +2303,8 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "value": "→ color/primary/50",
         "alias": "color/primary/50",
         "group": "colors/icon",
-        "darkValue": "→ color/primary/800",
-        "darkAlias": "color/primary/800"
+        "darkValue": "→ color/primary/700",
+        "darkAlias": "color/primary/700"
       },
       {
         "path": "colors/icon/inverse",
@@ -2149,6 +2345,58 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "group": "colors/icon",
         "darkValue": "→ color/neutral/400",
         "darkAlias": "color/neutral/400"
+      }
+    ]
+  },
+  {
+    "id": "colors/input",
+    "label": "colors/input",
+    "tokens": [
+      {
+        "path": "colors/input/error",
+        "cssVar": "--color-input-error",
+        "type": "color",
+        "value": "→ color/input/error",
+        "alias": "color/input/error",
+        "group": "colors/input",
+        "darkValue": "→ color/input/error",
+        "darkAlias": "color/input/error"
+      },
+      {
+        "path": "colors/input/placeholder",
+        "cssVar": "--color-input-placeholder",
+        "type": "color",
+        "value": "→ color/input/placeholder",
+        "alias": "color/input/placeholder",
+        "group": "colors/input",
+        "darkValue": "→ color/input/placeholder",
+        "darkAlias": "color/input/placeholder"
+      },
+      {
+        "path": "colors/input/value",
+        "cssVar": "--color-input-value",
+        "type": "color",
+        "value": "→ color/input/value",
+        "alias": "color/input/value",
+        "group": "colors/input",
+        "darkValue": "→ color/input/value",
+        "darkAlias": "color/input/value"
+      }
+    ]
+  },
+  {
+    "id": "colors/progress",
+    "label": "colors/progress",
+    "tokens": [
+      {
+        "path": "colors/progress/foreground",
+        "cssVar": "--color-progress-foreground",
+        "type": "color",
+        "value": "→ color/neutral/50",
+        "alias": "color/neutral/50",
+        "group": "colors/progress",
+        "darkValue": "→ color/neutral/50",
+        "darkAlias": "color/neutral/50"
       }
     ]
   },
@@ -2243,6 +2491,16 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
     "label": "colors/surface",
     "tokens": [
       {
+        "path": "colors/surface/disabled",
+        "cssVar": "--color-surface-disabled",
+        "type": "color",
+        "value": "→ color/neutral/100",
+        "alias": "color/neutral/100",
+        "group": "colors/surface",
+        "darkValue": "→ color/dark/600",
+        "darkAlias": "color/dark/600"
+      },
+      {
         "path": "colors/surface/elevated",
         "cssVar": "--color-surface-elevated",
         "type": "color",
@@ -2251,6 +2509,16 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "group": "colors/surface",
         "darkValue": "→ color/dark/750",
         "darkAlias": "color/dark/750"
+      },
+      {
+        "path": "colors/surface/focused",
+        "cssVar": "--color-surface-focused",
+        "type": "color",
+        "value": "→ color/primary/50",
+        "alias": "color/primary/50",
+        "group": "colors/surface",
+        "darkValue": "→ color/primary/50",
+        "darkAlias": "color/primary/50"
       },
       {
         "path": "colors/surface/page-layout",
@@ -2289,6 +2557,26 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "darkAlias": "color/primary/300"
       },
       {
+        "path": "colors/text/button label",
+        "cssVar": "--color-text-button-label",
+        "type": "color",
+        "value": "→ color/shades/0",
+        "alias": "color/shades/0",
+        "group": "colors/text",
+        "darkValue": "→ color/neutral/100",
+        "darkAlias": "color/neutral/100"
+      },
+      {
+        "path": "colors/text/button label - alt",
+        "cssVar": "--color-text-button-label-alt",
+        "type": "color",
+        "value": "→ color/primary/400",
+        "alias": "color/primary/400",
+        "group": "colors/text",
+        "darkValue": "→ color/primary/300",
+        "darkAlias": "color/primary/300"
+      },
+      {
         "path": "colors/text/disabled",
         "cssVar": "--color-text-disabled",
         "type": "color",
@@ -2297,6 +2585,16 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "group": "colors/text",
         "darkValue": "→ color/dark/200",
         "darkAlias": "color/dark/200"
+      },
+      {
+        "path": "colors/text/error message",
+        "cssVar": "--color-text-error-message",
+        "type": "color",
+        "value": "→ color/error/500",
+        "alias": "color/error/500",
+        "group": "colors/text",
+        "darkValue": "→ color/error/400",
+        "darkAlias": "color/error/400"
       },
       {
         "path": "colors/text/inverse",
@@ -2602,6 +2900,56 @@ export const TOKEN_COMPONENT_GROUPS: TokenCatalogGroup[] = [
         "darkAlias": "radius/sm"
       },
       {
+        "path": "radius/component/radio-compact",
+        "cssVar": "--radius-component-radio-compact",
+        "type": "number",
+        "value": "→ radius/13",
+        "alias": "radius/13",
+        "group": "radius",
+        "darkValue": "→ radius/13",
+        "darkAlias": "radius/13"
+      },
+      {
+        "path": "radius/component/radio-container",
+        "cssVar": "--radius-component-radio-container",
+        "type": "number",
+        "value": "→ radius/30",
+        "alias": "radius/30",
+        "group": "radius",
+        "darkValue": "→ radius/30",
+        "darkAlias": "radius/30"
+      },
+      {
+        "path": "radius/component/radio-inner",
+        "cssVar": "--radius-component-radio-inner",
+        "type": "number",
+        "value": "→ radius/15",
+        "alias": "radius/15",
+        "group": "radius",
+        "darkValue": "→ radius/15",
+        "darkAlias": "radius/15"
+      },
+      {
+        "path": "radius/component/radio-ring",
+        "cssVar": "--radius-component-radio-ring",
+        "type": "number",
+        "value": "→ radius/27",
+        "alias": "radius/27",
+        "group": "radius",
+        "darkValue": "→ radius/27",
+        "darkAlias": "radius/27"
+      },
+      {
+        "path": "radius/component/toggle-track",
+        "cssVar": "--radius-component-toggle-track",
+        "type": "number",
+        "value": "→ radius/10",
+        "alias": "radius/10",
+        "group": "radius",
+        "darkValue": "→ radius/10",
+        "darkAlias": "radius/10"
+      },
+      {
         "path": "radius/component/tooltip",
         "cssVar": "--radius-component-tooltip",
         "type": "number",
@@ -2706,6 +3054,26 @@ export const TOKEN_COMPONENT_GROUPS: TokenCatalogGroup[] = [
         "group": "spacing",
         "darkValue": "→ spacing/4",
         "darkAlias": "spacing/4"
+      },
+      {
+        "path": "spacing/component padding/radio-inset",
+        "cssVar": "--spacing-component-padding-radio-inset",
+        "type": "number",
+        "value": "→ spacing/3",
+        "alias": "spacing/3",
+        "group": "spacing",
+        "darkValue": "→ spacing/3",
+        "darkAlias": "spacing/3"
+      },
+      {
+        "path": "spacing/component padding/slider-centered-inset",
+        "cssVar": "--spacing-component-padding-slider-centered-inset",
+        "type": "number",
+        "value": "→ spacing/36",
+        "alias": "spacing/36",
+        "group": "spacing",
+        "darkValue": "→ spacing/36",
+        "darkAlias": "spacing/36"
       }
     ]
   },
@@ -2788,7 +3156,7 @@ export const TOKEN_COMPONENT_GROUPS: TokenCatalogGroup[] = [
 ]
 
 export const TOKEN_CATALOG_COUNTS = {
-  primitive: 164,
-  semantic: 99,
-  component: 27,
+  primitive: 179,
+  semantic: 115,
+  component: 34,
 } as const

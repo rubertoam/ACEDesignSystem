@@ -28,9 +28,9 @@ function aceTypography(token: string) {
 }
 
 const ACE = {
-  sectionTitle: '--ace-type-heading-h6-small-semi-bold',
-  cell: '--ace-type-paragraph-p1-regular',
-  emptyState: '--ace-type-paragraph-p1-regular',
+  sectionTitle: '--type-subheading-semi-bold',
+  cell: '--type-body-regular',
+  emptyState: '--type-body-regular',
 } as const
 
 type SortDir = 'asc' | 'desc'
@@ -156,7 +156,7 @@ export function UserListTable({
           <div
             className={cn(
               'flex h-[var(--screening-input-height-sm)] w-[12rem] min-w-[min(100%,12.5rem)] max-w-[16rem] shrink-0 items-center gap-[var(--screening-input-gap)] rounded-[var(--screening-input-radius)] border border-solid border-[var(--screening-input-border)] bg-[var(--screening-surface)] px-[var(--screening-input-px)] transition-[background-color,border-color,box-shadow] duration-150 ease-out',
-              'focus-within:border-[var(--screening-input-border-focus)] focus-within:bg-[var(--screening-input-bg-focus)] focus-within:shadow-[0_0_0_2px_var(--screening-input-focus-ring)]',
+              'focus-within:border-[var(--screening-input-border-focus)] focus-within:bg-[var(--screening-input-bg-focus)]',
             )}
           >
             <MaterialSymbol

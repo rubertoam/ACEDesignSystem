@@ -90,17 +90,17 @@ function aceTypography(token: string) {
 }
 
 const ACE = {
-  sectionTitle: '--ace-type-heading-h6-small-semi-bold',
-  meta: '--ace-type-paragraph-p1-regular',
-  filterLabel: '--ace-type-paragraph-p1-semi-bold',
-  chip: '--ace-type-paragraph-p1-semi-bold',
-  keyCode: '--ace-type-footer-semi-bold',
-  cell: '--ace-type-paragraph-p1-regular',
-  cellEmphasis: '--ace-type-paragraph-p1-semi-bold',
-  emptyState: '--ace-type-paragraph-p1-regular',
-  link: '--ace-type-paragraph-p1-semi-bold',
-  detail: '--ace-type-paragraph-p1-regular',
-  score: '--ace-type-paragraph-p1-semi-bold',
+  sectionTitle: '--type-subheading-semi-bold',
+  meta: '--type-body-regular',
+  filterLabel: '--type-body-semi-bold',
+  chip: '--type-body-semi-bold',
+  keyCode: '--type-footnote-semi-bold',
+  cell: '--type-body-regular',
+  cellEmphasis: '--type-body-semi-bold',
+  emptyState: '--type-body-regular',
+  link: '--type-body-semi-bold',
+  detail: '--type-body-regular',
+  score: '--type-body-semi-bold',
 } as const
 
 type SortDir = 'asc' | 'desc'

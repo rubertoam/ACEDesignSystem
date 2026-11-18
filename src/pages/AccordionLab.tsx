@@ -28,7 +28,7 @@ const ICON_OPTIONS: { value: AccordionIconId; label: string }[] = [
 const ALL_ICONS: AccordionIconId[] = ICON_OPTIONS.map((o) => o.value)
 
 const sampleBody = (
-  <p className="m-0 min-h-[18rem] [font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--screening-text-secondary)]">
+  <p className="m-0 min-h-[18rem] [font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-[var(--screening-text-secondary)]">
     Accordion body content goes here. Expand and collapse uses a 420ms ease-out curve (
     <code className="text-[var(--screening-text-primary)]">--accordion-ease</code>).
   </p>
@@ -260,7 +260,7 @@ export function AccordionLab() {
             <code className="text-[var(--color-text-primary)]">--accordion-surface</code> (white)
           </li>
           <li>
-            <code className="text-[var(--color-text-primary)]">--ace-drop-shadow-xs</code> when{' '}
+            <code className="text-[var(--color-text-primary)]">--shadow-xs</code> when{' '}
             <code className="text-[var(--color-text-primary)]">dropShadow</code> is true
           </li>
           <li>

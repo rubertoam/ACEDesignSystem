@@ -35,11 +35,11 @@ export const aceCheckboxSurfaceClass = cn(
   'disabled:data-[state=indeterminate]:text-[var(--screening-checkbox-disabled-check)]',
 )
 
-/** Box sizes - Figma Small 16 / Medium 20 / Large 24; Large uses 1.5px stroke + 4px radius. */
+/** Box sizes - Figma Small 16 / Medium 20 / Large 24; Large uses border-width/medium + radius/sm. */
 export const checkboxSizeClass: Record<CheckboxSize, string> = {
-  sm: 'size-4 shrink-0 rounded-[var(--radius-checkbox)] border',
-  md: 'size-5 shrink-0 rounded-[var(--radius-checkbox)] border',
-  lg: 'size-6 shrink-0 rounded-[var(--radius-sm)] border-[1.5px]',
+  sm: 'size-4 shrink-0 rounded-[var(--radius-checkbox)] border-[length:var(--checkbox-border-width)]',
+  md: 'size-5 shrink-0 rounded-[var(--radius-checkbox)] border-[length:var(--checkbox-border-width)]',
+  lg: 'size-6 shrink-0 rounded-[var(--radius-sm)] border-[length:var(--checkbox-border-width-lg)]',
 }
 
 /** Indeterminate bar only - selected state uses the filled square + inset, not a glyph. */
@@ -51,9 +51,9 @@ export const aceCheckboxIconSizeClass: Record<CheckboxSize, string> = {
 
 /** Label next to checkbox - Caption 12 (sm) / Body 14 (md, lg). */
 export const aceCheckboxLabelClass: Record<CheckboxSize, string> = {
-  sm: '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)] text-[var(--color-text-primary)]',
-  md: '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--color-text-primary)]',
-  lg: '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--color-text-primary)]',
+  sm: '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)] text-[var(--color-text-primary)]',
+  md: '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-[var(--color-text-primary)]',
+  lg: '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-[var(--color-text-primary)]',
 }
 
 export const aceCheckboxLabelDisabledClass = 'text-[var(--color-text-disabled)]'

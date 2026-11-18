@@ -3,8 +3,8 @@
  * Prefer Semantic / Component paths from the Figma JSON exports.
  *
  * Component CSS vars use Figma kebab names (e.g. `--inline-message-*`, `--button-*`).
- * Matching `--ace-*` aliases remain in variables.css as a temporary compat layer only.
- * Foundation tokens (`--ace-type-*`, `--ace-motion-*`, `--ace-drop-shadow-*`, color scales) are unchanged.
+ * Composed type styles use `--type-{heading|subheading|body|caption|footnote|micro}-*`.
+ * Elevation uses Figma Shadow tokens `--shadow-{none|xs|sm|md|lg|xl}`.
  *
  * Token layers (Layouts → Tokens):
  * - Primitive - raw scales (color/*, spacing/N, radius/sm, typography/size, …)
@@ -99,7 +99,12 @@ export function inferLabTokenLevel(token: LabTokenRef): LabTokenLevel {
     cssVar.includes('--typography-ui') ||
     cssVar.includes('--typography-heading') ||
     cssVar.includes('--typography-body') ||
-    cssVar.includes('--ace-type') ||
+    cssVar.includes('--type-heading') ||
+    cssVar.includes('--type-subheading') ||
+    cssVar.includes('--type-body') ||
+    cssVar.includes('--type-caption') ||
+    cssVar.includes('--type-footnote') ||
+    cssVar.includes('--type-micro') ||
     cssVar.includes('--icon-button') ||
     /--(accordion|badge|button|checkbox|toggle|radio|tooltip|tabs|tab-card|toast-message|inline-message|progress-indicator|dropdown|filter|slider|stepper|task-bar|page-header|sub-header|dialog-modal|screening|date-picker|time-picker|sidebar|inline-drawer|site-header|landing-page-card|data-card|timeline|attachments|scrollable-list)(-|\*|$|\/)/.test(
       cssVar,
@@ -116,9 +121,8 @@ export function inferLabTokenLevel(token: LabTokenRef): LabTokenLevel {
     cssVar.startsWith('--typography-line-height') ||
     cssVar.startsWith('--typography-letter-spacing') ||
     cssVar.startsWith('--border-width') ||
-    cssVar.startsWith('--ace-drop-shadow') ||
-    cssVar.startsWith('--ace-motion') ||
-    cssVar.startsWith('--type-size')
+    cssVar.startsWith('--shadow-') ||
+    cssVar.startsWith('--motion-')
   ) {
     return 'primitive'
   }
@@ -159,24 +163,24 @@ const actionPrimary = [
 ]
 
 const badges = [
-  t('colors/badges/purple-fill', '--color-badges-purple-fill'),
-  t('colors/badges/purple-border', '--color-badges-purple-border'),
-  t('colors/badges/orange-fill', '--color-badges-orange-fill'),
-  t('colors/badges/orange-border', '--color-badges-orange-border'),
-  t('colors/badges/green-fill', '--color-badges-green-fill'),
-  t('colors/badges/green-border', '--color-badges-green-border'),
-  t('colors/badges/gray-fill', '--color-badges-gray-fill'),
-  t('colors/badges/gray-border', '--color-badges-gray-border'),
-  t('colors/badges/blue-fill', '--color-badges-blue-fill'),
-  t('colors/badges/blue-border', '--color-badges-blue-border'),
-  t('colors/badges/yellow-fill', '--color-badges-yellow-fill'),
-  t('colors/badges/yellow-border', '--color-badges-yellow-border'),
-  t('colors/badges/pink-fill', '--color-badges-pink-fill'),
-  t('colors/badges/pink-border', '--color-badges-pink-border'),
-  t('colors/badges/teal-fill', '--color-badges-teal-fill'),
-  t('colors/badges/teal-border', '--color-badges-teal-border'),
-  t('colors/badges/red-fill', '--color-badges-red-fill'),
-  t('colors/badges/red-border', '--color-badges-red-border'),
+  t('colors/badges & inline messages/purple-fill', '--color-badges-inline-messages-purple-fill'),
+  t('colors/badges & inline messages/purple-border', '--color-badges-inline-messages-purple-border'),
+  t('colors/badges & inline messages/orange-fill', '--color-badges-inline-messages-orange-fill'),
+  t('colors/badges & inline messages/orange-border', '--color-badges-inline-messages-orange-border'),
+  t('colors/badges & inline messages/green-fill', '--color-badges-inline-messages-green-fill'),
+  t('colors/badges & inline messages/green-border', '--color-badges-inline-messages-green-border'),
+  t('colors/badges & inline messages/gray-fill', '--color-badges-inline-messages-gray-fill'),
+  t('colors/badges & inline messages/gray-border', '--color-badges-inline-messages-gray-border'),
+  t('colors/badges & inline messages/blue-fill', '--color-badges-inline-messages-blue-fill'),
+  t('colors/badges & inline messages/blue-border', '--color-badges-inline-messages-blue-border'),
+  t('colors/badges & inline messages/yellow-fill', '--color-badges-inline-messages-yellow-fill'),
+  t('colors/badges & inline messages/yellow-border', '--color-badges-inline-messages-yellow-border'),
+  t('colors/badges & inline messages/pink-fill', '--color-badges-inline-messages-pink-fill'),
+  t('colors/badges & inline messages/pink-border', '--color-badges-inline-messages-pink-border'),
+  t('colors/badges & inline messages/teal-fill', '--color-badges-inline-messages-teal-fill'),
+  t('colors/badges & inline messages/teal-border', '--color-badges-inline-messages-teal-border'),
+  t('colors/badges & inline messages/red-fill', '--color-badges-inline-messages-red-fill'),
+  t('colors/badges & inline messages/red-border', '--color-badges-inline-messages-red-border'),
 ]
 
 const status = [
@@ -211,7 +215,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('color/neutral/{shade}', '--color-neutral-*'),
         t('color/primary/{shade}', '--color-primary-*'),
         t('color/secondary/{shade}', '--color-secondary-*'),
-        t('color/blue|teal|success|warning|warning 2|error|dark/{shade}', '--color-{family}-*'),
+        t('color/blue|teal|success|warning|warning 2|error|dark|input/{shade}', '--color-{family}-*'),
       ],
     },
     {
@@ -223,7 +227,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         ...status,
         ...icons,
         ...badges.slice(0, 4),
-        css('--color-badges-*', 'full badge set - see Tokens → Semantic → colors/badges'),
+        css('--color-badges-inline-messages-*', 'full set - Tokens → Semantic → colors/badges & inline messages'),
       ],
     },
   ],
@@ -231,7 +235,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Primitive type',
       tokens: [
-        t('typography/size/*', '--typography-size-* / --type-size-*'),
+        t('typography/size/*', '--typography-size-*'),
         t('typography/line-height/*', '--typography-line-height-*'),
         t('typography/letter-spacing/*', '--typography-letter-spacing-*'),
       ],
@@ -242,7 +246,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('typography/ui/*', '--typography-ui-*'),
         t('typography/heading/*', '--typography-heading-*'),
         t('typography/body/*', '--typography-body-*'),
-        css('--ace-type-*', 'composed ACE type styles in typography-tokens.css'),
+        css('--type-*', 'composed style-sheet styles in typography-tokens.css (Heading→Micro)'),
       ],
     },
   ],
@@ -263,10 +267,10 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Animations',
       tokens: [
-        css('--ace-motion-ease-standard'),
-        css('--ace-motion-duration-fast'),
-        css('--ace-motion-duration-medium'),
-        css('--ace-motion-duration-slow'),
+        css('--motion-ease-standard'),
+        css('--motion-duration-fast'),
+        css('--motion-duration-medium'),
+        css('--motion-duration-slow'),
       ],
     },
   ],
@@ -274,11 +278,11 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Elevation',
       tokens: [
-        css('--ace-drop-shadow-xs'),
-        css('--ace-drop-shadow-sm'),
-        css('--ace-drop-shadow-md'),
-        css('--ace-drop-shadow-lg'),
-        css('--ace-drop-shadow-xl'),
+        css('--shadow-xs'),
+        css('--shadow-sm'),
+        css('--shadow-md'),
+        css('--shadow-lg'),
+        css('--shadow-xl'),
       ],
     },
   ],
@@ -288,44 +292,74 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       tokens: [
         t('colors/action/primary', '--color-action-primary'),
         t('colors/action/primary-hover', '--color-action-primary-hover'),
-        t('colors/action/primary-pressed', '--color-action-primary-pressed'),
+        t(
+          'colors/action/primary - pressed - subtle',
+          '--color-action-primary-pressed-subtle',
+          'Figma pressed fill',
+        ),
         t('colors/action/secondary*', '--color-action-secondary*'),
         t('colors/action/success*', '--color-action-success*'),
         t('colors/action/error*', '--color-action-error*'),
         t('colors/action/warning*', '--color-action-warning*'),
-        t('colors/action/disabled-button', '--color-action-disabled-button'),
+        t('colors/action/warning 2*', '--color-action-warning-2*'),
+        t('colors/action/icon', '--color-action-icon'),
+        t('colors/action/disabled', '--color-action-disabled', 'disabled fill for all variants'),
         css('--button-fill*', 'maps to the selected actionTone'),
       ],
     },
     {
-      title: 'Surface / type',
+      title: 'Surface / type / geometry',
       tokens: [
         t('colors/surface/primary', '--color-surface-primary'),
-        t('colors/text/inverse', '--color-text-inverse'),
-        t('colors/text/secondary', '--color-text-secondary'),
+        t('colors/text/button label', '--color-text-button-label', 'on solid fills + disabled'),
+        t('colors/text/button label - alt', '--color-text-button-label-alt', 'secondary/tertiary default'),
         t('radius/component/button', '--radius-component-button'),
-        css('--ace-type-caption-bold / --ace-type-paragraph-p1-bold / --ace-type-paragraph-p2-bold'),
+        t(
+          'typography/body/body-main',
+          '--typography-body-body-main',
+          'default label via --type-body-semi-bold — typography token drives height',
+        ),
+        t(
+          'typography/body/body-secondary',
+          '--typography-body-body-secondary',
+          'via --type-caption-semi-bold',
+        ),
+        t('spacing/8', '--spacing-8', 'vertical padding + icon gap'),
+        t('spacing/12', '--spacing-12', 'horizontal padding'),
       ],
     },
   ],
   '/lab/molecules/inputs': [
     {
-      title: 'Field states',
+      title: 'Field states (Figma Input Field bindings)',
       tokens: [
         t('colors/border/default', '--color-border-default'),
         t('colors/surface/primary', '--color-surface-primary'),
+        t('colors/text/primary', '--color-text-primary', 'value + label'),
         t('colors/text/placeholder', '--color-text-placeholder'),
-        t('colors/border/brand', '--color-border-brand'),
-        t('colors/bg/brand-hover', '--color-bg-brand-hover'),
-        t('colors/border/focus', '--color-border-focus'),
+        t('colors/bg/brand-hover', '--color-bg-brand-hover', 'focused fill'),
+        t('colors/border/focus', '--color-border-focus', 'focused stroke'),
         t('colors/bg/error', '--color-bg-error'),
         t('colors/border/error', '--color-border-error'),
-        t('colors/status/error', '--color-status-error'),
+        t('colors/text/error message', '--color-text-error-message', 'error helper'),
         t('colors/bg/disabled-subtle', '--color-bg-disabled-subtle'),
         t('colors/border/disabled-subtle', '--color-border-disabled-subtle'),
         t('colors/text/disabled', '--color-text-disabled'),
         t('colors/icon/primary', '--color-icon-primary'),
-        t('radius/component/input', '--radius-component-input'),
+        t(
+          'typography/body/body-main',
+          '--typography-body-body-main',
+          'default field value via --type-body-regular — typography token drives height',
+        ),
+        t(
+          'typography/body/body-secondary',
+          '--typography-body-body-secondary',
+          'label; also fieldTypography=body-secondary → --type-caption-regular',
+        ),
+        t('typography/ui/footnote', '--typography-ui-footnote', 'error helper'),
+        t('radius/sm', '--radius-sm', 'Input Field corner radius'),
+        t('spacing/8', '--spacing-8', 'padding + stack gap'),
+        t('border-width/default', '--border-width-default'),
       ],
     },
   ],
@@ -333,12 +367,17 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Checkbox',
       tokens: [
-        t('colors/action/primary', '--color-action-primary'),
-        t('colors/border/default', '--color-border-default'),
+        t('colors/border/brand', '--color-border-brand'),
+        t('colors/bg/brand', '--color-bg-brand'),
+        t('colors/bg/brand-hover', '--color-bg-brand-hover'),
         t('colors/surface/primary', '--color-surface-primary'),
-        t('colors/icon/disabled', '--color-icon-disabled'),
+        t('colors/border/disabled', '--color-border-disabled'),
+        t('colors/bg/disabled', '--color-bg-disabled'),
         t('colors/text/primary', '--color-text-primary'),
-        css('--radius-checkbox'),
+        t('radius/3', '--radius-3', 'sm/md control'),
+        t('radius/sm', '--radius-sm', 'lg control'),
+        t('border-width/default', '--border-width-default'),
+        t('border-width/medium', '--border-width-medium', 'lg stroke'),
       ],
     },
   ],
@@ -346,11 +385,14 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Toggle',
       tokens: [
-        t('colors/action/primary', '--color-action-primary'),
-        t('colors/border/default', '--color-border-default'),
+        t('colors/bg/brand', '--color-bg-brand'),
+        t('colors/bg/secondary', '--color-bg-secondary'),
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/bg/disabled-subtle', '--color-bg-disabled-subtle'),
-        t('colors/text/primary', '--color-text-primary'),
+        t('radius/component/toggle-track', '--radius-component-toggle-track'),
+        t('border-width/toggle-icon-small', '--border-width-toggle-icon-small'),
+        t('border-width/toggle-icon-medium', '--border-width-toggle-icon-medium'),
+        css('--toggle-*', 'component aliases in variables.css'),
       ],
     },
   ],
@@ -361,9 +403,12 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('colors/action/primary', '--color-action-primary', 'selected border / indicator'),
         t('colors/icon/primary', '--color-icon-primary', 'default border'),
         t('colors/surface/primary', '--color-surface-primary'),
+        t('colors/surface/focused', '--color-surface-focused', 'control hover'),
+        t('colors/surface/disabled', '--color-surface-disabled', 'field disabled'),
         t('colors/bg/brand-hover', '--color-bg-brand-hover', 'field hover / active'),
-        t('colors/icon/disabled', '--color-icon-disabled'),
-        t('colors/border/default', '--color-border-default'),
+        t('radius/component/radio-inner', '--radius-component-radio-inner'),
+        t('radius/component/radio-container', '--radius-component-radio-container'),
+        t('spacing/component padding/radio-inset', '--spacing-component-padding-radio-inset'),
         css('--radio-*', 'component aliases in variables.css'),
       ],
     },
@@ -376,11 +421,11 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Component aliases',
       tokens: [
-        css('--badge-*', 'pill layout → colors/badges/*'),
+        css('--badge-*', 'pill layout → colors/badges & inline messages/*'),
         css('--badge-tag-*', 'tag layout'),
         t('radius/component/badge', '--radius-component-badge'),
         t('typography/body/body-secondary', '--typography-body-body-secondary', 'Caption Semi Bold label size'),
-        css('--ace-type-caption-semi-bold', 'badge label text style'),
+        css('--type-caption-semi-bold', 'badge label text style'),
       ],
     },
   ],
@@ -389,9 +434,10 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       title: 'Progress',
       tokens: [
         t('colors/action/primary', '--color-action-primary'),
+        t('colors/progress/foreground', '--color-progress-foreground', 'on-brand text / spinner'),
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/border/default', '--color-border-default'),
-        t('colors/text/primary', '--color-text-primary'),
+        t('colors/text/brand', '--color-text-brand'),
         css('--progress-indicator-*'),
       ],
     },
@@ -400,10 +446,11 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Tooltip',
       tokens: [
+        t('colors/surface/primary', '--color-surface-primary'),
         t('colors/text/primary', '--color-text-primary'),
-        t('colors/bg/primary', '--color-bg-primary'),
-        t('colors/text/inverse', '--color-text-inverse'),
         t('radius/component/tooltip', '--radius-component-tooltip'),
+        t('spacing/12', '--spacing-12', 'horizontal padding'),
+        t('spacing/8', '--spacing-8', 'vertical padding'),
         css('--tooltip-*'),
       ],
     },
@@ -427,14 +474,21 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('colors/border/default', '--color-border-default'),
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/text/primary', '--color-text-primary'),
-        t('colors/text/brand', '--color-text-brand'),
-        t('colors/bg/brand', '--color-bg-brand'),
-        t('colors/bg/brand-hover', '--color-bg-brand-hover'),
-        t('colors/bg/secondary', '--color-bg-secondary'),
+        t('colors/text/brand', '--color-text-brand', 'pipe + Select All / Reset'),
+        t('colors/bg/brand-subtle', '--color-bg-brand-subtle', 'Secondary Active / FilterChip Selected'),
+        t('colors/bg/brand-hover', '--color-bg-brand-hover', 'Primary open + selected rows'),
+        t('colors/bg/secondary', '--color-bg-secondary', 'row hover'),
         t('colors/border/brand', '--color-border-brand'),
         t('colors/border/focus', '--color-border-focus'),
-        t('colors/icon/primary', '--color-icon-primary'),
+        t('colors/action/icon', '--color-action-icon', 'Secondary / FilterChip active icons'),
         t('colors/status/error', '--color-status-error'),
+        t('radius/sm', '--radius-sm', 'trigger / menu radius'),
+        t('spacing/12', '--spacing-12', 'Primary padding-x / Secondary Label padding-x'),
+        t('spacing/8', '--spacing-8', 'Primary padding-y / Secondary·FilterChip padding-x / menu row pad'),
+        t('spacing/16', '--spacing-16', 'Primary label↔chevron gap'),
+        t('spacing/4', '--spacing-4', 'Secondary / FilterChip / Secondary Label padding-y'),
+        t('border/width/subtle', '--border-width-subtle', 'menu panel stroke'),
+        t('typography/body/body-secondary', '--type-caption-regular', 'trigger + label'),
         css('--dropdown-menu-*'),
       ],
     },
@@ -493,7 +547,10 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('colors/border/default', '--color-border-default'),
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/text/primary', '--color-text-primary'),
-        t('colors/icon/primary', '--color-icon-primary'),
+        t('colors/bg/brand-hover', '--color-bg-brand-hover', 'control hover'),
+        t('spacing/2', '--spacing-2', 'gap + vertical pad'),
+        t('spacing/component padding/padding-xs', '--spacing-component-padding-padding-xs', 'horizontal pad'),
+        css('--stepper-*'),
       ],
     },
   ],
@@ -503,7 +560,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       tokens: [
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/border/default', '--color-border-default'),
-        css('--ace-drop-shadow-xs'),
+        css('--shadow-xs'),
         css('--task-bar-*'),
       ],
     },
@@ -525,12 +582,16 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
     {
       title: 'Tabs',
       tokens: [
-        t('colors/action/primary', '--color-action-primary'),
-        t('colors/icon/secondary', '--color-icon-secondary'),
-        t('colors/bg/brand-hover', '--color-bg-brand-hover', 'tab card emphasis'),
+        t('colors/text/brand', '--color-text-brand', 'active label'),
+        t('colors/text/secondary', '--color-text-secondary', 'inactive label'),
+        t('colors/bg/brand', '--color-bg-brand', 'horizontal indicator'),
+        t('spacing/12', '--spacing-12', 'tab list gap'),
+        t('colors/bg/brand-hover', '--color-bg-brand-hover', 'tab card hover / selected fill'),
+        t('colors/border/brand', '--color-border-brand', 'tab card selected stroke'),
         t('colors/border/default', '--color-border-default'),
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/text/primary', '--color-text-primary'),
+        t('radius/md', '--radius-md', 'tab card'),
         css('--tabs-* / --tab-card-*'),
       ],
     },
@@ -540,11 +601,16 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       title: 'Toast',
       tokens: [
         t('colors/surface/primary', '--color-surface-primary'),
-        t('colors/border/default', '--color-border-default'),
-        t('colors/action/primary', '--color-action-primary'),
+        t('colors/border/subtle', '--color-border-subtle'),
+        t('colors/action/primary', '--color-action-primary', 'info / confirm'),
         t('colors/text/inverse', '--color-text-inverse'),
         t('colors/icon/secondary', '--color-icon-secondary'),
-        ...status,
+        t('colors/status/success', '--color-status-success'),
+        t('colors/status/warning', '--color-status-warning'),
+        t('colors/status/error', '--color-status-error'),
+        t('radius/sm', '--radius-sm'),
+        t('spacing/16', '--spacing-16', 'horizontal padding'),
+        t('spacing/12', '--spacing-12', 'vertical padding'),
         css('--toast-message-*'),
       ],
     },
@@ -554,19 +620,16 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       title: 'Inline message',
       tokens: [
         t('radius/component/inline message', '--radius-component-inline-message'),
-        t('colors/bg/error', '--color-bg-error'),
-        t('colors/border/error', '--color-border-error'),
-        t('colors/status/error', '--color-status-error'),
-        t('colors/bg/success', '--color-bg-success'),
-        t('colors/border/success', '--color-border-success'),
-        t('colors/status/success', '--color-status-success'),
-        t('colors/status/info-subtle', '--color-status-info-subtle'),
-        t('colors/status/info', '--color-status-info'),
-        t('colors/bg/warning', '--color-bg-warning'),
-        t('colors/border/warning', '--color-border-warning'),
-        t('colors/status/warning', '--color-status-warning'),
+        t('colors/badges & inline messages/red-fill', '--color-badges-inline-messages-red-fill'),
+        t('colors/badges & inline messages/red-border', '--color-badges-inline-messages-red-border'),
+        t('colors/badges & inline messages/green-fill', '--color-badges-inline-messages-green-fill'),
+        t('colors/badges & inline messages/green-border', '--color-badges-inline-messages-green-border'),
+        t('colors/badges & inline messages/purple-fill', '--color-badges-inline-messages-purple-fill', 'info'),
+        t('colors/badges & inline messages/purple-border', '--color-badges-inline-messages-purple-border', 'info'),
+        t('colors/badges & inline messages/orange-fill', '--color-badges-inline-messages-orange-fill'),
+        t('colors/badges & inline messages/orange-border', '--color-badges-inline-messages-orange-border'),
         t('colors/text/primary', '--color-text-primary'),
-        css('--inline-message-*', 'includes radius → --radius-component-inline-message'),
+        css('--inline-message-*', 'tones → red/green/purple/orange badges & inline messages'),
       ],
     },
   ],
@@ -577,11 +640,12 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('colors/border/default', '--color-border-default'),
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/text/primary', '--color-text-primary'),
-        t('colors/bg/brand', '--color-bg-brand', 'selected / active'),
-        t('colors/text/inverse', '--color-text-inverse'),
-        t('colors/icon/inverse', '--color-icon-inverse'),
+        t('colors/bg/brand-subtle', '--color-bg-brand-subtle', 'selected / active'),
+        t('colors/action/icon', '--color-action-icon', 'selected icons'),
         t('colors/icon/primary', '--color-icon-primary'),
-        t('colors/icon/secondary', '--color-icon-secondary'),
+        t('radius/sm', '--radius-sm'),
+        t('spacing/8', '--spacing-8'),
+        t('spacing/4', '--spacing-4'),
         css('--filter-* / --dropdown-menu-secondary-*'),
       ],
     },
@@ -591,6 +655,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
       title: 'Dialog',
       tokens: [
         t('colors/surface/primary', '--color-surface-primary'),
+        t('colors/bg/secondary', '--color-bg-secondary', 'modal border'),
         t('colors/text/primary', '--color-text-primary'),
         t('colors/text/secondary', '--color-text-secondary'),
         t('colors/action/primary', '--color-action-primary'),
@@ -599,7 +664,10 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('colors/text/brand', '--color-text-brand'),
         t('colors/bg/brand-hover', '--color-bg-brand-hover'),
         t('colors/status/error', '--color-status-error'),
-        t('colors/border/error', '--color-border-error'),
+        t('colors/badges & inline messages/red-fill', '--color-badges-inline-messages-red-fill'),
+        t('colors/badges & inline messages/red-border', '--color-badges-inline-messages-red-border'),
+        t('spacing/24', '--spacing-24', 'padding + section gap'),
+        t('spacing/12', '--spacing-12', 'footer button gap'),
         t('radius/component/modal', '--radius-component-modal'),
         css('--dialog-modal-*'),
       ],

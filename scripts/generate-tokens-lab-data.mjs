@@ -57,6 +57,15 @@ function cssVarFromPath(tokenPath) {
   return `--${parts.join('-')}`
 }
 
+/** Match generate-tokens-from-figma.mjs: remapped input primitives avoid semantic collisions. */
+function primitiveCssVarFromPath(tokenPath) {
+  const name = cssVarFromPath(tokenPath)
+  if (tokenPath.startsWith('color/input/')) {
+    return `--primitive-${name.slice(2)}`
+  }
+  return name
+}
+
 function formatValue(token) {
   if (token.alias) return `→ ${token.alias}`
   if (token.type === 'color') return String(token.value).toUpperCase()
@@ -92,10 +101,10 @@ function isComponentPath(tokenPath) {
   )
 }
 
-function toEntries(tokens) {
+function toEntries(tokens, { primitive = false } = {}) {
   return tokens.map((t) => ({
     path: t.path,
-    cssVar: cssVarFromPath(t.path),
+    cssVar: primitive ? primitiveCssVarFromPath(t.path) : cssVarFromPath(t.path),
     type: t.type,
     value: formatValue(t),
     alias: t.alias,
@@ -141,7 +150,7 @@ function groupEntries(entries, { groupCompare = naturalPathCompare } = {}) {
     }))
 }
 
-const prim = toEntries(walk(JSON.parse(fs.readFileSync(PATHS.primitives, 'utf8'))))
+const prim = toEntries(walk(JSON.parse(fs.readFileSync(PATHS.primitives, 'utf8'))), { primitive: true })
 const lightRaw = walk(JSON.parse(fs.readFileSync(PATHS.light, 'utf8')))
 const darkRaw = walk(JSON.parse(fs.readFileSync(PATHS.dark, 'utf8')))
 const darkByPath = new Map(darkRaw.map((t) => [t.path, t]))

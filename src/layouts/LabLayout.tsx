@@ -15,10 +15,10 @@ import {
 } from '../pages/labNav'
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
 const navLinkBase =
-  'block rounded-[var(--radius-md)] px-3 text-sm transition-colors [font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  'block rounded-[var(--radius-md)] px-3 text-sm transition-colors [font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
 const topNavLinkClass = ({ isActive }: { isActive: boolean }) =>
   cn(
@@ -73,8 +73,8 @@ function LabThemeToggle({
         'bg-[color-mix(in_srgb,var(--color-bg-secondary)_88%,transparent)]',
         'shadow-[inset_0_1px_0_color-mix(in_srgb,var(--color-surface-primary)_55%,transparent)]',
         'transition-[background-color,border-color]',
-        'duration-[var(--ace-motion-duration-medium)]',
-        '[transition-timing-function:var(--ace-motion-ease-standard)]',
+        'duration-[var(--motion-duration-medium)]',
+        '[transition-timing-function:var(--motion-ease-standard)]',
       )}
     >
       {/* Sliding thumb - pin left/right so it never overflows the track */}
@@ -98,7 +98,7 @@ function LabThemeToggle({
         onClick={() => onThemeChange('light')}
         className={cn(
           'relative z-[1] inline-flex h-7 items-center justify-center gap-1 rounded-full px-2.5',
-          '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+          '[font:var(--type-caption-semi-bold)] [letter-spacing:var(--type-caption-semi-bold-tracking)]',
           'transition-colors duration-200',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--screening-primary-ring)]',
           !isDark
@@ -126,7 +126,7 @@ function LabThemeToggle({
         onClick={() => onThemeChange('dark')}
         className={cn(
           'relative z-[1] inline-flex h-7 items-center justify-center gap-1 rounded-full px-2.5',
-          '[font:var(--ace-type-caption-semi-bold)] [letter-spacing:var(--ace-type-caption-semi-bold-tracking)]',
+          '[font:var(--type-caption-semi-bold)] [letter-spacing:var(--type-caption-semi-bold-tracking)]',
           'transition-colors duration-200',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--screening-primary-ring)]',
           isDark

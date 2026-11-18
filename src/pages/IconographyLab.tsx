@@ -311,7 +311,7 @@ const CATALOG: CatalogIcon[] = [
     materialIoName: 'Favorite',
     fill: 'filled',
     notes: 'Selected state uses Error 500. Prefer heart over star for favorites.',
-    colorClass: 'text-[var(--ace-error-500)]',
+    colorClass: 'text-[var(--color-error-500)]',
   },
   {
     id: 12,
@@ -806,7 +806,7 @@ export function IconographyLab() {
                     name="favorite"
                     size="lg"
                     filled
-                    className="text-[var(--ace-error-500)]"
+                    className="text-[var(--color-error-500)]"
                   />
                   <div>
                     <p className="m-0 text-sm font-semibold text-[var(--screening-text-primary)]">Filled</p>
@@ -838,7 +838,7 @@ export function IconographyLab() {
 
           <div className={cn('w-full', labExampleSectionClass)}>
             <p className={labSectionLabelClass}>Icon Catalog</p>
-            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] shadow-[var(--ace-drop-shadow-xs)]">
+            <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-solid border-[var(--screening-border-strong)] bg-[var(--screening-surface)] shadow-[var(--shadow-xs)]">
               <table className="w-full min-w-[48rem] border-collapse text-left text-sm">
                 <thead className="bg-[var(--screening-surface-muted)] text-xs font-semibold uppercase tracking-wide text-[var(--screening-text-muted)]">
                   <tr>
@@ -916,7 +916,7 @@ export function IconographyLab() {
   name="favorite"
   size="md"
   filled
-  className="text-[var(--ace-error-500)]"
+  className="text-[var(--color-error-500)]"
 />
 
 {/* Always filled */}

@@ -21,16 +21,17 @@ export const buttonLabCode = (
       Primary export is <code className="text-[var(--screening-text-primary)]">Button</code>. Descriptive cards use{' '}
       <code className="text-[var(--screening-text-primary)]">ButtonDescriptive</code>. Deprecated{' '}
       <code className="text-[var(--screening-text-primary)]">AceButton</code> /{' '}
-      <code className="text-[var(--screening-text-primary)]">AceDescriptiveButton</code> aliases still resolve.
+      <code className="text-[var(--screening-text-primary)]">AceDescriptiveButton</code> aliases still resolve.{' '}
+      <code className="text-[var(--screening-text-primary)]">size</code> is ignored (typography-driven height).
     </p>
     <ComponentLabCode>{`import { Button } from '../components/atoms/Button'
 import { ButtonDescriptive } from '../components/molecules/ButtonDescriptive'
 
-<Button variant="primary" actionTone="primary" size="md">
+<Button variant="primary" actionTone="primary" buttonTypography="body-main">
   Save
 </Button>
 
-<Button variant="secondary" actionTone="error" size="sm" icon="left">
+<Button variant="secondary" actionTone="error" icon="left">
   Delete
 </Button>
 
@@ -60,11 +61,14 @@ export const buttonLabUsage = (
         </li>
         <li>
           <strong className="text-[var(--screening-text-primary)]">actionTone</strong> - remaps fill tokens to{' '}
-          primary / secondary / success / error / warning action colors (disabled always uses disabled-button)
+          primary / secondary / success / error / warning action colors (disabled always uses{' '}
+          <code className="text-[var(--screening-text-primary)]">colors/action/disabled</code>)
         </li>
         <li>
-          <strong className="text-[var(--screening-text-primary)]">size</strong> - sm / md / lg;{' '}
-          <strong className="text-[var(--screening-text-primary)]">icon</strong> - none / left / right
+          <strong className="text-[var(--screening-text-primary)]">buttonTypography</strong> - body-main (default) /
+          body-secondary; drives hug height with spacing/8 · spacing/12.{' '}
+          <strong className="text-[var(--screening-text-primary)]">icon</strong> - none / left / right (toggleable
+          layer)
         </li>
       </ul>
     </LabUsageSection>
@@ -84,23 +88,23 @@ export const buttonLabQa = (
         rows={[
           {
             variant: 'primary × each actionTone',
-            cover: 'default, hover, pressed, disabled × sm/md/lg',
-            pass: 'Fill/text match action tokens; disabled uses disabled-button fill',
+            cover: 'default, hover, pressed, disabled (typography-driven height)',
+            pass: 'Fill/text match action tokens; pressed uses pressed-subtle; disabled uses colors/action/disabled',
           },
           {
             variant: 'secondary × each actionTone',
             cover: 'default → hover → pressed → disabled',
-            pass: 'Border/text use tone fill; hover fills solid correctly',
+            pass: 'Default outline + label-alt; hover/pressed/disabled solid like primary',
           },
           {
             variant: 'tertiary × each actionTone',
             cover: 'default → hover → pressed → disabled',
-            pass: 'Transparent rest; hover/pressed fill; no stray border',
+            pass: 'Default surface + label-alt; hover/pressed/disabled solid; no stray border',
           },
           {
             variant: 'icon left / right',
-            cover: 'All sizes with Material chevron/icon',
-            pass: 'Gap and icon color follow size tokens; label stays readable',
+            cover: 'Playground toggle (not a static matrix)',
+            pass: 'Gap spacing/8; icon inherits currentColor; label stays readable',
           },
           {
             variant: 'ButtonDescriptive',
@@ -117,6 +121,7 @@ export const buttonLabQa = (
           'Disabled buttons do not fire handlers and show the disabled token set',
           'Focus-visible ring appears on keyboard focus for every variant',
           'Preview-state matrices stay frozen (no live hover) when the lab preview control is set',
+          'Label typography control changes hug height without a separate size prop',
         ]}
       />
     </LabQaSection>
@@ -229,19 +234,24 @@ export const inputLabQa = (
       <LabQaVariantTable
         rows={[
           {
-            variant: 'fieldSize sm / md / lg',
-            cover: 'Default, focus, error, disabled',
-            pass: 'Height/padding match size; focus shows brand border + focus ring',
+            variant: 'Default / Focused / Error / Disabled',
+            cover: 'Static reference row',
+            pass: 'Hug height from field typography (default body-main) + spacing/8 — typography token drives size; focus shows border/focus + bg/brand-hover',
+          },
+          {
+            variant: 'fieldTypography',
+            cover: 'Playground dropdown',
+            pass: 'Swapping body-secondary / body-main visibly changes field height; static ref stays on body-main',
           },
           {
             variant: 'icon left / right / none',
-            cover: 'Each size in default and disabled',
-            pass: 'Icon color follows tokens; disabled icon uses disabled icon color',
+            cover: 'Playground toggle only',
+            pass: 'Optional layer; icon color follows tokens; disabled uses disabled icon color',
           },
           {
             variant: 'error',
             cover: 'Message + field chrome',
-            pass: 'Error border/bg and message color; announced as invalid',
+            pass: 'Error border/bg; helper uses colors/text/error message + footnote; announced as invalid',
           },
         ]}
       />
@@ -381,7 +391,7 @@ export const badgesLabQa = (
           {
             variant: 'appearance pill',
             cover: 'Each color (purple, orange, green, gray, blue, yellow, pink, teal, red)',
-            pass: 'Fill/border/label/dot tokens match colors/badges/*; label is Caption Semi Bold',
+            pass: 'Fill/border/label/dot tokens match colors/badges & inline messages/*; label is Caption Semi Bold',
           },
           {
             variant: 'appearance tag',
@@ -712,22 +722,34 @@ export const stepperLabUsage = (
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <code className="text-[var(--screening-text-primary)]">variant=&quot;horizontal&quot;</code> - minus / plus
-          flanking the value
+          <code className="text-[var(--color-text-primary)]">variant=&quot;horizontal&quot;</code> - minus / plus
+          flanking the value; height hugs Figma FIXED 44 (
+          <code className="text-[var(--color-text-primary)]">--stepper-horizontal-height</code>)
         </li>
         <li>
-          <code className="text-[var(--screening-text-primary)]">variant=&quot;vertical&quot;</code> - chevrons above and
-          below the value
+          <code className="text-[var(--color-text-primary)]">variant=&quot;vertical&quot;</code> - chevrons above and
+          below the value; width FIXED 44 / height HUG (
+          <code className="text-[var(--color-text-primary)]">--stepper-vertical-width</code>)
         </li>
         <li>
-          Bound with <code className="text-[var(--screening-text-primary)]">value</code> /{' '}
-          <code className="text-[var(--screening-text-primary)]">onValueChange</code>; optional{' '}
-          <code className="text-[var(--screening-text-primary)]">min</code>,{' '}
-          <code className="text-[var(--screening-text-primary)]">max</code>,{' '}
-          <code className="text-[var(--screening-text-primary)]">step</code>,{' '}
-          <code className="text-[var(--screening-text-primary)]">disabled</code>
+          Bound with <code className="text-[var(--color-text-primary)]">value</code> /{' '}
+          <code className="text-[var(--color-text-primary)]">onValueChange</code>; optional{' '}
+          <code className="text-[var(--color-text-primary)]">min</code>,{' '}
+          <code className="text-[var(--color-text-primary)]">max</code>,{' '}
+          <code className="text-[var(--color-text-primary)]">step</code>,{' '}
+          <code className="text-[var(--color-text-primary)]">disabled</code>
         </li>
       </ul>
+    </LabUsageSection>
+    <LabUsageSection title="Tokens">
+      <p className="m-0">
+        Shell uses <code className="text-[var(--color-text-primary)]">colors/surface/primary</code> +{' '}
+        <code className="text-[var(--color-text-primary)]">colors/border/default</code>; controls{' '}
+        <code className="text-[var(--color-text-primary)]">colors/action/primary</code> with hover{' '}
+        <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code>. Gap / vertical pad{' '}
+        <code className="text-[var(--color-text-primary)]">spacing/2</code>; horizontal pad{' '}
+        <code className="text-[var(--color-text-primary)]">spacing/component padding/padding-xs</code>.
+      </p>
     </LabUsageSection>
     <LabUsageSection title="Accessibility">
       <p className="m-0">
@@ -1334,7 +1356,7 @@ export const typographyLabQa = (
     <LabQaSection title="Tasks">
       <LabQaItems
         items={[
-          'Each specimen uses the documented --ace-type-* / --typography-* token',
+          'Each specimen uses the documented --type-* / --typography-* token',
           'Weights and tracking match the label',
           'Long sample text wraps without clipping',
         ]}
@@ -1347,24 +1369,24 @@ export const dropShadowsLabCode = (
   <>
     <p className="m-0 text-[var(--screening-text-muted)]">
       Elevation tokens live in <code className="text-[var(--screening-text-primary)]">variables.css</code> as{' '}
-      <code className="text-[var(--screening-text-primary)]">--ace-drop-shadow-*</code> (none → xl). Apply via{' '}
+      <code className="text-[var(--screening-text-primary)]">--shadow-*</code> (none → xl). Apply via{' '}
       <code className="text-[var(--screening-text-primary)]">box-shadow</code> or Tailwind arbitrary values.
     </p>
     <ComponentLabCode>{`.elevated-card {
-  box-shadow: var(--ace-drop-shadow-md);
+  box-shadow: var(--shadow-md);
   border-radius: var(--radius-lg);
 }
 
 .floating-panel {
-  box-shadow: var(--ace-drop-shadow-xl);
+  box-shadow: var(--shadow-xl);
 }
 
 .flat-surface {
-  box-shadow: var(--ace-drop-shadow-none);
+  box-shadow: var(--shadow-none);
 }
 
 /* Tailwind */
-<div className="shadow-[var(--ace-drop-shadow-sm)]" />`}</ComponentLabCode>
+<div className="shadow-[var(--shadow-sm)]" />`}</ComponentLabCode>
   </>
 )
 
@@ -1372,16 +1394,16 @@ export const dropShadowsLabUsage = (
   <>
     <LabUsageSection title="When to use">
       <p className="m-0">
-        Use ACE drop shadows for product elevation (cards, menus, modals). Prefer larger steps for higher elevation;{' '}
+        Use Figma Shadow (XS…XL) tokens for product elevation (cards, menus, modals). Prefer larger steps for higher elevation;{' '}
         <code className="text-[var(--screening-text-primary)]">none</code> removes shadow. Lab shell{' '}
-        <code className="text-[var(--screening-text-primary)]">--shadow-sm</code> is separate chrome - do not substitute
+        <code className="text-[var(--screening-text-primary)]">--lab-shadow-sm</code> is separate chrome - do not substitute
         it for product surfaces.
       </p>
     </LabUsageSection>
     <LabUsageSection title="Variants">
       <ul className="m-0 list-disc space-y-1 pl-5">
         <li>
-          <code className="text-[var(--screening-text-primary)]">--ace-drop-shadow-none</code> →{' '}
+          <code className="text-[var(--screening-text-primary)]">--shadow-none</code> →{' '}
           <code className="text-[var(--screening-text-primary)]">xs</code> →{' '}
           <code className="text-[var(--screening-text-primary)]">sm</code> →{' '}
           <code className="text-[var(--screening-text-primary)]">md</code> →{' '}
@@ -1390,7 +1412,7 @@ export const dropShadowsLabUsage = (
         </li>
         <li>
           Dialog modal maps <code className="text-[var(--screening-text-primary)]">--dialog-modal-shadow</code> →{' '}
-          <code className="text-[var(--screening-text-primary)]">var(--ace-drop-shadow-xl)</code>
+          <code className="text-[var(--screening-text-primary)]">var(--shadow-xl)</code>
         </li>
       </ul>
     </LabUsageSection>
@@ -1409,7 +1431,7 @@ export const dropShadowsLabQa = (
       <LabQaItems
         items={[
           'XS→XL samples visibly step in elevation',
-          'Token names match --ace-drop-shadow-*',
+          'Token names match --shadow-*',
         ]}
       />
     </LabQaSection>

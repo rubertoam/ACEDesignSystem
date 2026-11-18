@@ -1,153 +1,58 @@
 :root {
   /*
-   * ACE typography - Figma Typography page (node 2:5).
-   * Documentation layer: --type-* primitives + --typography-* semantics (5160:2 / 5160:154).
-   * Product shorthands: --ace-type-* (legacy composed styles still used by components).
+   * Composed typography styles — Figma Typography style sheet (Heading → Micro)
+   * sized from Semantic Desktop JSON aliases; leading from typography/leading/relaxed;
+   * tracking from typography/letter-spacing/* primitives (only tight | normal exist).
+   * Pair each --type-* shorthand with its *-tracking token.
    */
-  --font-ace-noto: "Noto Sans", var(--font-sans);
-  --font-ace-inter: "Inter", var(--font-sans);
+  --font-noto: "Noto Sans", var(--font-sans);
 
-  /*
-   * Primitive --type-size-* / --type-line-height-* / --type-letter-spacing-*
-   * and semantic --typography-* sizes are generated in color-tokens.css from
-   * Figma Primitives + Semantic token JSON. Composed --ace-type-* shorthands below.
-   */
+  /* typography/heading/heading → --type-heading-* */
+  --type-heading-regular: 400 var(--typography-heading-heading)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-heading-regular-tracking: var(--typography-letter-spacing-tight);
+  --type-heading-semi-bold: 600 var(--typography-heading-heading)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-heading-semi-bold-tracking: var(--typography-letter-spacing-tight);
+  --type-heading-bold: 700 var(--typography-heading-heading)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-heading-bold-tracking: var(--typography-letter-spacing-tight);
 
-  /* --- Composed --ace-type-* shorthands (pair each with *-tracking) --- */
-  /* ACE paragraph p1/p2/p3 ↔ Figma typography/size: p1→p3 (14), p2→p2 (16), p3→p1 (18). */
-  --ace-type-display-01-regular: 400 var(--typography-size-heading)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-display-01-regular-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-display-01-semi-bold: 600 var(--typography-size-heading)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-display-01-semi-bold-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-display-01-bold: 700 var(--typography-size-heading)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-display-01-bold-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-body-semibold-default-16px-inter: 600 var(--typography-size-p2)/var(--typography-line-height-normal) var(--font-ace-inter);
-  --ace-type-body-semibold-default-16px-inter-tracking: 0;
-  --ace-type-display-02-regular: 400 var(--typography-size-display-02)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-display-02-regular-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-display-02-semi-bold: 600 var(--typography-size-display-02)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-display-02-semi-bold-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-display-02-bold: 700 var(--typography-size-display-02)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-display-02-bold-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-heading-h1-regular: 400 var(--typography-size-h1)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h1-regular-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-heading-h1-semi-bold: 600 var(--typography-size-h1)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h1-semi-bold-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-heading-h1-bold: 700 var(--typography-size-h1)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h1-bold-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-heading-h1-small-regular: 400 var(--typography-size-h1-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h1-small-regular-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-heading-h1-small-semi-bold: 600 var(--typography-size-h1-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h1-small-semi-bold-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-heading-h1-small-bold: 700 var(--typography-size-h1-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h1-small-bold-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-heading-h2-regular: 400 var(--typography-size-h2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h2-regular-tracking: -0.02em;
-  --ace-type-heading-h2-semi-bold: 600 var(--typography-size-h2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h2-semi-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-heading-h2-bold: 700 var(--typography-size-h2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h2-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-heading-h2-small-regular: 400 var(--typography-size-h2-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h2-small-regular-tracking: -0.02em;
-  --ace-type-heading-h2-small-semi-bold: 600 var(--typography-size-h2-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h2-small-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h2-small-bold: 700 var(--typography-size-h2-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h2-small-bold-tracking: -0.02em;
-  --ace-type-heading-h3-regular: 400 var(--typography-size-h2-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h3-regular-tracking: -0.02em;
-  --ace-type-heading-h3-semi-bold: 600 var(--typography-size-h2-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h3-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h3-bold: 700 var(--typography-size-h2-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h3-bold-tracking: -0.02em;
-  --ace-type-heading-h3-small-regular: 400 var(--typography-size-h3-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h3-small-regular-tracking: -0.02em;
-  --ace-type-heading-h3-small-semi-bold: 600 var(--typography-size-h3-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h3-small-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h3-small-bold: 700 var(--typography-size-h3-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h3-small-bold-tracking: -0.02em;
-  --ace-type-heading-h4-regular: 400 var(--typography-size-h3-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h4-regular-tracking: -0.02em;
-  --ace-type-heading-h4-semi-bold: 600 var(--typography-size-h3-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h4-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h4-bold: 700 var(--typography-size-h3-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h4-bold-tracking: -0.02em;
-  --ace-type-heading-h4-small-regular: 400 var(--typography-size-h4-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h4-small-regular-tracking: -0.02em;
-  --ace-type-heading-h4-small-semi-bold: 600 var(--typography-size-h4-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h4-small-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h4-small-bold: 700 var(--typography-size-h4-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h4-small-bold-tracking: -0.02em;
-  --ace-type-heading-h5-regular: 400 var(--typography-size-h4-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h5-regular-tracking: -0.02em;
-  --ace-type-heading-h5-semi-bold: 600 var(--typography-size-h4-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h5-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h5-bold: 700 var(--typography-size-h4-small)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h5-bold-tracking: -0.02em;
-  --ace-type-heading-h5-small-regular: 400 1.1875rem/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h5-small-regular-tracking: -0.02em;
-  --ace-type-heading-h5-small-semi-bold: 600 1.1875rem/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h5-small-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h5-small-bold: 700 1.1875rem/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h5-small-bold-tracking: -0.02em;
-  --ace-type-heading-h6-regular: 400 1.1875rem/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h6-regular-tracking: -0.02em;
-  --ace-type-heading-h6-semi-bold: 600 1.1875rem/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h6-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h6-bold: 700 1.1875rem/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h6-bold-tracking: -0.02em;
-  --ace-type-heading-h6-small-regular: 400 var(--typography-size-p2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h6-small-regular-tracking: -0.02em;
-  --ace-type-heading-h6-small-semi-bold: 600 var(--typography-size-p2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h6-small-semi-bold-tracking: -0.02em;
-  --ace-type-heading-h6-small-bold: 700 var(--typography-size-p2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-heading-h6-small-bold-tracking: -0.02em;
-  --ace-type-subheading-regular: 400 var(--typography-size-subheading)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-subheading-regular-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-subheading-semi-bold: 600 var(--typography-size-subheading)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-subheading-semi-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-subheading-bold: 700 var(--typography-size-subheading)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-subheading-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p1-regular: 400 var(--typography-size-p3)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p1-regular-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p1-semi-bold: 600 var(--typography-size-p3)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p1-semi-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p1-bold: 700 var(--typography-size-p3)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p1-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p2-regular: 400 var(--typography-size-p2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p2-regular-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p2-semi-bold: 600 var(--typography-size-p2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p2-semi-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p2-bold: 700 var(--typography-size-p2)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p2-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p3-regular: 400 var(--typography-size-p1)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p3-regular-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p3-semi-bold: 600 var(--typography-size-p1)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p3-semi-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-paragraph-p3-bold: 700 var(--typography-size-p1)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-paragraph-p3-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-caption-regular: 400 var(--typography-size-caption)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-caption-regular-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-caption-semi-bold: 600 var(--typography-size-caption)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-caption-semi-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-caption-bold: 700 var(--typography-size-caption)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-caption-bold-tracking: var(--typography-letter-spacing-normal);
-  /* Label Bold - dense UI / table headers (smaller than Caption; matches Footer Bold scale) */
-  --ace-type-label-bold: 700 var(--typography-size-footer-01)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-label-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-footer-regular: 400 var(--typography-size-footer-01)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-footer-regular-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-footer-semi-bold: 600 var(--typography-size-footer-01)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-footer-semi-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-footer-bold: 700 var(--typography-size-footer-01)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-footer-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-footer-02-regular: 400 var(--typography-size-footer-02)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-footer-02-regular-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-footer-02-semi-bold: 600 var(--typography-size-footer-02)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-footer-02-semi-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-footer-02-bold: 700 var(--typography-size-footer-02)/var(--typography-line-height-relaxed) var(--font-ace-noto);
-  --ace-type-footer-02-bold-tracking: var(--typography-letter-spacing-normal);
-  --ace-type-heading-h1-small-extra-bold-inter: 800 var(--typography-size-h1-small)/2.5000rem var(--font-ace-inter);
-  --ace-type-heading-h1-small-extra-bold-inter-tracking: var(--typography-letter-spacing-tight);
-  --ace-type-paragraph-p2-regular-inter: 400 var(--typography-size-p2)/1.1875rem var(--font-ace-inter);
-  --ace-type-paragraph-p2-regular-inter-tracking: var(--typography-letter-spacing-normal);
+  /* typography/heading/subheading → --type-subheading-* */
+  --type-subheading-regular: 400 var(--typography-heading-subheading)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-subheading-regular-tracking: var(--typography-letter-spacing-normal);
+  --type-subheading-semi-bold: 600 var(--typography-heading-subheading)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-subheading-semi-bold-tracking: var(--typography-letter-spacing-normal);
+  --type-subheading-bold: 700 var(--typography-heading-subheading)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-subheading-bold-tracking: var(--typography-letter-spacing-normal);
+
+  /* typography/body/body-main → --type-body-* */
+  --type-body-regular: 400 var(--typography-body-body-main)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-body-regular-tracking: var(--typography-letter-spacing-normal);
+  --type-body-semi-bold: 600 var(--typography-body-body-main)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-body-semi-bold-tracking: var(--typography-letter-spacing-normal);
+  --type-body-bold: 700 var(--typography-body-body-main)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-body-bold-tracking: var(--typography-letter-spacing-normal);
+
+  /* typography/body/body-secondary → --type-caption-* */
+  --type-caption-regular: 400 var(--typography-body-body-secondary)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-caption-regular-tracking: var(--typography-letter-spacing-normal);
+  --type-caption-semi-bold: 600 var(--typography-body-body-secondary)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-caption-semi-bold-tracking: var(--typography-letter-spacing-normal);
+  --type-caption-bold: 700 var(--typography-body-body-secondary)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-caption-bold-tracking: var(--typography-letter-spacing-normal);
+
+  /* typography/ui/footnote → --type-footnote-* */
+  --type-footnote-regular: 400 var(--typography-ui-footnote)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-footnote-regular-tracking: var(--typography-letter-spacing-normal);
+  --type-footnote-semi-bold: 600 var(--typography-ui-footnote)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-footnote-semi-bold-tracking: var(--typography-letter-spacing-normal);
+  --type-footnote-bold: 700 var(--typography-ui-footnote)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-footnote-bold-tracking: var(--typography-letter-spacing-normal);
+
+  /* typography/ui/micro → --type-micro-* */
+  --type-micro-regular: 400 var(--typography-ui-micro)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-micro-regular-tracking: var(--typography-letter-spacing-normal);
+  --type-micro-semi-bold: 600 var(--typography-ui-micro)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-micro-semi-bold-tracking: var(--typography-letter-spacing-normal);
+  --type-micro-bold: 700 var(--typography-ui-micro)/var(--typography-leading-relaxed) var(--font-noto);
+  --type-micro-bold-tracking: var(--typography-letter-spacing-normal);
+
 }

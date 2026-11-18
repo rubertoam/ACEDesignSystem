@@ -5,7 +5,7 @@
  * Literal colors/sizes are allowed only inside this file as token definitions.
  * Components and lab pages must consume tokens via var(--token-name), not raw hex/px.
  *
- * Typography: see `typography-tokens.css` and `typographyLabData.ts` (ACE / Figma page 2:5).
+ * Typography: see `typography-tokens.css` and `typographyLabData.ts` (Figma Typography page 2:5).
  */
 
 :root {
@@ -22,28 +22,30 @@
   --text-base: 1rem;
 
   /* Spacing (--space-*) + radius (--radius-*) primitives live in color-tokens.css (Figma export). */
-  --radius-checkbox: 0.1875rem;
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+  --radius-checkbox: var(--radius-3); /* Figma checkbox control → radius/3 */
+  --checkbox-border-width: var(--border-width-default);
+  --checkbox-border-width-lg: var(--border-width-medium); /* Large box stroke 1.5px */
+  --lab-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
 
-  /* ACE drop shadows - Figma Drop Shadows (71:71); single-layer elevation, 10% alpha */
+  /* Drop shadows — Figma Drop Shadows (71:71) / Shadow (XS…XL); single-layer elevation, 10% alpha */
   /** Space between a subsection label and its content (labs, documentation). */
-  --ace-section-label-gap: var(--space-3); /* 12px */
+  --section-label-gap: var(--space-3); /* 12px */
 
-  --ace-drop-shadow-none: none;
-  --ace-drop-shadow-xs: 0 4px 8px rgb(0 0 0 / 0.1);
-  --ace-drop-shadow-sm: 0 6px 12px rgb(0 0 0 / 0.1);
-  --ace-drop-shadow-md: 0 8px 16px rgb(0 0 0 / 0.1);
-  --ace-drop-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.1);
-  --ace-drop-shadow-xl: 0 12px 24px rgb(0 0 0 / 0.1);
+  --shadow-none: none;
+  --shadow-xs: 0 4px 8px rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 6px 12px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 8px 16px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 20px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 12px 24px rgb(0 0 0 / 0.1);
 
-  /* Dialog modal - ACE Dialog Modals (Figma node 3047:2036) */
+  /* Dialog modal - ACE Dialog Modals (Figma set 6003:293) */
   --dialog-modal-surface: var(--color-surface-primary);
-  --dialog-modal-border: var(--color-neutral-100);
+  --dialog-modal-border: var(--color-bg-secondary); /* colors/bg/secondary */
   --dialog-modal-radius: var(--radius-component-modal);
-  --dialog-modal-padding: 1.5rem;
+  --dialog-modal-padding: var(--spacing-24); /* spacing/24 */
   --dialog-modal-body-focus-gutter: 0.25rem; /* room for input focus ring inside scroll body */
-  --dialog-modal-section-gap: 1.5rem;
-  --dialog-modal-shadow: var(--ace-drop-shadow-xl);
+  --dialog-modal-section-gap: var(--spacing-24); /* spacing/24 */
+  --dialog-modal-shadow: var(--shadow-xl);
   --dialog-modal-overlay: rgb(0 0 0 / 0.45);
   --dialog-modal-title: var(--color-text-primary);
   --dialog-modal-body: var(--color-text-primary);
@@ -57,21 +59,14 @@
   --dialog-modal-outline-hover-bg: var(--color-bg-brand-hover);
   --dialog-modal-danger: var(--color-status-error);
   --dialog-modal-danger-hover: var(--color-error-600);
-  --dialog-modal-close-hover: var(--ace-neutral-100);
+  --dialog-modal-close-hover: var(--color-neutral-100);
   --dialog-modal-btn-radius: var(--radius-component-button);
-  --dialog-modal-footer-btn-gap: 0.75rem;
+  --dialog-modal-footer-btn-gap: var(--spacing-12); /* spacing/12 */
   --dialog-modal-content-max-h: min(85vh, 32rem);
   --dialog-modal-max-width-md: 28rem;
   --dialog-modal-max-width-lg: 38.5rem;
-  --dialog-modal-inline-error-bg: var(--ace-error-50);
-  --dialog-modal-inline-error-border: var(--color-border-error);
-
-  /* ACE neutrals - alias Figma primitive neutrals */
-  --ace-neutral-50: var(--color-neutral-50);
-  --ace-neutral-100: var(--color-neutral-100);
-  --ace-neutral-200: var(--color-neutral-200);
-  --ace-neutral-800: var(--color-neutral-800);
-  --ace-neutral-900: var(--color-neutral-900);
+  --dialog-modal-inline-error-bg: var(--color-badges-inline-messages-red-fill);
+  --dialog-modal-inline-error-border: var(--color-badges-inline-messages-red-border);
 
   /* --- Data table (screening) organism - mapped to Semantic color tokens --- */
   --screening-surface: var(--color-surface-primary);
@@ -112,17 +107,17 @@
   --screening-chip-inactive-hover-bg: var(--color-bg-secondary);
   --screening-chip-inactive-hover-border: var(--color-neutral-500);
   /* AceBadge purple / New - Semantic colors/badges/* */
-  --screening-pill-new-border: var(--color-badges-purple-border);
-  --screening-pill-new-surface: var(--color-badges-purple-fill);
-  --screening-pill-new-dot: var(--color-badges-purple-border);
-  --screening-pill-new-label: var(--color-badges-purple-border);
+  --screening-pill-new-border: var(--color-badges-inline-messages-purple-border);
+  --screening-pill-new-surface: var(--color-badges-inline-messages-purple-fill);
+  --screening-pill-new-dot: var(--color-badges-inline-messages-purple-border);
+  --screening-pill-new-label: var(--color-badges-inline-messages-purple-border);
   --screening-chip-active-text: var(--color-text-brand);
   --screening-chip-active-border: var(--color-border-brand);
   /* AceBadge orange / Escalate - Semantic colors/badges/* */
-  --screening-pill-escalated-border: var(--color-badges-orange-border);
-  --screening-pill-escalated-surface: var(--color-badges-orange-fill);
-  --screening-pill-escalated-dot: var(--color-badges-orange-border);
-  --screening-pill-escalated-label: var(--color-badges-orange-border);
+  --screening-pill-escalated-border: var(--color-badges-inline-messages-orange-border);
+  --screening-pill-escalated-surface: var(--color-badges-inline-messages-orange-fill);
+  --screening-pill-escalated-dot: var(--color-badges-inline-messages-orange-border);
+  --screening-pill-escalated-label: var(--color-badges-inline-messages-orange-border);
   --screening-score-high: var(--color-status-error);
   --screening-age-fresh: var(--color-status-success);
   --screening-age-warn: var(--color-status-warning);
@@ -143,32 +138,42 @@
   --screening-tile-b-bg: var(--badge-gray-surface);
   --screening-tile-b-fg: var(--badge-gray-label);
   --screening-tile-b-border: var(--badge-gray-border);
-  /* Dropdown trigger + MenuList (Figma Dropdowns 1307:3725 / Menus 5318:1634; sets 2277:136, 1541:6165) */
+  /* Dropdown trigger + MenuList (Figma Dropdowns 1307:3725 / Menus 5318:1634; set 2277:136) */
   --dropdown-menu-trigger-width: 12.5rem; /* 200px - Primary field */
-  --dropdown-menu-trigger-radius: var(--radius-component-input);
-  --dropdown-menu-trigger-px: 0.75rem; /* 12px */
-  --dropdown-menu-trigger-py: 0.5rem; /* 8px - Primary */
+  --dropdown-menu-trigger-radius: var(--radius-sm); /* radius/sm */
+  --dropdown-menu-trigger-px: var(--spacing-12); /* spacing/12 */
+  --dropdown-menu-trigger-py: var(--spacing-8); /* spacing/8 - Primary */
+  --dropdown-menu-trigger-gap: var(--spacing-16); /* spacing/16 - label ↔ chevron */
+  --dropdown-menu-label-gap: var(--spacing-6); /* spacing/6 - external label ↔ field */
   --dropdown-menu-trigger-border: var(--color-border-default);
+  --dropdown-menu-trigger-border-width: var(--border-width-default);
   --dropdown-menu-trigger-bg: var(--color-surface-primary);
   --dropdown-menu-trigger-text: var(--color-text-primary);
-  --dropdown-menu-trigger-icon: var(--color-icon-primary);
+  --dropdown-menu-trigger-icon: var(--color-text-primary); /* chevron fills colors/text/primary */
   --dropdown-menu-trigger-active-border: var(--color-border-brand);
   --dropdown-menu-trigger-active-bg: var(--color-bg-brand-hover);
   --dropdown-menu-trigger-focus-ring: var(--color-border-focus);
   --dropdown-menu-trigger-label: var(--color-text-primary);
-  --dropdown-menu-secondary-px: 0.5rem; /* 8px */
-  --dropdown-menu-secondary-py: 0.25rem; /* 4px - Secondary / FilterChip */
-  --dropdown-menu-secondary-active-bg: var(--color-bg-brand);
-  --dropdown-menu-secondary-active-text: var(--color-text-inverse);
-  --dropdown-menu-secondary-active-icon: var(--color-icon-inverse);
-  --dropdown-menu-shadow: var(--ace-drop-shadow-md); /* Figma Shadow (MD) */
+  --dropdown-menu-secondary-px: var(--spacing-8); /* spacing/8 - compact Secondary / FilterChip */
+  --dropdown-menu-secondary-py: var(--spacing-4); /* spacing/4 - Secondary / FilterChip */
+  /* Secondary + Label (Figma 5278:2) uses spacing/12 x · spacing/4 y on the trigger */
+  --dropdown-menu-secondary-label-px: var(--spacing-12); /* spacing/12 */
+  --dropdown-menu-secondary-label-py: var(--spacing-4); /* spacing/4 */
+  --dropdown-menu-item-px: var(--spacing-8); /* spacing/8 - menu row / section label pad */
+  --dropdown-menu-item-py: var(--spacing-8); /* spacing/8 */
+  /* Secondary Active / FilterChip Selected → colors/bg/brand-subtle + text/primary + action/icon */
+  --dropdown-menu-secondary-active-bg: var(--color-bg-brand-subtle);
+  --dropdown-menu-secondary-active-text: var(--color-text-primary);
+  --dropdown-menu-secondary-active-icon: var(--color-action-icon);
+  --dropdown-menu-shadow: var(--shadow-md); /* MultiSelect/Primary: y8 blur16 @ 10% */
   --dropdown-menu-surface: var(--color-surface-primary);
   --dropdown-menu-border: var(--color-border-default);
+  --dropdown-menu-border-width: var(--border-width-subtle); /* border/width/subtle */
   --dropdown-menu-text: var(--color-text-primary);
   --dropdown-menu-text-secondary: var(--color-text-secondary);
   --dropdown-menu-text-muted: var(--color-text-secondary);
   --dropdown-menu-primary: var(--color-text-brand); /* brand pipe on hover / selected rows */
-  --dropdown-menu-action: var(--color-text-primary); /* Select All / Reset All (Figma Menus 5318:1634) */
+  --dropdown-menu-action: var(--color-text-brand); /* Select All / Reset All → colors/text/brand */
   --dropdown-menu-row-hover: var(--color-bg-secondary); /* colors/bg/secondary */
   --dropdown-menu-row-selected: var(--color-bg-brand-hover); /* colors/bg/brand-hover */
   --dropdown-menu-row-emphasis: var(--color-bg-brand-hover);
@@ -199,7 +204,7 @@
   --site-header-py: 0.5rem;
   --site-header-surface: var(--screening-surface);
   --site-header-border: var(--screening-border-strong);
-  --site-header-logo-gap: var(--ace-finscan-icon-gap);
+  --site-header-logo-gap: var(--finscan-icon-gap);
   --site-header-nav-gap: 2rem;
   --site-header-actions-gap: 1.5rem;
   --site-header-toolbar-gap: 0.75rem;
@@ -211,58 +216,14 @@
   --site-header-greeting-color: var(--screening-primary);
 
   /* Lab segmented toggle - soft track, elevated indicator pill */
-  --ace-lab-segmented-track-bg: var(--screening-surface-muted);
-  --ace-lab-segmented-track-border: var(--screening-border-soft);
-  --ace-lab-segmented-indicator-bg: var(--screening-surface);
-  --ace-lab-segmented-indicator-shadow: 0 1px 2px rgb(35 38 44 / 0.06), 0 2px 6px rgb(35 38 44 / 0.08);
-  --ace-lab-segmented-padding: 0.25rem;
+  --lab-segmented-track-bg: var(--screening-surface-muted);
+  --lab-segmented-track-border: var(--screening-border-soft);
+  --lab-segmented-indicator-bg: var(--screening-surface);
+  --lab-segmented-indicator-shadow: 0 1px 2px rgb(35 38 44 / 0.06), 0 2px 6px rgb(35 38 44 / 0.08);
+  --lab-segmented-padding: 0.25rem;
 
   /* FinScan icon / brand (Figma Icon / FinScan 2782:29) */
-  --ace-finscan-icon-gap: 0.75rem;
-  --ace-finscan-mark-green: var(--color-success-400);
-  --ace-finscan-mark-blue: var(--color-blue-500);
-  --ace-finscan-mark-magenta: var(--color-secondary-500);
-
-  /* Secondary - Enlighten Violet (Figma 2794:97) */
-  --ace-secondary-enlighten-violet-50: var(--color-secondary-50);
-  --ace-secondary-enlighten-violet-100: var(--color-secondary-100);
-  --ace-secondary-enlighten-violet-200: var(--color-secondary-200);
-  --ace-secondary-enlighten-violet-300: var(--color-secondary-300);
-  --ace-secondary-enlighten-violet-400: var(--color-secondary-400);
-  --ace-secondary-enlighten-violet-500: var(--ace-finscan-mark-magenta);
-  --ace-secondary-enlighten-violet-600: var(--color-secondary-600);
-  --ace-secondary-enlighten-violet-700: var(--color-secondary-700);
-  --ace-secondary-enlighten-violet-800: var(--color-secondary-800);
-  --ace-secondary-enlighten-violet-900: var(--color-secondary-900);
-
-  /* Secondary - FinScan Teal (Figma 2794:187) */
-  --ace-secondary-teal-50: var(--color-teal-50);
-  --ace-secondary-teal-100: var(--color-teal-100);
-  --ace-secondary-teal-200: var(--color-teal-200);
-  --ace-secondary-teal-300: var(--color-teal-300);
-  --ace-secondary-teal-400: var(--color-teal-400);
-  --ace-secondary-teal-500: var(--color-teal-500);
-  --ace-secondary-teal-600: var(--color-teal-600);
-  --ace-secondary-teal-700: var(--color-teal-700);
-  --ace-secondary-teal-800: var(--color-teal-800);
-  --ace-secondary-teal-900: var(--color-teal-900);
-
-  /* Dark mode scale - Figma color/dark/* primitives (updated export) */
-  --ace-dark-mode-50: var(--color-dark-50);
-  --ace-dark-mode-100: var(--color-dark-100);
-  --ace-dark-mode-200: var(--color-dark-200);
-  --ace-dark-mode-300: var(--color-dark-300);
-  --ace-dark-mode-400: var(--color-dark-400);
-  --ace-dark-mode-500: var(--color-dark-500);
-  --ace-dark-mode-600: var(--color-dark-600);
-  --ace-dark-mode-700: var(--color-dark-700);
-  --ace-dark-mode-750: var(--color-dark-750);
-  --ace-dark-mode-800: var(--color-dark-800);
-  --ace-dark-mode-900: var(--color-dark-900);
-  --ace-dark-mode-950: var(--color-dark-950);
-  --ace-finscan-mark-primary: var(--color-primary-500);
-  --ace-finscan-wordmark-fill: var(--color-primary-500);
-  --ace-guidelines-principle-title: var(--color-primary-400);
+  --finscan-icon-gap: 0.75rem;
 
   /* Sidebar (Figma 4491:2509) */
   --sidebar-width: 18.125rem; /* 290px */
@@ -273,7 +234,7 @@
    * No-border hover border matches the hover fill. Surface: colors/icon/inverse.
    */
   --icon-button-icon: var(--color-icon-primary);
-  --icon-button-icon-rest-ghost: var(--color-text-primary);
+  --icon-button-icon-rest-ghost: var(--color-action-icon); /* colors/action/icon */
   --icon-button-icon-disabled: var(--color-icon-disabled);
   --icon-button-surface: var(--color-icon-inverse);
   --icon-button-hover-bg: var(--color-icon-hover);
@@ -281,31 +242,6 @@
   --icon-button-disabled-bg: var(--color-action-disabled-button);
   --icon-button-disabled-border: var(--color-border-disabled-subtle);
   /* Success / Warning / Notice / Error - Figma primitives */
-  --ace-success-50: var(--color-success-50);
-  --ace-success-500: var(--color-success-500);
-  --ace-warning-50: var(--color-warning-50);
-  --ace-warning-100: var(--color-warning-100);
-  --ace-warning-200: var(--color-warning-200);
-  --ace-warning-300: var(--color-warning-300);
-  --ace-warning-400: var(--color-warning-400);
-  --ace-warning-500: var(--color-warning-500);
-  --ace-warning-600: var(--color-warning-600);
-  --ace-warning-700: var(--color-warning-700);
-  --ace-warning-800: var(--color-warning-800);
-  --ace-warning-900: var(--color-warning-900);
-  --ace-notice-50: var(--color-warning-2-50);
-  --ace-notice-100: var(--color-warning-2-100);
-  --ace-notice-200: var(--color-warning-2-200);
-  --ace-notice-300: var(--color-warning-2-300);
-  --ace-notice-400: var(--color-warning-2-400);
-  --ace-notice-500: var(--color-warning-2-500);
-  --ace-notice-600: var(--color-warning-2-600);
-  --ace-notice-700: var(--color-warning-2-700);
-  --ace-notice-800: var(--color-warning-2-800);
-  --ace-notice-900: var(--color-warning-2-900);
-  --ace-error-50: var(--color-error-50);
-  --ace-error-500: var(--color-error-500);
-  --ace-header-status-success: var(--ace-success-500);
   --sidebar-shadow: 6px 0 5px rgb(0 0 0 / 0.03);
   --sidebar-border: var(--screening-border-strong);
   --sidebar-border-accent: var(--color-primary-300);
@@ -314,10 +250,10 @@
   --sidebar-item-radius: var(--radius-md);
   --sidebar-item-selected-bg: var(--screening-primary-soft-bg);
   --sidebar-item-selected-text: var(--dialog-modal-primary);
-  --sidebar-item-hover-bg: var(--ace-neutral-100);
+  --sidebar-item-hover-bg: var(--color-neutral-100);
   /** Neutral 400 - expanded group container stroke (Figma). */
   --sidebar-group-expanded-border: var(--button-neutral-400);
-  --sidebar-group-hover-bg: var(--ace-neutral-100);
+  --sidebar-group-hover-bg: var(--color-neutral-100);
   /** No-border icon hover fill - icon button hover token */
   --sidebar-row-action-hover-bg: var(--icon-button-hover-bg);
   --sidebar-group-gap: var(--space-3);
@@ -326,21 +262,21 @@
   /* Full-width controls in header align with group row hover area (nav column) */
   --sidebar-control-width: calc(var(--sidebar-width) - 2 * var(--sidebar-nav-px));
   /* Edit group dialog - items list scrolls after 5 rows */
-  --ace-edit-group-restore-bg: var(--ace-success-500);
-  --ace-edit-group-restore-hover-bg: var(--ace-success-50);
-  --ace-edit-group-trash-hover-bg: var(--ace-error-50);
-  --ace-edit-group-item-row-height: 2.5rem;
-  --ace-edit-group-items-list-max-height: calc(
-    5 * var(--ace-edit-group-item-row-height) + 4 * var(--space-1) + 2 * var(--space-2)
+  --edit-group-restore-bg: var(--color-success-500);
+  --edit-group-restore-hover-bg: var(--color-success-50);
+  --edit-group-trash-hover-bg: var(--color-error-50);
+  --edit-group-item-row-height: 2.5rem;
+  --edit-group-items-list-max-height: calc(
+    5 * var(--edit-group-item-row-height) + 4 * var(--space-1) + 2 * var(--space-2)
   );
 
   /* Motion - shared easing/duration tokens (see Animations lab + aceAnimations.ts) */
-  --ace-motion-ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
-  --ace-motion-duration-fast: 150ms;
-  --ace-motion-duration-medium: 300ms;
-  --ace-motion-duration-slow: 420ms;
-  --sidebar-duration-panel: var(--ace-motion-duration-medium);
-  --sidebar-duration-expand: var(--ace-motion-duration-medium);
+  --motion-ease-standard: cubic-bezier(0.33, 1, 0.68, 1);
+  --motion-duration-fast: 150ms;
+  --motion-duration-medium: 300ms;
+  --motion-duration-slow: 420ms;
+  --sidebar-duration-panel: var(--motion-duration-medium);
+  --sidebar-duration-expand: var(--motion-duration-medium);
 
   /* Inline Drawer - right in-flow panel (Figma 1063:3635 / 4081:943+) */
   --inline-drawer-width: 30rem; /* 480px - Review Assigned SideDrawer default */
@@ -357,7 +293,7 @@
   /* ACE Task Bar - Review Assigned bottom action bar */
   --task-bar-surface: var(--screening-surface);
   --task-bar-border: var(--screening-border-strong);
-  --task-bar-shadow: var(--ace-drop-shadow-xs);
+  --task-bar-shadow: var(--shadow-xs);
   --task-bar-px: 1rem; /* 16px */
   --task-bar-py: 1rem; /* 16px */
 
@@ -368,45 +304,46 @@
   --page-header-py: 0.75rem; /* 12px */
 
   /* ACE Sub-header - Figma Headers 1049:2627 (full / split) */
-  --sub-header-bg: var(--screening-surface); /* Shades / 0 */
-  --sub-header-border: var(--screening-border-strong);
+  --sub-header-bg: var(--color-surface-primary);
+  --sub-header-border: var(--color-border-default);
   --sub-header-radius: var(--radius-sm);
-  --sub-header-stat-separator: var(--screening-icon-muted); /* Neutral/500 #949BAA */
+  --sub-header-stat-separator: var(--color-icon-secondary);
   --sub-header-back: var(--color-action-primary);
-  --sub-header-px: 2rem; /* 32px */
-  --sub-header-py: 0.75rem; /* 12px */
-  --sub-header-drilldown-pl: 3rem; /* 48px */
+  --sub-header-px: var(--spacing-32); /* spacing/32 */
+  --sub-header-py: var(--spacing-12); /* spacing/12 */
+  --sub-header-drilldown-pl: var(--spacing-48); /* spacing/48 */
   --sub-header-height: 3.75rem; /* 60px */
 
-  /* Tabs (Figma 2045:4334) */
-  --tabs-gap: var(--space-3);
-  --tabs-text-active: var(--screening-primary);
-  --tabs-text-inactive: var(--screening-icon-muted);
-  --tabs-indicator-bg: var(--screening-primary);
+  /* Tabs (Figma set 5190:1219) */
+  --tabs-gap: var(--spacing-12); /* spacing/12 */
+  --tabs-text-active: var(--color-text-brand); /* colors/text/brand */
+  --tabs-text-inactive: var(--color-text-secondary); /* colors/text/secondary */
+  --tabs-indicator-bg: var(--color-bg-brand); /* colors/bg/brand (horizontal locator) */
   --tabs-indicator-height: 0.09375rem;
   --tabs-indicator-radius: var(--radius-sm);
-  --tabs-vertical-gap: 0.25rem;
-  --tabs-vertical-inactive-px: 0.375rem;
+  --tabs-vertical-gap: var(--spacing-4); /* spacing/4 - active tab indicator ↔ label */
+  --tabs-vertical-inactive-px: var(--spacing-6); /* spacing/6 */
   --tabs-vertical-indicator-width: 0.125rem;
   --tabs-vertical-indicator-height: 1.5rem;
+  --tabs-vertical-indicator-bg: var(--color-text-brand); /* vertical locator uses text/brand in Figma */
 
-  /* Tab cards - Figma Cards / Tab (4130:4356) */
-  --tab-card-gap: var(--space-4);
-  --tab-card-radius: 6px;
-  --tab-card-padding: 0.875rem;
+  /* Tab cards - Figma Tab Property 1=Card (5190:1215–1216) */
+  --tab-card-gap: var(--spacing-12); /* spacing/12 */
+  --tab-card-radius: var(--radius-md); /* radius/md */
+  --tab-card-padding: var(--spacing-12); /* spacing/12 */
   --tab-card-max-width: 23.3125rem;
-  --tab-card-surface-default: var(--screening-surface);
+  --tab-card-surface-default: var(--color-surface-primary);
   --tab-card-border-default: var(--color-border-default);
-  --tab-card-surface-emphasis: var(--screening-primary-soft-bg);
-  --tab-card-border-active: var(--screening-primary);
+  --tab-card-surface-emphasis: var(--color-bg-brand-hover); /* hover / selected fill */
+  --tab-card-border-active: var(--color-border-brand); /* selected stroke */
   --tab-card-title-color: var(--color-text-primary);
-  --tab-card-subtitle-color: var(--screening-text-secondary);
+  --tab-card-subtitle-color: var(--color-text-secondary);
   --tab-card-description-color: var(--color-text-primary);
-  --tab-card-icon-primary: var(--screening-primary);
+  --tab-card-icon-primary: var(--color-text-brand);
 
   /* Data table outer card - ACE Drop Shadows XS at rest (Figma 71:71); hover uses SM */
-  --screening-shadow-card: var(--ace-drop-shadow-xs);
-  --screening-shadow-card-hover: var(--ace-drop-shadow-sm);
+  --screening-shadow-card: var(--shadow-xs);
+  --screening-shadow-card-hover: var(--shadow-sm);
 
   /* Landing page card - Figma Cards (4130:1977 / sets 4212:1424-1427) */
   --landing-page-card-width: 25rem; /* 400px */
@@ -416,8 +353,8 @@
   --landing-page-card-surface: var(--color-surface-primary); /* colors/surface/primary */
   --landing-page-card-footer-bg: var(--color-surface-primary);
   --landing-page-card-divider: var(--color-border-default);
-  --landing-page-card-shadow: var(--ace-drop-shadow-xs); /* Shadow (XS) */
-  --landing-page-card-shadow-hover: var(--ace-drop-shadow-xl); /* Shadow (XL) */
+  --landing-page-card-shadow: var(--shadow-xs); /* Shadow (XS) */
+  --landing-page-card-shadow-hover: var(--shadow-xl); /* Shadow (XL) */
   --landing-page-card-title-color: var(--color-text-primary); /* colors/text/primary */
   --landing-page-card-body-color: var(--color-text-primary);
   --landing-page-card-footer-stat-color: var(--color-text-primary);
@@ -443,8 +380,8 @@
   --data-card-surface: var(--color-surface-primary);
   --data-card-header-bg: var(--color-bg-primary); /* Neutral/50 #fafafb */
   --data-card-header-height: 2.625rem;
-  --data-card-shadow: var(--ace-drop-shadow-sm);
-  --data-card-shadow-hover: var(--ace-drop-shadow-xl);
+  --data-card-shadow: var(--shadow-sm);
+  --data-card-shadow-hover: var(--shadow-xl);
   --data-card-row-muted: var(--color-text-muted);
   --data-card-insight-bg: var(--color-bg-brand-hover); /* Primary/50 #efeef9 */
   --data-card-insight-border: var(--color-action-primary);
@@ -473,8 +410,8 @@
   --screening-checkbox-disabled-checked-bg: var(--color-bg-disabled);
 
   /* ACE Toggle - Figma Toggles (117:1265) / set 5283:2831 */
-  --toggle-duration: var(--ace-motion-duration-medium);
-  --toggle-ease: var(--ace-motion-ease-standard);
+  --toggle-duration: var(--motion-duration-medium);
+  --toggle-ease: var(--motion-ease-standard);
   --toggle-thumb: var(--color-surface-primary);
   --toggle-thumb-disabled: var(--color-surface-primary);
   --toggle-track-off: var(--color-bg-secondary);
@@ -486,18 +423,21 @@
   --toggle-focus-ring: var(--color-border-focus);
   --toggle-ring-offset: var(--color-surface-primary);
   --toggle-track-padding: 0.25rem;
+  --toggle-track-radius: var(--radius-component-toggle-track); /* radius/component/toggle-track */
+  --toggle-icon-border-sm: var(--border-width-toggle-icon-small);
+  --toggle-icon-border-md: var(--border-width-toggle-icon-medium);
   --toggle-icon-glyph-off: var(--color-icon-primary);
   --toggle-icon-glyph-on: var(--color-icon-inverse);
 
   /* ACE Tooltip - Review Assigned screening toolbar pattern */
   --tooltip-radius: var(--radius-component-tooltip);
-  --tooltip-px: var(--space-3);
-  --tooltip-py: var(--space-2);
-  --tooltip-surface: var(--screening-surface);
-  --tooltip-border: var(--screening-border-strong);
-  --tooltip-text: var(--screening-text-primary);
-  --tooltip-shadow: var(--ace-drop-shadow-xs);
-  --tooltip-duration: var(--ace-motion-duration-fast);
+  --tooltip-px: var(--spacing-12);
+  --tooltip-py: var(--spacing-8);
+  --tooltip-surface: var(--color-surface-primary); /* colors/surface/primary */
+  --tooltip-border: var(--color-border-default);
+  --tooltip-text: var(--color-text-primary); /* colors/text/primary */
+  --tooltip-shadow: var(--shadow-xs);
+  --tooltip-duration: var(--motion-duration-fast);
   --tooltip-ease: ease;
 
   /* ACE Badge / Status pill - Figma Badge: px 8, py 2, gap 6, Caption Semi Bold (body-secondary 12 / 1.65) */
@@ -512,42 +452,42 @@
   --badge-label-size: var(--typography-body-body-secondary);
   --badge-label-leading: 1.65;
   /* Status pills - Semantic colors/badges/* (fill + border); label/dot use border */
-  --badge-purple-border: var(--color-badges-purple-border);
-  --badge-purple-surface: var(--color-badges-purple-fill);
-  --badge-purple-dot: var(--color-badges-purple-border);
-  --badge-purple-label: var(--color-badges-purple-border);
-  --badge-orange-border: var(--color-badges-orange-border);
-  --badge-orange-surface: var(--color-badges-orange-fill);
-  --badge-orange-dot: var(--color-badges-orange-border);
-  --badge-orange-label: var(--color-badges-orange-border);
-  --badge-green-border: var(--color-badges-green-border);
-  --badge-green-surface: var(--color-badges-green-fill);
-  --badge-green-dot: var(--color-badges-green-border);
-  --badge-green-label: var(--color-badges-green-border);
-  --badge-gray-border: var(--color-badges-gray-border);
-  --badge-gray-surface: var(--color-badges-gray-fill);
-  --badge-gray-dot: var(--color-badges-gray-border);
-  --badge-gray-label: var(--color-badges-gray-border);
-  --badge-blue-border: var(--color-badges-blue-border);
-  --badge-blue-surface: var(--color-badges-blue-fill);
-  --badge-blue-dot: var(--color-badges-blue-border);
-  --badge-blue-label: var(--color-badges-blue-border);
-  --badge-yellow-border: var(--color-badges-yellow-border);
-  --badge-yellow-surface: var(--color-badges-yellow-fill);
-  --badge-yellow-dot: var(--color-badges-yellow-border);
-  --badge-yellow-label: var(--color-badges-yellow-border);
-  --badge-pink-border: var(--color-badges-pink-border);
-  --badge-pink-surface: var(--color-badges-pink-fill);
-  --badge-pink-dot: var(--color-badges-pink-border);
-  --badge-pink-label: var(--color-badges-pink-border);
-  --badge-teal-border: var(--color-badges-teal-border);
-  --badge-teal-surface: var(--color-badges-teal-fill);
-  --badge-teal-dot: var(--color-badges-teal-border);
-  --badge-teal-label: var(--color-badges-teal-border);
-  --badge-red-border: var(--color-badges-red-border);
-  --badge-red-surface: var(--color-badges-red-fill);
-  --badge-red-dot: var(--color-badges-red-border);
-  --badge-red-label: var(--color-badges-red-border);
+  --badge-purple-border: var(--color-badges-inline-messages-purple-border);
+  --badge-purple-surface: var(--color-badges-inline-messages-purple-fill);
+  --badge-purple-dot: var(--color-badges-inline-messages-purple-border);
+  --badge-purple-label: var(--color-badges-inline-messages-purple-border);
+  --badge-orange-border: var(--color-badges-inline-messages-orange-border);
+  --badge-orange-surface: var(--color-badges-inline-messages-orange-fill);
+  --badge-orange-dot: var(--color-badges-inline-messages-orange-border);
+  --badge-orange-label: var(--color-badges-inline-messages-orange-border);
+  --badge-green-border: var(--color-badges-inline-messages-green-border);
+  --badge-green-surface: var(--color-badges-inline-messages-green-fill);
+  --badge-green-dot: var(--color-badges-inline-messages-green-border);
+  --badge-green-label: var(--color-badges-inline-messages-green-border);
+  --badge-gray-border: var(--color-badges-inline-messages-gray-border);
+  --badge-gray-surface: var(--color-badges-inline-messages-gray-fill);
+  --badge-gray-dot: var(--color-badges-inline-messages-gray-border);
+  --badge-gray-label: var(--color-badges-inline-messages-gray-border);
+  --badge-blue-border: var(--color-badges-inline-messages-blue-border);
+  --badge-blue-surface: var(--color-badges-inline-messages-blue-fill);
+  --badge-blue-dot: var(--color-badges-inline-messages-blue-border);
+  --badge-blue-label: var(--color-badges-inline-messages-blue-border);
+  --badge-yellow-border: var(--color-badges-inline-messages-yellow-border);
+  --badge-yellow-surface: var(--color-badges-inline-messages-yellow-fill);
+  --badge-yellow-dot: var(--color-badges-inline-messages-yellow-border);
+  --badge-yellow-label: var(--color-badges-inline-messages-yellow-border);
+  --badge-pink-border: var(--color-badges-inline-messages-pink-border);
+  --badge-pink-surface: var(--color-badges-inline-messages-pink-fill);
+  --badge-pink-dot: var(--color-badges-inline-messages-pink-border);
+  --badge-pink-label: var(--color-badges-inline-messages-pink-border);
+  --badge-teal-border: var(--color-badges-inline-messages-teal-border);
+  --badge-teal-surface: var(--color-badges-inline-messages-teal-fill);
+  --badge-teal-dot: var(--color-badges-inline-messages-teal-border);
+  --badge-teal-label: var(--color-badges-inline-messages-teal-border);
+  --badge-red-border: var(--color-badges-inline-messages-red-border);
+  --badge-red-surface: var(--color-badges-inline-messages-red-fill);
+  --badge-red-dot: var(--color-badges-inline-messages-red-border);
+  --badge-red-label: var(--color-badges-inline-messages-red-border);
 
   /* ACE Badge tag - same padding/colors as pills; squared radius */
   --badge-tag-gap: var(--badge-gap);
@@ -557,25 +497,25 @@
   --badge-tag-border: var(--color-border-default);
   --badge-tag-surface: var(--color-bg-primary);
   --badge-tag-label: var(--color-text-secondary);
-  --badge-tag-warning-border: var(--color-badges-orange-border);
-  --badge-tag-warning-surface: var(--color-badges-orange-fill);
-  --badge-tag-warning-label: var(--color-badges-orange-border);
+  --badge-tag-warning-border: var(--color-badges-inline-messages-orange-border);
+  --badge-tag-warning-surface: var(--color-badges-inline-messages-orange-fill);
+  --badge-tag-warning-label: var(--color-badges-inline-messages-orange-border);
   --badge-tag-warning-icon-size: 0.75rem; /* size-3 */
   --badge-tag-warning-icon-text-size: 0.5rem; /* 8px */
-  --badge-tag-warning-icon-bg: var(--color-badges-orange-border);
+  --badge-tag-warning-icon-bg: var(--color-badges-inline-messages-orange-border);
   --badge-tag-warning-icon-fg: var(--color-text-inverse);
 
   /* ACE Toast - Figma Toast Messages (2783:5) */
   --toast-message-width: 25rem;
-  --toast-message-radius: var(--radius-component-tooltip);
-  --toast-message-px: 1rem;
-  --toast-message-py: 0.75rem;
-  --toast-message-gap: 0.5rem;
+  --toast-message-radius: var(--radius-sm); /* Figma Toast Messages bind radius/sm */
+  --toast-message-px: var(--spacing-16);
+  --toast-message-py: var(--spacing-12);
+  --toast-message-gap: var(--spacing-8);
   --toast-message-body-indent: 2rem;
-  --toast-message-action-gap: 1rem;
+  --toast-message-action-gap: var(--spacing-16);
   --toast-message-bg: var(--color-surface-primary);
-  --toast-message-border: var(--color-border-default);
-  --toast-message-shadow: var(--ace-drop-shadow-md);
+  --toast-message-border: var(--color-border-subtle); /* Figma Toast → colors/border/subtle */
+  --toast-message-shadow: var(--shadow-md);
   --toast-message-text: var(--screening-text-secondary);
   --toast-message-action-text: var(--color-action-primary);
   --toast-message-action-text-hover: var(--color-action-primary-hover);
@@ -602,18 +542,19 @@
   --inline-message-py: var(--spacing-component-padding-padding-sm);
   --inline-message-gap: var(--spacing-component-padding-gap-md);
   --inline-message-text: var(--color-text-primary);
-  --inline-message-error-bg: var(--color-bg-error);
-  --inline-message-error-border: var(--color-border-error);
-  --inline-message-error-icon: var(--color-status-error);
-  --inline-message-success-bg: var(--color-bg-success);
-  --inline-message-success-border: var(--color-border-success);
-  --inline-message-success-icon: var(--color-status-success);
-  --inline-message-info-bg: var(--color-status-info-subtle);
-  --inline-message-info-border: var(--color-status-info);
-  --inline-message-info-icon: var(--color-status-info);
-  --inline-message-warning-bg: var(--color-bg-warning);
-  --inline-message-warning-border: var(--color-border-warning);
-  --inline-message-warning-icon: var(--color-status-warning);
+  /* Tones → colors/badges & inline messages (Figma Semantic) */
+  --inline-message-error-bg: var(--color-badges-inline-messages-red-fill);
+  --inline-message-error-border: var(--color-badges-inline-messages-red-border);
+  --inline-message-error-icon: var(--color-badges-inline-messages-red-border);
+  --inline-message-success-bg: var(--color-badges-inline-messages-green-fill);
+  --inline-message-success-border: var(--color-badges-inline-messages-green-border);
+  --inline-message-success-icon: var(--color-badges-inline-messages-green-border);
+  --inline-message-info-bg: var(--color-badges-inline-messages-purple-fill);
+  --inline-message-info-border: var(--color-badges-inline-messages-purple-border);
+  --inline-message-info-icon: var(--color-badges-inline-messages-purple-border);
+  --inline-message-warning-bg: var(--color-badges-inline-messages-orange-fill);
+  --inline-message-warning-border: var(--color-badges-inline-messages-orange-border);
+  --inline-message-warning-icon: var(--color-badges-inline-messages-orange-border);
 
   /* ACE Timeline - Figma Timeline (4622:1645) */
   --timeline-radius: var(--radius-component-card);
@@ -638,15 +579,15 @@
   --timeline-body-bg: var(--color-surface-primary);
   --timeline-icon-glyph: var(--color-text-inverse);
   --timeline-icon-system: var(--screening-primary);
-  --timeline-icon-escalation: var(--ace-warning-500);
-  --timeline-icon-pending: var(--ace-notice-500);
+  --timeline-icon-escalation: var(--color-warning-500);
+  --timeline-icon-pending: var(--color-warning-2-500);
   --timeline-icon-blocked: var(--dialog-modal-danger);
-  --timeline-icon-safe: var(--ace-success-500);
+  --timeline-icon-safe: var(--color-success-500);
   --timeline-highlight-system: var(--screening-primary-soft-bg);
-  --timeline-highlight-escalation: var(--ace-warning-50);
-  --timeline-highlight-pending: var(--ace-notice-50);
-  --timeline-highlight-blocked: var(--ace-error-50);
-  --timeline-highlight-safe: var(--ace-success-50);
+  --timeline-highlight-escalation: var(--color-warning-50);
+  --timeline-highlight-pending: var(--color-warning-2-50);
+  --timeline-highlight-blocked: var(--color-error-50);
+  --timeline-highlight-safe: var(--color-success-50);
 
   /* ACE Attachments - Figma Attachments (3313:156) */
   --attachments-radius: 4px;
@@ -673,8 +614,8 @@
   --scrollable-list-icon: var(--color-icon-brand);
 
   /* ACE Filtering - Secondary / FilterChip (Figma Dropdowns 2277:136; Table Headers 1540:4577) */
-  --filter-radius: var(--radius-component-input);
-  --filter-gap: 0.5rem;
+  --filter-radius: var(--radius-sm);
+  --filter-gap: var(--spacing-8); /* spacing/8 */
   --filter-px: var(--dropdown-menu-secondary-px);
   --filter-py: var(--dropdown-menu-secondary-py);
   --filter-trigger-border: var(--color-border-default);
@@ -686,12 +627,12 @@
   --filter-chip-bg: var(--color-surface-primary);
   --filter-chip-text: var(--color-text-primary);
   --filter-chip-icon: var(--color-icon-primary);
-  --filter-chip-clear: var(--color-icon-secondary);
+  --filter-chip-clear: var(--color-icon-primary);
   --filter-chip-selected-bg: var(--dropdown-menu-secondary-active-bg);
   --filter-chip-selected-text: var(--dropdown-menu-secondary-active-text);
   --filter-chip-selected-icon: var(--dropdown-menu-secondary-active-icon);
   --filter-header-title: var(--color-text-secondary);
-  --filter-header-gap: 0.75rem;
+  --filter-header-gap: var(--spacing-12); /* spacing/12 */
   --filter-search-width: 12.5rem;
 
   /* ACE Slider - Figma Sliders (2505:47) */
@@ -700,7 +641,7 @@
   --slider-handle-height: 2.25rem;
   --slider-handle-width: 4px;
   --slider-handle-width-hover: 8px;
-  --slider-tick-inset: 4px;
+  --slider-tick-inset: var(--spacing-component-padding-slider-centered-inset, var(--spacing-4));
   --slider-tooltip-size: 1.75rem;
   --slider-track-inactive: var(--color-bg-brand-hover);
   --slider-track-border: var(--color-action-primary);
@@ -721,7 +662,7 @@
   --radio-bg-inner: var(--color-surface-primary);
   --radio-border-default: var(--color-icon-primary);
   --radio-border-hover: var(--color-icon-primary);
-  --radio-surface-hover: var(--ace-neutral-100);
+  --radio-surface-hover: var(--color-surface-focused); /* colors/surface/focused */
   --radio-border-selected: var(--color-action-primary);
   --radio-indicator-selected: var(--color-action-primary);
   --radio-border-disabled: var(--color-icon-disabled);
@@ -729,12 +670,17 @@
   --radio-label-disabled: var(--color-icon-disabled);
   --radio-focus-ring: var(--screening-primary-ring);
   --radio-focus-offset: var(--screening-primary-ring-offset);
+  --radio-radius-compact: var(--radius-component-radio-compact);
+  --radio-radius-inner: var(--radius-component-radio-inner);
+  --radio-radius-ring: var(--radius-component-radio-ring);
+  --radio-radius-container: var(--radius-component-radio-container);
+  --radio-inset: var(--spacing-component-padding-radio-inset);
   --radio-field-border: var(--color-border-default);
   --radio-field-bg: var(--color-surface-primary);
   --radio-field-bg-hover: var(--color-bg-brand-hover);
   --radio-field-bg-active: var(--color-bg-brand-hover);
   --radio-field-border-active: var(--color-action-primary);
-  --radio-field-bg-disabled: var(--color-neutral-100);
+  --radio-field-bg-disabled: var(--color-surface-disabled);
 
   --screening-icon-chevron: 1rem; /* 16px */
   --screening-duration-accordion: 420ms;
@@ -762,27 +708,32 @@
   --screening-pagination-btn-radius: 0.1875rem;
   --screening-pagination-gap: 0.25rem;
   --screening-pagination-page-size-border: var(--color-neutral-500);
-  /* Input - ACE Design System v.3 Figma Input (408:1976); shared with data table search */
-  --screening-input-height-sm: 2.25rem; /* 36px */
-  --screening-input-radius: var(--radius-component-input);
-  --screening-input-px: 0.75rem; /* 12px */
-  --screening-input-gap: 0.75rem; /* 12px */
+  /* Input - Figma Input Fields: hug height = body-main + spacing/8 padding; radius/sm */
+  --screening-input-height-sm: 2.25rem; /* legacy alias; field no longer uses fixed heights */
+  --screening-input-radius: var(--radius-sm); /* Figma Input Field → radius/sm (not radius/component/input) */
+  --screening-input-px: var(--spacing-8); /* spacing/8 — padding all sides */
+  --screening-input-gap: var(--spacing-8);
   --screening-input-border: var(--color-border-default);
-  /* Focus: 1px inner brand border + 2px outer focus ring (Figma colors/border/brand + border/focus) */
-  --screening-input-border-focus: var(--color-border-brand);
+  /* Focus stroke is colors/border/focus + colors/bg/brand-hover (Figma Input / Focused) */
+  --screening-input-border-focus: var(--color-border-focus);
   --screening-input-bg-focus: var(--color-bg-brand-hover);
   --screening-input-focus-ring: var(--color-border-focus);
-  --screening-input-placeholder: var(--color-text-placeholder);
+  --screening-input-placeholder: var(--color-text-placeholder); /* colors/text/placeholder */
 
-  /* ACE Input atom - Figma Input (408:1976); semantic aliases for component + lab docs */
-  --input-height-sm: var(--screening-input-height-sm);
-  --input-height-md: 2.75rem; /* 44px */
-  --input-height-lg: 3.25rem; /* 52px */
-  --input-label-gap: 0.375rem; /* 6px - organism stack gap */
+  /* ACE Input atom - Figma Input Fields artboard bindings */
+  --input-label-gap: var(--spacing-8); /* Figma Input stack itemSpacing → spacing/8 */
+
+  /* Stepper - Figma set 5748:3370 (horizontal FIXED 44h HUG-w; vertical FIXED 44w HUG-h) */
+  --stepper-horizontal-height: 2.75rem; /* 44px */
+  --stepper-vertical-width: 2.75rem; /* 44px */
+  --stepper-gap: var(--spacing-2); /* spacing/2 */
+  --stepper-horizontal-px: var(--spacing-component-padding-padding-xs); /* spacing/4 */
+  --stepper-vertical-pad: var(--spacing-2); /* spacing/2 */
+  --input-value: var(--color-text-primary); /* colors/text/primary on sample value */
   --input-error-bg: var(--color-bg-error);
   --input-error-border: var(--color-border-error);
-  --input-error-message: var(--color-status-error);
-  --input-disabled-bg: var(--color-bg-disabled-subtle);
+  --input-error-message: var(--color-text-error-message); /* colors/text/error message */
+  --input-disabled-bg: var(--color-bg-disabled-subtle); /* colors/bg/disabled-subtle */
   --input-disabled-border: var(--color-border-disabled-subtle);
   --input-disabled-text: var(--color-text-disabled);
   --input-icon: var(--color-icon-primary);
@@ -798,17 +749,18 @@
   --progress-indicator-bg-brand: var(--color-action-primary);
   --progress-indicator-bg-surface: var(--screening-surface);
   --progress-indicator-border: var(--color-action-primary);
-  --progress-indicator-text-on-brand: var(--color-text-inverse);
+  --progress-indicator-text-on-brand: var(--color-progress-foreground); /* colors/progress/foreground */
   --progress-indicator-text-on-surface: var(--color-text-brand);
-  --progress-indicator-spinner-on-brand: var(--color-text-inverse);
+  --progress-indicator-spinner-on-brand: var(--color-progress-foreground);
   --progress-indicator-spinner-on-surface: var(--color-action-primary);
   --progress-spinner-width: 3.1875rem; /* 51px */
   --progress-spinner-height: 3.4375rem; /* 55px */
   --progress-spinner-duration: 2.5s;
 
-  /* ACE Buttons - action token fills (Figma Buttons, node 2067:191) */
-  --button-radius: var(--radius-component-button);
-  --button-on-solid: var(--color-text-inverse);
+  /* ACE Buttons - Figma Buttons 5996:605 / COMPONENT_SET 5998:27889 */
+  --button-radius: var(--radius-component-button); /* radius/component/button → radius/sm */
+  --button-on-solid: var(--color-text-button-label); /* colors/text/button label */
+  --button-label-alt: var(--color-text-button-label-alt); /* colors/text/button label - alt */
   /* Brand / info scale aliases (shared chrome) → color primitives */
   --button-purple-500: var(--color-primary-500);
   --button-purple-700: var(--color-primary-700);
@@ -822,24 +774,19 @@
   --button-neutral-500: var(--color-neutral-500);
   --button-neutral-600: var(--color-neutral-600);
   /*
-   * Default button fills → colors/action/primary* (AceButton actionTone swaps these).
-   * Disabled primary fill always uses colors/action/disabled-button.
+   * Default fills → colors/action/primary* (Button actionTone swaps these).
+   * Pressed uses primary - pressed - subtle; disabled uses colors/action/disabled.
+   * Height hugs label typography + spacing/8 py / spacing/12 px (no sm/md/lg heights).
    */
   --button-fill: var(--color-action-primary);
   --button-fill-hover: var(--color-action-primary-hover);
-  --button-fill-pressed: var(--color-action-primary-pressed);
-  --button-disabled-primary-bg: var(--color-action-disabled-button);
-  --button-disabled-primary-text: var(--color-text-secondary);
+  --button-fill-pressed: var(--color-action-primary-pressed-subtle);
+  --button-disabled-primary-bg: var(--color-action-disabled);
+  --button-disabled-primary-text: var(--color-text-button-label);
   --button-focus-ring: color-mix(in srgb, var(--color-primary-300) 45%, transparent);
-  --button-px-sm: var(--spacing-component-padding-padding-md);
-  --button-py-sm: var(--spacing-component-padding-padding-xs);
-  --button-gap-sm: var(--spacing-component-padding-gap-sm);
-  --button-px-md: var(--spacing-component-padding-padding-lg);
-  --button-py-md: var(--spacing-component-padding-padding-sm);
-  --button-gap-md: var(--spacing-component-padding-gap-sm);
-  --button-px-lg: var(--spacing-component-padding-padding-lg);
-  --button-py-lg: var(--spacing-component-padding-padding-md);
-  --button-gap-lg: var(--spacing-component-padding-gap-md);
+  --button-px: var(--spacing-12); /* spacing/12 */
+  --button-py: var(--spacing-8); /* spacing/8 */
+  --button-gap: var(--spacing-8); /* spacing/8 */
 
   /* ACE Descriptive Buttons - Figma ButtonDescriptive 4118:682 */
   --button-descriptive-width: 16.5rem;
@@ -862,495 +809,6 @@
   --button-descriptive-focus-ring: var(--button-focus-ring);
 
 
-  /* ace→figma CSS compat aliases (generated) */
-  --ace-accordion-border: var(--accordion-border);
-  --ace-accordion-content-bg: var(--accordion-content-bg);
-  --ace-accordion-duration: var(--accordion-duration);
-  --ace-accordion-ease: var(--accordion-ease);
-  --ace-accordion-gap: var(--accordion-gap);
-  --ace-accordion-actions-gap: var(--accordion-actions-gap);
-  --ace-accordion-icon: var(--accordion-icon);
-  --ace-accordion-px: var(--accordion-px);
-  --ace-accordion-py: var(--accordion-py);
-  --ace-accordion-radius: var(--accordion-radius);
-  --ace-accordion-surface: var(--accordion-surface);
-  --ace-accordion-surface-muted: var(--accordion-surface-muted);
-  --ace-accordion-tag-bg: var(--accordion-tag-bg);
-  --ace-accordion-tag-text: var(--accordion-tag-text);
-  --ace-accordion-title: var(--accordion-title);
-  --ace-attachments-border: var(--attachments-border);
-  --ace-attachments-divider: var(--attachments-divider);
-  --ace-attachments-dropzone-border: var(--attachments-dropzone-border);
-  --ace-attachments-error: var(--attachments-error);
-  --ace-attachments-gap: var(--attachments-gap);
-  --ace-attachments-label: var(--attachments-label);
-  --ace-attachments-link: var(--attachments-link);
-  --ace-attachments-muted: var(--attachments-muted);
-  --ace-attachments-padding: var(--attachments-padding);
-  --ace-attachments-radius: var(--attachments-radius);
-  --ace-attachments-status: var(--attachments-status);
-  --ace-attachments-surface: var(--attachments-surface);
-  --ace-attachments-title: var(--attachments-title);
-  --ace-badge-tag-border: var(--badge-tag-border);
-  --ace-badge-tag-gap: var(--badge-tag-gap);
-  --ace-badge-tag-label: var(--badge-tag-label);
-  --ace-badge-tag-px: var(--badge-tag-px);
-  --ace-badge-tag-py: var(--badge-tag-py);
-  --ace-badge-tag-radius: var(--badge-tag-radius);
-  --ace-badge-tag-surface: var(--badge-tag-surface);
-  --ace-badge-tag-warning-border: var(--badge-tag-warning-border);
-  --ace-badge-tag-warning-icon-bg: var(--badge-tag-warning-icon-bg);
-  --ace-badge-tag-warning-icon-fg: var(--badge-tag-warning-icon-fg);
-  --ace-badge-tag-warning-icon-size: var(--badge-tag-warning-icon-size);
-  --ace-badge-tag-warning-icon-text-size: var(--badge-tag-warning-icon-text-size);
-  --ace-badge-tag-warning-label: var(--badge-tag-warning-label);
-  --ace-badge-tag-warning-surface: var(--badge-tag-warning-surface);
-  --ace-button-blue-200: var(--button-blue-200);
-  --ace-button-blue-400: var(--button-blue-400);
-  --ace-button-blue-50: var(--button-blue-50);
-  --ace-button-blue-500: var(--button-blue-500);
-  --ace-button-blue-700: var(--button-blue-700);
-  --ace-button-disabled-primary-bg: var(--button-disabled-primary-bg);
-  --ace-button-disabled-primary-text: var(--button-disabled-primary-text);
-  --ace-button-fill: var(--button-fill);
-  --ace-button-fill-hover: var(--button-fill-hover);
-  --ace-button-fill-pressed: var(--button-fill-pressed);
-  --ace-button-focus-ring: var(--button-focus-ring);
-  --ace-button-gap-lg: var(--button-gap-lg);
-  --ace-button-gap-md: var(--button-gap-md);
-  --ace-button-gap-sm: var(--button-gap-sm);
-  --ace-button-neutral-400: var(--button-neutral-400);
-  --ace-button-neutral-500: var(--button-neutral-500);
-  --ace-button-neutral-600: var(--button-neutral-600);
-  --ace-button-on-solid: var(--button-on-solid);
-  --ace-button-purple-400: var(--button-purple-400);
-  --ace-button-purple-500: var(--button-purple-500);
-  --ace-button-purple-700: var(--button-purple-700);
-  --ace-button-px-lg: var(--button-px-lg);
-  --ace-button-px-md: var(--button-px-md);
-  --ace-button-px-sm: var(--button-px-sm);
-  --ace-button-py-lg: var(--button-py-lg);
-  --ace-button-py-md: var(--button-py-md);
-  --ace-button-py-sm: var(--button-py-sm);
-  --ace-button-radius: var(--button-radius);
-  --ace-date-picker-day: var(--date-picker-day);
-  --ace-date-picker-day-gap: var(--date-picker-day-gap);
-  --ace-date-picker-day-muted: var(--date-picker-day-muted);
-  --ace-date-picker-day-on-primary: var(--date-picker-day-on-primary);
-  --ace-date-picker-day-size: var(--date-picker-day-size);
-  --ace-date-picker-month-title: var(--date-picker-month-title);
-  --ace-date-picker-panel-width: var(--date-picker-panel-width);
-  --ace-date-picker-panel-width-single: var(--date-picker-panel-width-single);
-  --ace-date-picker-range-fill: var(--date-picker-range-fill);
-  --ace-date-picker-trigger-width: var(--date-picker-trigger-width);
-  --ace-date-picker-weekday: var(--date-picker-weekday);
-  --ace-descriptive-button-active-bg: var(--button-descriptive-active-bg);
-  --ace-descriptive-button-active-border: var(--button-descriptive-active-border);
-  --ace-descriptive-button-bg: var(--button-descriptive-bg);
-  --ace-descriptive-button-border: var(--button-descriptive-border);
-  --ace-descriptive-button-disabled-bg: var(--button-descriptive-disabled-bg);
-  --ace-descriptive-button-disabled-border: var(--button-descriptive-disabled-border);
-  --ace-descriptive-button-disabled-text: var(--button-descriptive-disabled-text);
-  --ace-descriptive-button-focus-ring: var(--button-descriptive-focus-ring);
-  --ace-descriptive-button-gap: var(--button-descriptive-gap);
-  --ace-descriptive-button-hover-bg: var(--button-descriptive-hover-bg);
-  --ace-descriptive-button-hover-border: var(--button-descriptive-hover-border);
-  --ace-descriptive-button-icon-h: var(--button-descriptive-icon-h);
-  --ace-descriptive-button-icon-w: var(--button-descriptive-icon-w);
-  --ace-descriptive-button-padding: var(--button-descriptive-padding);
-  --ace-descriptive-button-radius: var(--button-descriptive-radius);
-  --ace-descriptive-button-text: var(--button-descriptive-text);
-  --ace-descriptive-button-text-gap: var(--button-descriptive-text-gap);
-  --ace-descriptive-button-width: var(--button-descriptive-width);
-  --ace-dropdown-action: var(--dropdown-menu-action);
-  --ace-dropdown-border: var(--dropdown-menu-border);
-  --ace-dropdown-danger: var(--dropdown-menu-danger);
-  --ace-dropdown-icon: var(--dropdown-menu-icon);
-  --ace-dropdown-primary: var(--dropdown-menu-primary);
-  --ace-dropdown-row-emphasis: var(--dropdown-menu-row-emphasis);
-  --ace-dropdown-row-hover: var(--dropdown-menu-row-hover);
-  --ace-dropdown-row-selected: var(--dropdown-menu-row-selected);
-  --ace-dropdown-search-placeholder: var(--dropdown-menu-search-placeholder);
-  --ace-dropdown-secondary-active-bg: var(--dropdown-menu-secondary-active-bg);
-  --ace-dropdown-secondary-active-icon: var(--dropdown-menu-secondary-active-icon);
-  --ace-dropdown-secondary-active-text: var(--dropdown-menu-secondary-active-text);
-  --ace-dropdown-secondary-px: var(--dropdown-menu-secondary-px);
-  --ace-dropdown-secondary-py: var(--dropdown-menu-secondary-py);
-  --ace-dropdown-shadow: var(--dropdown-menu-shadow);
-  --ace-dropdown-surface: var(--dropdown-menu-surface);
-  --ace-dropdown-text: var(--dropdown-menu-text);
-  --ace-dropdown-text-muted: var(--dropdown-menu-text-muted);
-  --ace-dropdown-text-secondary: var(--dropdown-menu-text-secondary);
-  --ace-dropdown-trigger-active-bg: var(--dropdown-menu-trigger-active-bg);
-  --ace-dropdown-trigger-active-border: var(--dropdown-menu-trigger-active-border);
-  --ace-dropdown-trigger-bg: var(--dropdown-menu-trigger-bg);
-  --ace-dropdown-trigger-border: var(--dropdown-menu-trigger-border);
-  --ace-dropdown-trigger-focus-ring: var(--dropdown-menu-trigger-focus-ring);
-  --ace-dropdown-trigger-icon: var(--dropdown-menu-trigger-icon);
-  --ace-dropdown-trigger-label: var(--dropdown-menu-trigger-label);
-  --ace-dropdown-trigger-px: var(--dropdown-menu-trigger-px);
-  --ace-dropdown-trigger-py: var(--dropdown-menu-trigger-py);
-  --ace-dropdown-trigger-radius: var(--dropdown-menu-trigger-radius);
-  --ace-dropdown-trigger-text: var(--dropdown-menu-trigger-text);
-  --ace-dropdown-trigger-width: var(--dropdown-menu-trigger-width);
-  --ace-filter-chip-bg: var(--filter-chip-bg);
-  --ace-filter-chip-border: var(--filter-chip-border);
-  --ace-filter-chip-clear: var(--filter-chip-clear);
-  --ace-filter-chip-icon: var(--filter-chip-icon);
-  --ace-filter-chip-selected-bg: var(--filter-chip-selected-bg);
-  --ace-filter-chip-selected-icon: var(--filter-chip-selected-icon);
-  --ace-filter-chip-selected-text: var(--filter-chip-selected-text);
-  --ace-filter-chip-text: var(--filter-chip-text);
-  --ace-filter-gap: var(--filter-gap);
-  --ace-filter-header-gap: var(--filter-header-gap);
-  --ace-filter-header-title: var(--filter-header-title);
-  --ace-filter-px: var(--filter-px);
-  --ace-filter-py: var(--filter-py);
-  --ace-filter-radius: var(--filter-radius);
-  --ace-filter-search-width: var(--filter-search-width);
-  --ace-filter-trigger-active-bg: var(--filter-trigger-active-bg);
-  --ace-filter-trigger-active-text: var(--filter-trigger-active-text);
-  --ace-filter-trigger-bg: var(--filter-trigger-bg);
-  --ace-filter-trigger-border: var(--filter-trigger-border);
-  --ace-filter-trigger-text: var(--filter-trigger-text);
-  --ace-icon-button-border: var(--icon-button-border);
-  --ace-icon-button-disabled-bg: var(--icon-button-disabled-bg);
-  --ace-icon-button-disabled-border: var(--icon-button-disabled-border);
-  --ace-icon-button-hover-bg: var(--icon-button-hover-bg);
-  --ace-icon-button-icon: var(--icon-button-icon);
-  --ace-icon-button-icon-disabled: var(--icon-button-icon-disabled);
-  --ace-icon-button-icon-rest-ghost: var(--icon-button-icon-rest-ghost);
-  --ace-icon-button-surface: var(--icon-button-surface);
-  --ace-inline-drawer-body-px: var(--inline-drawer-body-px);
-  --ace-inline-drawer-body-py: var(--inline-drawer-body-py);
-  --ace-inline-drawer-border: var(--inline-drawer-border);
-  --ace-inline-drawer-duration-panel: var(--inline-drawer-duration-panel);
-  --ace-inline-drawer-footer-gap: var(--inline-drawer-footer-gap);
-  --ace-inline-drawer-header-px: var(--inline-drawer-header-px);
-  --ace-inline-drawer-header-py: var(--inline-drawer-header-py);
-  --ace-inline-drawer-section-gap: var(--inline-drawer-section-gap);
-  --ace-inline-drawer-shadow: var(--inline-drawer-shadow);
-  --ace-inline-drawer-width: var(--inline-drawer-width);
-  --ace-inline-message-error-bg: var(--inline-message-error-bg);
-  --ace-inline-message-error-border: var(--inline-message-error-border);
-  --ace-inline-message-error-icon: var(--inline-message-error-icon);
-  --ace-inline-message-gap: var(--inline-message-gap);
-  --ace-inline-message-info-bg: var(--inline-message-info-bg);
-  --ace-inline-message-info-border: var(--inline-message-info-border);
-  --ace-inline-message-info-icon: var(--inline-message-info-icon);
-  --ace-inline-message-px: var(--inline-message-px);
-  --ace-inline-message-py: var(--inline-message-py);
-  --ace-inline-message-radius: var(--inline-message-radius);
-  --ace-inline-message-success-bg: var(--inline-message-success-bg);
-  --ace-inline-message-success-border: var(--inline-message-success-border);
-  --ace-inline-message-success-icon: var(--inline-message-success-icon);
-  --ace-inline-message-text: var(--inline-message-text);
-  --ace-inline-message-warning-bg: var(--inline-message-warning-bg);
-  --ace-inline-message-warning-border: var(--inline-message-warning-border);
-  --ace-inline-message-warning-icon: var(--inline-message-warning-icon);
-  --ace-input-disabled-bg: var(--input-disabled-bg);
-  --ace-input-disabled-border: var(--input-disabled-border);
-  --ace-input-disabled-text: var(--input-disabled-text);
-  --ace-input-error-bg: var(--input-error-bg);
-  --ace-input-error-border: var(--input-error-border);
-  --ace-input-error-message: var(--input-error-message);
-  --ace-input-height-lg: var(--input-height-lg);
-  --ace-input-height-md: var(--input-height-md);
-  --ace-input-height-sm: var(--input-height-sm);
-  --ace-input-icon: var(--input-icon);
-  --ace-input-icon-disabled: var(--input-icon-disabled);
-  --ace-input-label-gap: var(--input-label-gap);
-  --ace-landing-page-card-body-color: var(--landing-page-card-body-color);
-  --ace-landing-page-card-body-px: var(--landing-page-card-body-px);
-  --ace-landing-page-card-body-py-desc: var(--landing-page-card-body-py-desc);
-  --ace-landing-page-card-body-py-stats: var(--landing-page-card-body-py-stats);
-  --ace-landing-page-card-body-py-stats-bottom: var(--landing-page-card-body-py-stats-bottom);
-  --ace-landing-page-card-border: var(--landing-page-card-border);
-  --ace-landing-page-card-divider: var(--landing-page-card-divider);
-  --ace-landing-page-card-footer-bg: var(--landing-page-card-footer-bg);
-  --ace-landing-page-card-footer-px: var(--landing-page-card-footer-px);
-  --ace-landing-page-card-footer-py: var(--landing-page-card-footer-py);
-  --ace-landing-page-card-footer-stat-color: var(--landing-page-card-footer-stat-color);
-  --ace-landing-page-card-header-px: var(--landing-page-card-header-px);
-  --ace-landing-page-card-header-py: var(--landing-page-card-header-py);
-  --ace-landing-page-card-icon-color: var(--landing-page-card-icon-color);
-  --ace-landing-page-card-link-color: var(--landing-page-card-link-color);
-  --ace-landing-page-card-min-height: var(--landing-page-card-min-height);
-  --ace-landing-page-card-radius: var(--landing-page-card-radius);
-  --ace-landing-page-card-shadow: var(--landing-page-card-shadow);
-  --ace-landing-page-card-shadow-hover: var(--landing-page-card-shadow-hover);
-  --ace-landing-page-card-surface: var(--landing-page-card-surface);
-  --ace-landing-page-card-tag-bg: var(--landing-page-card-tag-bg);
-  --ace-landing-page-card-tag-border: var(--landing-page-card-tag-border);
-  --ace-landing-page-card-tag-text: var(--landing-page-card-tag-text);
-  --ace-landing-page-card-title-color: var(--landing-page-card-title-color);
-  --ace-landing-page-card-width: var(--landing-page-card-width);
-  --ace-page-header-bg: var(--page-header-bg);
-  --ace-page-header-border: var(--page-header-border);
-  --ace-page-header-px: var(--page-header-px);
-  --ace-page-header-py: var(--page-header-py);
-  --ace-progress-indicator-action-gap: var(--progress-indicator-action-gap);
-  --ace-progress-indicator-bg-brand: var(--progress-indicator-bg-brand);
-  --ace-progress-indicator-bg-surface: var(--progress-indicator-bg-surface);
-  --ace-progress-indicator-border: var(--progress-indicator-border);
-  --ace-progress-indicator-gap: var(--progress-indicator-gap);
-  --ace-progress-indicator-min-height: var(--progress-indicator-min-height);
-  --ace-progress-indicator-padding: var(--progress-indicator-padding);
-  --ace-progress-indicator-radius: var(--progress-indicator-radius);
-  --ace-progress-indicator-spinner-on-brand: var(--progress-indicator-spinner-on-brand);
-  --ace-progress-indicator-spinner-on-surface: var(--progress-indicator-spinner-on-surface);
-  --ace-progress-indicator-text-on-brand: var(--progress-indicator-text-on-brand);
-  --ace-progress-indicator-text-on-surface: var(--progress-indicator-text-on-surface);
-  --ace-progress-indicator-width: var(--progress-indicator-width);
-  --ace-progress-spinner-duration: var(--progress-spinner-duration);
-  --ace-progress-spinner-height: var(--progress-spinner-height);
-  --ace-progress-spinner-width: var(--progress-spinner-width);
-  --ace-radio-bg-inner: var(--radio-bg-inner);
-  --ace-radio-border-default: var(--radio-border-default);
-  --ace-radio-border-disabled: var(--radio-border-disabled);
-  --ace-radio-border-hover: var(--radio-border-hover);
-  --ace-radio-border-selected: var(--radio-border-selected);
-  --ace-radio-field-bg: var(--radio-field-bg);
-  --ace-radio-field-bg-active: var(--radio-field-bg-active);
-  --ace-radio-field-bg-disabled: var(--radio-field-bg-disabled);
-  --ace-radio-field-bg-hover: var(--radio-field-bg-hover);
-  --ace-radio-field-border: var(--radio-field-border);
-  --ace-radio-field-border-active: var(--radio-field-border-active);
-  --ace-radio-focus-offset: var(--radio-focus-offset);
-  --ace-radio-focus-ring: var(--radio-focus-ring);
-  --ace-radio-indicator-disabled: var(--radio-indicator-disabled);
-  --ace-radio-indicator-selected: var(--radio-indicator-selected);
-  --ace-radio-label-disabled: var(--radio-label-disabled);
-  --ace-radio-surface-hover: var(--radio-surface-hover);
-  --ace-scrollable-list-border: var(--scrollable-list-border);
-  --ace-scrollable-list-icon: var(--scrollable-list-icon);
-  --ace-scrollable-list-item-hover-bg: var(--scrollable-list-item-hover-bg);
-  --ace-scrollable-list-item-selected-bg: var(--scrollable-list-item-selected-bg);
-  --ace-scrollable-list-item-text: var(--scrollable-list-item-text);
-  --ace-scrollable-list-surface: var(--scrollable-list-surface);
-  --ace-scrollable-list-title: var(--scrollable-list-title);
-  --ace-sidebar-border: var(--sidebar-border);
-  --ace-sidebar-border-accent: var(--sidebar-border-accent);
-  --ace-sidebar-control-width: var(--sidebar-control-width);
-  --ace-sidebar-duration-expand: var(--sidebar-duration-expand);
-  --ace-sidebar-duration-panel: var(--sidebar-duration-panel);
-  --ace-sidebar-group-expanded-border: var(--sidebar-group-expanded-border);
-  --ace-sidebar-group-gap: var(--sidebar-group-gap);
-  --ace-sidebar-group-hover-bg: var(--sidebar-group-hover-bg);
-  --ace-sidebar-heading-bg: var(--sidebar-heading-bg);
-  --ace-sidebar-heading-border: var(--sidebar-heading-border);
-  --ace-sidebar-item-hover-bg: var(--sidebar-item-hover-bg);
-  --ace-sidebar-item-radius: var(--sidebar-item-radius);
-  --ace-sidebar-item-selected-bg: var(--sidebar-item-selected-bg);
-  --ace-sidebar-item-selected-text: var(--sidebar-item-selected-text);
-  --ace-sidebar-menu-icon: var(--sidebar-menu-icon);
-  --ace-sidebar-nav-px: var(--sidebar-nav-px);
-  --ace-sidebar-nav-py: var(--sidebar-nav-py);
-  --ace-sidebar-row-action-hover-bg: var(--sidebar-row-action-hover-bg);
-  --ace-sidebar-shadow: var(--sidebar-shadow);
-  --ace-sidebar-width: var(--sidebar-width);
-  --ace-site-header-actions-gap: var(--site-header-actions-gap);
-  --ace-site-header-border: var(--site-header-border);
-  --ace-site-header-greeting-color: var(--site-header-greeting-color);
-  --ace-site-header-height: var(--site-header-height);
-  --ace-site-header-icon-help-size: var(--site-header-icon-help-size);
-  --ace-site-header-icon-notifications-height: var(--site-header-icon-notifications-height);
-  --ace-site-header-icon-notifications-width: var(--site-header-icon-notifications-width);
-  --ace-site-header-logo-gap: var(--site-header-logo-gap);
-  --ace-site-header-nav-gap: var(--site-header-nav-gap);
-  --ace-site-header-nav-hover: var(--site-header-nav-hover);
-  --ace-site-header-px: var(--site-header-px);
-  --ace-site-header-py: var(--site-header-py);
-  --ace-site-header-surface: var(--site-header-surface);
-  --ace-site-header-toolbar-gap: var(--site-header-toolbar-gap);
-  --ace-site-header-toolbar-icon-color: var(--site-header-toolbar-icon-color);
-  --ace-slider-focus-ring: var(--slider-focus-ring);
-  --ace-slider-handle: var(--slider-handle);
-  --ace-slider-handle-disabled: var(--slider-handle-disabled);
-  --ace-slider-handle-height: var(--slider-handle-height);
-  --ace-slider-handle-width: var(--slider-handle-width);
-  --ace-slider-handle-width-hover: var(--slider-handle-width-hover);
-  --ace-slider-radius: var(--slider-radius);
-  --ace-slider-range: var(--slider-range);
-  --ace-slider-range-disabled: var(--slider-range-disabled);
-  --ace-slider-ring-offset: var(--slider-ring-offset);
-  --ace-slider-tick-inset: var(--slider-tick-inset);
-  --ace-slider-tick-on-range: var(--slider-tick-on-range);
-  --ace-slider-tick-on-track: var(--slider-tick-on-track);
-  --ace-slider-tooltip-bg: var(--slider-tooltip-bg);
-  --ace-slider-tooltip-size: var(--slider-tooltip-size);
-  --ace-slider-tooltip-text: var(--slider-tooltip-text);
-  --ace-slider-track-border: var(--slider-track-border);
-  --ace-slider-track-border-disabled: var(--slider-track-border-disabled);
-  --ace-slider-track-height: var(--slider-track-height);
-  --ace-slider-track-inactive: var(--slider-track-inactive);
-  --ace-slider-track-inactive-disabled: var(--slider-track-inactive-disabled);
-  --ace-status-pill-blue-border: var(--badge-blue-border);
-  --ace-status-pill-blue-dot: var(--badge-blue-dot);
-  --ace-status-pill-blue-label: var(--badge-blue-label);
-  --ace-status-pill-blue-surface: var(--badge-blue-surface);
-  --ace-status-pill-dot-size: var(--badge-dot-size);
-  --ace-status-pill-gap: var(--badge-gap);
-  --ace-status-pill-gray-border: var(--badge-gray-border);
-  --ace-status-pill-gray-dot: var(--badge-gray-dot);
-  --ace-status-pill-gray-label: var(--badge-gray-label);
-  --ace-status-pill-gray-surface: var(--badge-gray-surface);
-  --ace-status-pill-green-border: var(--badge-green-border);
-  --ace-status-pill-green-dot: var(--badge-green-dot);
-  --ace-status-pill-green-label: var(--badge-green-label);
-  --ace-status-pill-green-surface: var(--badge-green-surface);
-  --ace-status-pill-label-leading: var(--badge-label-leading);
-  --ace-status-pill-label-size: var(--badge-label-size);
-  --ace-status-pill-orange-border: var(--badge-orange-border);
-  --ace-status-pill-orange-dot: var(--badge-orange-dot);
-  --ace-status-pill-orange-label: var(--badge-orange-label);
-  --ace-status-pill-orange-surface: var(--badge-orange-surface);
-  --ace-status-pill-pink-border: var(--badge-pink-border);
-  --ace-status-pill-pink-dot: var(--badge-pink-dot);
-  --ace-status-pill-pink-label: var(--badge-pink-label);
-  --ace-status-pill-pink-surface: var(--badge-pink-surface);
-  --ace-status-pill-pl: var(--badge-pl);
-  --ace-status-pill-pr: var(--badge-pr);
-  --ace-status-pill-purple-border: var(--badge-purple-border);
-  --ace-status-pill-purple-dot: var(--badge-purple-dot);
-  --ace-status-pill-purple-label: var(--badge-purple-label);
-  --ace-status-pill-purple-surface: var(--badge-purple-surface);
-  --ace-status-pill-px: var(--badge-px);
-  --ace-status-pill-py: var(--badge-py);
-  --ace-status-pill-radius: var(--badge-radius);
-  --ace-status-pill-red-border: var(--badge-red-border);
-  --ace-status-pill-red-dot: var(--badge-red-dot);
-  --ace-status-pill-red-label: var(--badge-red-label);
-  --ace-status-pill-red-surface: var(--badge-red-surface);
-  --ace-status-pill-teal-border: var(--badge-teal-border);
-  --ace-status-pill-teal-dot: var(--badge-teal-dot);
-  --ace-status-pill-teal-label: var(--badge-teal-label);
-  --ace-status-pill-teal-surface: var(--badge-teal-surface);
-  --ace-status-pill-yellow-border: var(--badge-yellow-border);
-  --ace-status-pill-yellow-dot: var(--badge-yellow-dot);
-  --ace-status-pill-yellow-label: var(--badge-yellow-label);
-  --ace-status-pill-yellow-surface: var(--badge-yellow-surface);
-  --ace-sub-header-back: var(--sub-header-back);
-  --ace-sub-header-bg: var(--sub-header-bg);
-  --ace-sub-header-border: var(--sub-header-border);
-  --ace-sub-header-drilldown-pl: var(--sub-header-drilldown-pl);
-  --ace-sub-header-height: var(--sub-header-height);
-  --ace-sub-header-px: var(--sub-header-px);
-  --ace-sub-header-py: var(--sub-header-py);
-  --ace-sub-header-radius: var(--sub-header-radius);
-  --ace-sub-header-stat-separator: var(--sub-header-stat-separator);
-  --ace-tab-card-border-active: var(--tab-card-border-active);
-  --ace-tab-card-border-default: var(--tab-card-border-default);
-  --ace-tab-card-description-color: var(--tab-card-description-color);
-  --ace-tab-card-gap: var(--tab-card-gap);
-  --ace-tab-card-icon-primary: var(--tab-card-icon-primary);
-  --ace-tab-card-max-width: var(--tab-card-max-width);
-  --ace-tab-card-padding: var(--tab-card-padding);
-  --ace-tab-card-radius: var(--tab-card-radius);
-  --ace-tab-card-subtitle-color: var(--tab-card-subtitle-color);
-  --ace-tab-card-surface-default: var(--tab-card-surface-default);
-  --ace-tab-card-surface-emphasis: var(--tab-card-surface-emphasis);
-  --ace-tab-card-title-color: var(--tab-card-title-color);
-  --ace-tabs-gap: var(--tabs-gap);
-  --ace-tabs-indicator-bg: var(--tabs-indicator-bg);
-  --ace-tabs-indicator-height: var(--tabs-indicator-height);
-  --ace-tabs-indicator-radius: var(--tabs-indicator-radius);
-  --ace-tabs-text-active: var(--tabs-text-active);
-  --ace-tabs-text-inactive: var(--tabs-text-inactive);
-  --ace-tabs-vertical-gap: var(--tabs-vertical-gap);
-  --ace-tabs-vertical-inactive-px: var(--tabs-vertical-inactive-px);
-  --ace-tabs-vertical-indicator-height: var(--tabs-vertical-indicator-height);
-  --ace-tabs-vertical-indicator-width: var(--tabs-vertical-indicator-width);
-  --ace-task-bar-border: var(--task-bar-border);
-  --ace-task-bar-px: var(--task-bar-px);
-  --ace-task-bar-py: var(--task-bar-py);
-  --ace-task-bar-shadow: var(--task-bar-shadow);
-  --ace-task-bar-surface: var(--task-bar-surface);
-  --ace-time-picker-panel-width: var(--time-picker-panel-width);
-  --ace-time-picker-trigger-width: var(--time-picker-trigger-width);
-  --ace-timeline-body-bg: var(--timeline-body-bg);
-  --ace-timeline-border: var(--timeline-border);
-  --ace-timeline-expanded-bg: var(--timeline-expanded-bg);
-  --ace-timeline-highlight-blocked: var(--timeline-highlight-blocked);
-  --ace-timeline-highlight-escalation: var(--timeline-highlight-escalation);
-  --ace-timeline-highlight-pending: var(--timeline-highlight-pending);
-  --ace-timeline-highlight-safe: var(--timeline-highlight-safe);
-  --ace-timeline-highlight-system: var(--timeline-highlight-system);
-  --ace-timeline-icon-blocked: var(--timeline-icon-blocked);
-  --ace-timeline-icon-escalation: var(--timeline-icon-escalation);
-  --ace-timeline-icon-glyph: var(--timeline-icon-glyph);
-  --ace-timeline-icon-glyph-size: var(--timeline-icon-glyph-size);
-  --ace-timeline-icon-glyph-size-hover: var(--timeline-icon-glyph-size-hover);
-  --ace-timeline-icon-pending: var(--timeline-icon-pending);
-  --ace-timeline-icon-safe: var(--timeline-icon-safe);
-  --ace-timeline-icon-size: var(--timeline-icon-size);
-  --ace-timeline-icon-size-hover: var(--timeline-icon-size-hover);
-  --ace-timeline-icon-system: var(--timeline-icon-system);
-  --ace-timeline-item-gap: var(--timeline-item-gap);
-  --ace-timeline-item-padding: var(--timeline-item-padding);
-  --ace-timeline-link: var(--timeline-link);
-  --ace-timeline-link-hover: var(--timeline-link-hover);
-  --ace-timeline-padding: var(--timeline-padding);
-  --ace-timeline-radius: var(--timeline-radius);
-  --ace-timeline-section-gap: var(--timeline-section-gap);
-  --ace-timeline-separator: var(--timeline-separator);
-  --ace-timeline-sort-bg: var(--timeline-sort-bg);
-  --ace-timeline-sort-width: var(--timeline-sort-width);
-  --ace-timeline-subtitle: var(--timeline-subtitle);
-  --ace-timeline-title: var(--timeline-title);
-  --ace-toast-action-gap: var(--toast-message-action-gap);
-  --ace-toast-action-text: var(--toast-message-action-text);
-  --ace-toast-action-text-hover: var(--toast-message-action-text-hover);
-  --ace-toast-bg: var(--toast-message-bg);
-  --ace-toast-body-indent: var(--toast-message-body-indent);
-  --ace-toast-border: var(--toast-message-border);
-  --ace-toast-confirm-bg: var(--toast-message-confirm-bg);
-  --ace-toast-confirm-bg-hover: var(--toast-message-confirm-bg-hover);
-  --ace-toast-confirm-px: var(--toast-message-confirm-px);
-  --ace-toast-confirm-py: var(--toast-message-confirm-py);
-  --ace-toast-confirm-radius: var(--toast-message-confirm-radius);
-  --ace-toast-confirm-text: var(--toast-message-confirm-text);
-  --ace-toast-dismiss-icon: var(--toast-message-dismiss-icon);
-  --ace-toast-dismiss-icon-hover: var(--toast-message-dismiss-icon-hover);
-  --ace-toast-gap: var(--toast-message-gap);
-  --ace-toast-icon-error: var(--toast-message-icon-error);
-  --ace-toast-icon-glyph: var(--toast-message-icon-glyph);
-  --ace-toast-icon-info: var(--toast-message-icon-info);
-  --ace-toast-icon-success: var(--toast-message-icon-success);
-  --ace-toast-icon-warning: var(--toast-message-icon-warning);
-  --ace-toast-progress-fill: var(--toast-message-progress-fill);
-  --ace-toast-progress-height: var(--toast-message-progress-height);
-  --ace-toast-progress-track: var(--toast-message-progress-track);
-  --ace-toast-px: var(--toast-message-px);
-  --ace-toast-py: var(--toast-message-py);
-  --ace-toast-radius: var(--toast-message-radius);
-  --ace-toast-shadow: var(--toast-message-shadow);
-  --ace-toast-text: var(--toast-message-text);
-  --ace-toast-width: var(--toast-message-width);
-  --ace-toggle-duration: var(--toggle-duration);
-  --ace-toggle-ease: var(--toggle-ease);
-  --ace-toggle-focus-ring: var(--toggle-focus-ring);
-  --ace-toggle-icon-glyph-off: var(--toggle-icon-glyph-off);
-  --ace-toggle-icon-glyph-on: var(--toggle-icon-glyph-on);
-  --ace-toggle-ring-offset: var(--toggle-ring-offset);
-  --ace-toggle-thumb: var(--toggle-thumb);
-  --ace-toggle-thumb-disabled: var(--toggle-thumb-disabled);
-  --ace-toggle-track-disabled-off: var(--toggle-track-disabled-off);
-  --ace-toggle-track-disabled-on: var(--toggle-track-disabled-on);
-  --ace-toggle-track-off: var(--toggle-track-off);
-  --ace-toggle-track-off-hover: var(--toggle-track-off-hover);
-  --ace-toggle-track-on: var(--toggle-track-on);
-  --ace-toggle-track-on-hover: var(--toggle-track-on-hover);
-  --ace-toggle-track-padding: var(--toggle-track-padding);
-  --ace-tooltip-border: var(--tooltip-border);
-  --ace-tooltip-duration: var(--tooltip-duration);
-  --ace-tooltip-ease: var(--tooltip-ease);
-  --ace-tooltip-px: var(--tooltip-px);
-  --ace-tooltip-py: var(--tooltip-py);
-  --ace-tooltip-radius: var(--tooltip-radius);
-  --ace-tooltip-shadow: var(--tooltip-shadow);
-  --ace-tooltip-surface: var(--tooltip-surface);
-  --ace-tooltip-text: var(--tooltip-text);
 
 }
 
@@ -1390,17 +848,17 @@
     --screening-primary-soft-bg: var(--color-bg-brand-hover);
     --screening-primary-soft-bg-hover: var(--color-action-primary-hover-subtle);
     --screening-primary-hover-border: var(--color-action-primary-hover);
-    --screening-pill-new-border: var(--color-badges-purple-border);
-    --screening-pill-new-surface: var(--color-badges-purple-fill);
-    --screening-pill-new-dot: var(--color-badges-purple-border);
-    --screening-pill-new-label: var(--color-badges-purple-border);
+    --screening-pill-new-border: var(--color-badges-inline-messages-purple-border);
+    --screening-pill-new-surface: var(--color-badges-inline-messages-purple-fill);
+    --screening-pill-new-dot: var(--color-badges-inline-messages-purple-border);
+    --screening-pill-new-label: var(--color-badges-inline-messages-purple-border);
     --screening-chip-active-text: var(--color-text-brand);
     --screening-chip-active-border: var(--color-border-brand);
     /* Checkbox / Toggle colors follow color-tokens.css semantic dark mappings via light aliases above. */
     --toast-message-bg: var(--color-surface-primary);
     --toast-message-border: var(--color-border-default);
     --toast-message-dismiss-icon: var(--color-icon-secondary);
-    --timeline-surface: var(--ace-dark-mode-800);
+    --timeline-surface: var(--color-dark-800);
     --timeline-sort-bg: var(--color-surface-primary);
     --timeline-expanded-bg: var(--color-bg-primary);
     --timeline-body-bg: var(--color-surface-primary);
@@ -1449,11 +907,11 @@
     --button-neutral-600: var(--color-neutral-500);
     --button-fill: var(--color-action-primary);
     --button-fill-hover: var(--color-action-primary-hover);
-    --button-fill-pressed: var(--color-action-primary-pressed);
-    --button-disabled-primary-bg: var(--color-action-disabled-button);
-    --button-disabled-primary-text: var(--color-text-secondary);
+    --button-fill-pressed: var(--color-action-primary-pressed-subtle);
+    --button-disabled-primary-bg: var(--color-action-disabled);
+    --button-disabled-primary-text: var(--color-text-button-label);
     --button-focus-ring: color-mix(in srgb, var(--color-primary-300) 50%, transparent);
-    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.35);
+    --lab-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.35);
     --accordion-surface: var(--color-surface-primary);
     --accordion-surface-muted: var(--color-bg-primary);
     --accordion-border: var(--color-border-default);
@@ -1462,22 +920,20 @@
     --accordion-tag-text: var(--color-text-primary);
     --accordion-icon: var(--color-icon-primary);
     --accordion-content-bg: var(--color-surface-primary);
-    --ace-drop-shadow-xs: 0 4px 8px rgb(0 0 0 / 0.4);
-    --ace-drop-shadow-sm: 0 6px 12px rgb(0 0 0 / 0.4);
-    --ace-drop-shadow-md: 0 8px 16px rgb(0 0 0 / 0.45);
-    --ace-drop-shadow-lg: 0 10px 20px rgb(0 0 0 / 0.45);
-    --ace-drop-shadow-xl: 0 12px 24px rgb(0 0 0 / 0.5);
+    --shadow-xs: 0 4px 8px rgb(0 0 0 / 0.4);
+    --shadow-sm: 0 6px 12px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 8px 16px rgb(0 0 0 / 0.45);
+    --shadow-lg: 0 10px 20px rgb(0 0 0 / 0.45);
+    --shadow-xl: 0 12px 24px rgb(0 0 0 / 0.5);
     --dialog-modal-surface: var(--color-surface-primary);
-    --dialog-modal-border: var(--color-neutral-100);
+    --dialog-modal-border: var(--color-bg-secondary); /* colors/bg/secondary */
     --dialog-modal-title: var(--color-text-primary);
     --dialog-modal-body: var(--color-text-primary);
     --dialog-modal-muted: var(--color-text-secondary);
-    --dialog-modal-close-hover: var(--ace-neutral-100);
+    --dialog-modal-close-hover: var(--color-neutral-100);
     --dialog-modal-outline-hover-bg: var(--color-bg-brand-hover);
-    --ace-neutral-100: var(--ace-dark-mode-200);
-    --ace-neutral-200: var(--ace-dark-mode-600);
-    --ace-lab-segmented-indicator-bg: var(--ace-dark-mode-500);
-    --ace-lab-segmented-indicator-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 2px 8px rgb(0 0 0 / 0.22);
+    --lab-segmented-indicator-bg: var(--color-dark-500);
+    --lab-segmented-indicator-shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 2px 8px rgb(0 0 0 / 0.22);
     --sidebar-menu-icon: var(--screening-icon-muted);
 
 
@@ -1489,14 +945,15 @@
     --dialog-modal-danger: var(--color-status-error);
     --dialog-modal-danger-hover: var(--color-action-error-hover);
     --dialog-modal-overlay: rgb(0 0 0 / 0.65);
-    --dialog-modal-inline-error-border: var(--color-border-error);
+    --dialog-modal-inline-error-bg: var(--color-badges-inline-messages-red-fill);
+    --dialog-modal-inline-error-border: var(--color-badges-inline-messages-red-border);
 
-    /* Progress, pills, age - badges already set above from --color-badges-* */
+    /* Progress, pills, age - badges already set above from --color-badges-inline-messages-* */
     --screening-progress-fill: var(--screening-primary);
-    --screening-pill-new-dot: var(--color-badges-purple-border);
-    --screening-pill-new-label: var(--color-badges-purple-border);
+    --screening-pill-new-dot: var(--color-badges-inline-messages-purple-border);
+    --screening-pill-new-label: var(--color-badges-inline-messages-purple-border);
 
-    /* Status / badge pills inherit Semantic dark --color-badges-* from color-tokens.css */
+    /* Status / badge pills inherit Semantic dark --color-badges-inline-messages-* from color-tokens.css */
     --screening-age-fresh: var(--color-status-success);
     --screening-age-warn: var(--color-status-warning);
     --screening-age-stale: var(--color-status-error);
@@ -1505,8 +962,8 @@
     /* Attachments - muted panels track dark surfaces (not light #fafafb) */
     --attachments-border: var(--screening-border-strong);
     --attachments-surface: var(--screening-surface);
-    --attachments-dropzone-bg: var(--ace-dark-mode-700);
-    --attachments-panel-bg: var(--ace-dark-mode-700);
+    --attachments-dropzone-bg: var(--color-dark-700);
+    --attachments-panel-bg: var(--color-dark-700);
     --attachments-label: var(--screening-text-secondary);
     --attachments-muted: var(--screening-text-muted);
     --attachments-divider: var(--screening-border-strong);
@@ -1540,15 +997,6 @@
     --sidebar-border-accent: var(--color-primary-300);
     --screening-shadow-row-accent: inset 2px 0 0 0 color-mix(in srgb, var(--color-action-primary) 35%, transparent);
     --screening-pagination-page-size-border: var(--color-border-default);
-    --ace-finscan-mark-primary: var(--color-primary-200);
-    --ace-finscan-wordmark-fill: var(--color-primary-200);
-    --ace-guidelines-principle-title: var(--color-primary-200);
-    --ace-success-500: var(--color-status-success);
-    --ace-error-50: var(--color-bg-error);
-    --ace-warning-50: var(--color-bg-warning);
-    --ace-notice-50: var(--color-warning-2-900);
-    --ace-notice-100: var(--color-warning-2-800);
-    --ace-notice-200: var(--color-warning-2-700);
 
 
 

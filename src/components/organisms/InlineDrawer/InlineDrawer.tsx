@@ -9,12 +9,12 @@ import { SideDrawer } from './SideDrawer'
 
 const titleClass = cn(
   'm-0 shrink-0 whitespace-nowrap',
-  '[font:var(--ace-type-subheading-bold)] [letter-spacing:var(--ace-type-subheading-bold-tracking)]',
+  '[font:var(--type-heading-bold)] [letter-spacing:var(--type-heading-bold-tracking)]',
   'text-[var(--color-text-primary)]',
 )
 
 const toggleLabelClass = cn(
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]',
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]',
   'text-[var(--color-action-primary)]',
 )
 

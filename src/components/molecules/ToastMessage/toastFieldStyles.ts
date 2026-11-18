@@ -11,7 +11,7 @@ export type ToastMessageLayout =
   | 'multi-line-double-action'
 
 const bodyClass =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)] text-[var(--toast-message-text)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)] text-[var(--toast-message-text)]'
 
 export const toastMessageShellClass = cn(
   'flex w-full max-w-[var(--toast-message-width)] flex-col',
@@ -29,7 +29,7 @@ export const toastMessageMessageRowClass = cn(
 export const toastMessageTitleClass = cn(
   bodyClass,
   'm-0',
-  '[font:var(--ace-type-paragraph-p1-semi-bold)] [letter-spacing:var(--ace-type-paragraph-p1-semi-bold-tracking)]',
+  '[font:var(--type-body-semi-bold)] [letter-spacing:var(--type-body-semi-bold-tracking)]',
 )
 
 export const toastMessageBodyClass = cn(bodyClass, 'm-0 min-w-0 leading-[1.4]')
@@ -48,7 +48,7 @@ export const toastMessageDoubleActionRowClass = cn(
 
 export const toastMessageActionLinkClass = cn(
   bodyClass,
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
   'rounded-[var(--radius-sm)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
 )
@@ -62,14 +62,14 @@ export const toastMessageActionLinkToneClass: Record<ToastMessageTone, string> =
     'text-[var(--toast-message-action-text)] transition-colors hover:text-[var(--toast-message-action-text-hover)]',
   info: 'text-[var(--toast-message-action-text)] transition-colors hover:text-[var(--toast-message-action-text-hover)]',
   warning:
-    'text-[var(--toast-message-icon-warning)] transition-colors hover:text-[var(--ace-warning-600)]',
+    'text-[var(--toast-message-icon-warning)] transition-colors hover:text-[var(--color-warning-600)]',
   error:
     'text-[var(--toast-message-icon-error)] transition-colors hover:text-[var(--dialog-modal-danger)]',
 }
 
 export const toastMessageConfirmButtonClass = cn(
   bodyClass,
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]',
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]',
   'rounded-[var(--toast-message-confirm-radius)] bg-[var(--toast-message-confirm-bg)] px-[var(--toast-message-confirm-px)] py-[var(--toast-message-confirm-py)] text-[var(--toast-message-confirm-text)]',
   'transition-colors hover:bg-[var(--toast-message-confirm-bg-hover)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--screening-primary-ring)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--screening-primary-ring-offset)]',
@@ -79,8 +79,8 @@ export const toastMessageDismissButtonClass = cn(
   'inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
   'text-[var(--toast-message-dismiss-icon)]',
   'transition-[background-color,box-shadow,color]',
-  'duration-[var(--ace-motion-duration-medium)]',
-  '[transition-timing-function:var(--ace-motion-ease-standard)]',
+  'duration-[var(--motion-duration-medium)]',
+  '[transition-timing-function:var(--motion-ease-standard)]',
   'motion-reduce:transition-none motion-reduce:duration-0',
   /* Iconography “No border stroke” - toast sits on white; hover = surface-hover + 1px ring */
   'hover:bg-[var(--screening-surface-hover)] hover:shadow-[0_0_0_1px_var(--screening-border-strong)] hover:text-[var(--toast-message-dismiss-icon-hover)]',
@@ -99,16 +99,16 @@ export const toastMessageProgressFillClass = cn(
 )
 
 export const toastMessageProgressTrackToneClass: Record<ToastMessageTone, string> = {
-  success: 'bg-[var(--ace-success-50)]',
-  info: 'bg-[var(--ace-neutral-50)]',
-  warning: 'bg-[var(--ace-warning-100)]',
-  error: 'bg-[var(--ace-error-50)]',
+  success: 'bg-[var(--color-success-50)]',
+  info: 'bg-[var(--color-neutral-50)]',
+  warning: 'bg-[var(--color-warning-100)]',
+  error: 'bg-[var(--color-error-50)]',
 }
 
 export const toastMessageProgressFillToneClass: Record<ToastMessageTone, string> = {
-  success: 'bg-[var(--ace-success-500)]',
+  success: 'bg-[var(--color-success-500)]',
   info: 'bg-[var(--button-purple-500)]',
-  warning: 'bg-[var(--ace-warning-300)]',
+  warning: 'bg-[var(--color-warning-300)]',
   error: 'bg-[var(--toast-message-icon-error)]',
 }
 

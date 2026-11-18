@@ -135,13 +135,13 @@ The host owns open state, selection, group expansion, and any create / edit / de
 
 | Area | Tokens |
 |------|--------|
-| Width / control | `--ace-sidebar-width` (290px), `--ace-sidebar-control-width` |
-| Panel | `--ace-sidebar-border`, `--ace-sidebar-shadow` |
-| Items / groups | `--ace-sidebar-item-*`, `--ace-sidebar-group-*`, `--ace-sidebar-heading-*` |
-| Actions | `--ace-sidebar-row-action-hover-bg` (no resting border) |
-| Motion | `--ace-sidebar-duration-panel`, `--ace-sidebar-duration-expand` with standard ease; respects `motion-reduce` |
-| Edit dialog | `--ace-edit-group-*`, success / error wash tokens |
-| Type | `--ace-type-paragraph-p1-*` |
+| Width / control | `--sidebar-width` (290px), `--sidebar-control-width` |
+| Panel | `--sidebar-border`, `--sidebar-shadow` |
+| Items / groups | `--sidebar-item-*`, `--sidebar-group-*`, `--sidebar-heading-*` |
+| Actions | `--sidebar-row-action-hover-bg` (no resting border) |
+| Motion | `--sidebar-duration-panel`, `--sidebar-duration-expand` with standard ease; respects `motion-reduce` |
+| Edit dialog | `--edit-group-*`, success / error wash tokens |
+| Type | `--type-body-*` |
 
 ---
 

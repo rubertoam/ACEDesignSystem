@@ -93,7 +93,7 @@ function DescriptivePattern({
         <Toggle size={size} checked={checked} onCheckedChange={onCheckedChange} id={toggleId} />
         <label
           htmlFor={toggleId}
-          className="cursor-pointer whitespace-nowrap text-[var(--color-text-brand)] [font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]"
+          className="cursor-pointer whitespace-nowrap text-[var(--color-text-brand)] [font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]"
         >
           {checked ? 'YES' : 'NO'}
         </label>
@@ -141,7 +141,7 @@ function TogglesChangelog() {
           </li>
           <li>
             Labels use Caption/Regular (
-            <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>) for Small and Large;
+            <code className="text-[var(--color-text-primary)]">--type-caption-regular</code>) for Small and Large;
             Descriptive YES/NO uses <code className="text-[var(--color-text-primary)]">colors/text/brand</code>.
           </li>
           <li>
@@ -217,7 +217,7 @@ export function TogglePlaygroundLab() {
     <ComponentLabPage
       qa={toggleLabQa}
       title="Toggles"
-      description="ACE Design System v.3 toggles (Figma 117:1265 / set 5283:2831): Standard or Icon; Small / Large (36×20 / 44×24); with or without label; Active unselected, Hover, Active selected, Inactive unselected, Inactive selected; Descriptive Toggle pattern (4081:1009). Colors and type wired to semantic --color-* and --ace-type-* tokens."
+      description="ACE Design System v.3 toggles (Figma 117:1265 / set 5283:2831): Standard or Icon; Small / Large (36×20 / 44×24); with or without label; Active unselected, Hover, Active selected, Inactive unselected, Inactive selected; Descriptive Toggle pattern (4081:1009). Colors and type wired to semantic --color-* and --type-* tokens."
       examplesToolbar={toolbar}
       examples={
         <section className="space-y-5">
@@ -232,7 +232,7 @@ export function TogglePlaygroundLab() {
               <code className="text-[var(--color-text-primary)]">md</code>) only.
             </p>
           </div>
-          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--lab-shadow-sm)]">
             <table className="w-full min-w-[42rem] border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
@@ -342,7 +342,7 @@ import { aceToggleLabelClass } from '../components/atoms/Toggle/toggleFieldStyle
             <code className="text-[var(--color-text-primary)]">--color-surface-primary</code>.
           </li>
           <li>
-            Type: <code className="text-[var(--color-text-primary)]">--ace-type-caption-regular</code>. Padding{' '}
+            Type: <code className="text-[var(--color-text-primary)]">--type-caption-regular</code>. Padding{' '}
             <code className="text-[var(--color-text-primary)]">--toggle-track-padding</code>.
           </li>
         </ul>

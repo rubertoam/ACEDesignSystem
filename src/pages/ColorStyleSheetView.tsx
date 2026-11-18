@@ -52,7 +52,7 @@ function StyleSheetFamilySection({ family }: { family: StyleSheetFamily }) {
 
 export function ColorStyleSheetView({ families }: { families: StyleSheetFamily[] }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--shadow-sm)] sm:px-8">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-2 shadow-[var(--lab-shadow-sm)] sm:px-8">
       {families.map((family) => (
         <StyleSheetFamilySection key={family.id} family={family} />
       ))}

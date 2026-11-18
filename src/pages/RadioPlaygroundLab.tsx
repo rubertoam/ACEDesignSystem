@@ -187,7 +187,7 @@ export function RadioPlaygroundLab() {
               hover.
             </p>
           </div>
-          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+          <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--lab-shadow-sm)]">
             <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
               <thead>
                 <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">

@@ -11,19 +11,19 @@ import {
 } from '../../../lib/aceExpandPanel'
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 const p1Bold =
-  '[font:var(--ace-type-paragraph-p1-bold)] [letter-spacing:var(--ace-type-paragraph-p1-bold-tracking)]'
+  '[font:var(--type-body-bold)] [letter-spacing:var(--type-body-bold-tracking)]'
 const caption =
-  '[font:var(--ace-type-caption-regular)] [letter-spacing:var(--ace-type-caption-regular-tracking)]'
+  '[font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)]'
 
 const durationAccordion = aceExpandPanelDurationClass
 const easeAccordion = aceExpandPanelEaseClass
 
 const iconButtonClass = cn(
   'inline-flex size-[2.125rem] shrink-0 cursor-pointer items-center justify-center rounded-[var(--radius-sm)]',
-  'transition-colors duration-[var(--ace-motion-duration-fast)]',
-  '[transition-timing-function:var(--ace-motion-ease-standard)]',
+  'transition-colors duration-[var(--motion-duration-fast)]',
+  '[transition-timing-function:var(--motion-ease-standard)]',
   'hover:bg-[var(--color-bg-secondary)]',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)]',
 )
@@ -167,7 +167,7 @@ export function DataCard({
         'border-[0.5px] border-solid border-[var(--data-card-border)] bg-[var(--data-card-surface)]',
         'shadow-[var(--data-card-shadow)]',
         elevateOnHover &&
-          'transition-[box-shadow] duration-[var(--ace-motion-duration-fast)] [transition-timing-function:var(--ace-motion-ease-standard)] hover:shadow-[var(--data-card-shadow-hover)]',
+          'transition-[box-shadow] duration-[var(--motion-duration-fast)] [transition-timing-function:var(--motion-ease-standard)] hover:shadow-[var(--data-card-shadow-hover)]',
         className,
       )}
     >
@@ -190,7 +190,7 @@ export function DataCard({
           {showStatusIndicator ? (
             <>
               <span
-                className="shrink-0 [font:var(--ace-type-heading-h4-bold)] [letter-spacing:var(--ace-type-heading-h4-bold-tracking)] text-[var(--color-status-success)]"
+                className="shrink-0 [font:var(--type-heading-bold)] [letter-spacing:var(--type-heading-bold-tracking)] text-[var(--color-status-success)]"
                 aria-hidden
               >
                 ·
@@ -199,7 +199,7 @@ export function DataCard({
                 {heading}
               </span>
               <span
-                className="shrink-0 [font:var(--ace-type-heading-h4-bold)] [letter-spacing:var(--ace-type-heading-h4-bold-tracking)] text-[var(--color-status-success)]"
+                className="shrink-0 [font:var(--type-heading-bold)] [letter-spacing:var(--type-heading-bold-tracking)] text-[var(--color-status-success)]"
                 aria-hidden
               >
                 ·······

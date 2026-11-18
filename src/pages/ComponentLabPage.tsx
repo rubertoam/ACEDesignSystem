@@ -17,7 +17,7 @@ import { labUsageSections } from './labContent'
 export type ComponentLabTab = 'examples' | 'code' | 'usage' | 'qa' | 'changelog'
 
 const p1 =
-  '[font:var(--ace-type-paragraph-p1-regular)] [letter-spacing:var(--ace-type-paragraph-p1-regular-tracking)]'
+  '[font:var(--type-body-regular)] [letter-spacing:var(--type-body-regular-tracking)]'
 
 const panel = cn('lab-panel p-6')
 
@@ -171,14 +171,14 @@ export function ComponentLabPage({
             <h2
               className={cn(
                 'm-0',
-                '[font:var(--ace-type-heading-h5-bold)] [letter-spacing:var(--ace-type-heading-h5-bold-tracking)]',
+                '[font:var(--type-subheading-bold)] [letter-spacing:var(--type-subheading-bold-tracking)]',
                 'text-[var(--screening-text-primary)]',
               )}
             >
               {title}
             </h2>
             {description ? (
-              <div className={cn('mt-[var(--ace-section-label-gap)]', p1, 'text-[var(--screening-text-muted)]')}>
+              <div className={cn('mt-[var(--section-label-gap)]', p1, 'text-[var(--screening-text-muted)]')}>
                 {typeof description === 'string' ? <p className="m-0">{description}</p> : description}
               </div>
             ) : null}
