@@ -714,9 +714,9 @@
   --screening-input-px: var(--spacing-8); /* spacing/8 — padding all sides */
   --screening-input-gap: var(--spacing-8);
   --screening-input-border: var(--color-border-default);
-  /* Focus stroke is colors/border/focus + colors/bg/brand-hover (Figma Input / Focused) */
+  /* Focus stroke is colors/border/focus + colors/input/focused (Figma Input / Focused) */
   --screening-input-border-focus: var(--color-border-focus);
-  --screening-input-bg-focus: var(--color-bg-brand-hover);
+  --screening-input-bg-focus: var(--color-input-focused);
   --screening-input-focus-ring: var(--color-border-focus);
   --screening-input-placeholder: var(--color-text-placeholder); /* colors/text/placeholder */
 

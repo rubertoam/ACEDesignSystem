@@ -2363,6 +2363,16 @@ export const TOKEN_SEMANTIC_GROUPS: TokenCatalogGroup[] = [
         "darkAlias": "color/input/error"
       },
       {
+        "path": "colors/input/focused",
+        "cssVar": "--color-input-focused",
+        "type": "color",
+        "value": "→ color/primary/50",
+        "alias": "color/primary/50",
+        "group": "colors/input",
+        "darkValue": "→ color/primary/800",
+        "darkAlias": "color/primary/800"
+      },
+      {
         "path": "colors/input/placeholder",
         "cssVar": "--color-input-placeholder",
         "type": "color",
@@ -3157,6 +3167,6 @@ export const TOKEN_COMPONENT_GROUPS: TokenCatalogGroup[] = [
 
 export const TOKEN_CATALOG_COUNTS = {
   primitive: 179,
-  semantic: 115,
+  semantic: 116,
   component: 34,
 } as const

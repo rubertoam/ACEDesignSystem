@@ -306,6 +306,7 @@
   --color-badges-inline-messages-teal-border: var(--color-teal-500); /* colors/badges & inline messages/teal-border ← color/teal/500 */
   --color-badges-inline-messages-red-fill: var(--color-error-50); /* colors/badges & inline messages/red-fill ← color/error/50 */
   --color-badges-inline-messages-red-border: var(--color-error-500); /* colors/badges & inline messages/red-border ← color/error/500 */
+  --color-input-focused: var(--color-primary-50); /* colors/input/focused ← color/primary/50 */
   --color-input-placeholder: var(--primitive-color-input-placeholder); /* colors/input/placeholder ← color/input/placeholder */
   --color-input-value: var(--primitive-color-input-value); /* colors/input/value ← color/input/value */
   --color-input-error: var(--primitive-color-input-error); /* colors/input/error ← color/input/error */
@@ -490,6 +491,7 @@
   --color-badges-inline-messages-teal-border: var(--color-teal-200); /* colors/badges & inline messages/teal-border ← color/teal/200 */
   --color-badges-inline-messages-red-fill: var(--color-error-800); /* colors/badges & inline messages/red-fill ← color/error/800 */
   --color-badges-inline-messages-red-border: var(--color-error-200); /* colors/badges & inline messages/red-border ← color/error/200 */
+  --color-input-focused: var(--color-primary-800); /* colors/input/focused ← color/primary/800 */
   --color-input-placeholder: var(--primitive-color-input-placeholder); /* colors/input/placeholder ← color/input/placeholder */
   --color-input-value: var(--primitive-color-input-value); /* colors/input/value ← color/input/value */
   --color-input-error: var(--primitive-color-input-error); /* colors/input/error ← color/input/error */

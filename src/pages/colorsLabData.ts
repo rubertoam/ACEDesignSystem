@@ -1790,6 +1790,14 @@ export const COLOR_SEMANTIC_GROUPS: SemanticTokenGroup[] = [
     "title": "Input",
     "tokens": [
       {
+        "tokenPath": "colors/input/focused",
+        "cssVar": "--color-input-focused",
+        "alias": "color/primary/50",
+        "hex": "#EFEEF9",
+        "darkAlias": "color/primary/800",
+        "darkHex": "#1A143B"
+      },
+      {
         "tokenPath": "colors/input/placeholder",
         "cssVar": "--color-input-placeholder",
         "alias": "color/input/placeholder",

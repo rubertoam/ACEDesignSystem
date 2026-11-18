@@ -337,7 +337,7 @@ export const LAB_COMPONENT_TOKENS: Record<string, LabTokenGroup[]> = {
         t('colors/surface/primary', '--color-surface-primary'),
         t('colors/text/primary', '--color-text-primary', 'value + label'),
         t('colors/text/placeholder', '--color-text-placeholder'),
-        t('colors/bg/brand-hover', '--color-bg-brand-hover', 'focused fill'),
+        t('colors/input/focused', '--color-input-focused', 'focused fill'),
         t('colors/border/focus', '--color-border-focus', 'focused stroke'),
         t('colors/bg/error', '--color-bg-error'),
         t('colors/border/error', '--color-border-error'),

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { version as appVersion } from '../../package.json'
 import { Input } from '../components/atoms/Input'
 import { MaterialSymbol } from '../components/molecules/Accordion/MaterialSymbol'
 import { SiteHeader } from '../components/organisms/SiteHeader/SiteHeader'
@@ -419,6 +420,12 @@ export function LabLayout() {
             <p className="m-0 px-2 text-sm text-[var(--screening-text-muted)]">No matches</p>
           ) : null}
         </nav>
+        <p
+          className="m-0 mt-4 px-2 [font:var(--type-caption-regular)] [letter-spacing:var(--type-caption-regular-tracking)] text-[var(--screening-text-muted)] opacity-70"
+          aria-label={`Design system version ${appVersion}`}
+        >
+          v{appVersion}
+        </p>
         </div>
       </aside>
         <main className="lab-main min-w-0 flex-1 overflow-y-auto px-6 py-8 sm:px-8 lg:px-10">

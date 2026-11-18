@@ -2367,6 +2367,32 @@
       }
     },
     "input": {
+      "focused": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.9372549057006836,
+            0.9333333373069763,
+            0.9764705896377563
+          ],
+          "alpha": 1,
+          "hex": "#EFEEF9"
+        },
+        "$description": "Input field focused fill (Figma Input / Focused).",
+        "$extensions": {
+          "com.figma.variableId": "VariableID:6033:5803",
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.aliasData": {
+            "targetVariableId": "VariableID:adfabf14ff854b0a465ff2f9ccb52c5cca81af3e/-1:-1",
+            "targetVariableName": "color/primary/50",
+            "targetVariableSetId": "VariableCollectionId:f115a1b9fa40a007087b464afd0755755706df94/-1:-1",
+            "targetVariableSetName": "Primitives"
+          }
+        }
+      },
       "placeholder": {
         "$type": "color",
         "$value": {

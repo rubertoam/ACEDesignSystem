@@ -88,6 +88,14 @@ function InputsChangelog() {
             left/right is a playground toggle, not a matrix row.
           </li>
           <li>
+            Focused fill uses{' '}
+            <code className="text-[var(--color-text-primary)]">colors/input/focused</code> →{' '}
+            <code className="text-[var(--color-text-primary)]">--color-input-focused</code> (light{' '}
+            <code className="text-[var(--color-text-primary)]">color/primary/50</code>, dark{' '}
+            <code className="text-[var(--color-text-primary)]">color/primary/800</code>) instead of{' '}
+            <code className="text-[var(--color-text-primary)]">colors/bg/brand-hover</code>.
+          </li>
+          <li>
             Error helper uses{' '}
             <code className="text-[var(--color-text-primary)]">colors/text/error message</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--color-text-error-message</code> and{' '}
@@ -113,7 +121,8 @@ function InputsChangelog() {
           </li>
           <li>
             Focus chrome: <code className="text-[var(--color-text-primary)]">--color-border-focus</code> +{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>.
+            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code> (later moved to{' '}
+            <code className="text-[var(--color-text-primary)]">--color-input-focused</code>).
           </li>
         </ul>
       </article>
@@ -211,7 +220,11 @@ export function InputPlaygroundLab() {
             <code className="text-[var(--color-text-primary)]">typography/body/body-main</code> →{' '}
             <code className="text-[var(--color-text-primary)]">--type-body-regular</code>) plus{' '}
             <code className="text-[var(--color-text-primary)]">spacing/8</code> padding — not fixed sm/md/lg
-            heights. Pass <code className="text-[var(--color-text-primary)]">error</code> /{' '}
+            heights. Focused fill binds to{' '}
+            <code className="text-[var(--color-text-primary)]">colors/input/focused</code> (
+            <code className="text-[var(--color-text-primary)]">--color-input-focused</code>) with stroke{' '}
+            <code className="text-[var(--color-text-primary)]">colors/border/focus</code>. Pass{' '}
+            <code className="text-[var(--color-text-primary)]">error</code> /{' '}
             <code className="text-[var(--color-text-primary)]">errorMessage</code> for validation;{' '}
             <code className="text-[var(--color-text-primary)]">icon</code> toggles an optional search layer. Reserve{' '}
             <code className="text-[var(--color-text-primary)]">visualState</code> for spec screenshots or QA grids.
@@ -228,7 +241,8 @@ export function InputPlaygroundLab() {
           </li>
           <li>
             Focus: <code className="text-[var(--color-text-primary)]">--color-border-focus</code>,{' '}
-            <code className="text-[var(--color-text-primary)]">--color-bg-brand-hover</code>.
+            <code className="text-[var(--color-text-primary)]">--color-input-focused</code> (
+            <code className="text-[var(--color-text-primary)]">colors/input/focused</code>).
           </li>
           <li>
             Geometry: the typography token drives field size — hug height from{' '}
